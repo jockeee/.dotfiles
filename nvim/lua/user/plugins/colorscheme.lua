@@ -1,6 +1,6 @@
 --
--- colorschemes.lua
--- update global variable `vim.g.colorscheme` in `lua/user/globals.lua` with the colorscheme you want to use
+-- colorscheme.lua
+-- Update global variable `vim.g.user_colorscheme` in `lua/user/globals.lua` with the colorscheme you want to use
 --
 -- :Telescope colorscheme
 
@@ -17,19 +17,6 @@ return {
     --   vim.cmd.colorscheme 'catppuccin'
     -- end,
   },
-
-  -- sonokai
-  -- https://github.com/sainnhe/sonokai
-  -- High contrast, dark theme for neovim
-  -- {
-  --   'sainnhe/sonokai',
-  --   name = 'sonokai',
-  --   priority = 1000,
-  --   init = function()
-  --     vim.g.sonokai_style = 'atlantis'
-  --     vim.cmd.colorscheme 'sonokai'
-  --   end,
-  -- },
 
   -- https://github.com/Mofiqul/vscode.nvim
   -- Neovim/Vim color scheme inspired by Dark+ and Light+ theme in Visual Studio Code

@@ -7,11 +7,10 @@
 return {
   'nvim-lualine/lualine.nvim',
   event = 'VimEnter',
-  dependencies = { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font }, -- for pretty icons, but requires a nerd font
+  dependencies = { 'nvim-tree/nvim-web-devicons' }, -- for pretty icons, requires a nerd font
   opts = {
     options = {
-      theme = vim.g.colorscheme_lualine,
-      icons_enabled = vim.g.have_nerd_font,
+      theme = vim.g.user_colorscheme_lualine,
       component_separators = '',
       section_separators = '',
     },
@@ -23,5 +22,6 @@ return {
       lualine_y = { 'progress' },
       lualine_z = { 'location' },
     },
+    extensions = { 'nvim-tree' },
   },
 }

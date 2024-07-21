@@ -4,17 +4,20 @@
 
 return {
   'folke/which-key.nvim',
-  event = 'VimEnter',
+  event = 'VeryLazy',
   opts = {},
   config = function()
     require('which-key').setup()
-    require('which-key').register {
-      -- ['<leader>b'] = { name = 'buffer', _ = 'which_key_ignore' },
-      ['<leader>c'] = { name = 'code', _ = 'which_key_ignore' },
-      ['<leader>d'] = { name = 'document', _ = 'which_key_ignore' },
-      ['<leader>f'] = { name = 'find', _ = 'which_key_ignore' },
-      -- ['<leader>g'] = { name = 'git', _ = 'which_key_ignore' },
-      ['<leader>w'] = { name = 'workspace', _ = 'which_key_ignore' },
+
+    -- Add groups to which-key
+    require('which-key').add {
+      { '<leader>c', group = 'Code' },
+      { '<leader>d', group = 'Buffer' },
+      { '<leader>f', group = 'Find' },
+      { '<leader>h', group = 'Git Hunk', mode = { 'n', 'v' } },
+      { '<leader>t', group = 'Toggle' },
+      { '<leader>w', group = 'Workspace' },
+      { '<leader>x', group = 'Trouble' },
     }
   end,
 }

@@ -18,7 +18,7 @@ return {
   event = 'VimEnter',
   branch = '0.1.x',
   dependencies = {
-    { 'nvim-lua/plenary.nvim' },
+    'nvim-lua/plenary.nvim',
     { -- If encountering errors, see telescope-fzf-native README for install instructions
       'nvim-telescope/telescope-fzf-native.nvim',
 
@@ -31,8 +31,8 @@ return {
     -- telescope-ui-select sets vim.ui.select to telescope.
     -- That means for example that neovim core stuff can fill the telescope picker.
     -- Example would be lua vim.lsp.buf.code_action().
-    { 'nvim-telescope/telescope-ui-select.nvim' },
-    { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
+    'nvim-telescope/telescope-ui-select.nvim',
+    'nvim-tree/nvim-web-devicons', -- for pretty icons, requires a nerd font
   },
   config = function()
     require('telescope').setup {

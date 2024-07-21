@@ -1,14 +1,17 @@
 --
 -- globals.lua
 
--- set <space> as the leader key
--- must happen before plugins are loaded (otherwise wrong leader will be used)
+-- Set <space> as the leader key
+-- Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
+vim.g.maplocalleader = '\\'
 
--- set to true if you have a nerd font installed
-vim.g.have_nerd_font = true
+-- Netrw
+vim.g.loaded_netrw = 1 -- Disable netrw
+vim.g.loaded_netrwPlugin = 1 -- Disable netrw
+vim.g.netrw_banner = 0 -- Disable banner
+vim.g.netrw_liststyle = 3 -- Tree view
 
--- colorscheme
-vim.g.colorscheme = 'vscode'
-vim.g.colorscheme_lualine = 'catppuccin'
+-- Colorschemes
+vim.g.user_colorscheme = 'catppuccin'
+vim.g.user_colorscheme_lualine = 'catppuccin'
