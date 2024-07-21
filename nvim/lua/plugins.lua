@@ -17,6 +17,7 @@ return {
   -- Editing
   require 'user.plugins.github-copilot',
   require 'user.plugins.nvim-surround', -- add/change/delete surrounding delimiter pairs with ease
+  require 'user.plugins.treesitter', -- highlight, edit, and navigate code
   -- 'tpope/vim-unimpaired', -- handy bracket mappings
   -- require 'user.plugins.comment',
   -- require 'user.plugins.mini', -- collection of various small independent plugins/modules
@@ -26,7 +27,6 @@ return {
   require 'user.plugins.neogit', -- interactive git interface
   require 'user.plugins.telescope', -- fuzzy finder (files, lsp, etc)
   require 'user.plugins.toggleterm',
-  require 'user.plugins.treesitter', -- highlight, edit, and navigate code
   require 'user.plugins.trouble', -- pretty diagnostics, references, telescope results, quickfix and location list
 
   -- LSP, Linting, Formatting, Autocompletion
