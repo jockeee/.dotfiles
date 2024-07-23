@@ -3,6 +3,10 @@
 -- A file explorer tree for neovim written in lua
 --
 -- https://github.com/nvim-tree/nvim-tree.lua/blob/master/doc/nvim-tree-lua.txt
+--
+-- lualine integration
+-- https://github.com/nvim-lualine/lualine.nvim#extensions
+--    extensions = { 'nvim-tree' }
 
 return {
   'kyazdani42/nvim-tree.lua',

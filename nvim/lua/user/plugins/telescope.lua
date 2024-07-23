@@ -51,7 +51,7 @@ return {
           '--smart-case',
 
           -- Extra arguments
-          -- '--no-ignore-vcs', -- don't exclude files specified in .gitignore
+          '--no-ignore-vcs', -- don't exclude files specified in .gitignore
           '--follow', -- follow symbolic links
           '--hidden', -- search in hidden files (dotfiles)
 
@@ -75,7 +75,7 @@ return {
             '--files',
 
             -- Extra arguments
-            -- '--no-ignore-vcs', -- don't exclude files specified in .gitignore
+            '--no-ignore-vcs', -- don't exclude files specified in .gitignore
 
             -- Exclude the following patterns from search
             -- '--glob=!**/.idea/*',
@@ -133,6 +133,7 @@ return {
     vim.keymap.set('n', '<leader>fp', builtin.git_files, { desc = 'Find git file' })
     vim.keymap.set('n', '<leader>fr', builtin.resume, { desc = 'Find resume' })
     vim.keymap.set('n', '<leader>fs', builtin.builtin, { desc = 'Find select telescope' })
+    vim.keymap.set('n', '<leader>fS', '<cmd>Telescope session-lens<cr>', { desc = 'Find auto-sessions' })
     vim.keymap.set('n', '<leader>fw', builtin.grep_string, { desc = 'Find word under cursor' })
   end,
 }
