@@ -8,6 +8,7 @@ return {
   'tpope/vim-sleuth', -- auto set tabstop, shiftwidth, etc for each file based on its contents
   { 'lewis6991/gitsigns.nvim', opts = {} }, -- adds git related signs to the gutter, and utilities for managing changes
   require 'user.plugins.colorscheme',
+  require 'user.plugins.dressing', -- improve the default vim.ui interfaces
   require 'user.plugins.lualine', -- statusline
   require 'user.plugins.nvim-tree', -- file explorer
   require 'user.plugins.todo-comments', -- highlight todo, notes, etc in comments
@@ -16,6 +17,7 @@ return {
 
   -- Editing
   require 'user.plugins.github-copilot',
+  -- require 'user.plugins.nvim-autopairs', -- automatically insert or delete brackets, parens, quotes in pair
   require 'user.plugins.nvim-surround', -- add/change/delete surrounding delimiter pairs with ease
   require 'user.plugins.treesitter', -- highlight, edit, and navigate code
   -- 'tpope/vim-unimpaired', -- handy bracket mappings

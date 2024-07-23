@@ -13,5 +13,5 @@ vim.g.netrw_banner = 0 -- Disable banner
 vim.g.netrw_liststyle = 3 -- Tree view
 
 -- Colorschemes
-vim.g.user_colorscheme = 'catppuccin'
+vim.g.user_colorscheme = 'vscode'
 vim.g.user_colorscheme_lualine = 'catppuccin'
