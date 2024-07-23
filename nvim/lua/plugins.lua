@@ -9,7 +9,6 @@ return {
   { 'stevearc/dressing.nvim', event = 'VeryLazy', opts = {} }, -- improve the default vim.ui interfaces
   { 'lewis6991/gitsigns.nvim', opts = {} }, -- adds git related signs to the gutter, and utilities for managing changes
   require 'user.plugins.colorscheme',
-  require 'user.plugins.dressing', -- improve the default vim.ui interfaces
   require 'user.plugins.lualine', -- statusline
   require 'user.plugins.nvim-tree', -- file explorer
   require 'user.plugins.todo-comments', -- highlight todo, notes, etc in comments
