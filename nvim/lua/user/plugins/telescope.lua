@@ -121,7 +121,15 @@ return {
       }
     end, { desc = 'Find in open files' })
 
-    vim.keymap.set('n', '<C-p>', builtin.find_files, { desc = 'Find file' })
+    -- Find file (dropdown)
+    vim.keymap.set('n', '<C-p>', function()
+      builtin.find_files(require('telescope.themes').get_dropdown {
+        layout_config = {
+          width = 0.8,
+        },
+      })
+    end, { desc = 'Find file (dropdown)' })
+
     vim.keymap.set('n', '<leader><leader>', builtin.find_files, { desc = 'Find file' })
     vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Find buffer' })
     vim.keymap.set('n', '<leader>fd', builtin.diagnostics, { desc = 'Find diagnostics' })
