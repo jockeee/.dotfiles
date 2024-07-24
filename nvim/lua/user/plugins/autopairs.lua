@@ -1,6 +1,6 @@
 --
 -- https://github.com/windwp/nvim-autopairs
--- A super powerful autopair plugin for Neovim that supports multiple characters
+-- Auto close surrounding characters like parens, brackets, curly braces, quotes, single quotes and tags
 
 return {
   'windwp/nvim-autopairs',

@@ -16,7 +16,7 @@ return {
 
   -- Editing
   require 'user.plugins.github-copilot',
-  -- require 'user.plugins.nvim-autopairs', -- automatically insert or delete brackets, parens, quotes in pair
+  require 'user.plugins.nvim-autopairs', -- automatically insert or delete brackets, parens, quotes in pair
   require 'user.plugins.nvim-surround', -- add/change/delete surrounding delimiter pairs with ease
   require 'user.plugins.treesitter', -- highlight, edit, and navigate code
   -- 'tpope/vim-unimpaired', -- handy bracket mappings
@@ -32,7 +32,7 @@ return {
   require 'user.plugins.trouble', -- pretty diagnostics, references, telescope results, quickfix and location list
 
   -- LSP, Linting, Formatting, Autocompletion
+  require 'user.plugins.nvim-cmp', -- autocompletion, snippets
   require 'user.plugins.lsp-config',
   require 'user.plugins.conform', -- formatting
-  require 'user.plugins.nvim-cmp', -- autocompletion, snippets
 }

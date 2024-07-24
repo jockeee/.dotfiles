@@ -16,6 +16,7 @@ return {
   keys = { { '\\', '<cmd>NvimTreeToggle<cr>' } },
   config = function()
     require('nvim-tree').setup {
+      disable_netrw = true,
       renderer = {
         group_empty = true,
       },
