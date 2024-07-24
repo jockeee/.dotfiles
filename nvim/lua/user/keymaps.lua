@@ -47,9 +47,11 @@ vim.keymap.set('n', ']b', '<cmd>bnext<cr>', { desc = 'Next Buffer' })
 vim.keymap.set('n', '<leader>dd', '<cmd>bd<cr>', { desc = 'Buffer delete' })
 vim.keymap.set('n', '<leader>da', '<cmd>%bdelete<cr>', { desc = 'Buffer delete all' })
 vim.keymap.set('n', '<leader>dk', '<cmd>bd!<cr>', { desc = 'Buffer kill (ignore unsaved changes)' })
+
+-- leader-t:
 vim.keymap.set(
   'n',
-  '<leader>dc',
+  '<leader>tc',
   '<cmd>lua vim.opt.colorcolumn = vim.inspect(vim.opt.colorcolumn:get()) == "{}" and { 79 } or {}<cr>',
-  { desc = 'Colorcolumn toggle' }
+  { desc = 'Colorcolumn Toggle' }
 )
