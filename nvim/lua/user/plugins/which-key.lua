@@ -14,8 +14,8 @@ return {
       { '<leader>c', group = 'Code' },
       { '<leader>d', group = 'Buffer' },
       { '<leader>f', group = 'Find' },
-      -- { '<leader>h', group = 'Git Hunk', mode = { 'n', 'v' } },
-      -- { '<leader>t', group = 'Toggle' },
+      { '<leader>h', group = 'Git Hunk', mode = { 'n', 'v' } },
+      { '<leader>t', group = 'Toggle' },
       { '<leader>w', group = 'Workspace' },
       { '<leader>x', group = 'Trouble' },
     }

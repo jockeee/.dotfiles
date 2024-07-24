@@ -4,7 +4,7 @@
 -- Set <space> as the leader key
 -- Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
-vim.g.maplocalleader = '\\'
+vim.g.maplocalleader = ' '
 
 -- Netrw
 vim.g.loaded_netrw = 1 -- Disable netrw

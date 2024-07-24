@@ -7,7 +7,6 @@ return {
   -- Visual
   'tpope/vim-sleuth', -- auto set tabstop, shiftwidth, etc for each file based on its contents
   { 'stevearc/dressing.nvim', event = 'VeryLazy', opts = {} }, -- improve the default vim.ui interfaces
-  { 'lewis6991/gitsigns.nvim', opts = {} }, -- adds git related signs to the gutter, and utilities for managing changes
   require 'user.plugins.colorscheme',
   require 'user.plugins.lualine', -- statusline
   require 'user.plugins.nvim-tree', -- file explorer
@@ -26,6 +25,7 @@ return {
 
   -- Functionality
   require 'user.plugins.auto-session',
+  require 'user.plugins.gitsigns', -- adds git related signs to the gutter, and utilities for managing changes
   require 'user.plugins.neogit', -- interactive git interface
   require 'user.plugins.telescope', -- fuzzy finder (files, lsp, etc)
   require 'user.plugins.toggleterm',
