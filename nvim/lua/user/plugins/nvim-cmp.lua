@@ -45,6 +45,7 @@ return {
     local luasnip = require 'luasnip'
     local lspkind = require 'lspkind'
 
+    -- https://github.com/L3MON4D3/LuaSnip#add-snippets
     -- Loads vscode style snippets from installed plugins (e.g. friendly-snippets)
     require('luasnip.loaders.from_vscode').lazy_load()
 

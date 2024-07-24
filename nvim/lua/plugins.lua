@@ -10,7 +10,9 @@ return {
   require 'user.plugins.colorscheme',
   require 'user.plugins.lualine', -- statusline
   require 'user.plugins.nvim-tree', -- file explorer
+  require 'user.plugins.telescope', -- fuzzy finder (files, lsp, etc)
   require 'user.plugins.todo-comments', -- highlight todo, notes, etc in comments
+  require 'user.plugins.trouble', -- pretty diagnostics, references, telescope results, quickfix and location list
   require 'user.plugins.vim-tmux-navigator', -- tmux & split window navigation with C-hjkl\
   require 'user.plugins.which-key', -- show pending keybinds
 
@@ -25,14 +27,18 @@ return {
 
   -- Functionality
   require 'user.plugins.auto-session',
+  require 'user.plugins.toggleterm',
+
+  -- Git
   require 'user.plugins.gitsigns', -- adds git related signs to the gutter, and utilities for managing changes
   require 'user.plugins.neogit', -- interactive git interface
-  require 'user.plugins.telescope', -- fuzzy finder (files, lsp, etc)
-  require 'user.plugins.toggleterm',
-  require 'user.plugins.trouble', -- pretty diagnostics, references, telescope results, quickfix and location list
 
-  -- LSP, Linting, Formatting, Autocompletion
+  -- Autocompletion
   require 'user.plugins.nvim-cmp', -- autocompletion, snippets
-  require 'user.plugins.lsp-config',
+
+  -- Formatting
   require 'user.plugins.conform', -- formatting
+
+  -- LSP and Linting
+  require 'user.plugins.lsp-config',
 }
