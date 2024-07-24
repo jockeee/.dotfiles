@@ -5,6 +5,8 @@
 -- highlight, edit, and navigate code
 --
 -- :help nvim-treesitter
+--
+-- https://github.com/nvim-treesitter/nvim-treesitter#supported-languages
 
 return {
   'nvim-treesitter/nvim-treesitter',
@@ -12,7 +14,7 @@ return {
   dependencies = { 'nvim-treesitter/nvim-treesitter-textobjects' },
   build = ':TSUpdate',
   opts = {
-    ensure_installed = { 'bash', 'c', 'html', 'lua', 'markdown', 'vim', 'vimdoc' },
+    ensure_installed = { 'lua', 'vim', 'vimdoc' },
     auto_install = true, -- autoinstall languages that are not installed
     highlight = { enable = true },
     indent = { enable = true },
@@ -38,25 +40,20 @@ return {
   end,
 }
 
--- ensure_installed = {
+-- https://github.com/nvim-treesitter/nvim-treesitter#supported-languages
+-- Examples
+--   'bash',
+--   'gitignore',
+--   'c',
+--   'html',
+--   'css',
 --   'json',
+--   'yaml',
+--   'markdown',
+--   'markdown_inline',
 --   'javascript',
 --   'typescript',
 --   'tsx',
---   'yaml',
---   'html',
---   'css',
---   'prisma',
---   'markdown',
---   'markdown_inline',
---   'svelte',
 --   'graphql',
---   'bash',
---   'lua',
---   'vim',
 --   'dockerfile',
---   'gitignore',
 --   'query',
---   'vimdoc',
---   'c',
--- },
