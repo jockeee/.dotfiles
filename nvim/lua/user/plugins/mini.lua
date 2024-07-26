@@ -1,12 +1,10 @@
 --
 -- https://github.com/echasnovski/mini.nvim
 -- Library of 40+ independent Lua modules improving overall Neovim (version 0.8 and higher) experience with minimal effort
---
--- collection of various small independent plugins/modules
 
 return {
   'echasnovski/mini.nvim',
-  lazy = false,
+  event = { 'BufReadPre', 'BufNewFile' },
   config = function()
     -- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-ai.md
     -- Better Around/Inside textobjects
@@ -27,6 +25,6 @@ return {
     --  - [D [d ]d ]D   diagnostics
     --  - [T [t ]t ]T   treesitter node and parents
     --
-    -- require('mini.bracketed').setup()
+    require('mini.bracketed').setup()
   end,
 }

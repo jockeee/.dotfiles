@@ -21,9 +21,7 @@ return {
   require 'user.plugins.nvim-autopairs', -- automatically insert or delete brackets, parens, quotes in pair
   require 'user.plugins.nvim-surround', -- add/change/delete surrounding delimiter pairs with ease
   require 'user.plugins.treesitter', -- highlight, edit, and navigate code
-  -- 'tpope/vim-unimpaired', -- handy bracket mappings
-  -- require 'user.plugins.comment',
-  -- require 'user.plugins.mini', -- collection of various small independent plugins/modules
+  require 'user.plugins.mini', -- collection of various small independent plugins/modules
 
   -- Functionality
   require 'user.plugins.auto-session',
