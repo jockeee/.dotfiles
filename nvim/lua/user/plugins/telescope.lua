@@ -19,6 +19,7 @@ return {
   branch = '0.1.x',
   dependencies = {
     'nvim-lua/plenary.nvim',
+    'nvim-tree/nvim-web-devicons', -- for pretty icons, requires a nerd font
     { -- If encountering errors, see telescope-fzf-native README for install instructions
       'nvim-telescope/telescope-fzf-native.nvim',
 
@@ -32,7 +33,7 @@ return {
     -- That means for example that neovim core stuff can fill the telescope picker.
     -- Example would be lua vim.lsp.buf.code_action().
     'nvim-telescope/telescope-ui-select.nvim',
-    'nvim-tree/nvim-web-devicons', -- for pretty icons, requires a nerd font
+    'folke/todo-comments.nvim',
   },
   config = function()
     require('telescope').setup {
@@ -141,6 +142,7 @@ return {
     vim.keymap.set('n', '<leader>fr', builtin.resume, { desc = 'Find resume' })
     vim.keymap.set('n', '<leader>fs', builtin.builtin, { desc = 'Find select telescope' })
     vim.keymap.set('n', '<leader>fS', '<cmd>Telescope session-lens<cr>', { desc = 'Find auto-sessions' })
+    vim.keymap.set('n', '<leader>ft', '<cmd>TodoTelescope<cr>', { desc = 'Find todos' })
     vim.keymap.set('n', '<leader>fw', builtin.grep_string, { desc = 'Find word under cursor' })
   end,
 }
