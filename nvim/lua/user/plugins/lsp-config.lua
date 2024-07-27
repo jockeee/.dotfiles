@@ -32,14 +32,22 @@
 return {
   'neovim/nvim-lspconfig',
   dependencies = {
+    -- https://github.com/williamboman/mason.nvim
+    -- Package manager for Neovim that runs everywhere Neovim runs.
+    -- Easily install and manage LSP servers, DAP servers, linters, and formatters.
     -- Automatically install LSPs and related tools to stdpath for neovim
     'williamboman/mason.nvim',
+    --
+    -- https://github.com/williamboman/mason-lspconfig.nvim
+    -- Extension to mason.nvim that makes it easier to use lspconfig with mason.nvim
     'williamboman/mason-lspconfig.nvim',
+    --
+    -- https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim
+    -- Install and upgrade third party tools automatically
     'WhoIsSethDaniel/mason-tool-installer.nvim',
-
-    -- fidget
-    -- for notifications and LSP progress messages
+    --
     -- https://github.com/j-hui/fidget.nvim
+    -- Notifications and LSP progress messages
     {
       'j-hui/fidget.nvim',
       opts = {
@@ -54,9 +62,12 @@ return {
         },
       },
     },
-
-    -- `neodev` configures Lua LSP for your Neovim config, runtime and plugins
-    -- used for completion, annotations and signatures of Neovim apis
+    --
+    -- https://github.com/folke/neodev.nvim
+    -- Neovim setup for init.lua and plugin development with full signature help, docs and completion for the nvim lua API
+    --
+    -- Neodev configures Lua LSP for your Neovim config, runtime and plugins
+    -- Used for completion, annotations and signatures of Neovim apis
     { 'folke/neodev.nvim', opts = {} },
   },
   config = function()
