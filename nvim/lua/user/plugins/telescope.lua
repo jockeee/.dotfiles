@@ -7,11 +7,11 @@
 -- :help telescope.builtin
 --
 -- Two important keymaps to use while in Telescope are:
---  - Insert mode: <c-/>
---  - Normal mode: ?
+--    Insert mode: <c-/>
+--    Normal mode: ?
 --
--- This opens a window that shows you all of the keymaps for the current Telescope picker.
--- This is really useful to discover what Telescope can do as well as how to actually do it!
+--    Opens a window that shows you all of the keymaps for the current Telescope picker.
+--    Useful to discover what Telescope can do as well as how to actually do it!
 
 return {
   'nvim-telescope/telescope.nvim',
