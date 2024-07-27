@@ -10,9 +10,7 @@
 
 return {
   'kyazdani42/nvim-tree.lua',
-  dependencies = {
-    'nvim-tree/nvim-web-devicons', -- for pretty icons, requires a nerd font
-  },
+  dependencies = { 'nvim-tree/nvim-web-devicons', event = 'VeryLazy' }, -- for pretty icons, requires a nerd font
   keys = { { '\\', '<cmd>NvimTreeToggle<cr>' } },
   config = function()
     require('nvim-tree').setup {

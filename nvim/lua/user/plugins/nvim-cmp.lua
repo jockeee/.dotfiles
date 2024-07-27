@@ -11,7 +11,7 @@ return {
     {
       'L3MON4D3/LuaSnip', -- Snippet Engine for Neovim written in Lua
       -- follow latest release
-      tag = 'v2.*', -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+      -- tag = 'v2.*', -- Replace <CurrentMajor> by the latest released major (first number of latest release)
       -- install jsregexp (optional)
       build = (function()
         -- Build Step is needed for regex support in snippets

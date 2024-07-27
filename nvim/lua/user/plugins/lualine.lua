@@ -15,7 +15,7 @@
 return {
   'nvim-lualine/lualine.nvim',
   event = 'VimEnter',
-  dependencies = { 'nvim-tree/nvim-web-devicons' }, -- for pretty icons, requires a nerd font
+  dependencies = { 'nvim-tree/nvim-web-devicons', event = 'VeryLazy' }, -- for pretty icons, requires a nerd font
   opts = {
     options = {
       theme = vim.g.user_colorscheme_lualine,

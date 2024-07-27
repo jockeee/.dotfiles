@@ -19,7 +19,7 @@ return {
   branch = '0.1.x',
   dependencies = {
     'nvim-lua/plenary.nvim',
-    'nvim-tree/nvim-web-devicons', -- for pretty icons, requires a nerd font
+    { 'nvim-tree/nvim-web-devicons', event = 'VeryLazy' }, -- for pretty icons, requires a nerd font
     { -- If encountering errors, see telescope-fzf-native README for install instructions
       'nvim-telescope/telescope-fzf-native.nvim',
 
@@ -39,7 +39,8 @@ return {
     require('telescope').setup {
       defaults = {
         file_ignore_patterns = {
-          -- '%.lockb', -- hides buns binary lock file from the results
+          -- In lua patterns, dashes are interpreted as quantifier, so you have to escape them
+          'lazy%-lock.json',
         },
         vimgrep_arguments = {
           -- Default grep command and arguments

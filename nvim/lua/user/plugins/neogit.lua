@@ -8,7 +8,7 @@ return {
   dependencies = {
     'nvim-lua/plenary.nvim', -- required
     'sindrets/diffview.nvim', -- optional - diff integration
-    'nvim-web-devicons', -- optional, for pretty icons, requires a nerd font
+    { 'nvim-tree/nvim-web-devicons', event = 'VeryLazy' }, -- for pretty icons, requires a nerd font
 
     -- Only one of these is needed, not both.
     'nvim-telescope/telescope.nvim', -- optional
