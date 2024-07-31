@@ -15,7 +15,7 @@
 return {
   'Wansmer/treesj',
   keys = {
-    { '<leader>m', '<cmd>TSJToggle<cr>', desc = 'TreeSJ Split/Join' },
+    { '<leader>j', '<cmd>TSJToggle<cr>', desc = 'TreeSJ Split/Join' },
     -- { '<leader>m', '<cmd>TSJToggle<cr>', desc = 'TreeSJ: Toggle' },
     -- { '<leader>s', '<cmd>TSJSplit<cr>', desc = 'TreeSJ: Split' },
     -- { '<leader>j', '<cmd>TSJJoin<cr>', desc = 'TreeSJ: Join' },
@@ -35,7 +35,7 @@ return {
     -- vim.keymap.set('n', '<leader>m', treesj.toggle)
 
     -- Extending default preset with `recursive = true`
-    vim.keymap.set('n', '<leader>M', function()
+    vim.keymap.set('n', '<leader>J', function()
       treesj.toggle { split = { recursive = true } }
     end)
   end,
