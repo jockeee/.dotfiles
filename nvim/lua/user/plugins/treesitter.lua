@@ -15,7 +15,10 @@
 return {
   'nvim-treesitter/nvim-treesitter',
   event = { 'BufReadPre', 'BufNewFile' },
-  dependencies = { 'nvim-treesitter/nvim-treesitter-textobjects' },
+  dependencies = {
+    'nvim-treesitter/nvim-treesitter-textobjects',
+    'windwp/nvim-ts-autotag',
+  },
   build = ':TSUpdate',
   opts = {
     ensure_installed = { 'lua', 'vim', 'vimdoc' },
@@ -27,7 +30,7 @@ return {
       keymaps = {
         init_selection = '<C-space>', -- set to `false` to disable one of the mappings
         node_incremental = '<C-space>',
-        scope_incremental = false,
+        scope_incremental = '<C-space>',
         node_decremental = '<bs>',
       },
     },
