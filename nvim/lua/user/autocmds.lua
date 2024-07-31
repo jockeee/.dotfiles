@@ -11,8 +11,8 @@ vim.api.nvim_create_autocmd('VimEnter', {
       -- where I guess we reach VimEnter but lazy hasn't loaded any plugins yet.
       local package_exists
 
-      -- if there are more than one window open, do nothing (lazy ui probably running)
-      if #vim.api.nvim_list_wins() > 1 then
+      -- if there are more than one window open in the current tab, do nothing (lazy ui probably running)
+      if #vim.api.nvim_tabpage_list_wins(0) > 1 then
         return
       end
 
