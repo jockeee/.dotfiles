@@ -14,6 +14,9 @@
 return {
   'rmagatti/auto-session',
   lazy = false,
+  dependencies = {
+    'nvim-telescope/telescope.nvim', -- if you want to use sesssion lens
+  },
   opts = {
     log_level = 'error', -- default: 'info'
     auto_save_enabled = true, -- default: nil

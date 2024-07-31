@@ -7,9 +7,20 @@ vim.api.nvim_create_autocmd('VimEnter', {
   group = vim.api.nvim_create_augroup('open-telescope-find_files', { clear = true }),
   callback = function()
     if vim.fn.argv(0) == '' then
-      -- this checks prevents error when lazy is doing installs on startup,
+      -- package_exists check prevents error when lazy is doing installs on startup,
       -- where I guess we reach VimEnter but lazy hasn't loaded any plugins yet.
-      local package_exists, _ = pcall(require, 'telescope.builtin')
+      local package_exists
+
+      -- If an auto-session session exists for current working directory, don't open telescope find_files()
+      package_exists, _ = pcall(require, 'auto-session')
+      if package_exists then
+        if require('auto-session').session_exists_for_cwd() then
+          return
+        end
+      end
+
+      -- Open telescope find_files()
+      package_exists, _ = pcall(require, 'telescope.builtin')
       if package_exists then
         require('telescope.builtin').find_files()
       end
