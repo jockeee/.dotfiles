@@ -36,8 +36,8 @@ vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnos
 vim.keymap.set('n', '<leader>ce', vim.diagnostic.open_float, { desc = 'Show diagnostic error messages' })
 vim.keymap.set('n', '<leader>cq', vim.diagnostic.setloclist, { desc = 'Open diagnostic quickfix list' })
 
-vim.keymap.set('n', '<leader>l', '<cmd>Lazy<cr>', { desc = 'Lazy' })
-vim.keymap.set('n', '<leader>m', '<cmd>Mason<cr>', { desc = 'Mason' })
+vim.keymap.set('n', '<leader>nl', '<cmd>Lazy<cr>', { desc = 'Lazy' })
+vim.keymap.set('n', '<leader>nm', '<cmd>Mason<cr>', { desc = 'Mason' })
 
 -- Buffers
 vim.keymap.set('n', '[b', '<cmd>bprevious<cr>', { desc = 'Prev Buffer' })

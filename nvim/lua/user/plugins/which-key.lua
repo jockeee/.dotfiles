@@ -15,6 +15,7 @@ return {
       { '<leader>d', group = 'Buffer' },
       { '<leader>f', group = 'Find' },
       { '<leader>h', group = 'Git Hunk', mode = { 'n', 'v' } },
+      { '<leader>n', group = 'Neovim' },
       { '<leader>t', group = 'Toggle' },
       { '<leader>w', group = 'Workspace' },
       { '<leader>x', group = 'Trouble' },
