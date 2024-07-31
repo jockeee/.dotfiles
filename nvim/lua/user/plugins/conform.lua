@@ -36,14 +36,14 @@ return {
       -- javascript = { { 'prettierd', 'prettier' } }
       bash = { 'shfmt' },
       lua = { 'stylua' },
-      html = { { 'prettierd', 'prettier' } },
-      javascript = { { 'prettierd', 'prettier' } },
+      html = { 'prettierd', 'prettier', stop_after_first = true },
+      javascript = { 'prettierd', 'prettier', stop_after_first = true },
       go = { 'gofumpt', 'goimports-reviser' },
     },
     formatters_by_ext = { -- Specify formatters by file extension
       -- ["py"] = { "isort", "black" },
-      -- ["js"] = { { 'prettierd', 'prettier' } },
-      -- ["ts"] = { { 'prettierd', 'prettier' } },
+      -- ["js"] = { 'prettierd', 'prettier', stop_after_first = true },
+      -- ["ts"] = { 'prettierd', 'prettier', stop_after_first = true },
     },
   },
 }
