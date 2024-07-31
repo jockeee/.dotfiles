@@ -11,11 +11,14 @@ vim.api.nvim_create_autocmd('VimEnter', {
       -- where I guess we reach VimEnter but lazy hasn't loaded any plugins yet.
       local package_exists
 
-      -- If an auto-session session exists for current working directory, don't open telescope find_files()
+      -- If an auto-session session exists for current working directory, do nothing (unless it's an empty buffer)
       package_exists, _ = pcall(require, 'auto-session')
       if package_exists then
         if require('auto-session').session_exists_for_cwd() then
-          return
+          -- If there are more than an empty buffer open, don't open telescope find_files()
+          if vim.api.nvim_list_bufs() ~= 1 and vim.api.nvim_buf_get_name(0) ~= '' then
+            return
+          end
         end
       end
 

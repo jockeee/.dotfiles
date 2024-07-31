@@ -31,6 +31,8 @@
 -- LSP configuration & plugins
 return {
   'neovim/nvim-lspconfig',
+  event = { 'BufReadPre', 'BufNewFile' },
+  cmd = { 'LspInfo', 'LspInstall', 'LspUninstall' },
   dependencies = {
     -- https://github.com/williamboman/mason.nvim
     -- Package manager for Neovim that runs everywhere Neovim runs.
