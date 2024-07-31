@@ -19,8 +19,8 @@ return {
   },
   opts = {
     log_level = 'error', -- default: 'info'
-    auto_save_enabled = true, -- default: nil
-    auto_restore_enabled = true, -- default: nil
+    auto_save_enabled = true, -- default: true
+    auto_restore_enabled = true, -- default: true
     auto_session_enable_last_session = false, -- default: false - Loads the last loaded session if session for cwd does not exist
     auto_session_root_dir = vim.fn.stdpath 'data' .. '/sessions/', -- default: vim.fn.stdpath 'data' .. '/sessions/'
     auto_session_suppress_dirs = { '/', '~/', '~/Downloads' }, -- default: nil
