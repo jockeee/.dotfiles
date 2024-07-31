@@ -18,7 +18,7 @@ return {
     'nvim-telescope/telescope.nvim', -- if you want to use sesssion lens
   },
   opts = {
-    log_level = 'error', -- default: 'info'
+    log_level = 'error', -- default: 'error'
     auto_save_enabled = true, -- default: true
     auto_restore_enabled = true, -- default: true
     auto_session_enable_last_session = false, -- default: false - Loads the last loaded session if session for cwd does not exist
