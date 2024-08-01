@@ -256,7 +256,7 @@ return {
       'stylua', -- lua formatter
       -- html
       'prettier', -- html formatter
-      'prettierd', -- html formatter, daemon style
+      'prettierd', -- html formatter, daemon style -- https://github.com/fsouza/prettierd#vim--neovim
       -- golang
       'gofumpt', -- go formatter
       'goimports-reviser', -- go imports formatter
