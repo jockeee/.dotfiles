@@ -9,6 +9,7 @@ alias la 'ls -lA'
 alias ld 'ls -ld'
 alias laa 'ls -la'
 alias laz 'ls -laZ'
+alias wezterm 'flatpak run org.wezfurlong.wezterm'
 
 if command -q bat
   alias bat 'bat -p'
@@ -33,6 +34,7 @@ if command -q eza
 end
 
 
+
 ##
 ## Abbreviations
 ##
@@ -42,6 +44,7 @@ abbr --add g 'git'
 abbr --add t 'tmux'
 abbr --add tm 'tmux'
 abbr --add v 'vim'
+abbr --add w 'wezterm'
 
 if command -q bat; or command -q batcat
   abbr --add c 'bat'
