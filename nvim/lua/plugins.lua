@@ -39,6 +39,6 @@ return {
   -- Formatting
   require 'user.plugins.conform', -- formatting
 
-  -- LSP and Linting
+  -- LSP, debug, linting and formatting helper tools
   require 'user.plugins.lsp-config',
 }

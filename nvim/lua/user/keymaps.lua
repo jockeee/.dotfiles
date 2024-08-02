@@ -3,6 +3,10 @@
 --
 -- https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 
+-- Leader key is space
+-- Do nothing when space is pressed in normal or visual mode
+vim.keymap.set({ 'n', 'v' }, '<space>', '<nop>')
+
 -- Clear highlights (search) with <esc>
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<cr>')
 

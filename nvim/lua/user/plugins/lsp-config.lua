@@ -31,8 +31,8 @@
 -- LSP configuration & plugins
 return {
   'neovim/nvim-lspconfig',
-  event = { 'BufReadPre', 'BufNewFile' },
-  cmd = { 'LspInfo', 'LspInstall', 'LspUninstall' },
+  -- event = { 'BufReadPre', 'BufNewFile' },
+  -- cmd = { 'LspInfo', 'LspInstall', 'LspUninstall' },
   dependencies = {
     -- https://github.com/williamboman/mason.nvim
     -- Package manager for Neovim that runs everywhere Neovim runs.
@@ -210,8 +210,10 @@ return {
       -- tsserver = {},
       --
 
-      bashls = {}, -- bash
+      -- bash
+      bashls = {},
 
+      -- lua
       lua_ls = {
         -- cmd = {...},
         -- filetypes {...},
@@ -230,12 +232,35 @@ return {
         },
       },
 
+      -- Web
       html = {},
       emmet_ls = {}, -- html emmet
-      htmx = {}, -- NOTE: requires cargo build tools (rust)
+      tailwindcss = {},
+      htmx = {}, -- INFO: Requires Rust build tools (cargo)
 
-      gopls = {}, -- golang
-      templ = {}, -- golang html templating
+      -- Golang
+      gopls = {}, -- the official Go language server developed by the Go team
+      templ = {}, -- templ HTML templating language
+
+      -- Python
+      -- https://github.com/python-lsp/python-lsp-server
+      -- Fork of the python-language-server project, maintained by the Spyder IDE team and the community.
+      pylsp = {
+        settings = {
+          pylsp = {
+            plugins = {
+              pycodestyle = {
+                enabled = true,
+                ignore = { 'E501', 'W503' },
+              },
+              mypy = { enabled = true },
+            },
+          },
+        },
+      }, -- LSP server
+      -- https://github.com/python/mypy
+      -- Mypy is a static type checker for Python
+      mypy = {}, -- linting and type checking
     }
 
     -- Ensure the servers and tools above are installed
@@ -250,18 +275,20 @@ return {
     -- for you, so that they are available from within Neovim.
     local ensure_installed = vim.tbl_keys(servers or {})
     vim.list_extend(ensure_installed, {
-      -- bash
+      -- Bash
       'shfmt', -- bash formatter
-      -- lua
+      -- Lua
       'stylua', -- lua formatter
-      -- html
+      -- Html
       'prettier', -- html formatter
       'prettierd', -- html formatter, daemon style -- https://github.com/fsouza/prettierd#vim--neovim
-      -- golang
+      -- Golang
       'gofumpt', -- go formatter
       'goimports-reviser', -- go imports formatter
       'delve', -- go debugger
-      -- TODO: go linters
+      -- Python
+      'black', -- Black, the uncompromising Python code formatter
+      'isort', -- isort is a Python utility / library to sort imports alphabetically
     })
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
