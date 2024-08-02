@@ -19,6 +19,8 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
     os.exit(1)
   end
 end
+
+-- Add lazy to the runtimepath, this allows us to require it.
 vim.opt.rtp:prepend(lazypath)
 
 -- lazy options

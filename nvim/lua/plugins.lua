@@ -33,12 +33,17 @@ return {
   require 'user.plugins.gitsigns', -- adds git related signs to the gutter, and utilities for managing changes
   require 'user.plugins.neogit', -- interactive git interface
 
+  -- SQL
+  'tpope/vim-dadbod',
+  'kristijanhusak/vim-dadbod-completion',
+  'kristijanhusak/vim-dadbod-ui',
+
   -- Autocompletion
   require 'user.plugins.nvim-cmp', -- autocompletion, snippets
 
   -- Formatting
   require 'user.plugins.conform', -- formatting
 
-  -- LSP, debug, linting and formatting helper tools
+  -- LSP, debug, linting and formatting tools
   require 'user.plugins.lsp-config',
 }

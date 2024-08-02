@@ -141,8 +141,8 @@ return {
     vim.keymap.set('n', '<leader>fo', builtin.oldfiles, { desc = 'Find Old (recent) File' })
     vim.keymap.set('n', '<leader>fp', builtin.git_files, { desc = 'Find Git File' })
     vim.keymap.set('n', '<leader>fr', builtin.resume, { desc = 'Find Fesume' })
-    vim.keymap.set('n', '<leader>fs', builtin.builtin, { desc = 'Find Telescope Select' })
-    vim.keymap.set('n', '<leader>fS', '<cmd>Telescope session-lens<cr>', { desc = 'Find auto-sessions' })
+    vim.keymap.set('n', '<leader>fs', '<cmd>Telescope session-lens<cr>', { desc = 'Find auto-sessions' })
+    vim.keymap.set('n', '<leader>fS', builtin.builtin, { desc = 'Find Telescope Select' })
     vim.keymap.set('n', '<leader>ft', '<cmd>TodoTelescope<cr>', { desc = 'Find Todos' })
     vim.keymap.set('n', '<leader>fw', builtin.grep_string, { desc = 'Find Word Under Cursor' })
   end,
