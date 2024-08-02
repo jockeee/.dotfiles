@@ -211,10 +211,10 @@ return {
       --
 
       -- bash
-      bashls = {},
+      bashls = {}, -- LSP: A language server for Bash
 
       -- lua
-      lua_ls = {
+      lua_ls = { -- LSP: Lua language server
         -- cmd = {...},
         -- filetypes {...},
         -- capabilities = {},
@@ -233,19 +233,17 @@ return {
       },
 
       -- Web
-      html = {},
-      emmet_ls = {}, -- html emmet
-      tailwindcss = {},
-      htmx = {}, -- INFO: Requires Rust build tools (cargo)
+      html = {}, -- LSP: Language Server Protocol implementation for HTML
+      emmet_ls = {}, -- LSP: Emmet support based on LSP
+      tailwindcss = {}, -- LSP: Language Server Protocol implementation for Tailwind CSS
+      htmx = {}, -- LSP: An experimental LSP for HTMX  INFO: Requires Rust build tools (cargo)
 
       -- Golang
-      gopls = {}, -- the official Go language server developed by the Go team
-      templ = {}, -- templ HTML templating language
+      gopls = {}, -- LSP: the official Go language server developed by the Go team
+      templ = {}, -- LSP: language server for the templ HTML templating language
 
       -- Python
-      -- https://github.com/python-lsp/python-lsp-server
-      -- Fork of the python-language-server project, maintained by the Spyder IDE team and the community.
-      pylsp = {
+      pylsp = { -- LSP: Fork of the python-language-server project, maintained by the Spyder IDE team and the community.
         settings = {
           pylsp = {
             plugins = {
@@ -257,10 +255,7 @@ return {
             },
           },
         },
-      }, -- LSP server
-      -- https://github.com/python/mypy
-      -- Mypy is a static type checker for Python
-      mypy = {}, -- linting and type checking
+      },
     }
 
     -- Ensure the servers and tools above are installed
@@ -276,19 +271,20 @@ return {
     local ensure_installed = vim.tbl_keys(servers or {})
     vim.list_extend(ensure_installed, {
       -- Bash
-      'shfmt', -- bash formatter
+      'shfmt', -- Formatter: A shell formatter (sh/bash/mksh)
       -- Lua
-      'stylua', -- lua formatter
+      'stylua', -- Formatter: An opinionated Lua code formatter
       -- Html
-      'prettier', -- html formatter
-      'prettierd', -- html formatter, daemon style -- https://github.com/fsouza/prettierd#vim--neovim
+      'prettier', -- Formatter: Prettier is an opinionated code formatter
+      'prettierd', -- Formatter: Prettier, as a daemon, for ludicrous formatting speed-- https://github.com/fsouza/prettierd#vim--neovim
       -- Golang
-      'gofumpt', -- go formatter
-      'goimports-reviser', -- go imports formatter
-      'delve', -- go debugger
+      'gofumpt', -- Formatter: A stricter gofmt
+      'goimports-reviser', -- Formatter: sorts goimports by 3-4 groups (stdlib, general, company, project dependencies)
+      'delve', -- DAP: Delve is a debugger for the Go programming language
       -- Python
-      'black', -- Black, the uncompromising Python code formatter
-      'isort', -- isort is a Python utility / library to sort imports alphabetically
+      'black', -- Formatter: Black, the uncompromising Python code formatter
+      'isort', -- Formatter: isort is a Python utility / library to sort imports alphabetically
+      'mypy', -- Linter: Mypy is a static type checker for Python
     })
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
