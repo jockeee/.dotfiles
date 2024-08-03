@@ -26,8 +26,9 @@ return {
   require 'user.plugins.mini', -- collection of various small independent plugins/modules
 
   -- Functionality
-  require 'user.plugins.auto-session',
-  require 'user.plugins.toggleterm',
+  require 'user.plugins.auto-session', -- sessions based on working directory
+  require 'user.plugins.harpoon', -- quick navigation
+  require 'user.plugins.toggleterm', -- terminal in a floating window
 
   -- Git
   require 'user.plugins.gitsigns', -- adds git related signs to the gutter, and utilities for managing changes
