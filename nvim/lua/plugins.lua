@@ -18,7 +18,8 @@ return {
 
   -- Editing
   require 'user.plugins.dial', -- enhanced increment/decrement, keyword cycle (true/false), and more
-  require 'user.plugins.github-copilot',
+  -- require 'user.plugins.github-copilot',
+  require 'user.plugins.copilot',
   require 'user.plugins.nvim-autopairs', -- automatically insert or delete brackets, parens, quotes in pair
   require 'user.plugins.nvim-surround', -- add/change/delete surrounding delimiter pairs with ease
   require 'user.plugins.treesj', -- split/join blocks of code

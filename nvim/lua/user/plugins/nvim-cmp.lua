@@ -92,8 +92,8 @@ return {
       mapping = cmp.mapping.preset.insert {
         ['<C-n>'] = cmp.mapping.select_next_item(), -- Select the next item
         ['<C-p>'] = cmp.mapping.select_prev_item(), -- Select the previous item
-        ['<C-b>'] = cmp.mapping.scroll_docs(-4), -- Scroll documentation backwards
-        ['<C-f>'] = cmp.mapping.scroll_docs(4), -- Scroll documentation forwards
+        -- ['<C-b>'] = cmp.mapping.scroll_docs(-4), -- Scroll documentation backwards
+        -- ['<C-f>'] = cmp.mapping.scroll_docs(4), -- Scroll documentation forwards
         ['<C-Space>'] = cmp.mapping.complete {}, -- Manually trigger a completion from nvim-cmp
         ['<C-e>'] = cmp.mapping.abort(), -- Close the completion menu
 
