@@ -123,8 +123,9 @@ return {
       },
     }
 
-    -- Setup up vim-dadbod
-    cmp.setup.filetype({ 'sql' }, {
+    -- vim-dadbod-completion
+    --    see: lua/user/plugins/sql.lua
+    cmp.setup.filetype({ 'sql', 'mysql', 'plsql' }, {
       sources = {
         { name = 'vim-dadbod-completion' },
         { name = 'buffer' },
