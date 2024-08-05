@@ -53,7 +53,7 @@ vim.keymap.set('n', '<leader>da', '<cmd>%bdelete<cr>', { desc = 'Buffer Delete A
 vim.keymap.set('n', '<leader>dx', '<cmd>bd!<cr>', { desc = 'Buffer Kill (Ignore Unsaved Changes)' })
 
 -- leader-n: Neovim
-vim.keymap.set('n', '<leader>nq', '<cmd>quit<cr>', { desc = 'Neovim Quit' })
+vim.keymap.set('n', '<leader>nq', '<cmd>quitall<cr>', { desc = 'Neovim Quit' })
 
 -- leader-t: Toggle
 vim.keymap.set(
