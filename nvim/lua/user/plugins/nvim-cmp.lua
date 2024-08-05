@@ -25,16 +25,15 @@ return {
     },
     'saadparwaiz1/cmp_luasnip', -- luasnip completion source for nvim-cmp
 
-    -- Adds other completion capabilities.
-    --  nvim-cmp does not ship with all sources by default. They are split
-    --  into multiple repos for maintenance purposes.
+    -- Adds other completion capabilities
+    --    nvim-cmp does not ship with all sources by default. They are split
+    --    into multiple repos for maintenance purposes.
     'hrsh7th/cmp-nvim-lsp',
     'hrsh7th/cmp-path',
 
-    -- If you want to add a bunch of pre-configured snippets,
-    --    you can use this plugin to help you. It even has snippets
-    --    for various frameworks/libraries/etc. but you will have to
-    --    set up the ones that are useful for you.
+    -- If you want to add a bunch of pre-configured snippets, you can use this plugin to help you.
+    --    It even has snippets for various frameworks/libraries/etc,
+    --    but you will have to set up the ones that are useful for you.
     'rafamadriz/friendly-snippets', -- useful snippets
 
     'onsails/lspkind.nvim', -- vscode like pictograms
@@ -77,27 +76,31 @@ return {
         { name = 'path' }, -- File system paths
       },
       -- Configure lspkind for vscode like pictograms in completion menu
+      -- https://github.com/onsails/lspkind.nvim#option-2-nvim-cmp
       ---@diagnostic disable-next-line: missing-fields
       formatting = {
         format = lspkind.cmp_format {
-          maxwidth = 50,
+          maxwidth = function()
+            return math.floor(0.45 * vim.o.columns)
+          end,
           ellipsis_char = '...',
+          show_labelDetails = true, -- Show label details (e.g. `Function` vs `method`) -- default: off
         },
       },
-      -- For an understanding of why these mappings were
-      -- chosen, you will need to read `:help ins-completion`
-      --
-      -- No, but seriously. Please read `:help ins-completion`, it is really good!
+      -- For an understanding of why these mappings were chosen, see:
+      --    :help ins-completion
       mapping = cmp.mapping.preset.insert {
         ['<C-n>'] = cmp.mapping.select_next_item(), -- Select the next item
         ['<C-p>'] = cmp.mapping.select_prev_item(), -- Select the previous item
         ['<C-b>'] = cmp.mapping.scroll_docs(-4), -- Scroll documentation backwards
         ['<C-f>'] = cmp.mapping.scroll_docs(4), -- Scroll documentation forwards
-        ['<C-Space>'] = cmp.mapping.complete {}, -- Manually trigger a completion from nvim-cmp.
+        ['<C-Space>'] = cmp.mapping.complete {}, -- Manually trigger a completion from nvim-cmp
         ['<C-e>'] = cmp.mapping.abort(), -- Close the completion menu
-        ['<C-y>'] = cmp.mapping.confirm { select = true }, -- Accept (yes) the completion.
-        --  This will auto-import if your LSP supports it.
-        --  This will expand snippets if the LSP sent a snippet.
+
+        -- Accept (yes) the completion
+        --    This will auto-import if your LSP supports it.
+        --    This will expand snippets if the LSP sent a snippet.
+        ['<C-y>'] = cmp.mapping.confirm { select = true },
 
         -- Think of <c-l> as moving to the right of your snippet expansion.
         --  So if you have a snippet that's like:
@@ -119,5 +122,13 @@ return {
         end, { 'i', 's' }),
       },
     }
+
+    -- Setup up vim-dadbod
+    cmp.setup.filetype({ 'sql' }, {
+      sources = {
+        { name = 'vim-dadbod-completion' },
+        { name = 'buffer' },
+      },
+    })
   end,
 }

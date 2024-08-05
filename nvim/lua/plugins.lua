@@ -35,9 +35,7 @@ return {
   require 'user.plugins.neogit', -- interactive git interface
 
   -- SQL
-  'tpope/vim-dadbod',
-  'kristijanhusak/vim-dadbod-completion',
-  'kristijanhusak/vim-dadbod-ui',
+  require 'user.plugins.sql', -- vim-dadbod, vim-dadbod-ui, vim-dadbod-completion
 
   -- Autocompletion
   require 'user.plugins.nvim-cmp', -- autocompletion, snippets
