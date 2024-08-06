@@ -53,7 +53,7 @@ return {
           '--smart-case',
 
           -- Extra arguments
-          '--no-ignore-vcs', -- don't exclude files specified in .gitignore
+          -- '--no-ignore-vcs', -- don't exclude files specified in .gitignore
           '--follow', -- follow symbolic links
           '--hidden', -- search in hidden files (dotfiles)
 
@@ -77,7 +77,7 @@ return {
             '--files',
 
             -- Extra arguments
-            '--no-ignore-vcs', -- don't exclude files specified in .gitignore
+            -- '--no-ignore-vcs', -- don't exclude files specified in .gitignore
 
             -- Exclude the following patterns from search
             -- '--glob=!**/.idea/*',
