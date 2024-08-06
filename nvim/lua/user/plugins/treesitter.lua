@@ -27,10 +27,10 @@ return {
     indent = { enable = true },
     incremental_selection = {
       enable = true,
-      keymaps = {
-        init_selection = '<C-space>', -- set to `false` to disable one of the mappings
+      keymaps = { -- set to `false` to disable one of the mappings
+        init_selection = '<C-space>',
         node_incremental = '<C-space>',
-        scope_incremental = '<C-space>',
+        scope_incremental = false,
         node_decremental = '<bs>',
       },
     },

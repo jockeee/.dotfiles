@@ -17,6 +17,7 @@ return {
   require 'user.plugins.which-key', -- show pending keybinds
 
   -- Editing
+  require 'user.plugins.aerial', -- code outline
   require 'user.plugins.dial', -- enhanced increment/decrement, keyword cycle (true/false), and more
   -- require 'user.plugins.github-copilot',
   require 'user.plugins.copilot',

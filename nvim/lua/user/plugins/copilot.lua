@@ -13,7 +13,7 @@ return {
       auto_trigger = true,
       keymap = {
         accept = '<C-a>',
-        accept_word = '<C-n>',
+        accept_word = '<C-d>',
         accept_line = '<C-f>',
         prev = '[[',
         next = ']]',

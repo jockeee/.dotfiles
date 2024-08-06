@@ -242,6 +242,9 @@ return {
       gopls = {}, -- LSP: the official Go language server developed by the Go team
       templ = {}, -- LSP: language server for the templ HTML templating language
 
+      -- PHP
+      phpactor = {}, -- LSP: Phpactor is an intelligent Completion and Refactoring tool for PHP
+
       -- Python
       pylsp = { -- LSP: Fork of the python-language-server project, maintained by the Spyder IDE team and the community.
         settings = {
@@ -281,6 +284,10 @@ return {
       'gofumpt', -- Formatter: A stricter gofmt
       'goimports-reviser', -- Formatter: sorts goimports by 3-4 groups (stdlib, general, company, project dependencies)
       'delve', -- DAP: Delve is a debugger for the Go programming language
+      -- PHP
+      'easy-coding-standard', -- Linter/Formatter: Use Coding Standard with 0-knowledge of PHP-CS-Fixer and PHP_CodeSniffer
+      'phpstan', -- Linter: PHP Static Analysis Tool - discover bugs in your code without running it!
+      'php-debug-adapter', -- DAP: PHP Debug Adapter
       -- Python
       'black', -- Formatter: Black, the uncompromising Python code formatter
       'isort', -- Formatter: isort is a Python utility / library to sort imports alphabetically
