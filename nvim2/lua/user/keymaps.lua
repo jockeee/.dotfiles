@@ -1,9 +1,7 @@
 --
 -- keymaps.lua
---
 
--- Leader key is space
--- Do nothing when space is pressed in normal or visual mode
+-- Leader key, space, do nothing when space is pressed in normal or visual mode
 vim.keymap.set({ 'n', 'v' }, '<space>', '<nop>')
 
 -- Clear highlights (search) with <esc>
@@ -39,19 +37,14 @@ vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Next Diagnostic Me
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show Diagnostic Error Messages' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open Diagnostic Quickfix List' })
 
-vim.keymap.set('n', '<leader>nl', '<cmd>Lazy<cr>', { desc = 'Lazy' })
-vim.keymap.set('n', '<leader>nm', '<cmd>Mason<cr>', { desc = 'Mason' })
-
--- Buffers
--- vim.keymap.set('n', '[b', '<cmd>bprevious<cr>', { desc = 'Prev Buffer' })
--- vim.keymap.set('n', ']b', '<cmd>bnext<cr>', { desc = 'Next Buffer' })
-
 -- leader-d: Buffer (document)
 vim.keymap.set('n', '<leader>dd', '<cmd>bd<cr>', { desc = 'Buffer Delete' })
 vim.keymap.set('n', '<leader>da', '<cmd>%bdelete<cr>', { desc = 'Buffer Delete All' })
 vim.keymap.set('n', '<leader>dx', '<cmd>bd!<cr>', { desc = 'Buffer Kill (Ignore Unsaved Changes)' })
 
 -- leader-n: Neovim
+vim.keymap.set('n', '<leader>nm', '<cmd>Mason<cr>', { desc = 'Mason' })
+vim.keymap.set('n', '<leader>nl', '<cmd>Lazy<cr>', { desc = 'Lazy' })
 vim.keymap.set('n', '<leader>nq', '<cmd>quitall<cr>', { desc = 'Neovim Quit' })
 
 -- leader-t: Toggle
