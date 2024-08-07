@@ -1,5 +1,5 @@
 # default distro ~/.bashrc above
-# VERSION 1.0.6
+# VERSION 1.0.7
 
 ##
 ## ALIAS
@@ -310,7 +310,7 @@ fi
 
 # zoxide, smarter cd
 if type -P /usr/bin/zoxide &>/dev/null; then
-  eval "$(zoxide init bash)"
+  eval "$(zoxide init --cmd cd bash)"
 fi
 
 # autocd
