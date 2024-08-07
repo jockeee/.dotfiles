@@ -75,6 +75,10 @@ alias gs='git status'
 ## Functions
 ##
 
+is_git_repo() {
+}
+
+
 # upd (fedora/ubuntu) - bash style
 
 upd_fedora() {
