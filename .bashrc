@@ -1,5 +1,5 @@
 # default distro ~/.bashrc above
-# VERSION 1.0.4
+# VERSION 1.0.6
 
 ##
 ## ALIAS
@@ -14,7 +14,6 @@ alias laa='ls -la'
 alias laz='ls -laZ'
 
 alias c='cat'
-
 if type -P bat &>/dev/null; then
   alias bat='bat -p'
   alias c='bat'
@@ -42,6 +41,39 @@ fi
 if type -P /usr/bin/btop &>/dev/null; then
   alias top='btop'
 fi
+
+alias g='git'
+alias t='tmux'
+alias tm='tmux'
+alias v='vim'
+alias w='wezterm'
+
+# tmux
+# https://github.com/lewisacidic/fish-tmux-abbr
+alias ta='tmux attach -t'
+alias ts='tmux new-session -s'
+alias tl='tmux list-sessions'
+alias tks='tmux kill-session -t'
+
+# git
+# https://github.com/lewisacidic/fish-git-abbr
+alias ga='git add'
+alias gc='git commit -m'
+alias gcl='git clone'
+alias gco='git checkout'
+alias gd='git diff'
+alias gf='git fetch'
+alias gp='git push'
+alias gpl='git pull'
+alias gr='git remote -v'
+alias grs='git reset'
+alias grs!='git reset --hard'
+alias gs='git status'
+
+
+##
+## Functions
+##
 
 # upd (fedora/ubuntu) - bash style
 
