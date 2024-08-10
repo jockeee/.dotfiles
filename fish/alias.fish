@@ -42,7 +42,6 @@ end
 # c<space> to see it in action
 abbr --add g 'git'
 abbr --add t 'tmux'
-abbr --add tm 'tmux'
 abbr --add v 'vim'
 abbr --add w 'wezterm'
 
@@ -58,11 +57,10 @@ end
 
 # tmux
 # https://github.com/lewisacidic/fish-tmux-abbr
-abbr --add ta 'tmux attach -t'
-abbr --add tad 'tmux attach -d -t'
-abbr --add ts 'tmux new-session -s'
-abbr --add tl 'tmux list-sessions'
-abbr --add tks 'tmux kill-session -t'
+abbr --add s 'tmux attach -t'
+abbr --add sn 'tmux new-session -s'
+abbr --add sx 'tmux kill-session -t'
+abbr --add sl 'tmux list-sessions'
 
 # git
 # https://github.com/lewisacidic/fish-git-abbr
