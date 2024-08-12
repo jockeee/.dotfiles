@@ -37,8 +37,6 @@ vim.api.nvim_create_autocmd('VimEnter', {
 })
 
 -- highlight when yanking (copying) text
--- Try it with `yap` in normal mode
---
 -- :help vim.highlight.on_yank()
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
@@ -47,14 +45,3 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     vim.highlight.on_yank()
   end,
 })
-
--- Don't insert comment leader after Enter on a commented line, or when using 'o'
---
--- :help 'formatoptions'
--- :help fo-table
--- vim.api.nvim_create_autocmd('FileType', {
---   pattern = '*',
---   callback = function()
---     vim.opt_local.formatoptions:remove { 'r', 'o' }
---   end,
--- })

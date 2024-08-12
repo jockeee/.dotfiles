@@ -27,10 +27,10 @@ vim.opt.rtp:prepend(lazypath)
 -- https://github.com/folke/lazy.nvim#%EF%B8%8F-configuration
 local opts = {
   defaults = {
-    lazy = false, -- should plugins be lazy-loaded? -- default: false
+    lazy = true, -- should plugins be lazy-loaded? -- default: false
   },
   install = {
-    colorscheme = { vim.g.user_colorscheme, 'habamax' }, -- try to load one of these colorschemes when starting an installation during startup
+    colorscheme = { vim.g.colorscheme, 'habamax' }, -- try to load one of these colorschemes when starting an installation during startup
   },
   checker = {
     enabled = false, -- automatically check for plugin updates -- default: false

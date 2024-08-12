@@ -31,6 +31,7 @@
 -- LSP configuration & plugins
 return {
   'neovim/nvim-lspconfig',
+  lazy = false,
   -- event = { 'BufReadPre', 'BufNewFile' },
   -- cmd = { 'LspInfo', 'LspInstall', 'LspUninstall' },
   dependencies = {
@@ -68,7 +69,7 @@ return {
     -- https://github.com/folke/neodev.nvim
     -- Neovim setup for init.lua and plugin development with full signature help, docs and completion for the nvim lua API
     --
-    -- Neodev configures Lua LSP for your Neovim config, runtime and plugins
+    -- Neodev configures Lua LSP for your Neovim config, runtime and plugins.
     -- Used for completion, annotations and signatures of Neovim apis
     { 'folke/neodev.nvim', opts = {} },
   },
@@ -198,17 +199,13 @@ return {
     --  - settings (table): Override the default settings passed when initializing the server.
     --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
     local servers = {
-      -- clangd = {},
-      -- pyright = {},
-      -- rust_analyzer = {},
-      -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
+      -- :help lspconfig-all for a list of all the pre-configured LSPs
       --
       -- Some languages (like typescript) have entire language plugins that can be useful:
       --    https://github.com/pmizio/typescript-tools.nvim
       --
       -- But for many setups, the LSP (`tsserver`) will work just fine
       -- tsserver = {},
-      --
 
       -- bash
       bashls = {}, -- LSP: A language server for Bash

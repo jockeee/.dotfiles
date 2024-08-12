@@ -3,8 +3,6 @@
 --
 -- :help vim.opt
 -- :help option-list
---
--- https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
 
 -- Mouse
 vim.opt.mouse = 'a'
@@ -60,7 +58,7 @@ vim.opt.undolevels = 1000 -- default: 1000
 
 -- Decrease update time
 vim.opt.updatetime = 250 -- save swap file and trigger CursorHold
-vim.opt.timeoutlen = 300 -- lower than default (1000) to quickly trigger which-key
+vim.opt.timeoutlen = 1000 -- lower than default (1000) to quickly trigger which-key
 
 -- How neovim will display certain whitespace in the editor.
 vim.opt.list = false -- show invisible characters (tabs...)
