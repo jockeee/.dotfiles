@@ -8,3 +8,6 @@ vim.g.maplocalleader = ' '
 
 -- Netrw
 vim.g.netrw_liststyle = 3 -- Tree view
+
+-- Colorscheme
+vim.g.colorscheme = 'vscode'
