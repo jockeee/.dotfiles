@@ -236,7 +236,7 @@ return {
       htmx = {}, -- LSP: An experimental LSP for HTMX  INFO: Requires Rust build tools (cargo)
 
       -- Golang
-      gopls = {}, -- LSP: the official Go language server developed by the Go team
+      gopls = {}, -- LSP: the official Go language server developed by the Go team  INFO: Requires Go
       templ = {}, -- LSP: language server for the templ HTML templating language
 
       -- PHP
@@ -269,6 +269,7 @@ return {
     -- You can add other tools here that you want Mason to install
     -- for you, so that they are available from within Neovim.
     local ensure_installed = vim.tbl_keys(servers or {})
+
     vim.list_extend(ensure_installed, {
       -- Bash
       'shfmt', -- Formatter: A shell formatter (sh/bash/mksh)
@@ -277,11 +278,11 @@ return {
       -- Html
       'prettier', -- Formatter: Prettier is an opinionated code formatter
       'prettierd', -- Formatter: Prettier, as a daemon, for ludicrous formatting speed-- https://github.com/fsouza/prettierd#vim--neovim
-      -- Golang
+      -- Golang  INFO: Requires Go binary in PATH
       'gofumpt', -- Formatter: A stricter gofmt
       'goimports-reviser', -- Formatter: sorts goimports by 3-4 groups (stdlib, general, company, project dependencies)
       'delve', -- DAP: Delve is a debugger for the Go programming language
-      -- PHP
+      -- PHP  INFO: Requires PHP binary in PATH
       'easy-coding-standard', -- Linter/Formatter: Use Coding Standard with 0-knowledge of PHP-CS-Fixer and PHP_CodeSniffer
       'phpstan', -- Linter: PHP Static Analysis Tool - discover bugs in your code without running it!
       'php-debug-adapter', -- DAP: PHP Debug Adapter
@@ -290,6 +291,7 @@ return {
       'isort', -- Formatter: isort is a Python utility / library to sort imports alphabetically
       'mypy', -- Linter: Mypy is a static type checker for Python
     })
+
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
     require('mason-lspconfig').setup {

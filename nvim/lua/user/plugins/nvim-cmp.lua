@@ -7,7 +7,7 @@ return {
   'hrsh7th/nvim-cmp',
   event = 'InsertEnter',
   dependencies = {
-    -- Snippet Engine & its associated nvim-cmp source
+    -- Snippet Engine
     {
       'L3MON4D3/LuaSnip', -- Snippet Engine for Neovim written in Lua
       -- follow latest release
@@ -23,6 +23,7 @@ return {
         return 'make install_jsregexp'
       end)(),
     },
+
     'saadparwaiz1/cmp_luasnip', -- luasnip completion source for nvim-cmp
 
     -- Adds other completion capabilities
