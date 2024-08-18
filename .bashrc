@@ -12,6 +12,8 @@ alias la='ls -lA'
 alias ld='ls -ld'
 alias laa='ls -la'
 alias laz='ls -laZ'
+alias ladz='ls -ladZ'
+alias lazd='ls -ladZ'
 
 alias c='cat'
 if type -P bat &>/dev/null; then
