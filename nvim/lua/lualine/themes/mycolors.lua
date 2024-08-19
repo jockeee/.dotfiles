@@ -1,10 +1,11 @@
 local colors = {
-  dark = '#353535', -- bg
-  light = '#b1b1b1', -- fg
+  bg = '#2c2c2c',
+  fg_light = '#b1b1b1',
+  fg_dark = '#353535',
 
   black = '#b1b1b1', -- fg
   white = '#b1b1b1', -- fg
-  gray = '#b1b1b1', -- fg / bg location
+  gray = '#b1b1b1', -- fg / 'location' bg
   red = '#353535', -- bg
   green = '#353535', -- bg
   blue = '#353535', -- bg
@@ -16,33 +17,33 @@ local colors = {
 
 return {
   normal = {
-    a = { bg = colors.dark, fg = colors.light },
-    b = { bg = colors.dark, fg = colors.light },
-    c = { bg = colors.dark, fg = colors.light },
+    a = { bg = colors.bg, fg = colors.fg_light },
+    b = { bg = colors.bg, fg = colors.fg_light },
+    c = { bg = colors.bg, fg = colors.fg_light },
   },
   insert = {
-    a = { bg = colors.dark, fg = colors.light },
-    b = { bg = colors.dark, fg = colors.light },
-    c = { bg = colors.dark, fg = colors.light },
+    a = { bg = colors.bg, fg = colors.fg_light },
+    b = { bg = colors.bg, fg = colors.fg_light },
+    c = { bg = colors.bg, fg = colors.fg_light },
   },
   visual = {
-    a = { bg = colors.dark, fg = colors.light },
-    b = { bg = colors.dark, fg = colors.light },
-    c = { bg = colors.dark, fg = colors.light },
+    a = { bg = colors.bg, fg = colors.fg_light },
+    b = { bg = colors.bg, fg = colors.fg_light },
+    c = { bg = colors.bg, fg = colors.fg_light },
   },
   replace = {
-    a = { bg = colors.dark, fg = colors.light },
-    b = { bg = colors.dark, fg = colors.light },
-    c = { bg = colors.dark, fg = colors.light },
+    a = { bg = colors.bg, fg = colors.fg_light },
+    b = { bg = colors.bg, fg = colors.fg_light },
+    c = { bg = colors.bg, fg = colors.fg_light },
   },
   command = {
-    a = { bg = colors.dark, fg = colors.light },
-    b = { bg = colors.dark, fg = colors.light },
-    c = { bg = colors.dark, fg = colors.light },
+    a = { bg = colors.bg, fg = colors.fg_light },
+    b = { bg = colors.bg, fg = colors.fg_light },
+    c = { bg = colors.bg, fg = colors.fg_light },
   },
   inactive = {
-    a = { bg = colors.dark, fg = colors.light },
-    b = { bg = colors.dark, fg = colors.light },
-    c = { bg = colors.dark, fg = colors.light },
+    a = { bg = colors.bg, fg = colors.fg_light },
+    b = { bg = colors.bg, fg = colors.fg_light },
+    c = { bg = colors.bg, fg = colors.fg_light },
   },
 }
