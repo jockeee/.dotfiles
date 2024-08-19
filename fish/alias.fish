@@ -59,8 +59,8 @@ end
 
 # tmux
 # https://github.com/lewisacidic/fish-tmux-abbr
-abbr --add s 'tmux attach -t'
-abbr --add sn 'tmux new-session -s'
+abbr --add s 'tmux attach'
+abbr --add sn 'tmux new-session -A -s'
 abbr --add sx 'tmux kill-session -t'
 abbr --add sl 'tmux list-sessions'
 
