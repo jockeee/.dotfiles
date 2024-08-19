@@ -39,9 +39,6 @@ if status is-interactive
     end
   end
 
-  # C-; same as C-l
-  #bind \c\; clear-screen
-
   # Alias
   if test -f $HOME/.config/fish/alias.fish
       source $HOME/.config/fish/alias.fish
