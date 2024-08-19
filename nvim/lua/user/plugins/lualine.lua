@@ -21,7 +21,7 @@ return {
   },
   opts = {
     options = {
-      theme = vim.g.colorscheme,
+      theme = 'mycolors', -- default: auto
       component_separators = '',
       section_separators = '',
     },
@@ -30,13 +30,13 @@ return {
       lualine_b = { 'branch', 'diff', 'diagnostics' },
       lualine_c = { 'filename' },
       lualine_x = {
-        { 'copilot', show_colors = true },
+        { 'copilot', show_colors = false },
         'encoding',
         'fileformat',
         'filetype',
       },
       lualine_y = { 'progress' },
-      lualine_z = { 'location' },
+      lualine_z = { 'location' }, -- default: 'location'
     },
     -- extensions = { 'nvim-tree' },
   },

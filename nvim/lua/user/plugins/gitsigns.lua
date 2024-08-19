@@ -6,7 +6,7 @@
 
 return {
   'lewis6991/gitsigns.nvim',
-  event = { 'BufRead', 'BufNewFile' },
+  event = { 'BufReadPre', 'BufNewFile' },
   opts = {
     on_attach = function(bufnr)
       local gitsigns = require 'gitsigns'

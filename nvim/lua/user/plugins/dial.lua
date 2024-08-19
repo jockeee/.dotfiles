@@ -35,7 +35,7 @@ return {
         augend.integer.alias.hex, -- 0x1f inc becomes 0x20
         augend.date.alias['%Y/%m/%d'], -- 2020/01/01 inc becomes 2020/01/02
         augend.constant.alias.bool, -- cycle true/false
-        -- augend.constant.new { elements = { 'let', 'const' } }, -- custom constant cycle list
+        augend.constant.new { elements = { 'on', 'off' } }, -- custom constant cycle list
       },
       visual = {
         augend.integer.alias.decimal, -- 123 inc becomes 124
@@ -45,6 +45,7 @@ return {
         augend.constant.alias.alpha, -- a inc becomes b
         augend.constant.alias.Alpha, -- A inc becomes B
         augend.semver.alias.semver, -- 1.2.3 inc becomes 1.2.4 depending on cursor position, 1.2.3 inc becomes 1.3.0
+        augend.constant.new { elements = { 'on', 'off' }, word = false }, -- custom constant cycle list
       },
     }
 

@@ -21,8 +21,8 @@ return {
         },
       }
       vim.cmd.colorscheme 'vscode'
-      vim.cmd.highlight   'StatusLine guifg=#b1b1b1 guibg=#353535 '
-      vim.cmd.highlight   'MsgArea    guifg=#b1b1b1'
+      vim.cmd.highlight 'StatusLine guifg=#b1b1b1 guibg=#353535 '
+      vim.cmd.highlight 'MsgArea    guifg=#b1b1b1'
     end,
   },
 
