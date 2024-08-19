@@ -21,7 +21,7 @@ return {
   },
   build = ':TSUpdate',
   opts = {
-    ensure_installed = { 'lua', 'vim', 'vimdoc' },
+    ensure_installed = { 'bash', 'lua', 'markdown', 'markdown_inline', 'vim', 'vimdoc' },
     auto_install = true, -- autoinstall languages that are not installed
     highlight = { enable = true },
     indent = { enable = true },
