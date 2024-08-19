@@ -8,6 +8,7 @@ return {
   -- Visual
   { 'folke/todo-comments.nvim', event = { 'BufReadPre', 'BufNewFile' } }, -- highlight todo, notes, etc in comments
   require 'user.plugins.colorscheme',
+  require 'user.plugins.lualine', -- statusline
   require 'user.plugins.telescope',
   require 'user.plugins.todo-comments', -- highlight todo, notes, etc in comments
   require 'user.plugins.trouble', -- pretty diagnostics, references, telescope results, quickfix and location list
