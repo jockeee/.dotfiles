@@ -17,7 +17,7 @@ vim.opt.background = 'dark' -- colorschemes that can be light or dark will be ma
 vim.opt.signcolumn = 'yes' -- always show sign column
 vim.opt.showmode = false -- show current mode (insert, normal, visual, etc) in bottom bar
 vim.opt.colorcolumn = '' -- right margin column
-vim.opt.showcmd = true -- show command in bottom bar -- default: on
+vim.opt.showcmd = false -- show command in bottom bar -- default: on
 
 -- Line Numbers
 vim.opt.number = true -- shows absolute line number on cursor line (when relative number is on)
