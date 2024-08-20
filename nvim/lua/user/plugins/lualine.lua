@@ -27,8 +27,37 @@ return {
     },
     sections = {
       lualine_a = { '' }, -- default: 'mode'
-      lualine_b = { 'branch', 'diff', 'diagnostics' },
-      lualine_c = { 'filename' },
+      lualine_b = { 'branch', 'diff' },
+      lualine_c = {
+        'filename',
+        'diagnostics',
+        {
+          'filename',
+          file_status = false,
+          path = 1, -- 0 = filename, 1 = relative path, 2 = absolute path, 3 = relative to home
+        },
+      },
+      lualine_x = {
+        { 'copilot', show_colors = false },
+        'encoding',
+        'fileformat',
+        'filetype',
+      },
+      lualine_y = { 'progress' },
+      lualine_z = { 'location' }, -- default: 'location'
+    },
+    inactive_sections = {
+      lualine_a = {},
+      lualine_b = {},
+      lualine_c = {
+        'filename',
+        'diagnostics',
+        {
+          'filename',
+          file_status = false,
+          path = 1, -- 0 = filename, 1 = relative path, 2 = absolute path, 3 = relative to home
+        },
+      },
       lualine_x = {
         { 'copilot', show_colors = false },
         'encoding',
