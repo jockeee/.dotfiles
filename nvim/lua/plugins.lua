@@ -15,6 +15,7 @@ return {
   require 'user.plugins.which-key', -- show keybinds
 
   -- Editing
+  require 'user.plugins.aerial', -- code outline
   require 'user.plugins.copilot',
   require 'user.plugins.dial', -- enhanced increment/decrement, keyword cycle (true/false), and more
   require 'user.plugins.nvim-autopairs', -- automatically insert or delete brackets, parens, quotes in pair
