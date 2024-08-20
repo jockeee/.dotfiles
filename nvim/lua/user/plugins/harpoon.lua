@@ -29,10 +29,10 @@ return {
 
     -- <alt>a-f for file 1-4
     -- <alt>z-v for file 5-8
-    for key, value in ipairs { 'a', 's', 'd', 'f', 'z', 'x', 'c', 'v' } do
-      vim.keymap.set('n', string.format('<M-%s>', value), function()
-        harpoon:list():select(key)
-      end, { desc = string.format('Harpoon: File %d', key) })
+    for idx, char in ipairs { 'a', 's', 'd', 'f', 'z', 'x', 'c', 'v' } do
+      vim.keymap.set('n', string.format('<M-%s>', char), function()
+        harpoon:list():select(idx)
+      end, { desc = string.format('Harpoon: File %d', idx) })
     end
   end,
 }
