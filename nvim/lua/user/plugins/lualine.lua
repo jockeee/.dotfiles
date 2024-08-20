@@ -30,12 +30,12 @@ return {
       lualine_b = { 'branch', 'diff' },
       lualine_c = {
         'filename',
-        'diagnostics',
         {
           'filename',
           file_status = false,
           path = 1, -- 0 = filename, 1 = relative path, 2 = absolute path, 3 = relative to home
         },
+        'diagnostics',
       },
       lualine_x = {
         { 'copilot', show_colors = false },
@@ -51,12 +51,12 @@ return {
       lualine_b = {},
       lualine_c = {
         'filename',
-        'diagnostics',
         {
           'filename',
           file_status = false,
           path = 1, -- 0 = filename, 1 = relative path, 2 = absolute path, 3 = relative to home
         },
+        'diagnostics',
       },
       lualine_x = {
         { 'copilot', show_colors = false },
