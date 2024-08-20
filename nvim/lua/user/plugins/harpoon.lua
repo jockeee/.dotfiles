@@ -10,6 +10,10 @@ return {
     local harpoon = require 'harpoon'
     harpoon:setup()
 
+    -- M-h Add
+    -- M-l List
+    -- M-n Previous
+    -- M-m Next
     vim.keymap.set('n', '<M-h>', function()
       harpoon:list():add()
     end, { desc = 'Harpoon: Add file' })
@@ -22,17 +26,13 @@ return {
     vim.keymap.set('n', '<M-m>', function()
       harpoon:list():next()
     end, { desc = 'Harpoon: Next' })
-    vim.keymap.set('n', '<M-a>', function()
-      harpoon:list():select(1)
-    end, { desc = 'Harpoon: File 1' })
-    vim.keymap.set('n', '<M-s>', function()
-      harpoon:list():select(2)
-    end, { desc = 'Harpoon: File 2' })
-    vim.keymap.set('n', '<M-d>', function()
-      harpoon:list():select(3)
-    end, { desc = 'Harpoon: File 3' })
-    vim.keymap.set('n', '<M-f>', function()
-      harpoon:list():select(4)
-    end, { desc = 'Harpoon: File 4' })
+
+    -- <alt>a-f for file 1-4
+    -- <alt>z-v for file 5-8
+    for key, value in ipairs { 'a', 's', 'd', 'f', 'z', 'x', 'c', 'v' } do
+      vim.keymap.set('n', string.format('<M-%s>', value), function()
+        harpoon:list():select(key)
+      end, { desc = string.format('Harpoon: File %d', key) })
+    end
   end,
 }
