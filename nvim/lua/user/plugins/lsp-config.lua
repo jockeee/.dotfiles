@@ -241,7 +241,7 @@ return {
 
       -- PHP
       intelephense = {}, -- LSP: Professional PHP tooling for any Language Server Protocol capable editor
-      phpactor = {}, -- LSP: Phpactor is an intelligent Completion and Refactoring tool for PHP
+      -- phpactor = {}, -- LSP: Phpactor is an intelligent Completion and Refactoring tool for PHP
 
       -- Python
       pylsp = { -- LSP: Fork of the python-language-server project, maintained by the Spyder IDE team and the community.
@@ -284,7 +284,7 @@ return {
       'goimports-reviser', -- Formatter: sorts goimports by 3-4 groups (stdlib, general, company, project dependencies)
       'delve', -- DAP: Delve is a debugger for the Go programming language
       -- PHP  INFO: Requires PHP binary in PATH
-      'easy-coding-standard', -- Linter/Formatter: Use Coding Standard with 0-knowledge of PHP-CS-Fixer and PHP_CodeSniffer
+      -- 'easy-coding-standard', -- Linter/Formatter: Use Coding Standard with 0-knowledge of PHP-CS-Fixer and PHP_CodeSniffer
       -- 'phpstan', -- Linter: PHP Static Analysis Tool - discover bugs in your code without running it!
       -- 'php-debug-adapter', -- DAP: PHP Debug Adapter
       -- Python
