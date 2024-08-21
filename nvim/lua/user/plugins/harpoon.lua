@@ -16,13 +16,13 @@ return {
     harpoon:setup(opts)
 
     -- M-h Harpoon List
-    -- M-l Add File
+    -- M-m Add "Mark"
     -- M-p Next
     -- M-n Previous
     vim.keymap.set('n', '<M-h>', function()
       harpoon.ui:toggle_quick_menu(harpoon:list())
     end)
-    vim.keymap.set('n', '<M-l>', function()
+    vim.keymap.set('n', '<M-m>', function()
       harpoon:list():add()
     end)
     vim.keymap.set('n', '<M-n>', function()
