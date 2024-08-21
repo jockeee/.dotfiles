@@ -46,7 +46,7 @@ vim.keymap.set('n', '<leader>dx', '<cmd>bd!<cr>', { desc = 'Kill Buffer (Ignore 
 vim.keymap.set('n', '<leader>nm', '<cmd>Mason<cr>', { desc = 'Mason' })
 vim.keymap.set('n', '<leader>nl', '<cmd>Lazy<cr>', { desc = 'Lazy' })
 vim.keymap.set('n', '<leader>nq', '<cmd>quitall<cr>', { desc = 'Quit' })
-vim.keymap.set('n', '<leader>nq', '<cmd>w !sudo tee %<cr>', { desc = 'Sudo Write' })
+vim.keymap.set('n', '<leader>ns', '<cmd>w !sudo tee %<cr>', { desc = 'Sudo Write' })
 
 -- Leader t: Toggle
 vim.keymap.set(
