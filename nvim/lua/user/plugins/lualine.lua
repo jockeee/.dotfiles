@@ -10,8 +10,6 @@
 -- https://github.com/nvim-lualine/lualine.nvim#extensions
 --    extensions = { 'nvim-tree' }
 
--- TODO: you like chris@machines lualine, check his config.
-
 return {
   'nvim-lualine/lualine.nvim',
   event = 'VimEnter',
@@ -27,7 +25,7 @@ return {
     },
     sections = {
       lualine_a = { '' }, -- default: 'mode'
-      lualine_b = { 'branch', 'diff' },
+      lualine_b = { 'branch' },
       lualine_c = {
         'filename',
         {
@@ -35,6 +33,7 @@ return {
           file_status = false,
           path = 1, -- 0 = filename, 1 = relative path, 2 = absolute path, 3 = relative to home
         },
+        'diff',
         'diagnostics',
       },
       lualine_x = {
