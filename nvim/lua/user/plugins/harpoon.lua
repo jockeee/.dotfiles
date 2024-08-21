@@ -16,20 +16,6 @@ return {
     harpoon:setup(opts)
 
     -- M-h Harpoon List
-    -- C-m Add "Mark"
-    -- C-e Next
-    -- C-q Previous
-    vim.keymap.set('n', '<C-m>', function()
-      harpoon:list():add()
-    end)
-    vim.keymap.set('n', '<C-e>', function()
-      harpoon:list():next()
-    end)
-    vim.keymap.set('n', '<C-q>', function()
-      harpoon:list():prev()
-    end)
-
-    -- M-h Harpoon List
     -- M-m Add "Mark"
     -- M-p Next
     -- M-n Previous
@@ -47,8 +33,7 @@ return {
     end)
 
     -- <alt>a-f for file 1-4
-    -- <alt>z-v for file 5-8
-    for idx, char in ipairs { 'a', 's', 'd', 'f', 'z', 'x', 'c', 'v' } do
+    for idx, char in ipairs { 'a', 's', 'd', 'f' } do
       vim.keymap.set('n', string.format('<M-%s>', char), function()
         harpoon:list():select(idx)
       end)
