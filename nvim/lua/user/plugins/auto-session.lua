@@ -21,5 +21,6 @@ return {
     auto_session_enable_last_session = false, -- default: false - Loads the last loaded session if session for cwd does not exist
     auto_session_root_dir = vim.fn.stdpath 'data' .. '/sessions/', -- default: vim.fn.stdpath 'data' .. '/sessions/'
     auto_session_suppress_dirs = { '/', '~/', '~/Downloads' }, -- default: nil
+    silent_restore = false, -- default: true
   },
 }
