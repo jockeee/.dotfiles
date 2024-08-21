@@ -240,6 +240,7 @@ return {
       templ = {}, -- LSP: language server for the templ HTML templating language
 
       -- PHP
+      intelephense = {}, -- LSP: Professional PHP tooling for any Language Server Protocol capable editor
       phpactor = {}, -- LSP: Phpactor is an intelligent Completion and Refactoring tool for PHP
 
       -- Python
@@ -284,8 +285,8 @@ return {
       'delve', -- DAP: Delve is a debugger for the Go programming language
       -- PHP  INFO: Requires PHP binary in PATH
       'easy-coding-standard', -- Linter/Formatter: Use Coding Standard with 0-knowledge of PHP-CS-Fixer and PHP_CodeSniffer
-      'phpstan', -- Linter: PHP Static Analysis Tool - discover bugs in your code without running it!
-      'php-debug-adapter', -- DAP: PHP Debug Adapter
+      -- 'phpstan', -- Linter: PHP Static Analysis Tool - discover bugs in your code without running it!
+      -- 'php-debug-adapter', -- DAP: PHP Debug Adapter
       -- Python
       'black', -- Formatter: Black, the uncompromising Python code formatter
       'isort', -- Formatter: isort is a Python utility / library to sort imports alphabetically

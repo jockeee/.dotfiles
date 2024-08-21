@@ -30,7 +30,7 @@ vim.opt.expandtab = true -- use spaces instead of tabs
 vim.opt.autoindent = true -- use indent from current line when starting a new line
 
 -- Line Wrapping
-vim.opt.wrap = false -- default: on
+vim.opt.wrap = true -- default: on
 vim.opt.breakindent = true -- wrapped lines will continue visually indented
 
 -- Folding
@@ -73,6 +73,9 @@ vim.opt.cursorline = false -- highlighting of the current line
 
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10 -- lines of context
+
+-- Minimal number of screen columns to keep to the left and to the right of the cursor.
+vim.opt.sidescrolloff = 20 -- columns of context
 
 -- PopUpMenu
 vim.opt.pumheight = 10 -- maximum number of items to show in the popup menu

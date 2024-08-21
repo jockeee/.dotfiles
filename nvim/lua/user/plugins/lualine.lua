@@ -24,8 +24,8 @@ return {
       section_separators = '',
     },
     sections = {
-      lualine_a = { '' }, -- default: 'mode'
-      lualine_b = { 'branch' },
+      lualine_a = {}, -- default: 'mode'
+      lualine_b = {},
       lualine_c = {
         'filename',
         {
@@ -33,8 +33,8 @@ return {
           file_status = false,
           path = 1, -- 0 = filename, 1 = relative path, 2 = absolute path, 3 = relative to home
         },
-        'diff',
         'diagnostics',
+        'diff',
       },
       lualine_x = {
         { 'copilot', show_colors = false },

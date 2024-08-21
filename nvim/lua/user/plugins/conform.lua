@@ -37,6 +37,7 @@ return {
       lua = { 'stylua' },
       html = { 'prettierd', 'prettier', stop_after_first = true },
       javascript = { 'prettierd', 'prettier', stop_after_first = true },
+      php = { 'inteliphense' },
       python = { 'isort', 'black' },
       go = { 'gofumpt', 'goimports-reviser' },
     },
