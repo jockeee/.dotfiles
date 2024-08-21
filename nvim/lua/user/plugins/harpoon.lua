@@ -16,6 +16,20 @@ return {
     harpoon:setup(opts)
 
     -- M-h Harpoon List
+    -- C-m Add "Mark"
+    -- C-e Next
+    -- C-q Previous
+    vim.keymap.set('n', '<C-m>', function()
+      harpoon:list():add()
+    end)
+    vim.keymap.set('n', '<C-e>', function()
+      harpoon:list():next()
+    end)
+    vim.keymap.set('n', '<C-q>', function()
+      harpoon:list():prev()
+    end)
+
+    -- M-h Harpoon List
     -- M-m Add "Mark"
     -- M-p Next
     -- M-n Previous
