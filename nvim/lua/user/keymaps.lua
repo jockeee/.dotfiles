@@ -38,14 +38,15 @@ vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show Diagn
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open Diagnostic Quickfix List' })
 
 -- Leader d: Buffer (document)
-vim.keymap.set('n', '<leader>dd', '<cmd>bd<cr>', { desc = 'Buffer Delete' })
-vim.keymap.set('n', '<leader>da', '<cmd>%bdelete<cr>', { desc = 'Buffer Delete All' })
-vim.keymap.set('n', '<leader>dx', '<cmd>bd!<cr>', { desc = 'Buffer Kill (Ignore Unsaved Changes)' })
+vim.keymap.set('n', '<leader>dd', '<cmd>bd<cr>', { desc = 'Delete Buffer' })
+vim.keymap.set('n', '<leader>da', '<cmd>%bdelete<cr>', { desc = 'Delete All Buffers' })
+vim.keymap.set('n', '<leader>dx', '<cmd>bd!<cr>', { desc = 'Kill Buffer (Ignore Unsaved Changes)' })
 
 -- Leader n: Neovim
 vim.keymap.set('n', '<leader>nm', '<cmd>Mason<cr>', { desc = 'Mason' })
 vim.keymap.set('n', '<leader>nl', '<cmd>Lazy<cr>', { desc = 'Lazy' })
-vim.keymap.set('n', '<leader>nq', '<cmd>quitall<cr>', { desc = 'Neovim Quit' })
+vim.keymap.set('n', '<leader>nq', '<cmd>quitall<cr>', { desc = 'Quit' })
+vim.keymap.set('n', '<leader>nq', '<cmd>w !sudo tee %<cr>', { desc = 'Sudo Write' })
 
 -- Leader t: Toggle
 vim.keymap.set(
