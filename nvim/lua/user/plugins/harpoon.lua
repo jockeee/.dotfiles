@@ -17,8 +17,8 @@ return {
 
     -- M-h Harpoon List
     -- M-l Add File
+    -- M-p Next
     -- M-n Previous
-    -- M-m Next
     vim.keymap.set('n', '<M-h>', function()
       harpoon.ui:toggle_quick_menu(harpoon:list())
     end)
@@ -26,10 +26,10 @@ return {
       harpoon:list():add()
     end)
     vim.keymap.set('n', '<M-n>', function()
-      harpoon:list():prev()
-    end)
-    vim.keymap.set('n', '<M-m>', function()
       harpoon:list():next()
+    end)
+    vim.keymap.set('n', '<M-p>', function()
+      harpoon:list():prev()
     end)
 
     -- <alt>a-f for file 1-4
