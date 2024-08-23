@@ -102,6 +102,7 @@ return {
     end, { desc = 'Find in current buffer' })
 
     vim.keymap.set('n', '<leader><leader>', builtin.find_files, { desc = 'Find File' })
+    vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Find Buffer' })
     vim.keymap.set('n', '<leader>fd', builtin.diagnostics, { desc = 'Find Diagnostics' })
     vim.keymap.set('n', '<leader>ff', builtin.live_grep, { desc = 'Find Grep' })
     vim.keymap.set('n', '<leader>fg', builtin.git_files, { desc = 'Find Git File' })

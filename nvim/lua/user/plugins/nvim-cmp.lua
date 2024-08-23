@@ -94,7 +94,7 @@ return {
         -- Accept (yes) the completion
         --    This will auto-import if your LSP supports it.
         --    This will expand snippets if the LSP sent a snippet.
-        ['<cr>'] = cmp.mapping.confirm { select = true },
+        ['<C-q>'] = cmp.mapping.confirm { select = true }, -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
         ['<C-e>'] = cmp.mapping.abort(), -- Close the completion menu
         ['<C-n>'] = cmp.mapping.select_next_item(), -- Select the next item
         ['<C-p>'] = cmp.mapping.select_prev_item(), -- Select the previous item

@@ -33,14 +33,14 @@ return {
       default = {
         augend.integer.alias.decimal, -- 123 inc becomes 124
         augend.integer.alias.hex, -- 0x1f inc becomes 0x20
-        augend.date.alias['%Y/%m/%d'], -- 2020/01/01 inc becomes 2020/01/02
+        augend.date.alias['%Y-%m-%d'], -- 2020-01-01 inc becomes 2020-01-02
         augend.constant.alias.bool, -- cycle true/false
         augend.constant.new { elements = { 'on', 'off' } }, -- custom constant cycle list
       },
       visual = {
         augend.integer.alias.decimal, -- 123 inc becomes 124
         augend.integer.alias.hex, -- 0x1f inc becomes 0x20
-        augend.date.alias['%Y/%m/%d'], -- 2020/01/01 inc becomes 2020/01/02
+        augend.date.alias['%Y-%m-%d'], -- 2020-01-01 inc becomes 2020-01-02
         augend.constant.alias.bool, -- cycle true/false
         augend.constant.alias.alpha, -- a inc becomes b
         augend.constant.alias.Alpha, -- A inc becomes B

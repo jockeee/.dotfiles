@@ -6,6 +6,7 @@
 
 -- Mouse
 vim.opt.mouse = 'a'
+vim.opt.mousemodel = 'extend' -- default: popup_setpos
 
 -- Clipboard
 -- Sync clipboard between os and neovim
@@ -59,7 +60,7 @@ vim.opt.undolevels = 1000 -- default: 1000
 
 -- Decrease update time
 vim.opt.updatetime = 250 -- save swap file and trigger CursorHold
-vim.opt.timeoutlen = 1000 -- lower than default (1000) to quickly trigger which-key
+vim.opt.timeoutlen = 1000 -- default: 1000, time in milliseconds to wait for a mapped sequence to complete, also "time until which-key triggers"
 
 -- How neovim will display certain whitespace in the editor.
 vim.opt.list = false -- show invisible characters (tabs...)
