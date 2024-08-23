@@ -7,25 +7,25 @@ vim.keymap.set({ 'n', 'v' }, '<space>', '<nop>')
 -- Clear highlights (search) with <esc>
 vim.keymap.set('n', '<esc>', '<cmd>nohlsearch<cr>')
 
--- Exit terminal mode in the builtin terminal with <esc> (default: <c-\><c-n>).
-vim.keymap.set('t', '<esc>', '<c-\\><c-n>', { desc = 'Exit Terminal Mode' })
+-- Exit terminal mode in the builtin terminal with <esc> (default: <C-\><C-n>).
+vim.keymap.set('t', '<esc>', '<C-\\><C-n>', { desc = 'Exit Terminal Mode' })
 
 -- Save file
-vim.keymap.set({ 'i', 'n', 's' }, '<c-s>', '<cmd>w<cr><esc>', { desc = 'Save File' })
+vim.keymap.set({ 'i', 'n', 's' }, '<C-s>', '<cmd>w<cr><esc>', { desc = 'Save File' })
 
 -- Resize windows using <ctrl> + arrow keys
-vim.keymap.set('n', '<c-up>', '<cmd>resize +2<cr>', { desc = 'Increase Window Height' })
-vim.keymap.set('n', '<c-down>', '<cmd>resize -2<cr>', { desc = 'decrease Window Height' })
-vim.keymap.set('n', '<c-left>', '<cmd>vertical resize -2<cr>', { desc = 'Decrease Window Height' })
-vim.keymap.set('n', '<c-right>', '<cmd>vertical resize +2<cr>', { desc = 'Increase Window Height' })
+vim.keymap.set('n', '<C-up>', '<cmd>resize +2<cr>', { desc = 'Increase Window Height' })
+vim.keymap.set('n', '<C-down>', '<cmd>resize -2<cr>', { desc = 'decrease Window Height' })
+vim.keymap.set('n', '<C-left>', '<cmd>vertical resize -2<cr>', { desc = 'Decrease Window Height' })
+vim.keymap.set('n', '<C-right>', '<cmd>vertical resize +2<cr>', { desc = 'Increase Window Height' })
 
 -- Move lines up/down
-vim.keymap.set('n', '<m-j>', '<cmd>m .+1<cr>==', { desc = 'Move Down' })
-vim.keymap.set('n', '<m-k>', '<cmd>m .-2<cr>==', { desc = 'Move Up' })
-vim.keymap.set('i', '<m-j>', '<esc><cmd>m .+1<cr>==gi', { desc = 'Move Down' })
-vim.keymap.set('i', '<m-k>', '<esc><cmd>m .-2<cr>==gi', { desc = 'Move Up' })
-vim.keymap.set('v', '<m-j>', ":m '>+1<cr>gv=gv", { desc = 'Move Down' })
-vim.keymap.set('v', '<m-k>', ":m '<-2<cr>gv=gv", { desc = 'Move Up' })
+vim.keymap.set('n', '<M-j>', '<cmd>m .+1<cr>==', { desc = 'Move Down' })
+vim.keymap.set('n', '<M-k>', '<cmd>m .-2<cr>==', { desc = 'Move Up' })
+vim.keymap.set('i', '<M-j>', '<esc><cmd>m .+1<cr>==gi', { desc = 'Move Down' })
+vim.keymap.set('i', '<M-k>', '<esc><cmd>m .-2<cr>==gi', { desc = 'Move Up' })
+vim.keymap.set('v', '<M-j>', ":m '>+1<cr>gv=gv", { desc = 'Move Down' })
+vim.keymap.set('v', '<M-k>', ":m '<-2<cr>gv=gv", { desc = 'Move Up' })
 
 -- Indenting (gv re-selects last selection)
 vim.keymap.set('v', '<', '<gv')
@@ -36,6 +36,10 @@ vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Previous Diagnosti
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Next Diagnostic Message' })
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show Diagnostic Error Messages' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open Diagnostic Quickfix List' })
+
+-- Buffer
+vim.keymap.set('n', '<S-h>', '<cmd>bprevious<cr>', { desc = 'Prev Buffer' })
+vim.keymap.set('n', '<S-l>', '<cmd>bnext<cr>', { desc = 'Next Buffer' })
 
 -- Leader d: Buffer (document)
 vim.keymap.set('n', '<leader>dd', '<cmd>bd<cr>', { desc = 'Delete Buffer' })
