@@ -217,8 +217,8 @@ upd_go() {
 upd_bashrc() {
     echo -e '\e[1mUpdating ~/.bashrc\e[0m\n'
 
-    if [ ! -e ~/.dotfiles/.bashrc ]; then
-        echo "Error: Couldn't find ~/.dotfiles/.bashrc"
+    if [ ! -e ~/.dotfiles/.bashrc-r ]; then
+        echo "Error: Couldn't find ~/.dotfiles/.bashrc-r"
         return 1
     fi
 
@@ -236,7 +236,7 @@ upd_bashrc() {
     fi
 
     # add new additions
-    cat ~/.dotfiles/.bashrc >>~/.bashrc
+    cat ~/.dotfiles/.bashrc-r >>~/.bashrc
     if [ $? -ne 0 ]; then
         echo "Error: Couldn't update ~/.bashrc"
         mv ~/.bashrc.bak ~/.bashrc
@@ -257,24 +257,6 @@ upd_bashrc() {
     echo
 }
 
-if [ -e /etc/os-release ]; then
-    os_id=$(grep -E "^ID=" /etc/os-release | cut -d= -f2)
-
-    case $os_id in
-    'fedora')
-        if type -P /usr/bin/dnf5 &>/dev/null; then
-            alias dnf='dnf5'
-        fi
-        export -f upd_fedora
-        alias upd='upd_fedora'
-        ;;
-    'ubuntu')
-        export -f upd_ubuntu
-        alias upd='upd_ubuntu'
-        ;;
-    esac
-fi
-
 # zoxide, smarter cd
 if type -P /usr/bin/zoxide &>/dev/null; then
     eval "$(zoxide init --cmd cd bash)"
@@ -282,3 +264,29 @@ fi
 
 # autocd
 shopt -s autocd
+
+if [ ! -f /etc/os-release ]; then
+    echo "[WARNING] /etc/os-release not found, alias 'upd' will not be set."
+    exit 0
+fi
+
+source /etc/os-release
+
+case $ID in
+'fedora')
+    if type -P /usr/bin/dnf5 &>/dev/null; then
+        alias dnf='dnf5'
+    fi
+    export -f upd_fedora
+    alias upd='upd_fedora'
+    ;;
+'ubuntu')
+    export -f upd_ubuntu
+    alias upd='upd_ubuntu'
+    ;;
+*)
+    echo "[WARNING] Distro not supported."
+    ;;
+esac
+
+# vim: set filetype=sh :
