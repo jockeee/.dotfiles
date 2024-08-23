@@ -41,9 +41,8 @@ end
 ## Abbreviations
 ##
 
-# c<space> to see it in action
+# c<space> expands to cat, c<enter> behaves like alias
 abbr --add g 'git'
-abbr --add t 'tmux'
 abbr --add v 'vim'
 abbr --add w 'wezterm'
 
