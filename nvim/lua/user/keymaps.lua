@@ -4,8 +4,14 @@
 -- Leader key, space, do nothing when space is pressed in normal or visual mode
 vim.keymap.set({ 'n', 'v' }, '<space>', '<nop>')
 
--- Clear highlights (search) with <esc>
-vim.keymap.set('n', '<esc>', '<cmd>nohlsearch<cr>')
+-- Clean up search results and extmarks with <esc>
+vim.keymap.set('n', '<esc>', function()
+  vim.cmd.nohlsearch()
+  local search_ns = vim.api.nvim_get_namespaces().search
+  if search_ns ~= nil then
+    vim.api.nvim_buf_clear_namespace(0, search_ns, 0, -1)
+  end
+end)
 
 -- Exit terminal mode in the builtin terminal with <esc> (default: <C-\><C-n>).
 vim.keymap.set('t', '<esc>', '<C-\\><C-n>', { desc = 'Exit Terminal Mode' })
@@ -30,6 +36,15 @@ vim.keymap.set('v', '<M-k>', ":m '<-2<cr>gv=gv", { desc = 'Move Up' })
 -- Indenting (gv re-selects last selection)
 vim.keymap.set('v', '<', '<gv')
 vim.keymap.set('v', '>', '>gv')
+
+-- Search index
+local keys = { 'n', 'N', '*', '#', 'g*', 'g#' }
+for _, key in ipairs(keys) do
+  vim.keymap.set('n', key, function()
+    vim.cmd('normal! ' .. key)
+    require('user.utils').hl_search()
+  end, { noremap = true })
+end
 
 -- Diagnostics (https://github.com/neovim/nvim-lspconfig)
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Previous Diagnostic Message' })
