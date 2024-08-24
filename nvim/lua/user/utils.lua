@@ -7,11 +7,11 @@
 local search_count_extmark_id
 
 local function show_search_index()
-  local namespaceId = vim.api.nvim_create_namespace 'search'
-  vim.api.nvim_buf_clear_namespace(0, namespaceId, 0, -1)
-  local searchCount = vim.fn.searchcount()
-  search_count_extmark_id = vim.api.nvim_buf_set_extmark(0, namespaceId, vim.api.nvim_win_get_cursor(0)[1] - 1, 0, {
-    virt_text = { { '[' .. searchCount.current .. '/' .. searchCount.total .. ']', 'StatusLine' } },
+  local namespace_id = vim.api.nvim_create_namespace 'search'
+  vim.api.nvim_buf_clear_namespace(0, namespace_id, 0, -1)
+  local search_count = vim.fn.searchcount()
+  search_count_extmark_id = vim.api.nvim_buf_set_extmark(0, namespace_id, vim.api.nvim_win_get_cursor(0)[1] - 1, 0, {
+    virt_text = { { '[' .. search_count.current .. '/' .. search_count.total .. ']', 'StatusLine' } },
     virt_text_pos = 'eol',
   })
 
@@ -19,8 +19,11 @@ local function show_search_index()
 end
 
 local function clear_search_index()
-  local namespaceId = vim.api.nvim_get_namespaces()['search']
-  vim.api.nvim_buf_del_extmark(0, namespaceId, search_count_extmark_id)
+  local namespace_id = vim.api.nvim_get_namespaces()['search']
+  if not namespace_id then
+    return
+  end
+  vim.api.nvim_buf_del_extmark(0, namespace_id, search_count_extmark_id)
 end
 
 -- These keys should work as they normally do, but additionally we want to trigger `show_search_index` with them
