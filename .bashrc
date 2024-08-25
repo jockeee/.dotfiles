@@ -1,5 +1,13 @@
 # default distro ~/.bashrc above
-# VERSION 1.0.9
+# VERSION 1.0.10
+
+##
+## Environment
+##
+
+if [ -z "$TMUX_DEFAULT_SESSION_NAME" ]; then
+    TMUX_DEFAULT_SESSION_NAME=$(uname -n)
+fi
 
 ##
 ## ALIAS
@@ -48,7 +56,7 @@ alias g='git'
 alias v='vim'
 
 # tmux
-alias s='tmux attach || tmux new-session -s base'
+alias s="tmux attach || tmux new-session -s $TMUX_DEFAULT_SESSION_NAME"
 alias ss='tmux new-session -A -s'
 alias sx='tmux kill-session -t'
 alias sl='tmux list-sessions'
