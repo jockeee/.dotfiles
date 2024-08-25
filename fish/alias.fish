@@ -3,7 +3,7 @@
 ##
 
 if test -z "$TMUX_DEFAULT_SESSION_NAME"
-  set -l TMUX_DEFAULT_SESSION_NAME base
+  set TMUX_DEFAULT_SESSION_NAME base
 end
 
 ##
