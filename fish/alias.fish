@@ -1,4 +1,17 @@
 ##
+## Environment
+##
+
+if test -f ~/.dotfiles/.env
+  source ~/.dotfiles/.env
+end
+
+# if environment variable $TMUX_DEFAULT_SESSION is not set, set it to 'base'
+if test -z $TMUX_DEFAULT_SESSION
+  set -l TMUX_DEFAULT_SESSION base
+end
+
+##
 ## Alias
 ##
 
@@ -34,8 +47,6 @@ if command -q eza
   alias laa 'eza -glaa --git'
   alias tree 'eza -aT --git-ignore'
 end
-
-
 
 ##
 ## Abbreviations
@@ -77,7 +88,6 @@ abbr --add gr 'git remote -v'
 abbr --add grs 'git reset'
 abbr --add grs! 'git reset --hard'
 abbr --add gs 'git status'
-
 
 ##
 ## Functions
@@ -136,7 +146,7 @@ function gg -d 'git add, git commit, git push'
 end
 
 # ww (git add, git commit, git push - whatthecommit.com)
-# usage: ww accept
+# usage: ww
 # like gg but random commit message from whatthecommit.com
 function ww -d 'git add, git commit, git push - whatthecommit.com'
   if not is_git_repo
@@ -144,20 +154,23 @@ function ww -d 'git add, git commit, git push - whatthecommit.com'
     return 1
   end
 
-  if test (count $argv) -ne 1; or test "$argv[1]" != "accept"
-      echo "Usage: ww accept"
-      return 1
-  end
-
   if ! command -q curl
     echo "Error: Unable to locate 'curl'"
     return 1
   end
 
-  set message (command curl -s https://whatthecommit.com/index.txt)
+  while test $continue != "y" -a $continue != "Y"
+    set message (curl -s https://whatthecommit.com/index.txt)
+    if test $status -ne 0
+      echo "Error: Couldn't retrieve a commit message from 'whatthecommit.com'"
+      return 1
+    end
 
-  if test $status -ne 0
-    echo "Error: Couldn't retrieve a commit message from 'whatthecommit.com'"
+    echo "Commit message: $message"
+    read -l -P "Do you want to use this commit message? [y/N/q]: " continue
+    if test $continue = "q"
+      return 0
+    end
   end
 
   # echo statements has bold text
