@@ -154,7 +154,7 @@ function ww -d 'git add, git commit, git push - whatthecommit.com'
     return 1
   end
 
-  while not test $continue = "y"; and not test $continue = "Y"
+  while test $continue != "y"; and test $continue != "Y"
     set message (curl -s https://whatthecommit.com/index.txt)
     if test $status -ne 0
       echo "Error: Couldn't retrieve a commit message from 'whatthecommit.com'"
