@@ -2,13 +2,8 @@
 ## Environment
 ##
 
-if test -f ~/.dotfiles/.env
-  source ~/.dotfiles/.env
-end
-
-# if environment variable $TMUX_DEFAULT_SESSION is not set, set it to 'base'
-if test -z $TMUX_DEFAULT_SESSION
-  set -l TMUX_DEFAULT_SESSION base
+if test -z "$TMUX_DEFAULT_SESSION_NAME"
+  set -l TMUX_DEFAULT_SESSION_NAME base
 end
 
 ##
@@ -69,7 +64,7 @@ end
 
 # tmux
 # https://github.com/lewisacidic/fish-tmux-abbr
-abbr --add s 'tmux attach || tmux new-session -s base'
+abbr --add s "tmux attach || tmux new-session -s $TMUX_DEFAULT_SESSION_NAME"
 abbr --add sn 'tmux new-session -A -s'
 abbr --add sx 'tmux kill-session -t'
 abbr --add sl 'tmux list-sessions'
@@ -159,7 +154,7 @@ function ww -d 'git add, git commit, git push - whatthecommit.com'
     return 1
   end
 
-  while test $continue != "y" -a $continue != "Y"
+  while not test $continue = "y"; and not test $continue = "Y"
     set message (curl -s https://whatthecommit.com/index.txt)
     if test $status -ne 0
       echo "Error: Couldn't retrieve a commit message from 'whatthecommit.com'"
