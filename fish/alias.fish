@@ -154,7 +154,8 @@ function ww -d 'git add, git commit, git push - whatthecommit.com'
     return 1
   end
 
-  while test $continue != "y"; and test $continue != "Y"
+  set -l continue 'n'
+  while test "$continue" != "y"; and test "$continue" != "Y"
     set message (curl -s https://whatthecommit.com/index.txt)
     if test $status -ne 0
       echo "Error: Couldn't retrieve a commit message from 'whatthecommit.com'"
@@ -162,8 +163,8 @@ function ww -d 'git add, git commit, git push - whatthecommit.com'
     end
 
     echo "Commit message: $message"
-    read -l -P "Do you want to use this commit message? [y/N/q]: " continue
-    if test $continue = "q"
+    read -P "Do you want to use this commit message? [y/N/q]: " continue
+    if test "$continue" = "q"
       return 0
     end
   end

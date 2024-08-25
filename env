@@ -1,1 +1,0 @@
-TMUX_DEFAULT_SESSION_NAME="$(uname -n)"
