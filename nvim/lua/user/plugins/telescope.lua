@@ -54,6 +54,7 @@ return {
           '--glob=!**/.git/*',
           '--glob=!**/yarn.lock',
           '--glob=!**/package-lock.json',
+          '--glob=!**/vendor/*',
         },
       },
       pickers = {
@@ -75,6 +76,7 @@ return {
             '--glob=!**/.git/*',
             '--glob=!**/yarn.lock',
             '--glob=!**/package-lock.json',
+            '--glob=!**/vendor/*',
           },
         },
       },
