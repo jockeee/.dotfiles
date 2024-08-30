@@ -71,6 +71,7 @@ if status is-interactive
 
   # fzf
   if command -q fzf
+    # Set up fzf key bindings
     fzf --fish | source
   end
 
