@@ -299,6 +299,12 @@ if type -P /usr/bin/zoxide &>/dev/null; then
     eval "$(zoxide init --cmd cd bash)"
 fi
 
+# fzf
+if type -P /usr/bin/fzf &>/dev/null; then
+    # Set up fzf key bindings and fuzzy completion
+    eval "$(fzf --bash)"
+fi
+
 # autocd
 shopt -s autocd
 
