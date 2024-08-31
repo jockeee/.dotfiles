@@ -14,8 +14,7 @@ config = {
       height = '100%',
     },
   },
-  font = wezterm.font('MesloLGS Nerd Font', { weight = 'Regular', stretch = 'Normal', style = 'Normal' }),
-  font_size = 16,
+  font_size = 14,
   line_height = 1.05,
 }
 
