@@ -15,7 +15,13 @@ zoxide_query() {
 if [[ $# -gt 0 ]]; then
     selected=$@
 else
-    selected=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --height=~1% --tmux=center,30%,20% --layout=reverse --print-query | tail -1 | xargs)
+    selected=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf \
+        --height=~1% \
+        --tmux=center,30%,20% \
+        --layout=reverse \
+        --info=inline-right \
+        --color='pointer:#7c7d83,current-bg:-1' \
+        --print-query | tail -1 | xargs)
 fi
 
 if [[ -z "$selected" ]]; then
@@ -30,7 +36,7 @@ if [[ -z $TMUX ]] && [[ -z "$tmux_running" ]]; then
     zoxide_match=$(zoxide_query $selected)
 
     if [[ -z "$zoxide_match" ]]; then
-        tmux new-session -s $session_name
+        tmux new-session -s $session_name -c $HOME
         exit 0
     fi
 
@@ -50,7 +56,7 @@ if ! tmux has-session -t=$session_name 2>/dev/null; then
     zoxide_match=$(zoxide_query $selected)
 
     if [[ -z "$zoxide_match" ]]; then
-        tmux new-session -d -s $session_name
+        tmux new-session -d -s $session_name -c $HOME
     else
         tmux new-session -d -s $session_name -c $zoxide_match
     fi
