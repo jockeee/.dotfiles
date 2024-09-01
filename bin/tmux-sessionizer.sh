@@ -18,7 +18,7 @@ else
     selected=$(
         tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf \
             --height=~1% \
-            --tmux=center,30%,20% \
+            --tmux=center,40%,30% \
             --layout=reverse \
             --info=inline-right \
             --color="pointer:#7c7d83,current-bg:-1" \
