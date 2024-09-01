@@ -15,13 +15,15 @@ zoxide_query() {
 if [[ $# -gt 0 ]]; then
     selected=$@
 else
-    selected=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf \
-        --height=~1% \
-        --tmux=center,30%,20% \
-        --layout=reverse \
-        --info=inline-right \
-        --color='pointer:#7c7d83,current-bg:-1' \
-        --print-query | tail -1 | xargs)
+    selected=$(
+        tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf \
+            --height=~1% \
+            --tmux=center,30%,20% \
+            --layout=reverse \
+            --info=inline-right \
+            --color="pointer:#7c7d83,current-bg:-1" \
+            --print-query | tail -1 | xargs
+    )
 fi
 
 if [[ -z "$selected" ]]; then
