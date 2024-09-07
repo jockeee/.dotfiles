@@ -13,6 +13,10 @@ vim.keymap.set('t', '<esc>', '<C-\\><C-n>', { desc = 'Exit Terminal Mode' })
 -- Save file
 vim.keymap.set({ 'i', 'n', 's' }, '<C-s>', '<cmd>w<cr><esc>', { desc = 'Save File' })
 
+-- j/k navigate visual lines (wrapped lines)
+vim.keymap.set('n', 'j', 'gj')
+vim.keymap.set('n', 'k', 'gk')
+
 -- Resize windows using <ctrl> + arrow keys
 vim.keymap.set('n', '<C-up>', '<cmd>resize +2<cr>', { desc = 'Increase Window Height' })
 vim.keymap.set('n', '<C-down>', '<cmd>resize -2<cr>', { desc = 'decrease Window Height' })
@@ -38,7 +42,7 @@ for _, key in ipairs(keys) do
 end
 
 -- Diagnostics (https://github.com/neovim/nvim-lspconfig)
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Previous Diagnostic Message' })
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Prev Diagnostic Message' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Next Diagnostic Message' })
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show Diagnostic Error Messages' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open Diagnostic Quickfix List' })
@@ -63,5 +67,7 @@ vim.keymap.set(
   'n',
   '<leader>tc',
   '<cmd>lua vim.opt.colorcolumn = vim.inspect(vim.opt.colorcolumn:get()) == "{}" and { 100 } or {}<cr>',
-  { desc = 'Colorcolumn' }
+  { desc = 'Color Column' }
 )
+vim.keymap.set('n', '<leader>tr', '<cmd>lua vim.opt.relativenumber = not vim.opt.relativenumber:get()<cr>', { desc = 'Relative Number' }) -- :set relativenumber! :set rnu!
+vim.keymap.set('n', '<leader>tw', '<cmd>lua vim.opt.wrap = not vim.opt.wrap:get()<cr>', { desc = 'Wrap' }) -- :set wrap!
