@@ -102,7 +102,7 @@ vim.opt.pumheight = 10 -- maximum number of items to show in the popup menu
 --
 
 -- highlight when yanking (copying) text
--- :help vim.highlight.on_yank()
+--  :help vim.highlight.on_yank()
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
   group = vim.api.nvim_create_augroup('highlight-yank', { clear = true }),

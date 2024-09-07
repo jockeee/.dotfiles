@@ -2,7 +2,7 @@
 -- https://github.com/folke/lazy.nvim
 -- A modern plugin manager for Neovim
 --
--- :help lazy.nvim.txt
+--  :help lazy.nvim.txt
 
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'

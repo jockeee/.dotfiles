@@ -1,16 +1,13 @@
 --
 -- https://github.com/nvim-treesitter/nvim-treesitter
--- nvim treesitter configurations and abstraction layer
---
 -- highlight, edit, and navigate code
---
--- :help nvim-treesitter
+--  :help nvim-treesitter
 --
 -- Incremental selection (included by default)
---    :help nvim-treesitter-incremental-selection-mod
+--  :help nvim-treesitter-incremental-selection-mod
 --
 -- ensure_installed
---    https://github.com/nvim-treesitter/nvim-treesitter#supported-languages
+--  https://github.com/nvim-treesitter/nvim-treesitter#supported-languages
 
 return {
   'nvim-treesitter/nvim-treesitter',

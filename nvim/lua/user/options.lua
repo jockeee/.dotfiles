@@ -1,8 +1,8 @@
 --
 -- options.lua
 --
--- :help vim.opt
--- :help option-list
+--  :help vim.opt
+--  :help option-list
 
 -- Mouse
 vim.opt.mouse = 'a'

@@ -25,8 +25,8 @@
 -- Thus, Language Servers are external tools that must be installed separately from
 -- Neovim. This is where `mason` and related plugins come into play.
 --
--- If you're wondering about lsp vs treesitter, you can check out the wonderfully
--- and elegantly composed help section, `:help lsp-vs-treesitter`
+-- If you're wondering about lsp vs treesitter, you can check out the wonderfully and elegantly composed help section.
+--  :help lsp-vs-treesitter
 
 -- LSP configuration & plugins
 return {
@@ -103,7 +103,7 @@ return {
         -- vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { buffer = event.buf })
 
         -- Opens a popup that displays documentation about the word under your cursor
-        --  See `:help K` for why this keymap
+        --  :help K for why this keymap
         map('K', vim.lsp.buf.hover, 'Show documentation')
 
         -- Jump to the implementation of the word under your cursor.
@@ -162,9 +162,8 @@ return {
         --   vim.lsp.buf.format { async = true }
         -- end, 'Document format')
 
-        -- The following two autocommands are used to highlight references of the
-        -- word under your cursor when your cursor rests there for a little while.
-        --    See `:help CursorHold` for information about when this is executed
+        -- The following two autocommands are used to highlight references of the word under your cursor when your cursor rests there for a little while.
+        --  :help CursorHold for information about when this is executed
         --
         -- When you move your cursor, the highlights will be cleared (the second autocommand).
         local client = vim.lsp.get_client_by_id(event.data.client_id)

@@ -40,7 +40,7 @@ return {
     'onsails/lspkind.nvim', -- vscode like pictograms
   },
   config = function()
-    -- See `:help cmp`
+    -- :help cmp
     local cmp = require 'cmp'
     local luasnip = require 'luasnip'
     local lspkind = require 'lspkind'
@@ -89,7 +89,7 @@ return {
         },
       },
       -- For an understanding of why these mappings were chosen, see:
-      --    :help ins-completion
+      --  :help ins-completion
       mapping = cmp.mapping.preset.insert {
         -- Accept (yes) the completion
         --    This will auto-import if your LSP supports it.
