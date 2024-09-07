@@ -26,7 +26,7 @@ return {
   init = function()
     -- :help vim-dadbod-ui-settings
     vim.g.db_ui_show_help = 1 -- default: 1, show/hide `Press ? for help` from the DBUI
-    vim.g.db_ui_winwidth = 60 -- default: 40
+    vim.g.db_ui_winwidth = 66 -- default: 40
     vim.g.db_ui_use_nerd_fonts = 1
   end,
 }
