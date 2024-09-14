@@ -71,7 +71,6 @@ if status is-interactive
 
   # fzf
   if command -q fzf
-    # https://github.com/junegunn/fzf#setting-up-shell-integration
     # https://github.com/junegunn/fzf#key-bindings-for-command-line
     fzf --fish | source
   end
