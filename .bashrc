@@ -53,6 +53,7 @@ if type -P /usr/bin/btop &>/dev/null; then
 fi
 
 alias g='git'
+alias p='pass'
 alias v='vim'
 
 # tmux
