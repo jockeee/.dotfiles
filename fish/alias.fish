@@ -47,9 +47,8 @@ end
 ## Abbreviations
 ##
 
-# c<space> expands to cat, c<enter> behaves like alias
+# c<space> expands to cat, c<enter> behaves like an alias
 abbr --add g 'git'
-abbr --add p 'pass'
 abbr --add v 'vim'
 
 if command -q bat; or command -q batcat
@@ -60,6 +59,11 @@ end
 
 if command -q btop
   abbr --add top 'btop'
+end
+
+if command -q pass
+  abbr --add p 'pass'
+  abbr --add pp 'pass git push'
 end
 
 # tmux
