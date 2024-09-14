@@ -49,6 +49,7 @@ end
 
 # c<space> expands to cat, c<enter> behaves like alias
 abbr --add g 'git'
+abbr --add p 'pass'
 abbr --add v 'vim'
 abbr --add w 'wezterm'
 
