@@ -51,7 +51,6 @@ end
 abbr --add g 'git'
 abbr --add p 'pass'
 abbr --add v 'vim'
-abbr --add w 'wezterm'
 
 if command -q bat; or command -q batcat
   abbr --add c 'bat'
