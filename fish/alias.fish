@@ -22,11 +22,11 @@ alias lazd 'ls -ladZ'
 alias wezterm 'flatpak run org.wezfurlong.wezterm'
 
 if command -q bat
-  alias bat 'bat -p'
+  alias bat 'bat -P'
 end
 
 if command -q batcat
-  alias bat 'batcat -p'
+  alias bat 'batcat -P'
 end
 
 if command -q eza
