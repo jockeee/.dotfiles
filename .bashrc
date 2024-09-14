@@ -25,13 +25,13 @@ alias lazd='ls -ladZ'
 
 alias c='cat'
 if type -P bat &>/dev/null; then
-    alias bat='bat -p'
-    alias c='bat -p'
+    alias bat='bat -P'
+    alias c='bat -P'
 fi
 
 if type -P batcat &>/dev/null; then
-    alias bat='batcat -p'
-    alias c='batcat -p'
+    alias bat='batcat -P'
+    alias c='batcat -P'
 fi
 
 if type -P /usr/bin/eza &>/dev/null; then
