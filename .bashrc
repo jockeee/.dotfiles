@@ -34,7 +34,7 @@ if type -P batcat &>/dev/null; then
     alias c='batcat -P'
 fi
 
-if type -P /usr/bin/eza &>/dev/null; then
+if type -P eza &>/dev/null; then
     # Filtering options
     #   Pass the -a, --all option twice to also show the . and .. directories.
     # Long view options
@@ -48,12 +48,16 @@ if type -P /usr/bin/eza &>/dev/null; then
     alias tree='eza -aT --git-ignore'
 fi
 
-if type -P /usr/bin/btop &>/dev/null; then
+if type -P btop &>/dev/null; then
     alias top='btop'
 fi
 
+if type -P pass &>/dev/null; then
+    alias p='pass'
+    alias pp='pass git push'
+fi
+
 alias g='git'
-alias p='pass'
 alias v='vim'
 
 # tmux
