@@ -30,7 +30,7 @@ if [[ -z "$selected" ]]; then
     exit 0
 fi
 
-session_name="${selected##* }" # session_name = last item in selected
+session_name="${selected##* }" # session_name = last item in string
 tmux_running=$(pgrep tmux)
 
 # We are not in a tmux session and tmux is not running
