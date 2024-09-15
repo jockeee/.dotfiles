@@ -62,7 +62,8 @@ if command -q btop
 end
 
 if command -q pass
-  abbr --add p 'pass'
+  abbr --add p 'pass -c show'
+  abbr --add pg 'pass -c genereate'
   abbr --add pp 'pass git push'
 end
 
