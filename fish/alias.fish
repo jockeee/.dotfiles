@@ -63,7 +63,9 @@ end
 
 if command -q pass
   abbr --add p 'pass show -c'
+  abbr --add pf 'pass find'
   abbr --add pg 'pass genereate -c'
+  abbr --add pi 'pass insert'
   abbr --add pp 'pass git push'
 end
 
@@ -80,7 +82,13 @@ abbr --add ga 'git add'
 abbr --add gc 'git commit -m'
 abbr --add gcl 'git clone'
 abbr --add gco 'git checkout'
-abbr --add gd 'git diff'
+if command -q git-forgit
+  abbr --add gd 'git-forgit diff'
+  abbr --add gl 'git-forgit log'
+else
+  abbr --add gd 'git diff'
+  abbr --add gl 'git log'
+end
 abbr --add gf 'git fetch'
 abbr --add gp 'git push'
 abbr --add gpl 'git pull'
