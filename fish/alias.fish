@@ -49,6 +49,7 @@ end
 
 # c<space> expands to cat, c<enter> behaves like an alias
 abbr --add g 'git'
+abbr --add t 'tree'
 abbr --add v 'vim'
 
 if command -q bat; or command -q batcat
@@ -63,6 +64,7 @@ end
 
 if command -q pass
   abbr --add p 'pass show -c'
+  abbr --add pe 'pass edit'
   abbr --add pf 'pass find'
   abbr --add pg 'pass genereate -c'
   abbr --add pi 'pass insert'
