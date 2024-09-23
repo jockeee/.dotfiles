@@ -53,7 +53,11 @@ if type -P btop &>/dev/null; then
 fi
 
 if type -P pass &>/dev/null; then
-    alias p='pass'
+    alias p='pass show -c'
+    alias pe='pass edit'
+    alias pf='pass find'
+    alias pg='pass generate -c'
+    alias pi='pass insert'
     alias pp='pass git push'
 fi
 
