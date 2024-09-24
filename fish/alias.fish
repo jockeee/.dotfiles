@@ -66,9 +66,8 @@ if command -q pass
   abbr --add p 'pass show -c'
   abbr --add pe 'pass edit'
   abbr --add pf 'pass find'
-  abbr --add pg 'pass generate -c'
-  abbr --add pi 'pass insert'
-  abbr --add pp 'pass git push'
+  abbr --add pg 'pass generate -ci'
+  abbr --add pi 'pass insert -m'
 end
 
 # tmux
