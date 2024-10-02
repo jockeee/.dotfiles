@@ -1,3 +1,6 @@
+# .
+# .
+
 ##
 ## Environment
 ##
@@ -7,7 +10,7 @@ if test -z "$TMUX_DEFAULT_SESSION_NAME"
 end
 
 ##
-## Alias
+## Alias and Abbreviations
 ##
 
 # ls options
@@ -21,12 +24,8 @@ alias ladz 'ls -ladZ'
 alias lazd 'ls -ladZ'
 alias wezterm 'flatpak run org.wezfurlong.wezterm'
 
-if command -q bat
-  alias bat 'bat -P'
-end
-
-if command -q batcat
-  alias bat 'batcat -P'
+if command -q btop
+  abbr --add top 'btop'
 end
 
 if command -q eza
@@ -43,25 +42,6 @@ if command -q eza
   alias tree 'eza -aT --git-ignore'
 end
 
-##
-## Abbreviations
-##
-
-# c<space> expands to cat, c<enter> behaves like an alias
-abbr --add g 'git'
-abbr --add t 'tree'
-abbr --add v 'vim'
-
-if command -q bat; or command -q batcat
-  abbr --add c 'bat'
-else
-  abbr --add c 'cat'
-end
-
-if command -q btop
-  abbr --add top 'btop'
-end
-
 if command -q pass
   abbr --add p 'pass show -c'
   abbr --add pe 'pass edit'
@@ -69,6 +49,11 @@ if command -q pass
   abbr --add pg 'pass generate -ci'
   abbr --add pi 'pass insert -m'
 end
+
+# c<space> expands to cat, c<enter> behaves like an alias
+abbr --add g 'git'
+abbr --add t 'tree'
+abbr --add v 'vim'
 
 # tmux
 # https://github.com/lewisacidic/fish-tmux-abbr
@@ -79,18 +64,14 @@ abbr --add sl 'tmux list-sessions'
 
 # git
 # https://github.com/lewisacidic/fish-git-abbr
+abbr --add d 'git diff'
 abbr --add ga 'git add'
 abbr --add gc 'git commit -m'
 abbr --add gcl 'git clone'
 abbr --add gco 'git checkout'
-if command -q git-forgit
-  abbr --add gd 'git-forgit diff'
-  abbr --add gl 'git-forgit log'
-else
-  abbr --add gd 'git diff'
-  abbr --add gl 'git log'
-end
+abbr --add gd 'git diff'
 abbr --add gf 'git fetch'
+abbr --add gl 'git log'
 abbr --add gp 'git push'
 abbr --add gpl 'git pull'
 abbr --add gr 'git remote -v'
@@ -98,23 +79,51 @@ abbr --add grs 'git reset'
 abbr --add grs! 'git reset --hard'
 abbr --add gs 'git status'
 
+if type -q git-forgit
+  #abbr --add d 'git-forgit diff'
+  abbr --add gd 'git-forgit diff'
+  abbr --add gl 'git-forgit log'
+end
+
+abbr --add c 'cat'
+if command -q bat
+  set bat_cmd 'bat'
+  alias bat 'bat -P'
+  abbr --add c 'bat'
+  abbr --add d 'batdiff'
+end
+
+if command -q batcat
+  set bat_cmd 'batcat'
+  alias bat 'batcat -P'
+  abbr --add c 'bat'
+  abbr --add d 'batdiff'
+end
+
+
 ##
 ## Functions
 ##
 
 # You like the output of batdiff for quick overview.
-if command -q bat
-  function batdiff
-    git diff --name-only --relative --diff-filter=d $argv | xargs bat --diff
+function batdiff
+  if not is_git_repo
+    echo 'Error: Unable to locate a Git repository.'
+    return 1
   end
-  abbr --add d 'batdiff'
+
+  git diff --name-only --relative --diff-filter=d $argv | xargs bat --diff
 end
 
-# used by: gg function
-# from   : https://github.com/oh-my-fish/oh-my-fish/blob/master/lib/git/git_is_repo.fish
+# https://github.com/oh-my-fish/oh-my-fish/blob/master/lib/git/git_is_repo.fish
 function is_git_repo -d 'Check if directory is a repository'
   test -d .git
   or begin
+    # Try to get information about the git directory
+    # Example output:
+    # git rev-parse --git-dir --is-bare-repository
+    #   .git
+    #   false
     set -l info (command git rev-parse --git-dir --is-bare-repository 2>/dev/null)
     and test $info[2] = false
   end
