@@ -30,14 +30,22 @@ if [[ -z "$selected" ]]; then
     exit 0
 fi
 
-session_name="${selected##* }" # session_name = last item in string
+selected="${selected/#\~/$HOME}" # tilde expansion of user input from fzf popup
+
+if [[ $selected == $HOME?(/) ]]; then
+    selected="base"
+fi
+
+selected=${selected%/}            # remove trailing slash from selected, if any
+session_name=${selected##*[ /\\]} # session_name is the last part of selected, separators: space, \ or /
+session_name=${session_name//./}  # remove dots from session_name
 tmux_running=$(pgrep tmux)
 
 # We are not in a tmux session and tmux is not running
 if [[ -z $TMUX ]] && [[ -z "$tmux_running" ]]; then
     zoxide_match=$(zoxide_query $selected)
 
-    if [[ -z "$zoxide_match" ]]; then
+    if [[ -z $zoxide_match ]]; then
         tmux new-session -s $session_name -c $HOME
         exit 0
     fi
@@ -57,7 +65,7 @@ fi
 if ! tmux has-session -t=$session_name 2>/dev/null; then
     zoxide_match=$(zoxide_query $selected)
 
-    if [[ -z "$zoxide_match" ]]; then
+    if [[ -z $zoxide_match ]]; then
         tmux new-session -d -s $session_name -c $HOME
     else
         tmux new-session -d -s $session_name -c $zoxide_match
