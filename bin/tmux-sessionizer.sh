@@ -15,15 +15,39 @@ zoxide_query() {
 if [[ $# -gt 0 ]]; then
     selected=$@
 else
-    selected=$(
-        tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf \
-            --height=~1% \
-            --tmux=center,30%,14% \
-            --layout=reverse \
-            --info=inline-right \
-            --color="pointer:#7c7d83,current-bg:-1" \
-            --print-query | tail -1 | xargs
-    )
+    while :; do
+        selected=$(
+            tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf \
+                --height=~1% \
+                --tmux=center,30%,14% \
+                --layout=reverse \
+                --info=inline-right \
+                --color="pointer:#7c7d83,current-bg:-1" \
+                --cycle \
+                --expect=ctrl-d \
+                --print-query | xargs
+        )
+
+        IFS=' ' read -ra list <<<"$selected"
+
+        if [[ ${#list[@]} -lt 2 ]]; then
+            # User selected or aborted
+            break
+        fi
+
+        if [[ ${#list[@]} -eq 2 ]]; then
+            # Expect triggered
+            key_pressed=${list[0]}
+            session_name=${list[1]}
+
+            if [[ $key_pressed == "ctrl-d" ]]; then
+                # Ctrl-d  Delete session
+                if tmux has-session -t $session_name 2>/dev/null; then
+                    tmux kill-session -t $session_name
+                fi
+            fi
+        fi
+    done
 fi
 
 if [[ -z "$selected" ]]; then
@@ -62,7 +86,7 @@ if [[ $session_name == $(tmux display-message -p '#S') ]]; then
 fi
 
 # session_name does not exist
-if ! tmux has-session -t=$session_name 2>/dev/null; then
+if ! tmux has-session -t $session_name 2>/dev/null; then
     zoxide_match=$(zoxide_query $selected)
 
     if [[ -z $zoxide_match ]]; then
