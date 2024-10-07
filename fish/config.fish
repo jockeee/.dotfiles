@@ -79,4 +79,9 @@ if status is-interactive
   if functions -q nvm
     nvm use lts 1>/dev/null
   end
+
+  # Tmuxifier
+  if command -q tmuxifier
+    eval (tmuxifier init - fish)
+  end
 end
