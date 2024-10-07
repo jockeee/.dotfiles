@@ -100,6 +100,10 @@ if command -q batcat
   abbr --add d 'batdiff'
 end
 
+if command -q tmuxifier
+  abbr --add m 'tmuxifier'
+end
+
 
 ##
 ## Functions
