@@ -40,12 +40,14 @@ else
             key_pressed=${list[0]}
             session_name=${list[1]}
 
-            if [[ $key_pressed == "ctrl-d" ]]; then
-                # Ctrl-d  Delete session
+            case "$key_pressed" in
+            "ctrl-d")
+                # Ctrl-d, Delete session
                 if tmux has-session -t $session_name 2>/dev/null; then
                     tmux kill-session -t $session_name
                 fi
-            fi
+                ;;
+            esac
         fi
     done
 fi
