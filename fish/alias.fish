@@ -148,6 +148,7 @@ function gg -d 'git add, git commit, git push'
       set use_ai 1
     else
       echo "Usage: gg [commit message]"
+      echo "Info: aicommits not present"
       return 1
     end
   end
@@ -155,15 +156,15 @@ function gg -d 'git add, git commit, git push'
   if test $use_ai -eq 1
     # using aicomments
     # echo statements has bold text
-    echo -e "\e[1mgit add -A\e[0m" && git add -A && \
-    echo -e "\e[1maicommits\e[0m" && aicommits && \
-    echo -e "\e[1mgit push\e[0m" && git push
+    echo -e "\e[1mgit add -A\e[0m" && git add -A &&
+      echo -e "\e[1maicommits\e[0m" && aicommits &&
+      echo -e "\e[1mgit push\e[0m" && git push
   else
     # using user supplied commit message
     # echo statements has bold text
-    echo -e "\e[1mgit add -A\e[0m" && git add -A && \
-    echo -e "\e[1mgit commit -m \"$argv\"\e[0m" && git commit -m "$argv" && \
-    echo -e "\e[1mgit push\e[0m" && git push
+    echo -e "\e[1mgit add -A\e[0m" && git add -A &&
+      echo -e "\e[1mgit commit -m \"$argv\"\e[0m" && git commit -m "$argv" &&
+      echo -e "\e[1mgit push\e[0m" && git push
   end
 end
 
@@ -197,9 +198,9 @@ function ww -d 'git add, git commit, git push - whatthecommit.com'
   end
 
   # echo statements has bold text
-  echo -e "\e[1mgit add -A\e[0m" && git add -A && \
-  echo -e "\e[1mgit commit -m \"$message\"\e[0m" && git commit -m "$message" && \
-  echo -e "\e[1mgit push\e[0m" && git push
+  echo -e "\e[1mgit add -A\e[0m" && git add -A &&
+    echo -e "\e[1mgit commit -m \"$message\"\e[0m" && git commit -m "$message" &&
+    echo -e "\e[1mgit push\e[0m" && git push
 end
 
 # upd (fedora/ubuntu)
