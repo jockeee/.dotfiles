@@ -100,6 +100,10 @@ if type -P batcat &>/dev/null; then
     alias d='batdiff'
 fi
 
+if type -P tmuxifier &>/dev/null; then
+    alias m='tmuxifier'
+fi
+
 ##
 ## Functions
 ##
