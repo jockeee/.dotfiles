@@ -145,6 +145,76 @@ is_git_repo() {
     return 1
 }
 
+# gg (git add, git commit, git push)
+# usage: gg [commit message]
+gg() {
+    if ! is_git_repo; then
+        echo 'Error: Unable to locate a Git repository.'
+        return 1
+    fi
+
+    use_ai=0
+
+    if [ $# -eq 0 ]; then
+        if type -P aicommits &>/dev/null; then
+            use_ai=1
+        else
+            echo "Usage: gg [commit message]"
+            echo "Info: aicommits not present"
+            return 1
+        fi
+    fi
+
+    if [ $use_ai -eq 1 ]; then
+        # using aicomments
+        # echo statements has bold text
+        echo -e "\e[1mgit add -A\e[0m" && git add -A &&
+            echo -e "\e[1maicommits\e[0m" && aicommits &&
+            echo -e "\e[1mgit push\e[0m" && git push
+    else
+        # using user supplied commit message
+        # echo statements has bold text
+        echo -e "\e[1mgit add -A\e[0m" && git add -A &&
+            echo -e "\e[1mgit commit -m \"$1\"\e[0m" && git commit -m "$1" &&
+            echo -e "\e[1mgit push\e[0m" && git push
+    fi
+}
+
+# ww (git add, git commit, git push - whatthecommit.com)
+# usage: ww
+# like gg but random commit message from whatthecommit.com
+ww() {
+    if ! is_git_repo; then
+        echo 'Error: Unable to locate a Git repository.'
+        return 1
+    fi
+
+    if ! type -P curl &>/dev/null; then
+        echo "Error: Unable to locate 'curl'"
+        return 1
+    fi
+
+    continue='n'
+    while [ "$continue" != "y" ] && [ "$continue" != "Y" ]; do
+        message=$(curl -s https://whatthecommit.com/index.txt)
+        if [ $? -ne 0 ]; then
+            echo "Error: Couldn't retrieve a commit message from 'whatthecommit.com'"
+            return 1
+        fi
+
+        echo "Commit message: $message"
+        read -p "Do you want to use this commit message? [y/N/q]: " continue
+        if [ "$continue" = "q" ]; then
+            return 0
+        fi
+    done
+
+    # echo statements has bold text
+    echo -e "\e[1mgit add -A\e[0m" && git add -A &&
+        echo -e "\e[1mgit commit -m \"$message\"\e[0m" && git commit -m "$message" &&
+        echo -e "\e[1mgit push\e[0m" && git push
+}
+
 upd_fedora() {
     echo -e '\e[1mUpdating system\e[0m'
     echo -e '\e[3msudo dnf upgrade\e[0m\n'
