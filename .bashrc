@@ -365,6 +365,11 @@ if type -P /usr/bin/fzf &>/dev/null; then
     eval "$(fzf --bash)"
 fi
 
+# Tmuxifier
+if type -P tmuxifier &>/dev/null; then
+    eval "$(tmuxifier init -)"
+fi
+
 # autocd
 shopt -s autocd
 
