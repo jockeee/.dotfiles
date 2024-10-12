@@ -36,6 +36,12 @@ else
         fi
 
         if [[ ${#list[@]} -eq 1 ]]; then
+            if [[ ${list[0]} == "ctrl-d" ]]; then
+                # Ctrl-d triggered on empty list
+                # Continue loop, we have no session_name
+                continue
+            fi
+
             # User selected from list, without filtering
             break
         fi
