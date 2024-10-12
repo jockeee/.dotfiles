@@ -17,7 +17,7 @@ if [[ $# -gt 0 ]]; then
 else
     while :; do
         selected=$(
-            tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf \
+            tmux list-sessions -F "#{session_name} #{session_last_attached}" 2>/dev/null | sort -k2r | awk '{print $1}' | fzf \
                 --height=~1% \
                 --tmux=center,30%,14% \
                 --layout=reverse \
