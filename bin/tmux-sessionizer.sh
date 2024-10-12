@@ -30,24 +30,29 @@ else
 
         IFS=' ' read -ra list <<<"$selected"
 
-        if [[ ${#list[@]} -lt 2 ]]; then
-            # User selected or aborted
+        if [[ -z ${list[0]} ]]; then
+            # User aborted
             break
         fi
 
-        if [[ ${#list[@]} -eq 2 ]]; then
-            # Expect triggered
-            key_pressed=${list[0]}
-            session_name=${list[1]}
+        if [[ ${#list[@]} -eq 1 ]]; then
+            # User selected from list, without filtering
+            break
+        fi
 
-            case "$key_pressed" in
-            "ctrl-d")
+        if [[ ${#list[@]} -gt 1 ]]; then
+            session_name=${list[-1]}
+
+            if [[ " ${list[@]} " =~ " ctrl-d " ]]; then
                 # Ctrl-d, Delete session
                 if tmux has-session -t $session_name 2>/dev/null; then
                     tmux kill-session -t $session_name
                 fi
-                ;;
-            esac
+            else
+                # User selected from list, with filtering
+                selected=$session_name
+                break
+            fi
         fi
     done
 fi
