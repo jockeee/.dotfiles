@@ -12,6 +12,16 @@ zoxide_query() {
     fi
 }
 
+kill_session() {
+    if [[ -z $1 ]]; then
+        return
+    fi
+
+    if tmux has-session -t $1 2>/dev/null; then
+        tmux kill-session -t $1
+    fi
+}
+
 if [[ $# -gt 0 ]]; then
     selected=$@
 else
@@ -27,39 +37,77 @@ else
                 --expect=ctrl-d \
                 --print-query | xargs
         )
+        IFS=' ' read -ra keywords <<<"$selected"
 
-        IFS=' ' read -ra list <<<"$selected"
+        # Variable `selected` variations
+        # [filter keyword] [triggered expect] [item match in list, if any]
+        #
+        #     ACTION                      RETURN            0  1  2  3 (keywords returned)
+        #     Ctrl-c / Escape             (nothing)         0          |_ 1 CASE = exit
+        #     Enter, list item            code                 1       |  4* CASES (3 technically in code, 2 cases handled in the same way, 1 edge case)
+        #     Filter, Enter, no match     co                   1       |  ^ Treat as above = User gives session name = Create it if it doesn't exist
+        #     Ctrl-d, empty list          ctrl-d               1       |_ ^
+        #     Ctrl-d, list item           ctrl-d code             2    |  3 CASES
+        #     Filter, Enter, match        co code                 2    |  ^
+        #     Ctrl-d, Filter, no match    co ctrl-d               2    |_ ^
+        #     Ctrl-d, Filter, match       co ctrl-d code             3 |  1 CASE
+        #
+        #     *Edge case, session_name ctrl-d exist
+        #     (yes it is stupid, but now you got here, and it works...) Can't read the code anymore but HEY! it works.
+        #     Enter, list item            ctrl-d               1       |  4* CASES (3 technically in code, 2 cases handled in the same way, 1 edge case)
 
-        if [[ -z ${list[0]} ]]; then
-            # User aborted
+        case ${#keywords[@]} in
+        0)
+            # Ctrl-c / Escape
+            # ''
             break
-        fi
-
-        if [[ ${#list[@]} -eq 1 ]]; then
-            if [[ ${list[0]} == "ctrl-d" ]]; then
-                # Ctrl-d triggered on empty list
-                # Continue loop, we have no session_name
+            ;;
+        1)
+            if [[ ${keywords[0]} == "ctrl-d" ]]; then
+                if tmux has-session -t ${keywords[0]} 2>/dev/null; then
+                    # *Edge case, session_name ctrl-d exist
+                    # Enter, list item
+                    # 'ctrl-d'
+                    break
+                fi
+                # Ctrl-d, empty list
+                # 'ctrl-d'
                 continue
             fi
-
-            # User selected from list, without filtering
+            # Enter, list item
+            # 'code'
+            # Filter, Enter, no match (create new session from name)
+            # 'co'
             break
-        fi
-
-        if [[ ${#list[@]} -gt 1 ]]; then
-            session_name=${list[-1]}
-
-            if [[ " ${list[@]} " =~ " ctrl-d " ]]; then
-                # Ctrl-d, Delete session
-                if tmux has-session -t $session_name 2>/dev/null; then
-                    tmux kill-session -t $session_name
-                fi
+            ;;
+        2)
+            if [[ ${keywords[0]} == "ctrl-d" ]]; then
+                # Ctrl-d, list item
+                # 'ctrl-d code'
+                session_name=${keywords[1]}
+                kill_session $session_name
             else
-                # User selected from list, with filtering
+                if [[ ${keywords[1]} == "ctrl-d" ]]; then
+                    # Ctrl-d, Filter, no match
+                    # 'co ctrl-d'
+                    continue
+                fi
+                # Filter, Enter, match
+                # 'co code'
+                session_name=${keywords[1]}
                 selected=$session_name
                 break
             fi
-        fi
+            ;;
+        3)
+            if [[ ${keywords[1]} == "ctrl-d" ]]; then
+                # Ctrl-d, Filter, match
+                # 'co ctrl-d code'
+                session_name=${keywords[2]}
+                kill_session $session_name
+            fi
+            ;;
+        esac
     done
 fi
 
