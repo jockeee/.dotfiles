@@ -44,7 +44,7 @@ else
         #
         #     ACTION                      RETURN            0  1  2  3 (keywords returned)
         #     Ctrl-c / Escape             (nothing)         0          |_ 1 CASE = exit
-        #     Enter, list item            code                 1       |  4* CASES (3 technically in code, 2 cases handled in the same way, 1 edge case)
+        #     Enter, list item            code                 1       |  3* CASES (2 technically in code, 2 cases handled in the same way, edge case not handled)
         #     Filter, Enter, no match     co                   1       |  ^ Treat as above = User gives session name = Create it if it doesn't exist
         #     Ctrl-d, empty list          ctrl-d               1       |_ ^
         #     Ctrl-d, list item           ctrl-d code             2    |  3 CASES
@@ -52,9 +52,8 @@ else
         #     Ctrl-d, Filter, no match    co ctrl-d               2    |_ ^
         #     Ctrl-d, Filter, match       co ctrl-d code             3 |  1 CASE
         #
-        #     *Edge case, session_name ctrl-d exist
-        #     (yes it is stupid, but now you got here, and it works...) Can't read the code anymore but HEY! it works.
-        #     Enter, list item            ctrl-d               1       |  4* CASES (3 technically in code, 2 cases handled in the same way, 1 edge case)
+        #     *Edge case, session_name ctrl-d exist (tmux new-session -d -s ctrl-d)
+        #     Enter, list item            ctrl-d               1       | Ignore this, removing code solving it.
 
         case ${#keywords[@]} in
         0)
@@ -64,12 +63,6 @@ else
             ;;
         1)
             if [[ ${keywords[0]} == "ctrl-d" ]]; then
-                if tmux has-session -t ${keywords[0]} 2>/dev/null; then
-                    # *Edge case, session_name ctrl-d exist
-                    # Enter, list item
-                    # 'ctrl-d'
-                    break
-                fi
                 # Ctrl-d, empty list
                 # 'ctrl-d'
                 continue
