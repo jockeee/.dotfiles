@@ -41,28 +41,39 @@ else
 
         case ${#keywords[@]} in
         0)
+            # Ctrl-c / Escape
             break
             ;;
         1)
             if [[ ${keywords[0]} == "ctrl-d" ]]; then
+                # Ctrl-d, empty list
                 continue
             fi
+            # Enter, list item
+            # Filter, Enter, no match
             break
             ;;
         2)
             if [[ ${keywords[0]} == "ctrl-d" ]]; then
-                kill_session ${keywords[1]}
+                # Ctrl-d, list item
+                session_name=${keywords[1]}
+                kill_session $session_name
             else
                 if [[ ${keywords[1]} == "ctrl-d" ]]; then
+                    # Ctrl-d, Filter, no match
                     continue
                 fi
-                selected=${keywords[1]}
+                # Filter, Enter, match
+                session_name=${keywords[1]}
+                selected=$session_name
                 break
             fi
             ;;
         3)
             if [[ ${keywords[1]} == "ctrl-d" ]]; then
-                kill_session ${keywords[2]}
+                # Ctrl-d, Filter, match
+                session_name=${keywords[2]}
+                kill_session $session_name
             fi
             ;;
         esac
