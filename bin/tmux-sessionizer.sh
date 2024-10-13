@@ -39,65 +39,30 @@ else
         )
         IFS=' ' read -ra keywords <<<"$selected"
 
-        # Variable `selected` variations
-        # [filter keyword] [triggered expect] [item match in list, if any]
-        #
-        #     ACTION                      RETURN            0  1  2  3 (keywords returned)
-        #     Ctrl-c / Escape             (nothing)         0          |_ 1 CASE = exit
-        #     Enter, list item            code                 1       |  3* CASES (2 technically in code, 2 cases handled in the same way, edge case not handled)
-        #     Filter, Enter, no match     co                   1       |  ^ Treat as above = User gives session name = Create it if it doesn't exist
-        #     Ctrl-d, empty list          ctrl-d               1       |_ ^
-        #     Ctrl-d, list item           ctrl-d code             2    |  3 CASES
-        #     Filter, Enter, match        co code                 2    |  ^
-        #     Ctrl-d, Filter, no match    co ctrl-d               2    |_ ^
-        #     Ctrl-d, Filter, match       co ctrl-d code             3 |  1 CASE
-        #
-        #     *Edge case, session_name ctrl-d exist (tmux new-session -d -s ctrl-d)
-        #     Enter, list item            ctrl-d               1       | Ignore this, removing code solving it.
-
         case ${#keywords[@]} in
         0)
-            # Ctrl-c / Escape
-            # ''
             break
             ;;
         1)
             if [[ ${keywords[0]} == "ctrl-d" ]]; then
-                # Ctrl-d, empty list
-                # 'ctrl-d'
                 continue
             fi
-            # Enter, list item
-            # 'code'
-            # Filter, Enter, no match (create new session from name)
-            # 'co'
             break
             ;;
         2)
             if [[ ${keywords[0]} == "ctrl-d" ]]; then
-                # Ctrl-d, list item
-                # 'ctrl-d code'
-                session_name=${keywords[1]}
-                kill_session $session_name
+                kill_session ${keywords[1]}
             else
                 if [[ ${keywords[1]} == "ctrl-d" ]]; then
-                    # Ctrl-d, Filter, no match
-                    # 'co ctrl-d'
                     continue
                 fi
-                # Filter, Enter, match
-                # 'co code'
-                session_name=${keywords[1]}
-                selected=$session_name
+                selected=${keywords[1]}
                 break
             fi
             ;;
         3)
             if [[ ${keywords[1]} == "ctrl-d" ]]; then
-                # Ctrl-d, Filter, match
-                # 'co ctrl-d code'
-                session_name=${keywords[2]}
-                kill_session $session_name
+                kill_session ${keywords[2]}
             fi
             ;;
         esac
