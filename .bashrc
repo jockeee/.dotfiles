@@ -46,7 +46,7 @@ if type -P pass &>/dev/null; then
     alias p='pass show -c'
     alias pe='pass edit'
     alias pf='pass find'
-    alias pg='pass generate -ci'
+    alias pg='pass generate -c -i'
     alias pi='pass insert -m'
 fi
 
