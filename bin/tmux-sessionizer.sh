@@ -26,8 +26,11 @@ if [[ $# -gt 0 ]]; then
     selected=$@
 else
     while :; do
+        sessions=($(tmux list-sessions -F "#{session_name} #{session_last_attached}" 2>/dev/null | sort -k2r | awk '{print $1}'))
+        [[ -n ${sessions[0]} ]] && sessions[0]+=" (current)" # mark current session
+
         selected=$(
-            tmux list-sessions -F "#{session_name} #{session_last_attached}" 2>/dev/null | sort -k2r | awk '{print $1}' | fzf \
+            printf '%s\n' "${sessions[@]}" | fzf \
                 --height=~1% \
                 --tmux=center,30%,14% \
                 --layout=reverse \
@@ -37,11 +40,12 @@ else
                 --expect=ctrl-d \
                 --print-query | xargs
         )
-        IFS=' ' read -ra keywords <<<"$selected"
+        selected=${selected% *(current)} # remove (current) from selected, if any
+        keywords=($selected)
 
         case ${#keywords[@]} in
         0)
-            # Ctrl-c / Escape
+            # Ctrl-c / Escape / Enter, empty list (CLI)
             break
             ;;
         1)
@@ -50,7 +54,7 @@ else
                 continue
             fi
             # Enter, list item
-            # Filter, Enter, no match
+            # Filter, Enter, no match (= new session name)
             break
             ;;
         2)
