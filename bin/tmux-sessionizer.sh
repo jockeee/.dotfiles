@@ -27,7 +27,7 @@ if [[ $# -gt 0 ]]; then
 else
     while :; do
         sessions=($(tmux list-sessions -F "#{session_name} #{session_last_attached}" 2>/dev/null | sort -k2r | awk '{print $1}'))
-        [[ -n ${sessions[0]} ]] && sessions[0]+=" (current)" # mark current session
+        [[ -n ${sessions[0]} ]] && sessions[0]+=" (current)"
 
         selected=$(
             printf '%s\n' "${sessions[@]}" | fzf \
@@ -40,7 +40,7 @@ else
                 --expect=ctrl-d \
                 --print-query | xargs
         )
-        selected=${selected% *(current)} # remove (current) from selected, if any
+        selected=${selected% *(current)}
         keywords=($selected)
 
         case ${#keywords[@]} in
