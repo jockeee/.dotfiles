@@ -231,7 +231,7 @@ function git-tidy -d 'Git History Cleanup'
   set backup_dir (mktemp -d)
   git clone --mirror . $backup_dir
   if test $status -ne 0
-    echo "Error: Couldn't create a backup"
+    echo "Error: Couldn't create backup"
     rm -rf $backup_dir
     return 1
   end
@@ -246,7 +246,6 @@ function git-tidy -d 'Git History Cleanup'
 
   read -l continue -P "Remove backup? [y/N]: "
   if test $continue = "y" -o $continue = "Y"
-    echo "Info: Removing $backup_dir"
     rm -rf $backup_dir
   end
 end
