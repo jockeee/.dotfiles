@@ -114,8 +114,7 @@ function batdiff
   git diff --name-only --relative --diff-filter=d $argv | xargs bat --diff
 end
 
-# https://github.com/oh-my-fish/oh-my-fish/blob/master/lib/git/git_is_repo.fish
-function cd_git_dir -d 'cd to git directory'
+function cdg -d 'cd to git root directory'
   if not is_git_repo
     echo 'Error: Unable to locate a Git repository.'
     return 1
@@ -126,7 +125,6 @@ function cd_git_dir -d 'cd to git directory'
     cd $git_dir
   end
 end
-alias cdg 'cd_git_dir'
 
 # https://github.com/oh-my-fish/oh-my-fish/blob/master/lib/git/git_is_repo.fish
 function is_git_repo -d 'Check if directory is a repository'
@@ -214,6 +212,41 @@ function ww -d 'git add, git commit, git push - whatthecommit.com'
   echo -e "\e[1mgit add -A\e[0m" && git add -A &&
     echo -e "\e[1mgit commit -m \"$message\"\e[0m" && git commit -m "$message" &&
     echo -e "\e[1mgit push\e[0m" && git push
+end
+
+# git-tidy (Git History Cleanup)
+abbr --add gt 'git-tidy'
+function git-tidy -d 'Git History Cleanup'
+  if not is_git_repo
+    echo 'Error: Unable to locate a Git repository.'
+    return 1
+  end
+
+  read -l -P "Remove all Git history in this repo? [y/N]: " continue
+  if test $continue != "y" -a $continue != "Y"
+    return 0
+  end
+  echo
+
+  set backup_dir (mktemp -d)
+  git clone --mirror . $backup_dir
+  if test $status -ne 0
+    echo "Error: Couldn't create a backup"
+    return 1
+  end
+  echo "Backup created at $backup_dir"
+
+  git checkout --orphan latest_commit
+  git add -A
+  git commit -m "Initial commit"
+  git branch -D main
+  git branch -m main
+  git push -f origin main
+
+  read -l continue -P "Remove backup? [y/N]: "
+  if test $continue = "y" -o $continue = "Y"
+    rm -rf $backup_dir
+  end
 end
 
 # upd (fedora/ubuntu)

@@ -44,6 +44,11 @@ if status is-interactive
       source $HOME/.config/fish/alias.fish
   end
 
+  # Local settings
+  if test -f $HOME/.config/fish/local.fish
+      source $HOME/.config/fish/local.fish
+  end
+
   # $PATH: ~/.local/bin
   if test -d $HOME/.local/bin
     fish_add_path $HOME/.local/bin
