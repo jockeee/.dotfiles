@@ -115,11 +115,29 @@ function batdiff
 end
 
 # https://github.com/oh-my-fish/oh-my-fish/blob/master/lib/git/git_is_repo.fish
+function cd_git_dir -d 'cd to git directory'
+  if not is_git_repo
+    echo 'Error: Unable to locate a Git repository.'
+    return 1
+  end
+
+  set -l git_dir (git rev-parse --show-toplevel)
+  if test -n "$git_dir"
+    cd $git_dir
+  end
+end
+alias cdg 'cd_git_dir'
+
+# https://github.com/oh-my-fish/oh-my-fish/blob/master/lib/git/git_is_repo.fish
 function is_git_repo -d 'Check if directory is a repository'
   test -d .git
   or begin
     # Try to get information about the git directory
     # Example output:
+    #
+    # git rev-parse --git-dir
+    #   ~/.dotfiles/.git
+    #
     # git rev-parse --git-dir --is-bare-repository
     #   .git
     #   false
