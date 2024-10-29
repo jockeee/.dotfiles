@@ -232,9 +232,10 @@ function git-tidy -d 'Git History Cleanup'
   git clone --mirror . $backup_dir
   if test $status -ne 0
     echo "Error: Couldn't create a backup"
+    rm -rf $backup_dir
     return 1
   end
-  echo "Backup created at $backup_dir"
+  echo "Info: Backup created at $backup_dir"
 
   git checkout --orphan latest_commit
   git add -A
@@ -245,6 +246,7 @@ function git-tidy -d 'Git History Cleanup'
 
   read -l continue -P "Remove backup? [y/N]: "
   if test $continue = "y" -o $continue = "Y"
+    echo "Info: Removing $backup_dir"
     rm -rf $backup_dir
   end
 end
