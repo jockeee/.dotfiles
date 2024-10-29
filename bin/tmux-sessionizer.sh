@@ -91,9 +91,14 @@ fi
 selected="${selected/#\~/$HOME}" # tilde expansion of user input from fzf popup
 selected=${selected%/}           # remove trailing slash from selected, if any
 
-if [[ $selected == $HOME ]]; then
+case $selected in
+$HOME)
     selected="base"
-fi
+    ;;
+$HOME/.dotfiles)
+    selected="dot"
+    ;;
+esac
 
 session_name=${selected##*[ /\\]} # session_name is the last part of selected, separators: space, \ or /
 session_name=${session_name//./}  # remove dots from session_name
