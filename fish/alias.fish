@@ -22,6 +22,7 @@ alias laa 'ls -la'
 alias laz 'ls -laZ'
 alias ladz 'ls -ladZ'
 alias lazd 'ls -ladZ'
+alias man 'man --no-justification'
 alias wezterm 'flatpak run org.wezfurlong.wezterm'
 
 if command -q btop
