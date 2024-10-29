@@ -39,6 +39,16 @@ if status is-interactive
     end
   end
 
+  function fish_user_key_bindings
+    if command -q tmux-sessionizer.sh
+      bind \eq 'tmux-sessionizer.sh base; commandline -f repaint'
+      bind \ew 'tmux-sessionizer.sh ~/.dotfiles; commandline -f repaint'
+      bind \ee 'tmux-sessionizer.sh dot nvim; commandline -f repaint'
+      bind \er 'tmux-sessionizer.sh code; commandline -f repaint'
+      bind \et 'tmux-sessionizer.sh pass; commandline -f repaint'
+    end
+  end
+
   # Alias
   if test -f $HOME/.config/fish/alias.fish
       source $HOME/.config/fish/alias.fish
