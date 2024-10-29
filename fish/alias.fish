@@ -228,10 +228,15 @@ function git-tidy -d 'Git History Cleanup'
   end
 
   echo
-  echo -e '\e[1mCreating Backup\e[0m'
+  echo -e '\e[1mCreate Backup\e[0m'
   echo
 
   set backup_dir (mktemp -d)
+  if test $status -ne 0
+    echo "Error: Couldn't create backup directory"
+    return 1
+  end
+
   git clone --mirror . $backup_dir
   if test $status -ne 0
     echo "Error: Couldn't create backup"
@@ -246,10 +251,9 @@ function git-tidy -d 'Git History Cleanup'
 
   git checkout --orphan latest_commit &&
     git add -A &&
-    git commit -m "Git History Cleanup" &&
+    git commit -m "Git History Cleanup" | grep -v " create mode " &&
     git branch -D main &&
     git branch -m main
-  echo
 
   if test $status -ne 0
     echo "Error: Couldn't cleanup Git history"
@@ -258,6 +262,12 @@ function git-tidy -d 'Git History Cleanup'
     git branch -D latest_commit
     return 1
   end
+  echo "Info: Branch 'latest_commit' renamed to 'main'"
+  echo
+
+  echo
+  echo -e '\e[1mPush to Remote\e[0m'
+  echo
 
   read -l continue -P "Push to remote? [Y/n]: "
   if test $continue = "y" -o $continue = "Y" -o $continue = ""
@@ -265,10 +275,16 @@ function git-tidy -d 'Git History Cleanup'
   end
   echo
 
+  echo
+  echo -e '\e[1mRemove Backup\e[0m'
+  echo
+
   read -l continue -P "Remove backup? [Y/n]: "
   if test $continue = "y" -o $continue = "Y" -o $continue = ""
     echo "Info: Removing $backup_dir"
     rm -rf $backup_dir
+  else
+    echo "Info: Backup available at $backup_dir"
   end
   echo
 
@@ -277,6 +293,7 @@ function git-tidy -d 'Git History Cleanup'
   echo
 
   git log
+  echo
 end
 
 # upd (fedora/ubuntu)
