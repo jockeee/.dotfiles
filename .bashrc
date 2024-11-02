@@ -1,5 +1,5 @@
 # default distro ~/.bashrc above
-# VERSION 1.0.12
+# VERSION 1.0.14
 
 ##
 ## Environment
@@ -22,6 +22,7 @@ alias laa='ls -la'
 alias laz='ls -laZ'
 alias ladz='ls -ladZ'
 alias lazd='ls -ladZ'
+alias man='man --nj'
 alias wezterm='flatpak run org.wezfurlong.wezterm'
 
 if type -P btop &>/dev/null; then
@@ -57,7 +58,7 @@ alias v='vim'
 
 # tmux
 # https://github.com/lewisacidic/fish-tmux-abbr
-alias s="tmux attach || tmux new-session -s $TMUX_DEFAULT_SESSION_NAME"
+alias s='tmux attach || tmux new-session -s $TMUX_DEFAULT_SESSION_NAME'
 alias ss='tmux new-session -A -s'
 alias sx='tmux kill-session -t'
 alias sl='tmux list-sessions'
@@ -111,28 +112,31 @@ batdiff() {
         return 1
     fi
 
-    git diff --name-only --relative --diff-filter=d "$@" | xargs $bat_cmd --diff
+    git diff --name-only --relative --diff-filter=d "$@" | xargs "$bat_cmd" --diff
+}
+
+cdg() {
+    if ! is_git_repo; then
+        echo 'Error: Unable to locate a Git repository.'
+        return 1
+    fi
+
+    git_dir=$(git rev-parse --show-toplevel)
+    if [ -n "$git_dir" ]; then
+        cd "$git_dir" || return 1
+    fi
 }
 
 # https://github.com/oh-my-fish/oh-my-fish/blob/master/lib/git/git_is_repo.fish
 is_git_repo() {
-    # Check if the current directory contains a .git folder
     if [ -d .git ]; then
         return 0
     fi
 
-    # Try to get information about the git directory
-    # Example output:
-    # git rev-parse --git-dir --is-bare-repository
-    #   .git
-    #   false
-    info=$(git rev-parse --git-dir --is-bare-repository 2>/dev/null)
-
-    if [ $? -eq 0 ]; then
-        # Split the info variable into an array
+    local info
+    if info=$(git rev-parse --git-dir --is-bare-repository 2>/dev/null); then
         IFS=' ' read -r git_dir is_bare <<<"$info"
 
-        # Check if the repository is not bare
         if [ "$is_bare" = "false" ]; then
             return 0
         fi
@@ -192,14 +196,14 @@ ww() {
 
     continue='n'
     while [ "$continue" != "y" ] && [ "$continue" != "Y" ]; do
-        message=$(curl -s https://whatthecommit.com/index.txt)
-        if [ $? -ne 0 ]; then
+        local message
+        if ! message=$(curl -s https://whatthecommit.com/index.txt); then
             echo "Error: Couldn't retrieve a commit message from 'whatthecommit.com'"
             return 1
         fi
 
         echo "Commit message: $message"
-        read -p "Do you want to use this commit message? [y/N/q]: " continue
+        read -rp "Do you want to use this commit message? [y/N/q]: " continue
         if [ "$continue" = "q" ]; then
             return 0
         fi
@@ -211,10 +215,78 @@ ww() {
         echo -e "\e[1mgit push\e[0m" && git push
 }
 
+# git-tidy (Git History Cleanup)
+alias gt='git-tidy'
+git-tidy() {
+    if ! is_git_repo; then
+        echo 'Error: Unable to locate a Git repository.'
+        return 1
+    fi
+
+    read -rp "Remove all Git history in this repo? [y/N]: " -n 1 -r
+    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+        return 0
+    fi
+
+    # Create Backup
+    echo -e '\n\n\e[1mCreate Backup\e[0m\n'
+
+    local backup_dir
+    if ! backup_dir=$(mktemp -d); then
+        echo "Error: Couldn't create backup directory"
+        return 1
+    fi
+
+    if ! git clone --mirror . "$backup_dir"; then
+        echo "Error: Couldn't create backup"
+        rm -rf "$backup_dir"
+        return 1
+    fi
+
+    # Git History Cleanup
+    echo -e '\n\n\e[1mGit History Cleanup\e[0m\n'
+    git checkout --orphan latest_commit &&
+        git add -A &&
+        git commit -m "Git History Cleanup" | grep -v " create mode " &&
+        git branch -D main &&
+        git branch -m main
+
+    if [[ $? -ne 0 ]]; then
+        echo "Error: Couldn't clean up Git history"
+        echo "Info: Backup available at $backup_dir"
+        git checkout main
+        git branch -D latest_commit
+        return 1
+    fi
+    echo "Info: Branch 'latest_commit' renamed to 'main'"
+
+    # Push to Remote
+    echo -e '\n\n\e[1mPush to Remote\e[0m\n'
+    read -p "Push to Remote? [Y/n]: " -n 1 -r
+    if [[ $REPLY =~ ^[Yy]$ || -z $REPLY ]]; then
+        git push -f origin main
+    fi
+
+    # Remove Backup
+    echo -e '\n\n\e[1mRemove Backup\e[0m\n'
+    read -p "Remove Backup? [Y/n]: " -n 1 -r
+    if [[ $REPLY =~ ^[Yy]$ || -z $REPLY ]]; then
+        echo "Info: Removing $backup_dir"
+        rm -rf "$backup_dir"
+    else
+        echo "Info: Backup available at $backup_dir"
+    fi
+
+    # Git Log
+    echo -e '\n\n\e[1mNew Git Log\e[0m\n'
+    git log
+    echo
+}
+
 upd_fedora() {
     echo -e '\e[1mUpdating system\e[0m'
     echo -e '\e[3msudo dnf upgrade\e[0m\n'
-    sudo dnf upgrade -y
+    sudo /usr/bin/dnf upgrade -y
     echo
     if type -P /usr/bin/flatpak &>/dev/null; then
         echo -e '\e[1mUpdating flatpak apps\e[0m'
@@ -229,9 +301,9 @@ upd_fedora() {
 upd_ubuntu() {
     echo -e '\e[1mUpdating system\e[0m'
     echo -e '\e[3msudo apt update, sudo apt full-upgrade, sudo apt autoremove\e[0m\n'
-    sudo apt update
-    sudo apt full-upgrade -y
-    sudo apt autoremove -y
+    sudo /usr/bin/apt update
+    sudo /usr/bin/apt full-upgrade -y
+    sudo /usr/bin/apt autoremove -y
     echo
     if type -P /usr/bin/snap &>/dev/null; then
         echo -e '\e[1mUpdating snap apps\e[0m'
@@ -260,13 +332,11 @@ upd_go() {
         echo -e '\e[3mhttps://go.dev/dl\e[0m'
         echo
 
-        # if neither curl nor wget found, exit
-        if ! type -P /usr/bin/curl &>/dev/null && ! type -P /usr/bin/wget &>/dev/null; then
-            echo "Error: Neither 'curl' nor 'wget' found"
+        if ! type -P /usr/bin/curl &>/dev/null; then
+            echo "Error: 'curl' not found"
             return 1
         fi
 
-        # if jq not found, exit
         if ! type -P /usr/bin/jq &>/dev/null; then
             echo "Error: 'jq' not found"
             return 1
@@ -274,7 +344,7 @@ upd_go() {
 
         os=$(uname -s | tr '[:upper:]' '[:lower:]')
         arch=$(uname -m)
-        if [ $arch == 'x86_64' ]; then
+        if [ "$arch" == 'x86_64' ]; then
             arch='amd64'
         fi
         kind='archive'
@@ -282,48 +352,45 @@ upd_go() {
         download_url_base='https://golang.org/dl/'
 
         # download json
-        if type -P /usr/bin/curl &>/dev/null; then
-            go_dev_json=$(curl -s https://go.dev/dl/?mode=json)
-        else
-            go_dev_json=$(wget -qO- https://go.dev/dl/?mode=json)
-        fi
-
-        if [ $? -ne 0 ]; then
+        local go_dev_json
+        # go_dev_json=$(curl -s https://go.dev/dl/?mode=json)
+        # go_dev_json=$(wget -qO- https://go.dev/dl/?mode=json)
+        if ! go_dev_json=$(curl -s https://go.dev/dl/?mode=json); then
             echo "Error: Couldn't retrieve JSON response from 'https://go.dev/dl/?mode=json'"
             rm $temp_file
             return 1
         fi
 
         current_go_version=$(/usr/local/go/bin/go version | awk '{print $3}')
-        latest_go_version=$(echo $go_dev_json | jq -r '.[0].version')
+        latest_go_version=$(echo "$go_dev_json" | jq -r '.[0].version')
 
-        current_major=$(echo $current_go_version | sed 's/go//' | cut -d. -f1)
-        current_minor=$(echo $current_go_version | sed 's/go//' | cut -d. -f2)
-        current_patch=$(echo $current_go_version | sed 's/go//' | cut -d. -f3)
+        current_major=$(echo "$current_go_version" | sed 's/go//' | cut -d. -f1)
+        current_minor=$(echo "$current_go_version" | sed 's/go//' | cut -d. -f2)
+        current_patch=$(echo "$current_go_version" | sed 's/go//' | cut -d. -f3)
 
-        latest_major=$(echo $latest_go_version | sed 's/go//' | cut -d. -f1)
-        latest_minor=$(echo $latest_go_version | sed 's/go//' | cut -d. -f2)
-        latest_patch=$(echo $latest_go_version | sed 's/go//' | cut -d. -f3)
+        latest_major=$(echo "$latest_go_version" | sed 's/go//' | cut -d. -f1)
+        latest_minor=$(echo "$latest_go_version" | sed 's/go//' | cut -d. -f2)
+        latest_patch=$(echo "$latest_go_version" | sed 's/go//' | cut -d. -f3)
 
         need_update=false
-        if [ $current_major -lt $latest_major ]; then
+        if [ "$current_major" -lt "$latest_major" ]; then
             need_update=true
-        elif [ $current_major -eq $latest_major ]; then
-            if [ $current_minor -lt $latest_minor ]; then
+        elif [ "$current_major" -eq "$latest_major" ]; then
+            if [ "$current_minor" -lt "$latest_minor" ]; then
                 need_update=true
-            elif [ $current_minor -eq $latest_minor ]; then
-                if [ $current_patch -lt $latest_patch ]; then
+            elif [ "$current_minor" -eq "$latest_minor" ]; then
+                if [ "$current_patch" -lt "$latest_patch" ]; then
                     need_update=true
                 fi
             fi
         fi
 
-        selected_json=$(echo $go_dev_json | jq -r --arg os "$os" --arg arch "$arch" --arg kind "$kind" --arg version "$latest_go_version" '.[0].files[] | select(.os == $os and .arch == $arch and .kind == $kind and .version == $version)')
+        selected_json=$(echo "$go_dev_json" | jq -r --arg os "$os" --arg arch "$arch" --arg kind "$kind" --arg version "$latest_go_version" '.[0].files[] | select(.os == $os and .arch == $arch and .kind == $kind and .version == $version)')
 
         # if selected_json isn't empty, set download_filename and download_checksum
         if [ -n "$selected_json" ]; then
-            download_filename=$(echo $selected_json | jq -r '.filename')
-            download_checksum=$(echo $selected_json | jq -r '.sha256')
+            download_filename=$(echo "$selected_json" | jq -r '.filename')
+            download_checksum=$(echo "$selected_json" | jq -r '.sha256')
         else
             echo "Error: Couldn't find the latest version for $os-$arch in the JSON response."
             return 1
@@ -333,20 +400,16 @@ upd_go() {
             echo "Update available: $current_go_version -> $latest_go_version"
             echo
 
-            # read -p "Do you want to update? [y/N] " -n 1 -r
+            # read -rp "Do you want to update? [y/N] " -n 1 -r
             # if [[ ! $REPLY =~ ^[Yy]$ ]]; then
             #   return 0
             # fi
             # echo
 
-            # download go
-            if type -P /usr/bin/curl &>/dev/null; then
-                curl -L -o $temp_file $download_url_base$download_filename
-            else
-                wget -q --show-progress -O $temp_file $download_url_base$download_filename
-            fi
-
-            if [ $? -ne 0 ]; then
+            # Download go
+            # curl -L -o "$temp_file $download_url_base$download_filename"
+            # wget -q --show-progress -O "$temp_file $download_url_base$download_filename"
+            if ! curl -L -o "$temp_file $download_url_base$download_filename"; then
                 echo "Error: Download failed."
                 if [ -e $temp_file ]; then
                     rm $temp_file
@@ -359,15 +422,15 @@ upd_go() {
                 return 1
             fi
 
-            # verify checksum
+            # Verify checksum
             checksum=$(sha256sum $temp_file | cut -d' ' -f1)
-            if [ $checksum != $download_checksum ]; then
+            if [ "$checksum" != "$download_checksum" ]; then
                 echo "Error: Checksum verification failed"
                 rm $temp_file
                 return 1
             fi
 
-            # update
+            # Update
             sudo rm -rf /usr/local/go
             sudo tar -C /usr/local -xzf $temp_file
             rm $temp_file
@@ -395,24 +458,21 @@ upd_bashrc() {
     fi
 
     # remove current additions
-    sed -i '/# default distro ~\/.bashrc above/,$ d' ~/.bashrc
-    if [ $? -ne 0 ]; then
+    if ! sed -i '/# default distro ~\/.bashrc above/,$ d' ~/.bashrc; then
         echo "Error: Couldn't clean ~/.bashrc from current additions."
         mv ~/.bashrc.bak ~/.bashrc
         return 1
     fi
 
     # add new additions
-    cat ~/.dotfiles/.bashrc >>~/.bashrc
-    if [ $? -ne 0 ]; then
+    if ! cat ~/.dotfiles/.bashrc >>~/.bashrc; then
         echo "Error: Couldn't update ~/.bashrc"
         mv ~/.bashrc.bak ~/.bashrc
         return 1
     fi
 
     # source ~/.bashrc
-    source ~/.bashrc
-    if [ $? -ne 0 ]; then
+    if ! source "$HOME/.bashrc"; then
         echo "Error: Couldn't source ~/.bashrc"
         mv ~/.bashrc.bak ~/.bashrc
         return 1
