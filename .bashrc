@@ -1,5 +1,5 @@
 # default distro ~/.bashrc above
-# VERSION 1.0.14
+# VERSION 1.0.16
 
 ##
 ## Environment
@@ -203,7 +203,7 @@ ww() {
         fi
 
         echo "Commit message: $message"
-        read -rp "Do you want to use this commit message? [y/N/q]: " continue
+        read continue -p "Do you want to use this commit message? [y/N/q]: " -r
         if [ "$continue" = "q" ]; then
             return 0
         fi
@@ -223,14 +223,13 @@ git-tidy() {
         return 1
     fi
 
-    read -rp "Remove all Git history in this repo? [y/N]: " -n 1 -r
+    read -p "Remove all Git history in this repo? [y/N]: " -r
     if [[ ! $REPLY =~ ^[Yy]$ ]]; then
         return 0
     fi
 
     # Create Backup
     echo -e '\n\n\e[1mCreate Backup\e[0m\n'
-
     local backup_dir
     if ! backup_dir=$(mktemp -d); then
         echo "Error: Couldn't create backup directory"
@@ -262,14 +261,14 @@ git-tidy() {
 
     # Push to Remote
     echo -e '\n\n\e[1mPush to Remote\e[0m\n'
-    read -p "Push to Remote? [Y/n]: " -n 1 -r
+    read -p "Push to Remote? [Y/n]: " -r
     if [[ $REPLY =~ ^[Yy]$ || -z $REPLY ]]; then
-        git push -f origin main
+        git push -f --set-upstream origin main
     fi
 
     # Remove Backup
     echo -e '\n\n\e[1mRemove Backup\e[0m\n'
-    read -p "Remove Backup? [Y/n]: " -n 1 -r
+    read -p "Remove Backup? [Y/n]: " -r
     if [[ $REPLY =~ ^[Yy]$ || -z $REPLY ]]; then
         echo "Info: Removing $backup_dir"
         rm -rf "$backup_dir"
@@ -400,7 +399,7 @@ upd_go() {
             echo "Update available: $current_go_version -> $latest_go_version"
             echo
 
-            # read -rp "Do you want to update? [y/N] " -n 1 -r
+            # read -p "Do you want to update? [y/N] " -r
             # if [[ ! $REPLY =~ ^[Yy]$ ]]; then
             #   return 0
             # fi
