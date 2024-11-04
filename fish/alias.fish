@@ -191,7 +191,7 @@ function ww -d 'git add, git commit, git push - whatthecommit.com'
         end
 
         echo "Commit message: $message"
-        read -P "Do you want to use this commit message? [y/N/q]: " continue
+        read -l contiune -P "Do you want to use this commit message? [y/N/q]: "
         if test "$continue" = q
             return 0
         end
@@ -211,7 +211,7 @@ function git-tidy -d 'Git History Cleanup'
         return 1
     end
 
-    read -l continue -P "Remove all Git history in this repo? [y/N]: " -n 1
+    read -l continue -P "Remove all Git history in this repo? [y/N]: "
     if test $continue != y -a $continue != Y
         return 0
     end
@@ -251,9 +251,9 @@ function git-tidy -d 'Git History Cleanup'
 
     # Push to Remote
     echo -e '\n\n\e[1mPush to Remote\e[0m\n'
-    read -l continue -P "Push to remote? [Y/n]: " -n 1
+    read -l continue -P "Push to remote? [Y/n]: "
     if test $continue = y -o $continue = Y -o $continue = ""
-        git push -f origin main
+        git push -f --set-upstream origin main
     end
 
     # Remove Backup
@@ -265,7 +265,6 @@ function git-tidy -d 'Git History Cleanup'
     else
         echo "Info: Backup available at $backup_dir"
     end
-    echo
 
     # Git Log
     echo -e '\n\n\e[1mNew Git Log\e[0m\n'
@@ -444,7 +443,7 @@ function upd_go -d 'golang update'
             echo "Update available: $current_go_version -> $latest_go_version"
             echo
 
-            # read -l -P "Do you want to update? [y/N]: " continue
+            # read -l continue -P "Do you want to update? [y/N]: "
             # if test $continue != "y" -a $continue != "Y"
             #   return 0
             # end
@@ -581,7 +580,7 @@ function install_go -d 'golang install'
     echo "Version available: $latest_go_version"
     echo
 
-    read -l -P "Do you want to install Go? [y/N]: " continue
+    read -l continue -P "Do you want to install Go? [y/N]: "
     if test $continue != y -a $continue != Y
         return 0
     end
