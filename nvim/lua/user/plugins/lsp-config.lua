@@ -273,6 +273,7 @@ return {
     vim.list_extend(ensure_installed, {
       -- Bash
       'shfmt', -- Formatter: A shell formatter (sh/bash/mksh)
+      'shellcheck', -- Linter: A static analysis tool for shell scripts
       -- Lua
       'stylua', -- Formatter: An opinionated Lua code formatter
       -- Html

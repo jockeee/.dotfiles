@@ -34,6 +34,7 @@ return {
       -- Run *until* a formatter is found
       -- html = { 'prettierd', 'prettier', stop_after_first = true },
       bash = { 'shfmt' },
+      fish = { 'fish_indent' },
       lua = { 'stylua' },
       html = { 'prettierd', 'prettier', stop_after_first = true },
       javascript = { 'prettierd', 'prettier', stop_after_first = true },
