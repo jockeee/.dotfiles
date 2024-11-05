@@ -14,7 +14,7 @@ return {
   event = { 'BufReadPre', 'BufNewFile' },
   dependencies = {
     'nvim-treesitter/nvim-treesitter-textobjects',
-    { 'windwp/nvim-ts-autotag', opts = {} },
+    { 'windwp/nvim-ts-autotag', opts = {} }, -- Use treesitter to auto close and auto rename html tag
   },
   build = ':TSUpdate',
   opts = {

@@ -166,6 +166,10 @@ return {
         --  :help CursorHold for information about when this is executed
         --
         -- When you move your cursor, the highlights will be cleared (the second autocommand).
+        -- Note: Usage of vim.lsp.buf.document_highlight() requires the following highlight groups to be defined or you won't be able to see the actual highlights.
+        --   hl-LspReferenceText
+        --   hl-LspReferenceRead
+        --   hl-LspReferenceWrite
         local client = vim.lsp.get_client_by_id(event.data.client_id)
         if client and client.server_capabilities.documentHighlightProvider then
           vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {

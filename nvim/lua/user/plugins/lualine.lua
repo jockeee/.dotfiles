@@ -19,7 +19,7 @@ return {
   },
   opts = {
     options = {
-      theme = 'mycolors', -- default: auto
+      theme = 'vscode-colors', -- default: auto, lua/lualine/themes/vscode-colors.lua
       component_separators = '',
       section_separators = '',
     },

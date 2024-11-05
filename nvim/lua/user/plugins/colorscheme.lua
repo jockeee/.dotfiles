@@ -13,16 +13,18 @@ return {
     priority = 1000,
     init = function()
       require('vscode').setup {
-        italic_comments = true,
+        italic_comments = false,
 
         -- Override colors (see ./lua/vscode/colors.lua)
         color_overrides = {
           vscGreen = '#787878',
+          vscPopupHighlightGray = '#434343',
         },
       }
       vim.cmd.colorscheme 'vscode'
       vim.cmd.highlight 'StatusLine guifg=#b1b1b1 guibg=#353535 '
-      vim.cmd.highlight 'MsgArea    guifg=#b1b1b1'
+      vim.cmd.highlight 'MsgArea guifg=#b1b1b1'
+      vim.cmd.highlight '@variable guifg=#e5e5e5'
     end,
   },
 
@@ -34,11 +36,14 @@ return {
   --   lazy = false,
   --   priority = 1000,
   --   opts = {
-  --     color_overrides = {
-  --       mocha = {
-  --         base =  '#1f1f1f', -- background color
-  --       },
+  --     styles = {
+  --       comments = {}, -- Default: "italics"
   --     },
+  --     -- color_overrides = {
+  --     --   mocha = {
+  --     --     base = '#1f1f1f', -- background color
+  --     --   },
+  --     -- },
   --   },
   --   init = function()
   --     vim.cmd.colorscheme 'catppuccin'

@@ -1,3 +1,7 @@
+-- Lualine colors
+-- vscode theme colors
+--   theme = 'vscode_colors', -- default: auto
+
 local colors = {
   bg = '#2c2c2c',
   fg_light = '#b1b1b1',
