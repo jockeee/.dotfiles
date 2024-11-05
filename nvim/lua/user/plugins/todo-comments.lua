@@ -15,7 +15,11 @@ return {
   'folke/todo-comments.nvim',
   event = 'VimEnter',
   dependencies = { 'nvim-lua/plenary.nvim' },
-  opts = {},
+  opts = {
+    highlight = {
+      multiline = false,
+    },
+  },
   -- config = function(_, opts)
   --   local todo_comments = require 'todo-comments'
   --
