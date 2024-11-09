@@ -1,4 +1,5 @@
 --
--- after/ftplugin sql.lua
+-- after/ftplugin
+-- sql.lua
 
 vim.opt_local.commentstring = '-- %s'
