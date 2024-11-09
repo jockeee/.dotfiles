@@ -86,7 +86,7 @@ end
 abbr --add c cat
 if command -q bat
     set bat_cmd bat
-    alias bat 'bat -P'
+    alias bat 'bat -pp'
     abbr --add c bat
     abbr --add d batdiff
 end
