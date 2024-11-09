@@ -5,7 +5,7 @@ zoxide_query() {
         echo ""
     fi
 
-    if [[ -z "$1" ]]; then
+    if [[ -z $1 ]]; then
         echo ""
     else
         zoxide query "$@" 2>/dev/null
@@ -27,12 +27,18 @@ if [[ $# -gt 0 ]]; then
 else
     while :; do
         mapfile -t sessions < <(tmux list-sessions -F "#{session_name} #{session_last_attached}" 2>/dev/null | sort -k2r | awk '{print $1}')
-        [[ -n ${sessions[0]} ]] && sessions[0]+=" (current)"
+
+        for i in "${!sessions[@]}"; do
+            if [[ ${sessions[i]} == "$(tmux display-message -p '#{session_name}')" ]]; then
+                sessions[i]+=" (current)"
+                break
+            fi
+        done
 
         selected=$(
             printf '%s\n' "${sessions[@]}" | fzf \
                 --height=~1% \
-                --tmux=center,30%,14% \
+                --tmux=center,28%,14% \
                 --layout=reverse \
                 --info=inline-right \
                 --color="pointer:#7c7d83,current-bg:-1" \
@@ -41,7 +47,7 @@ else
                 --print-query | xargs
         )
         selected=${selected% *(current)}
-        keywords=("$selected")
+        read -ra keywords <<<"$selected"
 
         case ${#keywords[@]} in
         0)
@@ -60,31 +66,28 @@ else
         2)
             if [[ ${keywords[0]} == "ctrl-d" ]]; then
                 # Ctrl-d, list item
-                session_name=${keywords[1]}
-                kill_session "$session_name"
+                kill_session "${keywords[1]}"
             else
                 if [[ ${keywords[1]} == "ctrl-d" ]]; then
                     # Ctrl-d, Filter, no match
                     continue
                 fi
                 # Filter, Enter, match
-                session_name=${keywords[1]}
-                selected=$session_name
+                selected="${keywords[1]}"
                 break
             fi
             ;;
         3)
             if [[ ${keywords[1]} == "ctrl-d" ]]; then
                 # Ctrl-d, Filter, match
-                session_name=${keywords[2]}
-                kill_session "$session_name"
+                kill_session "${keywords[2]}"
             fi
             ;;
         esac
     done
 fi
 
-if [[ -z "$selected" ]]; then
+if [[ -z $selected ]]; then
     exit 0
 fi
 
@@ -102,12 +105,13 @@ esac
 
 if [[ -z $session_name ]]; then
     session_name=${selected##*[ /\\]} # session_name is the last part of selected, separators: space, \ or /
+    session_name=${session_name//./}  # remove dots from session_name
 fi
-session_name=${session_name//./} # remove dots from session_name
+
 tmux_running=$(pgrep tmux)
 
 # We are not in a tmux session and tmux is not running
-if [[ -z $TMUX ]] && [[ -z "$tmux_running" ]]; then
+if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
     zoxide_match=$(zoxide_query "$selected")
 
     if [[ -z $zoxide_match ]]; then
@@ -122,7 +126,7 @@ fi
 # We are in Tmux
 
 # session_name is current session
-if [[ $session_name == $(tmux display-message -p '#S') ]]; then
+if [[ $session_name == "$(tmux display-message -p '#{session_name}')" ]]; then
     exit 0
 fi
 
