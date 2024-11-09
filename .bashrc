@@ -1,5 +1,5 @@
 # default distro ~/.bashrc above
-# VERSION 1.0.16
+# VERSION 1.0.18
 
 ##
 ## Environment
@@ -89,15 +89,15 @@ fi
 alias c='cat'
 if type -P bat &>/dev/null; then
     bat_cmd='bat'
-    alias bat='bat -P'
-    alias c='bat -P'
+    alias bat='bat -pp'
+    alias c='bat -pp'
     alias d='batdiff'
 fi
 
 if type -P batcat &>/dev/null; then
     bat_cmd='batcat'
-    alias bat='batcat -P'
-    alias c='batcat -P'
+    alias bat='batcat -pp'
+    alias c='batcat -pp'
     alias d='batdiff'
 fi
 
