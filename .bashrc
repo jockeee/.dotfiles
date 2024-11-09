@@ -52,6 +52,7 @@ if type -P pass &>/dev/null; then
 fi
 
 # .
+alias c='cat'
 alias g='git'
 alias t='tree'
 alias v='vim'
@@ -86,7 +87,6 @@ if type -P git-forgit &>/dev/null; then
     alias gl='git-forgit log'
 fi
 
-alias c='cat'
 if type -P bat &>/dev/null; then
     bat_cmd='bat'
     alias bat='bat -pp'
