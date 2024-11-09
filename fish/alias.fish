@@ -49,6 +49,7 @@ if command -q pass
 end
 
 # c<space> expands to cat, c<enter> behaves like an alias
+abbr --add c cat
 abbr --add g git
 abbr --add t tree
 abbr --add v vim
@@ -83,18 +84,15 @@ if type -q git-forgit
     abbr --add gl 'git-forgit log'
 end
 
-abbr --add c cat
 if command -q bat
     set bat_cmd bat
-    alias bat 'bat -pp'
-    abbr --add c bat
+    alias cat 'bat -pp'
     abbr --add d batdiff
 end
 
 if command -q batcat
     set bat_cmd batcat
-    alias bat 'batcat -P'
-    abbr --add c bat
+    alias cat 'batcat -pp'
     abbr --add d batdiff
 end
 
