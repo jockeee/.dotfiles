@@ -41,7 +41,7 @@ if status is-interactive
 
     function fish_user_key_bindings
         if command -q tmux-sessionizer.sh
-            bind \eq 'tmux-sessionizer.sh base; commandline -f repaint'
+            bind \eq 'tmux-sessionizer.sh ~; commandline -f repaint'
             bind \ew 'tmux-sessionizer.sh ~/.dotfiles; commandline -f repaint'
             bind \ee 'tmux-sessionizer.sh dot nvim; commandline -f repaint'
             bind \er 'tmux-sessionizer.sh code; commandline -f repaint'
