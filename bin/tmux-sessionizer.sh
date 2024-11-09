@@ -8,7 +8,7 @@ zoxide_query() {
     if [[ -z "$1" ]]; then
         echo ""
     else
-        echo $(zoxide query $@ 2>/dev/null)
+        zoxide query "$@" 2>/dev/null
     fi
 }
 
@@ -17,16 +17,16 @@ kill_session() {
         return
     fi
 
-    if tmux has-session -t $1 2>/dev/null; then
-        tmux kill-session -t $1
+    if tmux has-session -t "$1" 2>/dev/null; then
+        tmux kill-session -t "$1"
     fi
 }
 
 if [[ $# -gt 0 ]]; then
-    selected=$@
+    selected=$*
 else
     while :; do
-        sessions=($(tmux list-sessions -F "#{session_name} #{session_last_attached}" 2>/dev/null | sort -k2r | awk '{print $1}'))
+        mapfile -t sessions < <(tmux list-sessions -F "#{session_name} #{session_last_attached}" 2>/dev/null | sort -k2r | awk '{print $1}')
         [[ -n ${sessions[0]} ]] && sessions[0]+=" (current)"
 
         selected=$(
@@ -41,7 +41,7 @@ else
                 --print-query | xargs
         )
         selected=${selected% *(current)}
-        keywords=($selected)
+        keywords=("$selected")
 
         case ${#keywords[@]} in
         0)
@@ -61,7 +61,7 @@ else
             if [[ ${keywords[0]} == "ctrl-d" ]]; then
                 # Ctrl-d, list item
                 session_name=${keywords[1]}
-                kill_session $session_name
+                kill_session "$session_name"
             else
                 if [[ ${keywords[1]} == "ctrl-d" ]]; then
                     # Ctrl-d, Filter, no match
@@ -77,7 +77,7 @@ else
             if [[ ${keywords[1]} == "ctrl-d" ]]; then
                 # Ctrl-d, Filter, match
                 session_name=${keywords[2]}
-                kill_session $session_name
+                kill_session "$session_name"
             fi
             ;;
         esac
@@ -92,28 +92,30 @@ selected="${selected/#\~/$HOME}" # tilde expansion of user input from fzf popup
 selected=${selected%/}           # remove trailing slash from selected, if any
 
 case $selected in
-$HOME)
-    selected="base"
+"$HOME")
+    session_name="home"
     ;;
-$HOME/.dotfiles)
-    selected="dot"
+"$HOME"/.dotfiles)
+    session_name="dot"
     ;;
 esac
 
-session_name=${selected##*[ /\\]} # session_name is the last part of selected, separators: space, \ or /
-session_name=${session_name//./}  # remove dots from session_name
+if [[ -z $session_name ]]; then
+    session_name=${selected##*[ /\\]} # session_name is the last part of selected, separators: space, \ or /
+fi
+session_name=${session_name//./} # remove dots from session_name
 tmux_running=$(pgrep tmux)
 
 # We are not in a tmux session and tmux is not running
 if [[ -z $TMUX ]] && [[ -z "$tmux_running" ]]; then
-    zoxide_match=$(zoxide_query $selected)
+    zoxide_match=$(zoxide_query "$selected")
 
     if [[ -z $zoxide_match ]]; then
-        tmux new-session -s $session_name -c $HOME
+        tmux new-session -s "$session_name" -c "$HOME"
         exit 0
     fi
 
-    tmux new-session -s $session_name -c $zoxide_match
+    tmux new-session -s "$session_name" -c "$zoxide_match"
     exit 0
 fi
 
@@ -125,14 +127,14 @@ if [[ $session_name == $(tmux display-message -p '#S') ]]; then
 fi
 
 # session_name does not exist
-if ! tmux has-session -t $session_name 2>/dev/null; then
-    zoxide_match=$(zoxide_query $selected)
+if ! tmux has-session -t "$session_name" 2>/dev/null; then
+    zoxide_match=$(zoxide_query "$selected")
 
     if [[ -z $zoxide_match ]]; then
-        tmux new-session -d -s $session_name -c $HOME
+        tmux new-session -d -s "$session_name" -c "$HOME"
     else
-        tmux new-session -d -s $session_name -c $zoxide_match
+        tmux new-session -d -s "$session_name" -c "$zoxide_match"
     fi
 fi
 
-tmux switch-client -t $session_name
+tmux switch-client -t "$session_name"
