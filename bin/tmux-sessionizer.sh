@@ -10,6 +10,7 @@ zoxide_query() {
         echo ""
     else
         local query=$*
+        # shellcheck disable=SC2086
         zoxide query $query 2>/dev/null
     fi
 }
