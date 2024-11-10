@@ -3,12 +3,14 @@
 zoxide_query() {
     if ! type -P zoxide &>/dev/null; then
         echo ""
+        return
     fi
 
     if [[ -z $1 ]]; then
         echo ""
     else
-        zoxide query $@ 2>/dev/null
+        local query=$*
+        zoxide query $query 2>/dev/null
     fi
 }
 
