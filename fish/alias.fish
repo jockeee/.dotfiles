@@ -189,7 +189,7 @@ function ww -d 'git add, git commit, git push - whatthecommit.com'
         end
 
         echo "Commit message: $message"
-        read -l contiune -P "Do you want to use this commit message? [y/N/q]: "
+        read -P "Do you want to use this commit message? [y/N/q]: " -l continue
         if test "$continue" = q
             return 0
         end
@@ -209,7 +209,7 @@ function git-tidy -d 'Git History Cleanup'
         return 1
     end
 
-    read -l continue -P "Remove all Git history in this repo? [y/N]: "
+    read -P "Remove all Git history in this repo? [y/N]: " -l continue
     if test $continue != y -a $continue != Y
         return 0
     end
@@ -249,14 +249,14 @@ function git-tidy -d 'Git History Cleanup'
 
     # Push to Remote
     echo -e '\n\n\e[1mPush to Remote\e[0m\n'
-    read -l continue -P "Push to remote? [Y/n]: "
+    read -P "Push to remote? [Y/n]: " -l continue
     if test $continue = y -o $continue = Y -o $continue = ""
         git push -f --set-upstream origin main
     end
 
     # Remove Backup
     echo -e '\n\n\e[1mRemove Backup\e[0m\n'
-    read -l continue -P "Remove backup? [Y/n]: "
+    read -P "Remove backup? [Y/n]: " -l continue
     if test $continue = y -o $continue = Y -o $continue = ""
         echo "Info: Removing $backup_dir"
         rm -rf $backup_dir
@@ -441,7 +441,7 @@ function upd_go -d 'golang update'
             echo "Update available: $current_go_version -> $latest_go_version"
             echo
 
-            # read -l continue -P "Do you want to update? [y/N]: "
+            # read -P "Do you want to update? [y/N]: " -l continue
             # if test $continue != "y" -a $continue != "Y"
             #   return 0
             # end
@@ -578,7 +578,7 @@ function install_go -d 'golang install'
     echo "Version available: $latest_go_version"
     echo
 
-    read -l continue -P "Do you want to install Go? [y/N]: "
+    read -P "Do you want to install Go? [y/N]: " -l continue
     if test $continue != y -a $continue != Y
         return 0
     end
