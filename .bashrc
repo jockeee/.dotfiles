@@ -1,5 +1,5 @@
 # default distro ~/.bashrc above
-# VERSION 1.0.18
+# VERSION 1.0.20
 
 ##
 ## Environment
@@ -203,7 +203,7 @@ ww() {
         fi
 
         echo "Commit message: $message"
-        read continue -p "Do you want to use this commit message? [y/N/q]: " -r
+        read -r -p "Do you want to use this commit message? [y/N/q]: " continue
         if [ "$continue" = "q" ]; then
             return 0
         fi
@@ -223,7 +223,7 @@ git-tidy() {
         return 1
     fi
 
-    read -p "Remove all Git history in this repo? [y/N]: " -r
+    read -r -p "Remove all Git history in this repo? [y/N]: "
     if [[ ! $REPLY =~ ^[Yy]$ ]]; then
         return 0
     fi
@@ -261,14 +261,14 @@ git-tidy() {
 
     # Push to Remote
     echo -e '\n\n\e[1mPush to Remote\e[0m\n'
-    read -p "Push to Remote? [Y/n]: " -r
+    read -r -p "Push to Remote? [Y/n]: "
     if [[ $REPLY =~ ^[Yy]$ || -z $REPLY ]]; then
         git push -f --set-upstream origin main
     fi
 
     # Remove Backup
     echo -e '\n\n\e[1mRemove Backup\e[0m\n'
-    read -p "Remove Backup? [Y/n]: " -r
+    read -r -p "Remove Backup? [Y/n]: "
     if [[ $REPLY =~ ^[Yy]$ || -z $REPLY ]]; then
         echo "Info: Removing $backup_dir"
         rm -rf "$backup_dir"
@@ -399,7 +399,7 @@ upd_go() {
             echo "Update available: $current_go_version -> $latest_go_version"
             echo
 
-            # read -p "Do you want to update? [y/N] " -r
+            # read -r -p "Do you want to update? [y/N] "
             # if [[ ! $REPLY =~ ^[Yy]$ ]]; then
             #   return 0
             # fi
