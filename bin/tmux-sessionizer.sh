@@ -8,7 +8,7 @@ zoxide_query() {
     if [[ -z $1 ]]; then
         echo ""
     else
-        zoxide query "$@" 2>/dev/null
+        zoxide query $@ 2>/dev/null
     fi
 }
 
