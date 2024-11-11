@@ -19,6 +19,7 @@ return {
   require 'user.plugins.aerial', -- code outline
   require 'user.plugins.copilot',
   require 'user.plugins.dial', -- enhanced increment/decrement, keyword cycle (true/false), and more
+  require 'user.plugins.multicursor',
   require 'user.plugins.nvim-autopairs', -- automatically insert or delete brackets, parens, quotes in pair
   require 'user.plugins.nvim-surround', -- add/change/delete surrounding delimiter pairs with ease
   require 'user.plugins.treesj', -- split/join blocks of code
@@ -36,6 +37,9 @@ return {
   -- SQL
   require 'user.plugins.sql', -- vim-dadbod, vim-dadbod-ui, vim-dadbod-completion
 
+  -- Markdown
+  require 'user.plugins.markdown',
+
   -- Autocompletion
   require 'user.plugins.nvim-cmp', -- autocompletion, snippets
 
@@ -44,4 +48,5 @@ return {
 
   -- LSP, debug, linting and formatting tools
   require 'user.plugins.lsp-config',
+  require 'user.plugins.debug',
 }

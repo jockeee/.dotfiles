@@ -14,8 +14,21 @@ vim.keymap.set('t', '<esc>', '<C-\\><C-n>', { desc = 'Exit Terminal Mode' })
 vim.keymap.set({ 'i', 'n', 's' }, '<C-s>', '<cmd>w<cr><esc>', { desc = 'Save File' })
 
 -- j/k navigate visual lines (wrapped lines)
-vim.keymap.set('n', 'j', 'gj')
-vim.keymap.set('n', 'k', 'gk')
+-- vim.keymap.set('n', 'j', 'gj')
+-- vim.keymap.set('n', 'k', 'gk')
+-- https://www.reddit.com/r/neovim/comments/19axx0v/how_do_i_stop_nvim_from_jumping_whole_lines/
+local mux_with_g = function(key)
+  local gkey = 'g' .. key
+  return function()
+    if vim.v.count == 0 then
+      return gkey
+    else
+      return key
+    end
+  end
+end
+vim.keymap.set({ 'n', 'v' }, 'j', mux_with_g 'j', { expr = true })
+vim.keymap.set({ 'n', 'v' }, 'k', mux_with_g 'k', { expr = true })
 
 -- Resize windows using <ctrl> + arrow keys
 vim.keymap.set('n', '<C-up>', '<cmd>resize +2<cr>', { desc = 'Increase Window Height' })
