@@ -6,10 +6,10 @@ return {
   { 'nvim-tree/nvim-web-devicons', event = 'VeryLazy' }, -- icons, via nerd font
 
   -- Visual
-  { 'folke/todo-comments.nvim', event = { 'BufReadPre', 'BufNewFile' } }, -- highlight todo, notes, etc in comments
   require 'user.plugins.colorscheme',
   require 'user.plugins.lualine', -- statusline
-  require 'user.plugins.nvim-tree', -- file explorer
+  require 'user.plugins.nvim-tree', -- file tree
+  require 'user.plugins.oil', -- file explorer
   require 'user.plugins.telescope',
   require 'user.plugins.todo-comments', -- highlight todo, notes, etc in comments
   require 'user.plugins.trouble', -- pretty diagnostics, references, telescope results, quickfix and location list
@@ -19,15 +19,17 @@ return {
   require 'user.plugins.aerial', -- code outline
   require 'user.plugins.copilot',
   require 'user.plugins.dial', -- enhanced increment/decrement, keyword cycle (true/false), and more
+  require 'user.plugins.mini', -- various small independent plugins/modules
   require 'user.plugins.multicursor',
   require 'user.plugins.nvim-autopairs', -- automatically insert or delete brackets, parens, quotes in pair
-  require 'user.plugins.nvim-surround', -- add/change/delete surrounding delimiter pairs with ease
+  -- require 'user.plugins.nvim-surround', -- add/change/delete surrounding delimiter pairs with ease -- back to mini.surround
   require 'user.plugins.treesj', -- split/join blocks of code
   require 'user.plugins.treesitter', -- highlight, edit, and navigate code
 
   -- Functionality
   require 'user.plugins.auto-session', -- sessions based on working directory
   require 'user.plugins.harpoon', -- quick navigation
+  require 'user.plugins.toggleterm', -- terminal in a floating window
   require 'user.plugins.vim-tmux-navigator', -- tmux & split window navigation with C-hjkl\
 
   -- Git
