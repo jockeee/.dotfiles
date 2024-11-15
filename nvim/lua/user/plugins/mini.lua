@@ -36,8 +36,8 @@ return {
     -- Examples:
     --    sa    add surrounding
     --    sd    delete surround
-    --    sf    find surrounding (to the right)
-    --    sF    find surrounding (to the left)
+    --    sf    find surrounding, forward
+    --    sF    find surrounding, backwards
     --    sh    highlight surrounding
     --    sr    replace surrounding
     require('mini.surround').setup()
