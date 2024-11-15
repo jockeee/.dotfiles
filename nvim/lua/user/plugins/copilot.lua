@@ -26,7 +26,7 @@ return {
         accept_line = '<C-f>',
         prev = '[[',
         next = ']]',
-        dismiss = '<C-q>',
+        dismiss = '<C-x>',
       },
     },
   },

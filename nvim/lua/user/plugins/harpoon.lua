@@ -3,8 +3,8 @@
 
 return {
   'ThePrimeagen/harpoon',
-  event = 'VimEnter',
   branch = 'harpoon2',
+  event = 'VimEnter',
   dependencies = { 'nvim-lua/plenary.nvim' },
   opts = {
     settings = {

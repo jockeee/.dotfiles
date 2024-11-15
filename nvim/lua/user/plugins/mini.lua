@@ -4,8 +4,8 @@
 
 return {
   'echasnovski/mini.nvim',
-  event = { 'BufReadPre', 'BufNewFile' },
   version = '*', -- * stable, false = main, for the latest features
+  event = { 'BufReadPre', 'BufNewFile' },
   config = function()
     -- a/i textobjects
     -- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-ai.md

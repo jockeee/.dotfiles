@@ -26,7 +26,7 @@
 
 return {
   'kylechui/nvim-surround',
-  event = { 'BufReadPre', 'BufNewFile' },
   version = '*', -- * stable; `main` branch for the latest features
+  event = { 'BufReadPre', 'BufNewFile' },
   config = true,
 }

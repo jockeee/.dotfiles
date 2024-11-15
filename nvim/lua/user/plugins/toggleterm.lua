@@ -6,8 +6,8 @@
 
 return {
   'akinsho/toggleterm.nvim',
-  event = 'VimEnter',
   version = '*',
+  event = 'VimEnter',
   keys = { { '`', '<cmd>ToggleTerm direction=float<cr>', desc = 'Terminal' } },
   config = function()
     require('toggleterm').setup {}

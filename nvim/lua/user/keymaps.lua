@@ -5,13 +5,21 @@
 vim.keymap.set({ 'n', 'v' }, '<space>', '<nop>')
 
 -- Clean up search results and extmarks with <esc>
-vim.keymap.set('n', '<esc>', '<cmd>nohlsearch<cr><cmd>lua require("user.utils").hl_search_index_clear()<cr>')
+-- vim.keymap.set('n', '<esc>', '<cmd>nohlsearch<cr><cmd>lua require("user.utils").hl_search_index_clear()<cr>')
+vim.keymap.set('n', '<esc>', function()
+  vim.cmd 'nohlsearch'
+  require('user.utils').hl_search_index_clear()
+  require('multicursor-nvim').clearCursors()
+end)
 
 -- Exit terminal mode in the builtin terminal with <esc> (default: <C-\><C-n>).
 vim.keymap.set('t', '<esc>', '<C-\\><C-n>', { desc = 'Exit Terminal Mode' })
 
 -- Save file
 vim.keymap.set({ 'i', 'n', 's' }, '<C-s>', '<cmd>w<cr><esc>', { desc = 'Save File' })
+
+vim.keymap.set({ 'n', 'v' }, '<left>', 'b')
+vim.keymap.set({ 'n', 'v' }, '<right>', 'e')
 
 -- j/k navigate visual lines (wrapped lines)
 -- vim.keymap.set('n', 'j', 'gj')
@@ -31,10 +39,10 @@ vim.keymap.set({ 'n', 'v' }, 'j', mux_with_g 'j', { expr = true })
 vim.keymap.set({ 'n', 'v' }, 'k', mux_with_g 'k', { expr = true })
 
 -- Resize windows using <ctrl> + arrow keys
-vim.keymap.set('n', '<C-up>', '<cmd>resize +2<cr>', { desc = 'Increase Window Height' })
-vim.keymap.set('n', '<C-down>', '<cmd>resize -2<cr>', { desc = 'decrease Window Height' })
-vim.keymap.set('n', '<C-left>', '<cmd>vertical resize -2<cr>', { desc = 'Decrease Window Height' })
-vim.keymap.set('n', '<C-right>', '<cmd>vertical resize +2<cr>', { desc = 'Increase Window Height' })
+vim.keymap.set('n', '<M-up>', '<cmd>resize +2<cr>', { desc = 'Window Height, +' })
+vim.keymap.set('n', '<M-down>', '<cmd>resize -2<cr>', { desc = 'Window Height, -' })
+vim.keymap.set('n', '<M-left>', '<cmd>vertical resize -2<cr>', { desc = 'Window Width, +' })
+vim.keymap.set('n', '<M-right>', '<cmd>vertical resize +2<cr>', { desc = 'Window Width, -' })
 
 -- Move lines up/down
 vim.keymap.set('n', '<M-j>', '<cmd>m .+1<cr>==', { desc = 'Move Down' })
@@ -69,11 +77,10 @@ vim.keymap.set('n', '<leader>dd', '<cmd>bd<cr>', { desc = 'Delete Buffer' })
 vim.keymap.set('n', '<leader>da', '<cmd>%bdelete<cr>', { desc = 'Delete All Buffers' })
 vim.keymap.set('n', '<leader>dx', '<cmd>bd!<cr>', { desc = 'Kill Buffer (Ignore Unsaved Changes)' })
 
--- Leader n: Neovim
-vim.keymap.set('n', '<leader>nm', '<cmd>Mason<cr>', { desc = 'Mason' })
-vim.keymap.set('n', '<leader>nl', '<cmd>Lazy<cr>', { desc = 'Lazy' })
-vim.keymap.set('n', '<leader>nq', '<cmd>quitall<cr>', { desc = 'Quit' })
-vim.keymap.set('n', '<leader>ns', '<cmd>w !sudo tee %<cr>', { desc = 'Sudo Write' })
+-- Leader q: Neovim
+vim.keymap.set('n', '<leader>qm', '<cmd>Mason<cr>', { desc = 'Mason' })
+vim.keymap.set('n', '<leader>ql', '<cmd>Lazy<cr>', { desc = 'Lazy' })
+vim.keymap.set('n', '<leader>qs', '<cmd>w !sudo tee %<cr>', { desc = 'Sudo Write' })
 
 -- Leader t: Toggle
 vim.keymap.set(

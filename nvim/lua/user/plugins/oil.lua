@@ -10,6 +10,7 @@ return {
   ---@module 'oil'
   ---@type oil.SetupOpts
   opts = {
+    delete_to_trash = true, -- Send deleted files to the trash instead of permanently deleting them (:help oil-trash)
     keymaps = {
       ['<C-h>'] = false,
       ['<C-s>'] = false,
