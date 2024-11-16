@@ -101,7 +101,12 @@ if type -P batcat &>/dev/null; then
     alias d='batdiff'
 fi
 
+if type -P npm &>/dev/null; then
+    alias n='npm'
+fi
+
 if type -P pnpm &>/dev/null; then
+    alias n='pnpm'
     alias npm='pnpm'
 fi
 
