@@ -25,6 +25,7 @@ return {
       vim.cmd.highlight 'StatusLine guifg=#b1b1b1 guibg=#353535 '
       vim.cmd.highlight 'MsgArea guifg=#b1b1b1'
       vim.cmd.highlight '@variable guifg=#e5e5e5'
+      vim.cmd.highlight '@string.special.url.html term=none cterm=none'
     end,
   },
 

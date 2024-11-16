@@ -233,7 +233,8 @@ return {
       },
 
       -- Web
-      html = {}, -- LSP: Language Server Protocol implementation for HTML
+      html = {}, -- LSP: Language Server Protocol implementation for HTML - https://github.com/microsoft/vscode-html-languageservice
+      cssls = {}, -- LSP: Language Server Protocol implementation for CSS, SCSS & LESS - https://github.com/microsoft/vscode-css-languageservice
       emmet_ls = {}, -- LSP: Emmet support based on LSP
       tailwindcss = {}, -- LSP: Language Server Protocol implementation for Tailwind CSS
       htmx = {}, -- LSP: An experimental LSP for HTMX  INFO: Requires Rust build tools (cargo)
