@@ -37,7 +37,7 @@ return {
       fish = { 'fish_indent' },
       lua = { 'stylua' },
       html = { 'prettierd', 'prettier', stop_after_first = true },
-      css = { 'prettierd', 'prettier', stop_after_first = true },
+      css = { 'stylelint' },
       javascript = { 'prettierd', 'prettier', stop_after_first = true },
       php = { 'inteliphense' },
       python = { 'isort', 'black' },

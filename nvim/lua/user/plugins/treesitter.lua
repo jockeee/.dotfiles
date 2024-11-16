@@ -30,6 +30,9 @@ return {
         scope_incremental = false,
         node_decremental = '<bs>',
       },
+      markdown = {
+        enable = true,
+      },
     },
   },
   config = function(_, opts)

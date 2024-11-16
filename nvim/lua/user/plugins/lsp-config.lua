@@ -233,11 +233,24 @@ return {
       },
 
       -- Web
-      html = {}, -- LSP: Language Server Protocol implementation for HTML - https://github.com/microsoft/vscode-html-languageservice
+      html = { -- LSP: Language Server Protocol implementation for HTML - https://github.com/microsoft/vscode-html-languageservice
+        filetypes = { 'html', 'templ' },
+      },
       cssls = {}, -- LSP: Language Server Protocol implementation for CSS, SCSS & LESS - https://github.com/microsoft/vscode-css-languageservice
       emmet_ls = {}, -- LSP: Emmet support based on LSP
-      tailwindcss = {}, -- LSP: Language Server Protocol implementation for Tailwind CSS
-      htmx = {}, -- LSP: An experimental LSP for HTMX  INFO: Requires Rust build tools (cargo)
+      tailwindcss = { -- LSP: Language Server Protocol implementation for Tailwind CSS
+        filetypes = { 'templ', 'astro', 'javascript', 'typescript', 'react' },
+        settings = {
+          tailwindCSS = {
+            includeLanguages = {
+              templ = 'html',
+            },
+          },
+        },
+      },
+      htmx = { -- LSP: An experimental LSP for HTMX  INFO: Requires Rust build tools (cargo)
+        filetypes = { 'html', 'templ' },
+      },
 
       -- Golang
       gopls = {}, -- LSP: the official Go language server developed by the Go team  INFO: Requires Go
@@ -283,7 +296,8 @@ return {
       'stylua', -- Formatter: An opinionated Lua code formatter
       -- Html
       'prettier', -- Formatter: Prettier is an opinionated code formatter
-      'prettierd', -- Formatter: Prettier, as a daemon, for ludicrous formatting speed-- https://github.com/fsouza/prettierd#vim--neovim
+      'prettierd', -- Formatter: Prettier, as a daemon, for ludicrous formatting speed - https://github.com/fsouza/prettierd#vim--neovim
+      'stylelint', -- Linter: A mighty CSS linter that helps you avoid errors and enforce conventions - https://stylelint.io
       -- Golang  INFO: Requires Go binary in PATH
       'gofumpt', -- Formatter: A stricter gofmt
       'goimports-reviser', -- Formatter: sorts goimports by 3-4 groups (stdlib, general, company, project dependencies)
