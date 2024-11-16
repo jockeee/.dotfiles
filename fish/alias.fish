@@ -99,6 +99,10 @@ if command -q batcat
     abbr --add d batdiff
 end
 
+if command -q pnpm
+    alias npm pnpm
+end
+
 ##
 ## Functions
 ##
