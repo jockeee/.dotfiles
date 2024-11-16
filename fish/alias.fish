@@ -106,6 +106,7 @@ end
 if command -q pnpm
     alias npm pnpm
     abbr --add n pnpm
+    abbr --add npm pnpm
 end
 
 ##

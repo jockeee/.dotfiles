@@ -1,13 +1,13 @@
 if status is-interactive
     # Set fish_greeting to empty = not showing
-    set -U fish_greeting
+    set -g fish_greeting
 
     # Remove underlines
     set fish_color_valid_path # default: '--underline'
     set fish_pager_color_prefix normal --bold # default: 'normal'  '--bold'  '--underline'
 
     # $EDITOR
-    set -Ux EDITOR /usr/bin/vim
+    set -gx EDITOR /usr/bin/vim
 
     # Title
     # Default shows truncated directories like ~/.d/f/config.fish
@@ -93,5 +93,14 @@ if status is-interactive
     # npm via nvm, and plugin jorgebucaran/nvm.fish
     if functions -q nvm
         nvm use lts 1>/dev/null
+    end
+
+    # pnpm
+    if command -q pnpm
+        set -gx PNPM_HOME "$HOME/.local/share/pnpm"
+        # $PATH
+        if not string match -q -- $PNPM_HOME $PATH
+            fish_add_path $PNPM_HOME
+        end
     end
 end
