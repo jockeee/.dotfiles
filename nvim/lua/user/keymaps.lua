@@ -26,10 +26,9 @@ vim.keymap.set({ 'n', 'v' }, '<right>', 'e')
 -- vim.keymap.set('n', 'k', 'gk')
 -- https://www.reddit.com/r/neovim/comments/19axx0v/how_do_i_stop_nvim_from_jumping_whole_lines/
 local mux_with_g = function(key)
-  local gkey = 'g' .. key
   return function()
     if vim.v.count == 0 then
-      return gkey
+      return 'g' .. key
     else
       return key
     end
