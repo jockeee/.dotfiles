@@ -43,6 +43,7 @@ return {
       go = { 'gofumpt', 'goimports-reviser' },
     },
     formatters_by_ext = { -- Specify formatters by file extension
+      ['tmpl'] = { 'prettierd', 'prettier', stop_after_first = true },
       -- ["py"] = { "isort", "black" },
       -- ["js"] = { 'prettierd', 'prettier', stop_after_first = true },
       -- ["ts"] = { 'prettierd', 'prettier', stop_after_first = true },
