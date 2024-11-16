@@ -1,5 +1,5 @@
 # default distro ~/.bashrc above
-# VERSION 1.0.20
+# VERSION 1.0.22
 
 ##
 ## Environment
@@ -99,6 +99,10 @@ if type -P batcat &>/dev/null; then
     alias bat='batcat -pp'
     alias c='batcat -pp'
     alias d='batdiff'
+fi
+
+if type -P pnpm &>/dev/null; then
+    alias npm='pnpm'
 fi
 
 ##
