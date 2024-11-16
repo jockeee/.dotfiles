@@ -9,8 +9,16 @@ return {
   version = '*',
   event = 'VimEnter',
   keys = { { '`', '<cmd>ToggleTerm direction=float<cr>', desc = 'Terminal' } },
-  config = function()
-    require('toggleterm').setup {}
-    vim.keymap.set('t', '`', '<C-\\><C-n><cmd>ToggleTerm direction=float<cr>', { desc = 'Exit Terminal' })
+  opts = {
+    -- start_in_insert = true,
+    -- insert_mappings = true, -- whether or not the open mapping applies in insert mode
+    -- terminal_mappings = true, -- whether or not the open mapping applies in the opened terminals
+  },
+  config = function(_, opts)
+    local tt = require 'toggleterm'
+    tt.setup(opts)
+
+    -- vim.keymap.set('t', '`', '<C-\\><C-n><cmd>ToggleTerm direction=float<cr>', { desc = 'Exit Terminal' })
+    vim.keymap.set('t', '`', '<cmd>ToggleTerm direction=float<cr>', { desc = 'Exit Terminal' })
   end,
 }
