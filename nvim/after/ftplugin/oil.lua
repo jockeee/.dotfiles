@@ -2,5 +2,5 @@
 -- after/ftplugin
 -- oil.lua
 
-vim.opt_local.number = false
-vim.opt_local.relativenumber = false
+vim.opt_local.nu = false -- number
+vim.opt_local.rnu = false -- relativenumber
