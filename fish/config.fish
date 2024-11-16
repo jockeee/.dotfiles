@@ -59,6 +59,12 @@ if status is-interactive
         source $HOME/.config/fish/local.fish
     end
 
+    # XDG Base Directory, User Directories
+    set -gx XDG_CONFIG_HOME "$HOME/.config" # User-specific configurations, analogous to /etc
+    set -gx XDG_CACHE_HOME "$HOME/.cache" # User-specific non-essential (cached) data, analogous to /var/cache
+    set -gx XDG_DATA_HOME "$HOME/.local/share" # User-specific data files, analogous to /usr/share
+    set -gx XDG_STATE_HOME "$HOME/.local/state" # User-specific state files, analogous to /var/lib
+
     # $PATH: ~/.local/bin
     if test -d $HOME/.local/bin
         fish_add_path $HOME/.local/bin
@@ -97,7 +103,7 @@ if status is-interactive
 
     # pnpm
     if command -q pnpm
-        set -gx PNPM_HOME "$HOME/.local/share/pnpm"
+        set -gx PNPM_HOME "$XDG_DATA_HOME/pnpm"
         # $PATH
         if not string match -q -- $PNPM_HOME $PATH
             fish_add_path $PNPM_HOME
