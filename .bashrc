@@ -1,5 +1,5 @@
 # default distro ~/.bashrc above
-# VERSION 1.0.22
+# VERSION 1.0.24
 
 ##
 ## Environment
@@ -310,6 +310,7 @@ upd_fedora() {
     fi
     upd_go
     upd_npm
+    upd_npm_packages
 }
 
 upd_ubuntu() {
@@ -327,6 +328,7 @@ upd_ubuntu() {
     fi
     upd_go
     upd_npm
+    upd_npm_packages
 }
 
 upd_npm() {
@@ -336,6 +338,15 @@ upd_npm() {
         sudo /usr/local/bin/npm install -g npm@latest
         echo
         echo "NPM version: $(/usr/local/bin/npm --version)"
+        echo
+    fi
+}
+
+upd_npm_packages() {
+    if type -P /usr/local/bin/npm &>/dev/null; then
+        echo -e '\e[1mUpdating npm packages\e[0m'
+        echo -e '\e[3msudo npm packages\e[0m'
+        sudo /usr/local/bin/npm update
         echo
     fi
 }
