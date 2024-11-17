@@ -306,6 +306,7 @@ if test -e /etc/os-release
                 upd_fisher
                 upd_go
                 upd_npm
+                upd_npm_packages
             end
         case ubuntu
             function upd -d 'system update, snap apps update, fisher plugins update'
@@ -326,6 +327,7 @@ if test -e /etc/os-release
                 upd_fisher
                 upd_go
                 upd_npm
+                upd_npm_packages
             end
     end
 end
@@ -355,6 +357,15 @@ function upd_npm -d 'npm update'
         npm install -g npm@latest
         echo
         echo "NPM version: $(npm --version)"
+        echo
+    end
+end
+
+function upd_npm_packages -d 'npm update global packages'
+    if command -q /usr/local/bin/npm
+        echo -e '\e[1mUpdating npm packages\e[0m'
+        echo -e '\e[3msudo npm update\e[0m'
+        sudo /usr/local/bin/npm update
         echo
     end
 end
