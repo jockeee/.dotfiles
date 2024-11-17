@@ -253,7 +253,14 @@ return {
       },
 
       -- Golang
-      gopls = {}, -- LSP: the official Go language server developed by the Go team  INFO: Requires Go
+      -- LSP: the official Go language server developed by the Go team  INFO: Requires Go
+      gopls = {
+        settings = {
+          templateExtensions = {
+            '.tmpl',
+          },
+        },
+      },
       templ = {}, -- LSP: language server for the templ HTML templating language
 
       -- PHP
@@ -310,6 +317,8 @@ return {
       'black', -- Formatter: Black, the uncompromising Python code formatter
       'isort', -- Formatter: isort is a Python utility / library to sort imports alphabetically
       'mypy', -- Linter: Mypy is a static type checker for Python
+      -- JSON
+      'jq', -- Command-line JSON processor - https://github.com/stedolan/jq
     })
 
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }

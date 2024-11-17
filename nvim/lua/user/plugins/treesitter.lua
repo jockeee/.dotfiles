@@ -39,6 +39,8 @@ return {
     -- ---@diagnostic disable-next-line: missing-fields
     require('nvim-treesitter.configs').setup(opts)
 
+    vim.treesitter.language.register('html', 'gohtml')
+
     -- There are additional nvim-treesitter modules that you can use to interact with nvim-treesitter.
     --
     --    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
