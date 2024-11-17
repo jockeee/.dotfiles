@@ -2,7 +2,9 @@
 -- filetypes.lua
 
 -- .tmpl
-vim.filetype.add { extension = { gohtml = 'gohtml' } }
+-- .gotmpl
+vim.filetype.add { extension = { tmpl = 'tmpl' } }
+vim.filetype.add { extension = { gotmpl = 'gotmpl' } }
 
 -- .templ
 -- https://templ.guide/commands-and-tools/ide-support/#neovim--050

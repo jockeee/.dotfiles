@@ -243,22 +243,22 @@ return {
         settings = {
           tailwindCSS = {
             includeLanguages = {
+              gotmpl = 'html',
+              tmpl = 'html',
               templ = 'html',
             },
           },
         },
       },
       htmx = { -- LSP: An experimental LSP for HTMX  INFO: Requires Rust build tools (cargo)
-        filetypes = { 'html', 'templ' },
+        filetypes = { 'html', 'tmpl', 'gotmpl', 'templ' },
       },
 
       -- Golang
       -- LSP: the official Go language server developed by the Go team  INFO: Requires Go
       gopls = {
         settings = {
-          templateExtensions = {
-            '.tmpl',
-          },
+          templateExtensions = { 'tmpl', 'gotmpl' },
         },
       },
       templ = {}, -- LSP: language server for the templ HTML templating language
