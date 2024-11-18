@@ -232,11 +232,14 @@ return {
         },
       },
 
-      -- Web
-      html = { -- LSP: Language Server Protocol implementation for HTML - https://github.com/microsoft/vscode-html-languageservice
+      -- https://github.com/microsoft/vscode-html-languageservice
+      -- LSP: Language Server Protocol implementation for HTML
+      html = {
         filetypes = { 'html', 'tmpl', 'gotmpl', 'templ' },
       },
-      cssls = { -- LSP: Language Server Protocol implementation for CSS, SCSS & LESS - https://github.com/microsoft/vscode-css-languageservice
+      -- https://github.com/microsoft/vscode-css-languageservice
+      -- LSP: Language Server Protocol implementation for CSS, SCSS & LESS
+      cssls = {
         settings = {
           css = {
             lint = {
@@ -245,8 +248,10 @@ return {
           },
         },
       },
-      emmet_ls = {}, -- LSP: Emmet support based on LSP
-      tailwindcss = { -- LSP: Language Server Protocol implementation for Tailwind CSS
+      -- LSP: Emmet support based on LSP
+      emmet_ls = {},
+      -- LSP: Language Server Protocol implementation for Tailwind CSS
+      tailwindcss = {
         filetypes = { 'astro', 'javascript', 'typescript', 'react', 'tmpl', 'gotmpl', 'templ' },
         settings = {
           tailwindCSS = {
@@ -258,7 +263,8 @@ return {
           },
         },
       },
-      htmx = { -- LSP: An experimental LSP for HTMX  INFO: Requires Rust build tools (cargo)
+      -- LSP: An experimental LSP for HTMX  INFO: Requires Rust build tools (cargo)
+      htmx = {
         filetypes = { 'html', 'tmpl', 'gotmpl', 'templ' },
       },
 
@@ -276,7 +282,8 @@ return {
       -- phpactor = {}, -- LSP: Phpactor is an intelligent Completion and Refactoring tool for PHP
 
       -- Python
-      pylsp = { -- LSP: Fork of the python-language-server project, maintained by the Spyder IDE team and the community.
+      -- LSP: Fork of the python-language-server project, maintained by the Spyder IDE team and the community.
+      pylsp = {
         settings = {
           pylsp = {
             plugins = {
