@@ -14,6 +14,7 @@ return {
       { '<leader>c', group = 'Code' },
       { '<leader>d', group = 'Buffer' },
       { '<leader>f', group = 'Find' },
+      { '<leader>g', group = 'Diffview', mode = { 'n', 'v' } },
       { '<leader>h', group = 'Git Hunk', mode = { 'n', 'v' } },
       { '<leader>m', group = 'Multicursor' },
       { '<leader>q', group = 'Neovim' },
