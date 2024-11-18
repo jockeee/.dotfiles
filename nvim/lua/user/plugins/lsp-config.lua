@@ -236,7 +236,15 @@ return {
       html = { -- LSP: Language Server Protocol implementation for HTML - https://github.com/microsoft/vscode-html-languageservice
         filetypes = { 'html', 'tmpl', 'gotmpl', 'templ' },
       },
-      cssls = {}, -- LSP: Language Server Protocol implementation for CSS, SCSS & LESS - https://github.com/microsoft/vscode-css-languageservice
+      cssls = { -- LSP: Language Server Protocol implementation for CSS, SCSS & LESS - https://github.com/microsoft/vscode-css-languageservice
+        settings = {
+          css = {
+            lint = {
+              unknownAtRules = 'ignore',
+            },
+          },
+        },
+      },
       emmet_ls = {}, -- LSP: Emmet support based on LSP
       tailwindcss = { -- LSP: Language Server Protocol implementation for Tailwind CSS
         filetypes = { 'astro', 'javascript', 'typescript', 'react', 'tmpl', 'gotmpl', 'templ' },
