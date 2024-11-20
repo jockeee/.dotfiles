@@ -18,6 +18,12 @@ return {
         return vim.fn.executable 'make' == 1
       end,
     },
+    {
+      'nvim-telescope/telescope-live-grep-args.nvim',
+      -- This will not install any breaking changes.
+      -- For major updates, this must be adjusted manually.
+      version = '^1.0.0',
+    },
     -- UI select
     -- https://github.com/nvim-telescope/telescope-ui-select.nvim
     -- Sets `vim.ui.select` to telescope.
@@ -25,7 +31,10 @@ return {
     'nvim-telescope/telescope-ui-select.nvim',
   },
   config = function()
-    require('telescope').setup {
+    local telescope = require 'telescope'
+    local _, lga_actions = pcall(require, 'telescope-live-grep-args.actions')
+
+    telescope.setup {
       defaults = {
         file_ignore_patterns = {
           -- In lua patterns, dashes are interpreted as quantifier, so you have to escape them
@@ -84,12 +93,29 @@ return {
         ['ui-select'] = {
           require('telescope.themes').get_dropdown(),
         },
+        live_grep_args = {
+          auto_quoting = true, -- enable/disable auto-quoting
+          -- define mappings, e.g.
+          mappings = { -- extend mappings
+            i = {
+              ['<C-k>'] = lga_actions.quote_prompt(),
+              ['<C-i>'] = lga_actions.quote_prompt { postfix = ' --iglob ' },
+              -- freeze the current list and start a fuzzy search in the frozen list
+              ['<C-space>'] = lga_actions.to_fuzzy_refine,
+            },
+          },
+          -- ... also accepts theme settings, for example:
+          -- theme = 'dropdown', -- use dropdown theme
+          -- theme = { }, -- use own theme spec
+          -- layout_config = { mirror=true }, -- mirror preview pane
+        },
       },
     }
 
     -- Enable telescope extensions, if they are installed
     pcall(require('telescope').load_extension, 'fzf')
     pcall(require('telescope').load_extension, 'ui-select')
+    pcall(require('telescope').load_extension, 'live_grep_args')
 
     local builtin = require 'telescope.builtin'
 
@@ -103,17 +129,18 @@ return {
       })
     end, { desc = 'Find in current buffer' })
 
-    vim.keymap.set('n', '<leader><leader>', builtin.find_files, { desc = 'Find File' })
-    vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Find Buffer' })
-    vim.keymap.set('n', '<leader>fd', builtin.diagnostics, { desc = 'Find Diagnostics' })
-    vim.keymap.set('n', '<leader>ff', builtin.live_grep, { desc = 'Find Grep' })
-    vim.keymap.set('n', '<leader>fg', builtin.git_files, { desc = 'Find Git File' })
-    vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Find Help' })
-    vim.keymap.set('n', '<leader>fk', builtin.keymaps, { desc = 'Find Keymap' })
-    vim.keymap.set('n', '<leader>fr', builtin.resume, { desc = 'Find Fesume' })
-    vim.keymap.set('n', '<leader>fs', '<cmd>Telescope session-lens<cr>', { desc = 'Find auto-sessions' }) -- auto-session
-    vim.keymap.set('n', '<leader>fS', builtin.builtin, { desc = 'Find Telescope Select' })
-    vim.keymap.set('n', '<leader>ft', '<cmd>TodoTelescope<cr>', { desc = 'Find Todos' }) -- todo-comments.nvim
-    vim.keymap.set('n', '<leader>fw', builtin.grep_string, { desc = 'Find Word Under Cursor' })
+    vim.keymap.set('n', '<leader><leader>', builtin.find_files, { desc = 'Find Files' })
+    vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Buffers' })
+    vim.keymap.set('n', '<leader>fd', builtin.diagnostics, { desc = 'Diagnostics' })
+    -- vim.keymap.set('n', '<leader>ff', builtin.live_grep, { desc = 'Grep' })
+    vim.keymap.set('n', '<leader>ff', telescope.extensions.live_grep_args.live_grep_args, { desc = 'Grep Args' })
+    vim.keymap.set('n', '<leader>fg', builtin.git_files, { desc = 'Git File' })
+    vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Help' })
+    vim.keymap.set('n', '<leader>fk', builtin.keymaps, { desc = 'Keymap' })
+    vim.keymap.set('n', '<leader>fr', builtin.resume, { desc = 'Resume' })
+    vim.keymap.set('n', '<leader>fs', '<cmd>Telescope session-lens<cr>', { desc = 'auto-sessions' }) -- auto-session
+    vim.keymap.set('n', '<leader>fS', builtin.builtin, { desc = 'Telescope Select' })
+    vim.keymap.set('n', '<leader>ft', '<cmd>TodoTelescope<cr>', { desc = 'Todos' }) -- todo-comments.nvim
+    vim.keymap.set('n', '<leader>fw', builtin.grep_string, { desc = 'Word Under Cursor' })
   end,
 }
