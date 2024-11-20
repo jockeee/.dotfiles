@@ -29,6 +29,7 @@ return {
     -- end)
 
     vim.keymap.set('n', '<C-leftmouse>', mc.handleMouse) -- Add and remove cursors with control + left click.
+    -- default: CTRL-M  same as <CR>
 
     -- Rotate the main cursor
     vim.keymap.set({ 'n', 'v' }, '<C-left>', mc.nextCursor)
@@ -49,6 +50,9 @@ return {
     end, { desc = 'Multicursor: Skip cursor, down' })
 
     -- Add or skip adding a new cursor by matching word/selection
+    vim.keymap.set({ 'n', 'v' }, '<C-m>', function() -- default: CTRL-M  same as <CR>
+      mc.matchAddCursor(1)
+    end, { desc = 'Multicursor: Add matching word/selection, next' })
     vim.keymap.set({ 'n', 'v' }, '<leader>n', function()
       mc.matchAddCursor(1)
     end, { desc = 'Multicursor: Add matching word/selection, next' })
