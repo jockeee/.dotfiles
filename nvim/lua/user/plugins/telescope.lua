@@ -39,6 +39,7 @@ return {
         file_ignore_patterns = {
           -- In lua patterns, dashes are interpreted as quantifier, so you have to escape them
           -- 'lazy%-lock.json',
+          '.woff2',
         },
         vimgrep_arguments = {
           -- Default grep command and arguments
