@@ -272,6 +272,14 @@ return {
       -- LSP: the official Go language server developed by the Go team  INFO: Requires Go
       gopls = {
         settings = {
+          gopls = {
+            analyses = {
+              unusedparams = true,
+            },
+            completeUnimported = true,
+            staticcheck = true,
+            gofumpt = true,
+          },
           templateExtensions = { 'tmpl', 'gotmpl' },
         },
       },
@@ -323,6 +331,7 @@ return {
       -- Golang  INFO: Requires Go binary in PATH
       'gofumpt', -- Formatter: A stricter gofmt
       'goimports-reviser', -- Formatter: sorts goimports by 3-4 groups (stdlib, general, company, project dependencies)
+      'staticcheck', -- Linter: The advanced Go linter
       'delve', -- DAP: Delve is a debugger for the Go programming language
       -- PHP  INFO: Requires PHP binary in PATH
       -- 'easy-coding-standard', -- Linter/Formatter: Use Coding Standard with 0-knowledge of PHP-CS-Fixer and PHP_CodeSniffer

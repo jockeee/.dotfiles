@@ -28,6 +28,11 @@ return {
         lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
       }
     end,
+    formatters = {
+      ['goimports-reviser'] = {
+        prepend_args = { '-rm-unused' },
+      },
+    },
     formatters_by_ft = { -- Specify formatters by filetype
       -- Run multiple formatters sequentially
       -- python = { 'isort', 'black' },
