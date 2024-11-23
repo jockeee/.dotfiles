@@ -29,7 +29,6 @@ return {
     -- end)
 
     vim.keymap.set('n', '<C-leftmouse>', mc.handleMouse) -- Add and remove cursors with control + left click.
-    -- default: CTRL-M  same as <CR>
 
     -- Rotate the main cursor
     vim.keymap.set({ 'n', 'v' }, '<C-left>', mc.nextCursor)
