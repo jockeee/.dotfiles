@@ -41,7 +41,8 @@ return {
       bash = { 'shfmt' },
       css = { 'stylelint' },
       fish = { 'fish_indent' },
-      go = { 'gofumpt', 'goimports-reviser' },
+      -- go = { 'gofumpt', 'goimports-reviser' },
+      go = { 'goimports-reviser' }, -- gofumpt is on in gopls
       tmpl = { 'prettier' },
       gotmpl = { 'prettier' },
       html = { 'prettier' },
