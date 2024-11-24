@@ -232,13 +232,13 @@ return {
         },
       },
 
-      -- https://github.com/microsoft/vscode-html-languageservice
       -- LSP: Language Server Protocol implementation for HTML
+      -- https://github.com/microsoft/vscode-html-languageservice
       html = {
         filetypes = { 'html', 'tmpl', 'gotmpl', 'templ' },
       },
-      -- https://github.com/microsoft/vscode-css-languageservice
       -- LSP: Language Server Protocol implementation for CSS, SCSS & LESS
+      -- https://github.com/microsoft/vscode-css-languageservice
       cssls = {
         settings = {
           css = {
@@ -322,17 +322,19 @@ return {
       -- Bash
       'shfmt', -- Formatter: A shell formatter (sh/bash/mksh)
       'shellcheck', -- Linter: A static analysis tool for shell scripts
-      -- Lua
-      'stylua', -- Formatter: An opinionated Lua code formatter
-      -- Html
-      'prettier', -- Formatter: Prettier is an opinionated code formatter
-      'prettierd', -- Formatter: Prettier, as a daemon, for ludicrous formatting speed - https://github.com/fsouza/prettierd#vim--neovim
-      'stylelint', -- Linter: A mighty CSS linter that helps you avoid errors and enforce conventions - https://stylelint.io
       -- Golang  INFO: Requires Go binary in PATH
       'gofumpt', -- Formatter: A stricter gofmt
       'goimports-reviser', -- Formatter: sorts goimports by 3-4 groups (stdlib, general, company, project dependencies)
       'staticcheck', -- Linter: The advanced Go linter
       'delve', -- DAP: Delve is a debugger for the Go programming language
+      -- Html
+      'prettier', -- Formatter: Prettier is an opinionated code formatter
+      'prettierd', -- Formatter: Prettier, as a daemon, for ludicrous formatting speed - https://github.com/fsouza/prettierd#vim--neovim
+      'stylelint', -- Linter: A mighty CSS linter that helps you avoid errors and enforce conventions - https://stylelint.io
+      -- JSON
+      'jq', -- Command-line JSON processor - https://github.com/stedolan/jq
+      -- Lua
+      'stylua', -- Formatter: An opinionated Lua code formatter
       -- PHP  INFO: Requires PHP binary in PATH
       -- 'easy-coding-standard', -- Linter/Formatter: Use Coding Standard with 0-knowledge of PHP-CS-Fixer and PHP_CodeSniffer
       -- 'phpstan', -- Linter: PHP Static Analysis Tool - discover bugs in your code without running it!
@@ -341,8 +343,8 @@ return {
       'black', -- Formatter: Black, the uncompromising Python code formatter
       'isort', -- Formatter: isort is a Python utility / library to sort imports alphabetically
       'mypy', -- Linter: Mypy is a static type checker for Python
-      -- JSON
-      'jq', -- Command-line JSON processor - https://github.com/stedolan/jq
+      -- SQL
+      'sqlfmt', -- Formatter: sqlfmt, it is similar in nature to black, gofmt, and rustfmt (but for SQL).
     })
 
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }

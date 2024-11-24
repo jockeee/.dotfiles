@@ -51,6 +51,7 @@ return {
       php = { 'inteliphense' },
       python = { 'isort', 'black' },
       json = { 'jq' },
+      sql = { 'sqlfmt' },
       ['*'] = { 'injected' },
     },
     formatters_by_ext = { -- Specify formatters by file extension
