@@ -45,7 +45,7 @@ return {
           -- Default grep command and arguments
           'rg',
           '--color=never',
-          -- '--no-heading', -- don't group matches by each file
+          '--no-heading', -- don't group matches by each file
           '--with-filename',
           '--line-number',
           '--column', -- show column numbers
