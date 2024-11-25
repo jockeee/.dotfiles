@@ -1,4 +1,4 @@
---
+--lsp
 -- lsp config
 
 -- https://github.com/neovim/nvim-lspconfig

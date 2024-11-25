@@ -4,7 +4,6 @@
 
 return {
   'NeogitOrg/neogit',
-  -- tag = 'v0.0.1', -- use tag v0.0.1 if neovim version is < 0.10
   dependencies = {
     'nvim-lua/plenary.nvim', -- required
     'sindrets/diffview.nvim', -- optional - diff integration
@@ -14,6 +13,6 @@ return {
     'nvim-telescope/telescope.nvim', -- optional
     -- "ibhagwan/fzf-lua",           -- optional
   },
-  keys = { { '<leader>g', '<cmd>Neogit<cr>', desc = 'Git Neogit' } },
+  keys = { { '<leader>gn', '<cmd>Neogit<cr>', desc = 'Neogit' } },
   config = true,
 }

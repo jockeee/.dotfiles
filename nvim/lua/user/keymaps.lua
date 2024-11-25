@@ -5,6 +5,7 @@
 vim.keymap.set({ 'n', 'v' }, '<space>', '<nop>')
 
 -- Clean up search results and extmarks with <esc>
+-- vim.keymap.set('n', '<esc>', '<cmd>nohlsearch<cr><cmd>lua require("user.utils").hl_search_index_clear()<cr>')
 vim.keymap.set('n', '<esc>', function()
   vim.cmd 'nohlsearch'
   require('user.utils').hl_search_index_clear()
@@ -57,13 +58,15 @@ vim.keymap.set('v', '>', '>gv')
 -- Search index
 local keys = { 'n', 'N', '*', '#', 'g*', 'g#' }
 for _, key in ipairs(keys) do
-  vim.keymap.set('n', key, function()
-    -- Execute the normal action for the key
-    vim.cmd.normal(key)
-    -- Then, call the custom function
-    require('user.utils').hl_search_index()
-  end, { desc = 'Search Index' })
+  vim.keymap.set('n', key, key .. '<cmd>lua require("user.utils").hl_search_index()<cr>', { desc = 'Search Index' })
 end
+-- for _, key in ipairs(keys) do
+--   vim.keymap.set('n', key, function()
+--     -- vim.cmd.normal(key)
+--     vim.cmd('normal! ' .. key)
+--     require('user.utils').hl_search_index()
+--   end, { desc = 'Search Index' })
+-- end
 
 -- Diagnostics (https://github.com/neovim/nvim-lspconfig)
 -- vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Prev Diagnostic Message' }) -- included in mini.bracketed
@@ -84,7 +87,6 @@ vim.keymap.set('n', '<leader>dx', '<cmd>bd!<cr>', { desc = 'Kill Buffer (Ignore 
 vim.keymap.set('n', '<leader>qm', '<cmd>Mason<cr>', { desc = 'Mason' })
 vim.keymap.set('n', '<leader>ql', '<cmd>Lazy<cr>', { desc = 'Lazy' })
 vim.keymap.set('n', '<leader>qs', '<cmd>w !sudo tee %<cr>', { desc = 'Sudo Write' })
-vim.keymap.set('n', '<leader>qq', '<cmd>tabclose<cr>', { desc = 'Close Tab' })
 
 -- Leader t: Toggle
 vim.keymap.set('n', '<leader>tc', function()

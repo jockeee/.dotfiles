@@ -35,7 +35,7 @@ return {
   -- Git
   require 'user.plugins.gitsigns', -- adds git related signs to the gutter, and utilities for managing changes
   require 'user.plugins.diffview',
-  -- require 'user.plugins.neogit', -- interactive git interface
+  require 'user.plugins.neogit', -- interactive git interface
 
   -- SQL
   require 'user.plugins.sql', -- vim-dadbod, vim-dadbod-ui, vim-dadbod-completion

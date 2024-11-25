@@ -36,9 +36,9 @@ return {
     local dv = require 'diffview'
     dv.setup(opts)
 
-    vim.keymap.set({ 'n', 'v' }, '<leader>gd', dv.open, { desc = 'Open' })
-    vim.keymap.set({ 'n', 'v' }, '<leader>gg', dv.close, { desc = 'Close' })
-    vim.keymap.set({ 'n', 'v' }, '<leader>gr', '<cmd>DiffviewRefresh<cr>', { desc = 'Refresh' })
-    vim.keymap.set({ 'n', 'v' }, '<leader>gt', '<cmd>DiffviewToggleFiles<cr>', { desc = 'Toggle File Panel' })
+    vim.keymap.set({ 'n', 'v' }, '<leader>gd', dv.open, { desc = 'Diffview: Open' })
+    vim.keymap.set({ 'n', 'v' }, '<leader>gg', dv.close, { desc = 'Diffview: Close' })
+    vim.keymap.set({ 'n', 'v' }, '<leader>gr', '<cmd>DiffviewRefresh<cr>', { desc = 'Diffview: Refresh' })
+    vim.keymap.set({ 'n', 'v' }, '<leader>gt', '<cmd>DiffviewToggleFiles<cr>', { desc = 'Diffview: Toggle File Panel' })
   end,
 }

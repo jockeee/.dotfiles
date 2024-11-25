@@ -1,5 +1,6 @@
 {
   "tabWidth": 2,
-  "keywordCase": "upper",
-  "functionCase": "upper"
+  "keywordCase": "lower",
+  "dataTypeCase": "lower",
+  "functionCase": "lower"
 }
