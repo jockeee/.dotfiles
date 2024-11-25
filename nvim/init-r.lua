@@ -164,9 +164,6 @@ vim.keymap.set('n', '<leader>nq', '<cmd>quitall<cr>', { desc = 'Quit' })
 vim.keymap.set('n', '<leader>ns', '<cmd>w !sudo tee %<cr>', { desc = 'Sudo Write' })
 
 -- Leader t: Toggle
-vim.keymap.set(
-  'n',
-  '<leader>tc',
-  '<cmd>lua vim.opt.colorcolumn = vim.inspect(vim.opt.colorcolumn:get()) == "{}" and { 100 } or {}<cr>',
-  { desc = 'Colorcolumn' }
-)
+vim.keymap.set('n', '<leader>tc', function()
+  vim.opt.colorcolumn = vim.inspect(vim.opt.colorcolumn:get()) == '{}' and { 100 } or {}
+end, { desc = 'Color Column' })

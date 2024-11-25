@@ -5,7 +5,6 @@
 vim.keymap.set({ 'n', 'v' }, '<space>', '<nop>')
 
 -- Clean up search results and extmarks with <esc>
--- vim.keymap.set('n', '<esc>', '<cmd>nohlsearch<cr><cmd>lua require("user.utils").hl_search_index_clear()<cr>')
 vim.keymap.set('n', '<esc>', function()
   vim.cmd 'nohlsearch'
   require('user.utils').hl_search_index_clear()
@@ -58,7 +57,12 @@ vim.keymap.set('v', '>', '>gv')
 -- Search index
 local keys = { 'n', 'N', '*', '#', 'g*', 'g#' }
 for _, key in ipairs(keys) do
-  vim.keymap.set('n', key, key .. '<cmd>lua require("user.utils").hl_search_index()<cr>', { desc = 'Search Index' })
+  vim.keymap.set('n', key, function()
+    -- Execute the normal action for the key
+    vim.cmd.normal(key)
+    -- Then, call the custom function
+    require('user.utils').hl_search_index()
+  end, { desc = 'Search Index' })
 end
 
 -- Diagnostics (https://github.com/neovim/nvim-lspconfig)
@@ -82,13 +86,13 @@ vim.keymap.set('n', '<leader>ql', '<cmd>Lazy<cr>', { desc = 'Lazy' })
 vim.keymap.set('n', '<leader>qs', '<cmd>w !sudo tee %<cr>', { desc = 'Sudo Write' })
 
 -- Leader t: Toggle
-vim.keymap.set(
-  'n',
-  '<leader>tc',
-  '<cmd>lua vim.opt.colorcolumn = vim.inspect(vim.opt.colorcolumn:get()) == "{}" and { 100 } or {}<cr>',
-  { desc = 'Color Column' }
-)
+vim.keymap.set('n', '<leader>tc', function()
+  vim.opt.colorcolumn = vim.inspect(vim.opt.colorcolumn:get()) == '{}' and { 100 } or {}
+end, { desc = 'Color Column' })
 vim.keymap.set('n', '<leader>th', '<cmd>set cursorline!<cr>', { desc = 'Hightlight Line' }) -- lua vim.opt.cursorline = not vim.opt.cursorline:get()
 vim.keymap.set('n', '<leader>tr', '<cmd>set relativenumber!<cr>', { desc = 'Relative Number' }) -- set rnu! or lua vim.opt.relativenumber = not vim.opt.relativenumber:get()
 vim.keymap.set('n', '<leader>ts', '<cmd>windo set scrollbind!<cr>', { desc = 'Scrollbind, in open windows' })
+vim.keymap.set('n', '<leader>tt', function()
+  vim.opt.showtabline = (vim.opt.showtabline:get() == 0) and 2 or 0
+end, { desc = 'Tab Line' })
 vim.keymap.set('n', '<leader>tw', '<cmd>set wrap!<cr>', { desc = 'Wrap' }) -- lua vim.opt.wrap = not vim.opt.wrap:get()
