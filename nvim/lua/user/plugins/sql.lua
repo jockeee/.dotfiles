@@ -15,7 +15,7 @@ return {
     { 'kristijanhusak/vim-dadbod-completion', ft = { 'sql', 'mysql', 'plsql' }, lazy = true },
   },
   keys = {
-    { '<leader>b', '<cmd>DBUI<cr>', desc = 'SQL: DBUI' },
+    { '<leader>b', '<cmd>DBUIToggle<cr>', desc = 'SQL: DBUI' },
   },
   cmd = {
     'DBUI',
@@ -25,8 +25,8 @@ return {
   },
   init = function()
     -- :help vim-dadbod-ui-settings
-    vim.g.db_ui_show_help = 1 -- default: 1, show/hide `Press ? for help` from the DBUI
-    vim.g.db_ui_winwidth = 66 -- default: 40
+    vim.g.db_ui_show_help = 0 -- default: 1, show/hide `Press ? for help` from the DBUI
+    vim.g.db_ui_winwidth = 60 -- default: 40
     vim.g.db_ui_use_nerd_fonts = 1
   end,
 }
