@@ -84,6 +84,7 @@ vim.keymap.set('n', '<leader>dx', '<cmd>bd!<cr>', { desc = 'Kill Buffer (Ignore 
 vim.keymap.set('n', '<leader>qm', '<cmd>Mason<cr>', { desc = 'Mason' })
 vim.keymap.set('n', '<leader>ql', '<cmd>Lazy<cr>', { desc = 'Lazy' })
 vim.keymap.set('n', '<leader>qs', '<cmd>w !sudo tee %<cr>', { desc = 'Sudo Write' })
+vim.keymap.set('n', '<leader>qq', '<cmd>tabclose<cr>', { desc = 'Close Tab' })
 
 -- Leader t: Toggle
 vim.keymap.set('n', '<leader>tc', function()
