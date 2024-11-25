@@ -339,7 +339,7 @@ return {
       'isort', -- Formatter: isort is a Python utility / library to sort imports alphabetically
       'mypy', -- Linter: Mypy is a static type checker for Python
       -- SQL
-      'sql-formatter', -- Formatter: A whitespace formatter for different query languages.
+      -- 'sql-formatter', -- Formatter: A whitespace formatter for different query languages.
       -- 'sqlfmt', -- Formatter: sqlfmt, it is similar in nature to black, gofmt, and rustfmt (but for SQL).
       -- 'sqlfluff', -- Linter: SQLFluff is a dialect-flexible and configurable SQL linter.
     })

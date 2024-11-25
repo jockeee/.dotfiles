@@ -32,9 +32,6 @@ return {
       ['goimports-reviser'] = {
         prepend_args = { '-rm-unused' },
       },
-      ['sql-formatter'] = {
-        prepend_args = { '--config ' .. vim.fn.stdpath 'config' .. '.sql-formatter.json' },
-      },
     },
     formatters_by_ft = { -- Specify formatters by filetype
       -- Run multiple formatters sequentially
@@ -54,7 +51,6 @@ return {
       php = { 'inteliphense' },
       python = { 'isort', 'black' },
       json = { 'jq' },
-      sql = { 'sql-formatter' },
       ['*'] = { 'injected' },
     },
     formatters_by_ext = { -- Specify formatters by file extension
