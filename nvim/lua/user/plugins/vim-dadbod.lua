@@ -23,10 +23,34 @@ return {
     'DBUIAddConnection',
     'DBUIFindBuffer',
   },
-  init = function()
+  config = function()
     -- :help vim-dadbod-ui-settings
     vim.g.db_ui_show_help = 0 -- default: 1, show/hide `Press ? for help` from the DBUI
     vim.g.db_ui_winwidth = 60 -- default: 40
     vim.g.db_ui_use_nerd_fonts = 1
   end,
 }
+
+-- return {
+--   'kndndrj/nvim-dbee',
+--   dependencies = {
+--     'MunifTanjim/nui.nvim',
+--   },
+--   build = function()
+--     -- Install tries to automatically detect the install method.
+--     -- if it fails, try calling it with one of these parameters:
+--     --    "curl", "wget", "bitsadmin", "go"
+--     require('dbee').install()
+--   end,
+--   keys = {
+--     { '<leader>b', '<cmd>Dbee toggle<cr>', desc = 'SQL: Dbee' },
+--   },
+--   config = function()
+--     local dbee = require 'dbee'
+--     dbee.setup {
+--       sources = {
+--         require('dbee.sources').FileSource:new(vim.fn.stdpath 'cache' .. '/dbee/persistence.json'),
+--       },
+--     }
+--   end,
+-- }

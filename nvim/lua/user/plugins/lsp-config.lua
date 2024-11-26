@@ -304,6 +304,8 @@ return {
           },
         },
       },
+      -- SQL
+      sqlls = {},
     }
 
     -- Ensure the servers and tools above are installed
@@ -341,7 +343,7 @@ return {
       -- SQL
       -- 'sql-formatter', -- Formatter: A whitespace formatter for different query languages.
       -- 'sqlfmt', -- Formatter: sqlfmt, it is similar in nature to black, gofmt, and rustfmt (but for SQL).
-      -- 'sqlfluff', -- Linter: SQLFluff is a dialect-flexible and configurable SQL linter.
+      'sqlfluff', -- Linter: SQLFluff is a dialect-flexible and configurable SQL linter.
     })
 
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }

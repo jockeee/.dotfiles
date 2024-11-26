@@ -23,7 +23,8 @@ return {
   require 'user.plugins.multicursor',
   require 'user.plugins.nvim-autopairs', -- automatically insert or delete brackets, parens, quotes in pair
   -- require 'user.plugins.nvim-surround', -- add/change/delete surrounding delimiter pairs with ease -- back to mini.surround
-  require 'user.plugins.treesj', -- split/join blocks of code
+  require 'user.plugins.sideways', -- move function arguments (parameters) left and right
+  require 'user.plugins.treesj', -- split/join blocks of code -- Disabled: testing mini-splitjoin
   require 'user.plugins.treesitter', -- highlight, edit, and navigate code
 
   -- Functionality
@@ -38,7 +39,8 @@ return {
   require 'user.plugins.neogit', -- interactive git interface
 
   -- SQL
-  require 'user.plugins.sql', -- vim-dadbod, vim-dadbod-ui, vim-dadbod-completion
+  require 'user.plugins.vim-dadbod', -- vim-dadbod, vim-dadbod-ui, vim-dadbod-completion
+  -- require 'user.plugins.nvim-dbee',
 
   -- Markdown
   require 'user.plugins.markdown',

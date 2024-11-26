@@ -41,5 +41,12 @@ return {
     --    sh    highlight surrounding
     --    sr    replace surrounding
     require('mini.surround').setup()
+
+    -- Split/Join
+    -- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-splitjoin.md
+    --
+    -- Examples:
+    --    gS    toggle
+    -- require('mini.splitjoin').setup()
   end,
 }

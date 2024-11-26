@@ -12,6 +12,10 @@
 --    },
 -- and reverse.
 
+-- Alternative:
+--  mini.nvim
+--    https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-splitjoin.md
+
 return {
   'Wansmer/treesj',
   dependencies = { 'nvim-treesitter/nvim-treesitter' }, -- if you install parsers with `nvim-treesitter`
