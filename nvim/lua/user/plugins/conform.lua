@@ -22,7 +22,7 @@ return {
     format_on_save = function(bufnr)
       -- Disable "format_on_save lsp_fallback" for languages that don't have a well standardized coding style.
       -- You can add additional languages here or re-enable it for the disabled ones.
-      local disable_filetypes = { text = true, c = true, cpp = true }
+      local disable_filetypes = { text = true, c = true, cpp = true, sql = true }
       return {
         timeout_ms = 2000,
         lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
@@ -35,14 +35,13 @@ return {
     },
     formatters_by_ft = { -- Specify formatters by filetype
       -- Run multiple formatters sequentially
-      -- python = { 'isort', 'black' },
+      --  python = { 'isort', 'black' },
       -- Run *until* a formatter is found
-      -- html = { 'prettierd', 'prettier', stop_after_first = true },
+      --  html = { 'prettierd', 'prettier', stop_after_first = true },
       bash = { 'shfmt' },
       css = { 'stylelint' },
       fish = { 'fish_indent' },
-      -- go = { 'gofumpt', 'goimports-reviser' },
-      go = { 'goimports-reviser' }, -- gopls runs gofumpt
+      go = { 'goimports-reviser', 'injected' }, -- gopls runs gofumpt
       tmpl = { 'prettier' },
       gotmpl = { 'prettier' },
       html = { 'prettier' },
@@ -52,12 +51,10 @@ return {
       python = { 'isort', 'black' },
       json = { 'jq' },
       sql = { 'sqlfluff' },
-      ['*'] = { 'injected' },
     },
     formatters_by_ext = { -- Specify formatters by file extension
       -- ["py"] = { "isort", "black" },
       -- ["js"] = { 'prettierd', 'prettier', stop_after_first = true },
-      -- ["ts"] = { 'prettierd', 'prettier', stop_after_first = true },
     },
   },
 }

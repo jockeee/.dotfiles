@@ -232,12 +232,12 @@ return {
         },
       },
 
-      -- LSP: Language Server Protocol implementation for HTML
+      -- LSP: HTML
       -- https://github.com/microsoft/vscode-html-languageservice
       html = {
         filetypes = { 'html', 'tmpl', 'gotmpl', 'templ' },
       },
-      -- LSP: Language Server Protocol implementation for CSS, SCSS & LESS
+      -- LSP: CSS, SCSS & LESS
       -- https://github.com/microsoft/vscode-css-languageservice
       cssls = {
         settings = {
@@ -248,9 +248,9 @@ return {
           },
         },
       },
-      -- LSP: Emmet support based on LSP
+      -- LSP: Emmet
       emmet_ls = {},
-      -- LSP: Language Server Protocol implementation for Tailwind CSS
+      -- LSP: Tailwind CSS
       tailwindcss = {
         filetypes = { 'astro', 'javascript', 'typescript', 'react', 'tmpl', 'gotmpl', 'templ' },
         settings = {
@@ -276,14 +276,15 @@ return {
             analyses = {
               unusedparams = true,
             },
-            completeUnimported = true,
+            completeUnimported = false,
             staticcheck = true,
             gofumpt = true,
           },
           templateExtensions = { 'tmpl', 'gotmpl' },
         },
       },
-      templ = {}, -- LSP: language server for the templ HTML templating language
+      -- LSP: templ
+      templ = {},
 
       -- PHP
       intelephense = {}, -- LSP: Professional PHP tooling for any Language Server Protocol capable editor
@@ -304,8 +305,6 @@ return {
           },
         },
       },
-      -- SQL
-      sqlls = {},
     }
 
     -- Ensure the servers and tools above are installed
@@ -314,12 +313,11 @@ return {
 
     -- You can add other tools here that you want Mason to install for you, so that they are available from within Neovim.
     local ensure_installed = vim.tbl_keys(servers or {})
-
     vim.list_extend(ensure_installed, {
       -- Bash
       'shfmt', -- Formatter: A shell formatter (sh/bash/mksh)
       'shellcheck', -- Linter: A static analysis tool for shell scripts
-      -- Golang  INFO: Requires Go binary in PATH
+      -- Golang  INFO: Requires Go
       'gofumpt', -- Formatter: A stricter gofmt
       'goimports-reviser', -- Formatter: sorts goimports by 3-4 groups (stdlib, general, company, project dependencies)
       'staticcheck', -- Linter: The advanced Go linter
@@ -332,8 +330,8 @@ return {
       'jq', -- Command-line JSON processor - https://github.com/stedolan/jq
       -- Lua
       'stylua', -- Formatter: An opinionated Lua code formatter
-      -- PHP  INFO: Requires PHP binary in PATH
-      -- 'easy-coding-standard', -- Linter/Formatter: Use Coding Standard with 0-knowledge of PHP-CS-Fixer and PHP_CodeSniffer
+      -- PHP  INFO: Requires PHP
+      -- 'easy-coding-standard', -- Formatter/Linter: Use Coding Standard with 0-knowledge of PHP-CS-Fixer and PHP_CodeSniffer
       -- 'phpstan', -- Linter: PHP Static Analysis Tool - discover bugs in your code without running it!
       -- 'php-debug-adapter', -- DAP: PHP Debug Adapter
       -- Python
@@ -341,9 +339,9 @@ return {
       'isort', -- Formatter: isort is a Python utility / library to sort imports alphabetically
       'mypy', -- Linter: Mypy is a static type checker for Python
       -- SQL
+      'sqlfluff', -- Formatter/Linter: SQLFluff is a dialect-flexible and configurable SQL linter.
       -- 'sql-formatter', -- Formatter: A whitespace formatter for different query languages.
       -- 'sqlfmt', -- Formatter: sqlfmt, it is similar in nature to black, gofmt, and rustfmt (but for SQL).
-      'sqlfluff', -- Linter: SQLFluff is a dialect-flexible and configurable SQL linter.
     })
 
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
