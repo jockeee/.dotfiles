@@ -51,6 +51,8 @@ return {
       python = { 'isort', 'black' },
       json = { 'jq' },
       sql = { 'sqlfluff' },
+      mysql = { 'sqlfluff' },
+      pgsql = { 'sqlfluff' },
     },
     formatters_by_ext = { -- Specify formatters by file extension
       -- ["py"] = { "isort", "black" },
