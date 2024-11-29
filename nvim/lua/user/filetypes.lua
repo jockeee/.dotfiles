@@ -1,9 +1,6 @@
 --
 -- filetypes.lua
 
--- .sqlfluff
-vim.filetype.add { extension = { sqlfluff = 'config' } }
-
 -- .tmpl
 -- .gotmpl
 vim.filetype.add { extension = { tmpl = 'tmpl' } }
