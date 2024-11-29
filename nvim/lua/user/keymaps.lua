@@ -56,12 +56,9 @@ vim.keymap.set('n', '<S-h>', '<cmd>bprevious<cr>', { desc = 'Prev Buffer' })
 vim.keymap.set('n', '<S-l>', '<cmd>bnext<cr>', { desc = 'Next Buffer' })
 
 -- Tabs
--- <leader>+ for tab new
--- <alt>v,b for tab next/prev
--- <alt>z,x,c for tab 1-3
 vim.keymap.set({ 'n', 'v' }, '<leader>+', '<cmd>tabnew<cr>', { desc = 'New Tab' })
 vim.keymap.set({ 'n', 'v' }, '<M-v>', '<cmd>tabprevious<cr>', { desc = 'Previous Tab' })
-vim.keymap.set({ 'n', 'v' }, '<leader>+', '<cmd>tabnext<cr>', { desc = 'Next Tab' })
+vim.keymap.set({ 'n', 'v' }, '<M-b>', '<cmd>tabnext<cr>', { desc = 'Next Tab' })
 for idx, char in ipairs { 'z', 'x', 'c' } do
   vim.keymap.set({ 'n', 'v' }, string.format('<M-%s>', char), string.format('%sgt', idx))
 end
