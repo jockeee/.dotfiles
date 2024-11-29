@@ -51,7 +51,22 @@ vim.keymap.set('i', '<M-k>', '<esc><cmd>m .-2<cr>==gi', { desc = 'Move Up' })
 vim.keymap.set('v', '<M-j>', ":m '>+1<cr>gv=gv", { desc = 'Move Down' })
 vim.keymap.set('v', '<M-k>', ":m '<-2<cr>gv=gv", { desc = 'Move Up' })
 
--- Indenting (gv re-selects last selection)
+-- Buffer
+vim.keymap.set('n', '<S-h>', '<cmd>bprevious<cr>', { desc = 'Prev Buffer' })
+vim.keymap.set('n', '<S-l>', '<cmd>bnext<cr>', { desc = 'Next Buffer' })
+
+-- Tabs
+-- <leader>+ for tab new
+-- <alt>v,b for tab next/prev
+-- <alt>z,x,c for tab 1-3
+vim.keymap.set({ 'n', 'v' }, '<leader>+', '<cmd>tabnew<cr>', { desc = 'New Tab' })
+vim.keymap.set({ 'n', 'v' }, '<M-v>', '<cmd>tabprevious<cr>', { desc = 'Previous Tab' })
+vim.keymap.set({ 'n', 'v' }, '<leader>+', '<cmd>tabnext<cr>', { desc = 'Next Tab' })
+for idx, char in ipairs { 'z', 'x', 'c' } do
+  vim.keymap.set({ 'n', 'v' }, string.format('<M-%s>', char), string.format('%sgt', idx))
+end
+
+-- Indenting
 vim.keymap.set('v', '<', '<gv')
 vim.keymap.set('v', '>', '>gv')
 
@@ -60,23 +75,12 @@ local keys = { 'n', 'N', '*', '#', 'g*', 'g#' }
 for _, key in ipairs(keys) do
   vim.keymap.set('n', key, key .. '<cmd>lua require("user.utils").hl_search_index()<cr>', { desc = 'Search Index' })
 end
--- for _, key in ipairs(keys) do
---   vim.keymap.set('n', key, function()
---     -- vim.cmd.normal(key)
---     vim.cmd('normal! ' .. key)
---     require('user.utils').hl_search_index()
---   end, { desc = 'Search Index' })
--- end
 
 -- Diagnostics (https://github.com/neovim/nvim-lspconfig)
 -- vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Prev Diagnostic Message' }) -- included in mini.bracketed
 -- vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Next Diagnostic Message' }) -- included in mini.bracketed
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show Diagnostic Error Messages' })
 -- vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open Diagnostic Quickfix List' }) -- trouble, leader-xx
-
--- Buffer
-vim.keymap.set('n', '<S-h>', '<cmd>bprevious<cr>', { desc = 'Prev Buffer' })
-vim.keymap.set('n', '<S-l>', '<cmd>bnext<cr>', { desc = 'Next Buffer' })
 
 -- Leader d: Buffer (document)
 vim.keymap.set('n', '<leader>dd', '<cmd>bd<cr>', { desc = 'Delete Buffer' })
