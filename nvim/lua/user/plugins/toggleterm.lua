@@ -14,6 +14,9 @@ return {
     -- insert_mappings = true, -- whether or not the open mapping applies in insert mode
     -- terminal_mappings = true, -- whether or not the open mapping applies in the opened terminals
     -- persist_mode = true, -- if set to true (default) the previous terminal mode will be remembered
+    float_opts = {
+      winblend = 10,
+    },
   },
   config = function(_, opts)
     local tt = require 'toggleterm'
