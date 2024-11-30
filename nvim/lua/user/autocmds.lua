@@ -46,8 +46,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
--- Golang: add missing imports on save
--- gopls: Imports and Formatting
+-- Golang: Add missing imports on save using gopls
 -- https://github.com/golang/tools/blob/master/gopls/doc/vim.md#neovim-imports
 vim.api.nvim_create_autocmd('BufWritePre', {
   pattern = '*.go',
