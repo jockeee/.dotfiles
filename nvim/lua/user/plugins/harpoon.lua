@@ -32,8 +32,8 @@ return {
       harpoon:list():prev()
     end)
 
-    -- <alt>a-f for file 1-4
-    for idx, char in ipairs { 'a', 's', 'd', 'f' } do
+    -- <alt>a-g for file 1-5
+    for idx, char in ipairs { 'a', 's', 'd', 'f', 'g' } do
       vim.keymap.set('n', string.format('<M-%s>', char), function()
         harpoon:list():select(idx)
       end)

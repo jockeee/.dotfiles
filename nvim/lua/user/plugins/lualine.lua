@@ -27,7 +27,10 @@ return {
       lualine_a = {}, -- default: 'mode'
       lualine_b = {},
       lualine_c = {
-        'filename',
+        {
+          'filename',
+          color = { gui = 'bold' },
+        },
         {
           'filename',
           file_status = false,
@@ -49,7 +52,10 @@ return {
       lualine_a = {},
       lualine_b = {},
       lualine_c = {
-        'filename',
+        {
+          'filename',
+          color = { gui = 'bold' },
+        },
         {
           'filename',
           file_status = false,
