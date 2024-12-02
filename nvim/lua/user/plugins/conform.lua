@@ -41,7 +41,7 @@ return {
       bash = { 'shfmt' },
       css = { 'stylelint' },
       fish = { 'fish_indent' },
-      go = { 'goimports-reviser' }, -- gopls runs gofumpt
+      go = { 'goimports-reviser', 'injected' }, -- gopls runs gofumpt
       tmpl = { 'prettier' },
       gotmpl = { 'prettier' },
       html = { 'prettier' },
@@ -53,7 +53,7 @@ return {
       sql = { 'sqlfluff' },
       mysql = { 'sqlfluff' },
       pgsql = { 'sqlfluff' },
-      ['*'] = { 'injected' },
+      -- ['*'] = { 'injected' },
     },
     formatters_by_ext = { -- Specify formatters by file extension
       -- ["py"] = { "isort", "black" },
