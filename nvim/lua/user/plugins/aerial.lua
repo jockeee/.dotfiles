@@ -27,7 +27,7 @@ return {
     require('aerial').setup {
       layout = {
         min_width = 20,
-        default_direction = 'right',
+        default_direction = 'float',
       },
       -- use on_attach to set keymaps when aerial has attached to a buffer
       on_attach = function(bufnr)
