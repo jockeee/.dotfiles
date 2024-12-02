@@ -9,22 +9,23 @@
 return {
   'stevearc/aerial.nvim',
   event = { 'BufReadPre', 'BufNewFile' },
-  keys = {
-    {
-      '<leader>a',
-      function()
-        require('aerial').toggle()
-      end,
-      mode = 'n',
-      desc = 'Aerial',
-    },
-  },
+  -- keys = {
+  --   {
+  --     '<leader>a',
+  --     function()
+  --       require('aerial').toggle()
+  --     end,
+  --     mode = 'n',
+  --     desc = 'Aerial',
+  --   },
+  -- },
   dependencies = {
     'nvim-treesitter/nvim-treesitter', -- optional
     'nvim-tree/nvim-web-devicons', -- optional
   },
   config = function()
-    require('aerial').setup {
+    local aerial = require 'aerial'
+    aerial.setup {
       layout = {
         min_width = 20,
         default_direction = 'right',
@@ -32,9 +33,12 @@ return {
       -- use on_attach to set keymaps when aerial has attached to a buffer
       on_attach = function(bufnr)
         -- Jump forwards/backwards with '{' and '}'
-        vim.keymap.set('n', '<leader>{', '<cmd>AerialPrev<CR>', { buffer = bufnr })
-        vim.keymap.set('n', '<leader>}', '<cmd>AerialNext<CR>', { buffer = bufnr })
+        vim.keymap.set('n', '<leader>{', aerial.prev, { buffer = bufnr, desc = 'Aerial Prev' })
+        vim.keymap.set('n', '<leader>}', aerial.next, { buffer = bufnr, desc = 'Aerial Next' })
       end,
     }
+
+    vim.keymap.set('n', '<leader>a', '<cmd>Telescope aerial<cr>', { desc = 'Telescope: Aerial' })
+    vim.keymap.set('n', '<leader>fa', '<cmd>Telescope aerial<cr>', { desc = 'Telescope: Aerial' })
   end,
 }
