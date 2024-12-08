@@ -7,9 +7,7 @@ if status is-interactive
     set fish_pager_color_prefix normal --bold # default: 'normal'  '--bold'  '--underline'
 
     # $EDITOR
-    if test -f /usr/bin/vim
-        set -gx EDITOR /usr/bin/vim
-    end
+    set -gx EDITOR /usr/bin/vim
 
     # Title
     # Default shows truncated directories like ~/.d/f/config.fish
