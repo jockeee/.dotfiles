@@ -20,6 +20,10 @@ return {
     },
     float = {
       padding = 20, -- Padding around the floating window
+      border = 'rounded',
+      win_options = {
+        winblend = 10,
+      },
     },
   },
   config = function(_, opts)
