@@ -114,13 +114,15 @@ end
 ##
 
 # You like the output of batdiff for quick overview.
-function batdiff
-    if not is_git_repo
-        echo 'Error: Unable to locate a Git repository.'
-        return 1
-    end
+if test -n "$bat_cmd"
+    function batdiff
+        if not is_git_repo
+            echo 'Error: Unable to locate a Git repository.'
+            return 1
+        end
 
-    git diff --name-only --relative --diff-filter=d $argv | xargs bat --diff
+        git diff --name-only --relative --diff-filter=d $argv | xargs $bat_cmd --diff
+    end
 end
 
 function cdg -d 'cd to git root directory'
