@@ -81,10 +81,8 @@ abbr --add grs 'git reset'
 abbr --add grs! 'git reset --hard'
 abbr --add gs 'git status'
 
-if type -q git-forgit
-    #abbr --add d 'git-forgit diff'
-    abbr --add gd 'git-forgit diff'
-    abbr --add gl 'git-forgit log'
+if type -q lazygit
+    abbr --add lg lazygit
 end
 
 if command -q bat
