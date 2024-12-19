@@ -20,10 +20,16 @@ return {
       --     base = '#1f1f1f', -- background color
       --   },
       -- },
+      custom_highlights = function()
+        return {
+          MsgArea = { fg = '#b1b1b1', bg = '#1f1f1f' },
+          ['@string.special.url'] = { style = {} },
+        }
+      end,
     },
     init = function()
       vim.cmd.colorscheme 'catppuccin'
-      vim.cmd.highlight 'MsgArea guifg=#b1b1b1 guibg=#1f1f1f'
+      -- vim.cmd.highlight 'MsgArea guifg=#b1b1b1 guibg=#1f1f1f'
       -- vim.cmd.highlight '@comment guifg=#787878'
     end,
   },
