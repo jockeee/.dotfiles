@@ -214,9 +214,9 @@ function ww -d 'git add, git commit, git push - whatthecommit.com'
         echo -e "\e[1mgit push\e[0m" && git push
 end
 
-# wwm (Outputs whatthecommit.com commit messages)
-# usage: wwm
-function wwm -d 'Outputs whatthecommit.com commit messages'
+# wwd (Outputs whatthecommit.com commit messages)
+# usage: wwd
+function wwd -d 'Outputs whatthecommit.com commit messages'
     if ! command -q curl
         echo "Error: Unable to locate 'curl'"
         return 1
