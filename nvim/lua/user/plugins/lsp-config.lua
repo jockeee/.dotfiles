@@ -230,6 +230,22 @@ return {
             -- diagnostics = { disable = { 'missing-fields' } },
           },
         },
+
+        -- Python
+        -- LSP: Fork of the python-language-server project, maintained by the Spyder IDE team and the community.
+        pylsp = {
+          settings = {
+            pylsp = {
+              plugins = {
+                pycodestyle = {
+                  enabled = true,
+                  ignore = { 'E501', 'W503' },
+                },
+                mypy = { enabled = true },
+              },
+            },
+          },
+        },
       },
 
       -- LSP: HTML
@@ -237,6 +253,7 @@ return {
       html = {
         filetypes = { 'html', 'tmpl', 'gotmpl', 'templ' },
       },
+
       -- LSP: CSS, SCSS & LESS
       -- https://github.com/microsoft/vscode-css-languageservice
       cssls = {
@@ -248,6 +265,7 @@ return {
           },
         },
       },
+
       -- LSP: Emmet
       -- https://github.com/aca/emmet-ls
       emmet_ls = {
@@ -261,6 +279,7 @@ return {
           },
         },
       },
+
       -- LSP: Tailwind CSS
       tailwindcss = {
         filetypes = { 'astro', 'javascript', 'typescript', 'react', 'tmpl', 'gotmpl', 'templ' },
@@ -274,6 +293,7 @@ return {
           },
         },
       },
+
       -- LSP: An experimental LSP for HTMX  INFO: Requires Rust build tools (cargo)
       htmx = {
         filetypes = { 'html', 'tmpl', 'gotmpl', 'templ' },
@@ -294,28 +314,9 @@ return {
           templateExtensions = { 'tmpl', 'gotmpl' },
         },
       },
+
       -- LSP: templ
       templ = {},
-
-      -- PHP
-      intelephense = {}, -- LSP: Professional PHP tooling for any Language Server Protocol capable editor
-      -- phpactor = {}, -- LSP: Phpactor is an intelligent Completion and Refactoring tool for PHP
-
-      -- Python
-      -- LSP: Fork of the python-language-server project, maintained by the Spyder IDE team and the community.
-      pylsp = {
-        settings = {
-          pylsp = {
-            plugins = {
-              pycodestyle = {
-                enabled = true,
-                ignore = { 'E501', 'W503' },
-              },
-              mypy = { enabled = true },
-            },
-          },
-        },
-      },
     }
 
     -- Ensure the servers and tools above are installed
@@ -341,10 +342,6 @@ return {
       'jq', -- Command-line JSON processor - https://github.com/stedolan/jq
       -- Lua
       'stylua', -- Formatter: An opinionated Lua code formatter
-      -- PHP  INFO: Requires PHP
-      -- 'easy-coding-standard', -- Formatter/Linter: Use Coding Standard with 0-knowledge of PHP-CS-Fixer and PHP_CodeSniffer
-      -- 'phpstan', -- Linter: PHP Static Analysis Tool - discover bugs in your code without running it!
-      -- 'php-debug-adapter', -- DAP: PHP Debug Adapter
       -- Python
       'black', -- Formatter: Black, the uncompromising Python code formatter
       'isort', -- Formatter: isort is a Python utility / library to sort imports alphabetically

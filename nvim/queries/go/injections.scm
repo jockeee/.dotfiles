@@ -1,7 +1,6 @@
 ; SQL highlighting when you have
 ; stmt = `
-;   ... SQL ...
-; `
+;   ... SQL ...`
 left: (expression_list
   (identifier) @var_name (#eq? @var_name "stmt")
 )
