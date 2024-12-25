@@ -7,7 +7,9 @@ return {
   event = { 'BufReadPre', 'BufNewFile' },
   opts = {},
   config = function()
-    vim.keymap.set({ 'n', 'v' }, '<leader><left>', '<cmd>SidewaysLeft<cr>')
-    vim.keymap.set({ 'n', 'v' }, '<leader><right>', '<cmd>SidewaysRight<cr>')
+    -- .vim plugin, no lua API
+
+    vim.keymap.set({ 'n', 'v' }, '<leader><left>', '<cmd>SidewaysLeft<cr>', { desc = 'Sideways: Left' })
+    vim.keymap.set({ 'n', 'v' }, '<leader><right>', '<cmd>SidewaysRight<cr>', { desc = 'Sideways: Right' })
   end,
 }
