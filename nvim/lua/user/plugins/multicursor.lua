@@ -34,13 +34,15 @@ return {
     vim.keymap.set({ 'n', 'v' }, '<C-left>', mc.nextCursor)
     vim.keymap.set({ 'n', 'v' }, '<C-right>', mc.prevCursor)
 
-    -- Add or skip cursor above/below the main cursor
+    -- Add cursor above/below the main cursor
     vim.keymap.set({ 'n', 'v' }, '<C-up>', function()
       mc.lineAddCursor(-1)
     end, { desc = 'Multicursor: Add cursor, up' })
     vim.keymap.set({ 'n', 'v' }, '<C-down>', function()
       mc.lineAddCursor(1)
     end, { desc = 'Multicursor: Add cursor, down' })
+
+    -- Skip cursor above/below the main cursor
     vim.keymap.set({ 'n', 'v' }, '<leader><C-up>', function()
       mc.lineSkipCursor(-1)
     end, { desc = 'Multicursor: Skip cursor, up' })

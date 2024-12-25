@@ -20,6 +20,10 @@ return {
       text = false, -- Disable Copilot for text files
     },
     suggestion = {
+      enabled = true,
+      auto_trigger = true,
+      hide_during_completion = false,
+      debounce = 75,
       keymap = {
         accept = '<C-a>',
         accept_word = '<C-d>',
