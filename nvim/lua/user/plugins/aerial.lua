@@ -90,7 +90,7 @@ return {
       open_automatic = false,
 
       -- Run this command after jumping to a symbol (false will disable)
-      post_jump_cmd = 'normal! zt',
+      post_jump_cmd = 'normal! zz',
 
       -- use on_attach to set keymaps when aerial has attached to a buffer
       on_attach = function(bufnr)
