@@ -25,11 +25,16 @@ return {
     },
     sections = {
       lualine_a = {}, -- default: 'mode'
-      lualine_b = {},
-      lualine_c = {
+      lualine_b = {
         {
           'filename',
           color = { gui = 'bold' },
+        },
+      },
+      lualine_c = {
+        {
+          'branch',
+          icon = '',
         },
         {
           'filename',
@@ -38,6 +43,7 @@ return {
         },
         'diagnostics',
         'diff',
+        -- 'aerial',
       },
       lualine_x = {
         { 'copilot', show_colors = false },
