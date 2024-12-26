@@ -23,7 +23,7 @@ vim.opt.showtabline = 0 -- hide tabline
 
 -- Line Numbers
 vim.opt.number = true -- shows absolute line number on cursor line (when relative number is on)
-vim.opt.relativenumber = true
+vim.opt.relativenumber = false
 
 -- Tabs & Indentation
 vim.opt.tabstop = 4 -- tab width
