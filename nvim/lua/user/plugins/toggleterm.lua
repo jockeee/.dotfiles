@@ -22,6 +22,6 @@ return {
     local tt = require 'toggleterm'
     tt.setup(opts)
 
-    vim.keymap.set('t', '`', '<cmd>ToggleTerm direction=float<cr>', { desc = 'Exit Terminal' })
+    vim.keymap.set({ 'v', 't' }, '`', '<cmd>ToggleTerm direction=float<cr>', { desc = 'Exit Terminal' })
   end,
 }
