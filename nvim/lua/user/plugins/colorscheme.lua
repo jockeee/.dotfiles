@@ -23,6 +23,7 @@ return {
       custom_highlights = function()
         return {
           MsgArea = { fg = '#b1b1b1', bg = '#1f1f1f' },
+          Comment = { fg = '#818181' },
           ['@string.special.url'] = { style = {} },
         }
       end,

@@ -51,6 +51,10 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 vim.api.nvim_create_autocmd('BufWritePre', {
   pattern = '*.go',
   callback = function()
+    -- if not (#vim.lsp.get_clients() > 0) then
+    --   return
+    -- end
+
     local params = vim.lsp.util.make_range_params()
     params.context = { only = { 'source.organizeImports' } }
     -- buf_request_sync defaults to a 1000ms timeout.
