@@ -22,7 +22,7 @@ return {
     suggestion = {
       enabled = true,
       auto_trigger = true,
-      hide_during_completion = false,
+      hide_during_completion = false, -- Hide during nvim-cmp completion
       debounce = 75,
       keymap = {
         accept = '<C-a>',
