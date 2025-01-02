@@ -15,9 +15,13 @@ end)
 -- Exit terminal mode in the builtin terminal with <esc> (default: <C-\><C-n>).
 vim.keymap.set('t', '<esc>', '<C-\\><C-n>', { desc = 'Exit Terminal Mode' })
 
+-- Yank with right mouse button
+vim.keymap.set('v', '<RightMouse>', 'y', { desc = 'Yank' })
+
 -- Save file
 vim.keymap.set({ 'i', 'n', 's' }, '<C-s>', '<cmd>w<cr><esc>', { desc = 'Save File' })
 
+-- Back/End of word with <left>/<right> keys
 vim.keymap.set({ 'n', 'v' }, '<left>', 'b')
 vim.keymap.set({ 'n', 'v' }, '<right>', 'e')
 
@@ -56,7 +60,7 @@ vim.keymap.set('n', '<S-h>', '<cmd>bprevious<cr>', { desc = 'Prev Buffer' })
 vim.keymap.set('n', '<S-l>', '<cmd>bnext<cr>', { desc = 'Next Buffer' })
 
 -- Tabs
-vim.keymap.set({ 'i', 'n', 'v', 't' }, '<leader>+', '<cmd>tabnew<cr>', { desc = 'New Tab' })
+vim.keymap.set({ 'n', 'v', 't' }, '<leader>+', '<cmd>tabnew<cr>', { desc = 'New Tab' })
 vim.keymap.set({ 'i', 'n', 'v', 't' }, '<M-v>', '<cmd>tabprevious<cr>', { desc = 'Previous Tab' })
 vim.keymap.set({ 'i', 'n', 'v', 't' }, '<M-b>', '<cmd>tabnext<cr>', { desc = 'Next Tab' })
 for idx, char in ipairs { 'z', 'x', 'c' } do
