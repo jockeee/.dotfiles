@@ -90,6 +90,11 @@ vim.keymap.set('n', '<leader>dx', '<cmd>bd!<cr>', { desc = 'Kill Buffer (Ignore 
 
 -- Execute line with bash
 vim.keymap.set('n', '<leader>de', '<cmd>.w !bash<cr>', { desc = 'Execute line with bash' })
+vim.keymap.set('n', '<leader>dE', function()
+  local line = vim.fn.getline '.'
+  local output = vim.fn.system('bash -c ' .. vim.fn.shellescape(line))
+  vim.fn.setreg('+', output)
+end, { desc = 'Execute line with bash and copy output to register' })
 
 -- open project/curl.sh in a split to the right
 vim.keymap.set('n', '<leader>dc', function()
