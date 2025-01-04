@@ -91,19 +91,19 @@ vim.keymap.set('n', '<leader>dx', '<cmd>bd!<cr>', { desc = 'Kill Buffer (Ignore 
 -- Execute line with bash
 vim.keymap.set('n', '<leader>de', '<cmd>.w !bash<cr>', { desc = 'Execute line with bash' })
 
--- open project/curl in a split to the right
+-- open project/curl.sh in a split to the right
 vim.keymap.set('n', '<leader>dc', function()
   local git_root = vim.fn.systemlist('git rev-parse --show-toplevel')[1]
   if not git_root or git_root == '' then
     print 'Not in a git repository'
   end
-  local project_curl = git_root .. '/project/curl'
+  local project_curl = git_root .. '/project/curl.sh'
 
   if vim.fn.filereadable(project_curl) == 1 then
     vim.cmd 'vsplit'
     vim.cmd('edit ' .. project_curl)
   else
-    print 'No project/curl file found'
+    print 'No project/curl.sh file found'
   end
 end, { desc = 'Open project/curl' })
 
