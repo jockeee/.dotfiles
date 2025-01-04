@@ -41,7 +41,7 @@ end
 vim.keymap.set({ 'n', 'v' }, 'j', mux_with_g 'j', { expr = true })
 vim.keymap.set({ 'n', 'v' }, 'k', mux_with_g 'k', { expr = true })
 
--- Resize windows using <ctrl> + arrow keys
+-- Resize windows using <alt> + arrow keys
 vim.keymap.set('n', '<M-up>', '<cmd>resize +2<cr>', { desc = 'Window Height, +' })
 vim.keymap.set('n', '<M-down>', '<cmd>resize -2<cr>', { desc = 'Window Height, -' })
 vim.keymap.set('n', '<M-left>', '<cmd>vertical resize -2<cr>', { desc = 'Window Width, +' })
@@ -105,7 +105,10 @@ vim.keymap.set('n', '<leader>dc', function()
   local project_curl = git_root .. '/project/curl.sh'
 
   if vim.fn.filereadable(project_curl) == 1 then
+    local width_percentage = 40
+    local width = math.floor(vim.o.columns * (width_percentage / 100))
     vim.cmd 'vsplit'
+    vim.cmd('vertical resize ' .. width)
     vim.cmd('edit ' .. project_curl)
   else
     print 'No project/curl.sh file found'
