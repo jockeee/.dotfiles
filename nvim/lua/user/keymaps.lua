@@ -88,9 +88,8 @@ vim.keymap.set('n', '<leader>dd', '<cmd>bd<cr>', { desc = 'Delete Buffer' })
 vim.keymap.set('n', '<leader>da', '<cmd>%bdelete<cr>', { desc = 'Delete All Buffers' })
 vim.keymap.set('n', '<leader>dx', '<cmd>bd!<cr>', { desc = 'Kill Buffer (Ignore Unsaved Changes)' })
 
--- Execute line/file with bash
+-- Execute line with bash
 vim.keymap.set('n', '<leader>de', '<cmd>.w !bash<cr>', { desc = 'Execute line with bash' })
-vim.keymap.set('n', '<leader>dE', '<cmd>%w !bash<cr>', { desc = 'Execute file with bash' })
 
 -- open project/curl in a split to the right
 vim.keymap.set('n', '<leader>dc', function()
