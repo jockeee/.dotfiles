@@ -88,6 +88,25 @@ vim.keymap.set('n', '<leader>dd', '<cmd>bd<cr>', { desc = 'Delete Buffer' })
 vim.keymap.set('n', '<leader>da', '<cmd>%bdelete<cr>', { desc = 'Delete All Buffers' })
 vim.keymap.set('n', '<leader>dx', '<cmd>bd!<cr>', { desc = 'Kill Buffer (Ignore Unsaved Changes)' })
 
+-- Execute current line with bash
+vim.keymap.set('n', '<leader>de', '<cmd>execute "!bash -c " . shellescape(getline("."))<cr>', { desc = 'Execute line with bash' })
+
+-- open project/curl in a split to the right
+vim.keymap.set('n', '<leader>dc', function()
+  local git_root = vim.fn.systemlist('git rev-parse --show-toplevel')[1]
+  if not git_root or git_root == '' then
+    print 'Not in a git repository'
+  end
+  local project_curl = git_root .. '/project/curl'
+
+  if vim.fn.filereadable(project_curl) == 1 then
+    vim.cmd 'vsplit'
+    vim.cmd('edit ' .. project_curl)
+  else
+    print 'No project/curl file found'
+  end
+end, { desc = 'Open project/curl' })
+
 -- Leader q: Neovim
 vim.keymap.set('n', '<leader>qm', '<cmd>Mason<cr>', { desc = 'Mason' })
 vim.keymap.set('n', '<leader>ql', '<cmd>Lazy<cr>', { desc = 'Lazy' })
