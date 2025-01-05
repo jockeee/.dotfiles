@@ -56,8 +56,14 @@ vim.keymap.set('v', '<M-j>', ":m '>+1<cr>gv=gv", { desc = 'Move Down' })
 vim.keymap.set('v', '<M-k>', ":m '<-2<cr>gv=gv", { desc = 'Move Up' })
 
 -- Buffer
-vim.keymap.set('n', '<S-h>', '<cmd>bprevious<cr>', { desc = 'Prev Buffer' })
-vim.keymap.set('n', '<S-l>', '<cmd>bnext<cr>', { desc = 'Next Buffer' })
+-- vim.keymap.set('n', '<S-h>', '<cmd>bprevious<cr>', { desc = 'Prev Buffer' })
+-- vim.keymap.set('n', '<S-l>', '<cmd>bnext<cr>', { desc = 'Next Buffer' })
+vim.keymap.set('n', '<S-h>', function()
+  require('user.utils').jl_buf_backward()
+end, { desc = 'Prev Buffer' })
+vim.keymap.set('n', '<S-l>', function()
+  require('user.utils').jl_buf_forward()
+end, { desc = 'Next Buffer' })
 
 -- Tabs
 vim.keymap.set({ 'n', 'v' }, '<leader>+', '<cmd>tabnew<cr>', { desc = 'New Tab' })
@@ -89,12 +95,13 @@ vim.keymap.set('n', '<leader>da', '<cmd>%bdelete<cr>', { desc = 'Delete All Buff
 vim.keymap.set('n', '<leader>dx', '<cmd>bd!<cr>', { desc = 'Kill Buffer (Ignore Unsaved Changes)' })
 
 -- Execute line with bash
-vim.keymap.set('n', '<leader>de', '<cmd>.w !bash<cr>', { desc = 'Execute line with bash' })
+vim.keymap.set('n', '<leader>de', '<cmd>.w !bash<cr>', { desc = 'Execute line, bash' })
+vim.keymap.set('n', '<leader>dj', '<cmd>.w !bash | jq<cr>', { desc = 'Execute line, bash | jq' })
 vim.keymap.set('n', '<leader>dE', function()
   local line = vim.fn.getline '.'
   local output = vim.fn.system('bash -c ' .. vim.fn.shellescape(line))
   vim.fn.setreg('+', output)
-end, { desc = 'Execute line with bash and copy output to register' })
+end, { desc = 'Execute line, bash > clipboard' })
 
 -- open project/curl.sh in a split to the right
 vim.keymap.set('n', '<leader>dc', function()
