@@ -27,10 +27,11 @@ return {
     'saadparwaiz1/cmp_luasnip', -- luasnip completion source for nvim-cmp
 
     -- Adds other completion capabilities
-    --    nvim-cmp does not ship with all sources by default. They are split
-    --    into multiple repos for maintenance purposes.
+    --    nvim-cmp does not ship with all sources by default.
+    --    They are split into multiple repos for maintenance purposes.
     'hrsh7th/cmp-nvim-lsp',
     'hrsh7th/cmp-path',
+    'hrsh7th/cmp-nvim-lsp-signature-help',
 
     -- If you want to add a bunch of pre-configured snippets, you can use this plugin to help you.
     --    It even has snippets for various frameworks/libraries/etc,
@@ -72,8 +73,9 @@ return {
       -- Sources for autocompletion
       sources = {
         { name = 'nvim_lsp' },
+        { name = 'nvim_lsp_signature_help' },
         { name = 'luasnip' }, -- Snippets
-        { name = 'buffer' }, -- Buffer
+        { name = 'buffer' }, -- Words in current buffer
         { name = 'path' }, -- File system paths
       },
       -- Configure lspkind for vscode like pictograms in completion menu
