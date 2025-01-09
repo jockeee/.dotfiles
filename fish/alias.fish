@@ -23,6 +23,8 @@ alias laz 'ls -laZ'
 alias ladz 'ls -ladZ'
 alias lazd 'ls -ladZ'
 alias man 'man --nj'
+
+alias rg 'rg --no-line-number --hidden --no-ignore --no-ignore-parent'
 alias wezterm 'flatpak run org.wezfurlong.wezterm'
 
 if command -q btop
