@@ -53,7 +53,8 @@ end
 
 # c<space> expands to cat, c<enter> behaves like an alias
 abbr --add c cat
-abbr --add g git
+abbr --add f fd
+abbr --add g rg
 abbr --add t tree
 abbr --add v vim
 
@@ -80,7 +81,6 @@ abbr --add gr 'git remote -v'
 abbr --add grs 'git reset'
 abbr --add grs! 'git reset --hard'
 abbr --add gs 'git status'
-
 if type -q lazygit
     abbr --add lg lazygit
 end
@@ -97,15 +97,7 @@ if command -q batcat
     abbr --add d batdiff
 end
 
-if command -q npm
-    abbr --add n npm
-end
-
-if command -q pnpm
-    alias npm pnpm
-    abbr --add n pnpm
-    abbr --add npm pnpm
-end
+abbr --add n npm
 
 ##
 ## Functions
