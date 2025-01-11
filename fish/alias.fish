@@ -24,6 +24,10 @@ alias ladz 'ls -ladZ'
 alias lazd 'ls -ladZ'
 alias man 'man --nj'
 
+if command -q ~/.local/bin/nvim
+    alias vim '~/.local/bin/nvim'
+end
+
 alias fd 'fd --hidden --no-ignore --no-ignore-parent'
 alias rg 'rg --no-line-number --hidden --no-ignore --no-ignore-parent'
 alias wezterm 'flatpak run org.wezfurlong.wezterm'
