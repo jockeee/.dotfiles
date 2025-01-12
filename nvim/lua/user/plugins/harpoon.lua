@@ -25,12 +25,12 @@ return {
     vim.keymap.set('n', '<M-m>', function()
       harpoon:list():add()
     end)
-    vim.keymap.set('n', '<M-n>', function()
-      harpoon:list():next()
-    end)
-    vim.keymap.set('n', '<M-p>', function()
-      harpoon:list():prev()
-    end)
+    -- vim.keymap.set('n', '<M-n>', function()
+    --   harpoon:list():next()
+    -- end)
+    -- vim.keymap.set('n', '<M-p>', function()
+    --   harpoon:list():prev()
+    -- end)
 
     -- <alt>a-g for file 1-5
     for idx, char in ipairs { 'a', 's', 'd', 'f', 'g' } do

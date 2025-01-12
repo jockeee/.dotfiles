@@ -1,11 +1,12 @@
 --
 -- https://github.com/echasnovski/mini.nvim
--- Library of 40+ independent Lua modules improving overall Neovim (version 0.8 and higher) experience with minimal effort
+-- Library of 40+ independent Lua modules improving overall nvim (version 0.8 and higher) experience with minimal effort
 
 return {
   'echasnovski/mini.nvim',
   version = '*', -- * stable, false = main, for the latest features
-  event = { 'BufReadPre', 'BufNewFile' },
+  event = 'VimEnter',
+  -- event = { 'BufReadPre', 'BufNewFile' },
   config = function()
     -- a/i textobjects
     -- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-ai.md
@@ -18,6 +19,12 @@ return {
     --    ci'  - [C]hange [I]nside [']quote
     require('mini.ai').setup { n_lines = 500 }
 
+    -- Icons
+    -- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-icons.md
+    -- Icons, via nerd font
+    require('mini.icons').setup()
+    MiniIcons.mock_nvim_web_devicons()
+
     -- Bracketed
     -- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-bracketed.md
     -- Go forward/backward with square brackets
@@ -28,7 +35,7 @@ return {
     --    [D [d ]d ]D   diagnostics
     --    [T [t ]t ]T   treesitter node and parents
     --
-    require('mini.bracketed').setup()
+    -- require('mini.bracketed').setup()
 
     -- Surround
     -- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-surround.md

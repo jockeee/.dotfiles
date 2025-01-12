@@ -1,6 +1,6 @@
 --
 -- https://github.com/MeanderingProgrammer/render-markdown.nvim
--- Improve viewing Markdown files in Neovim
+-- Improve viewing Markdown files in nvim
 
 return {
   'MeanderingProgrammer/render-markdown.nvim',
@@ -13,3 +13,4 @@ return {
   ---@type render.md.UserConfig
   opts = {},
 }
+

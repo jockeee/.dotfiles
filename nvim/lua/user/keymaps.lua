@@ -19,7 +19,7 @@ vim.keymap.set('t', '<esc>', '<C-\\><C-n>', { desc = 'Exit Terminal Mode' })
 vim.keymap.set('v', '<RightMouse>', 'y', { desc = 'Yank' })
 
 -- Save file
-vim.keymap.set({ 'i', 'n', 's' }, '<C-s>', '<cmd>w<cr><esc>', { desc = 'Save File' })
+vim.keymap.set({ 'n', 'v' }, '<C-w><C-w>', '<cmd>w<cr>', { desc = 'Save File' })
 
 -- Back/End of word with <left>/<right> keys
 vim.keymap.set({ 'n', 'v' }, '<left>', 'b')
@@ -83,6 +83,10 @@ for _, key in ipairs(keys) do
   vim.keymap.set('n', key, key .. '<cmd>lua require("user.utils").hl_search_index()<cr>', { desc = 'Search Index' })
 end
 
+-- Quickfix
+vim.keymap.set('n', '<M-p>', '<cmd>cprev<cr>', { desc = 'Quickfix: Prev' }) -- included in mini.bracketed, [q
+vim.keymap.set('n', '<M-n>', '<cmd>cnext<cr>', { desc = 'Quickfix: Next' }) -- included in mini.bracketed, ]q
+
 -- Diagnostics (https://github.com/neovim/nvim-lspconfig)
 -- vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Prev Diagnostic Message' }) -- included in mini.bracketed
 -- vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Next Diagnostic Message' }) -- included in mini.bracketed
@@ -90,8 +94,8 @@ vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show Diagn
 -- vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open Diagnostic Quickfix List' }) -- trouble, leader-xx
 
 -- Leader d: Buffer (document)
-vim.keymap.set('n', '<leader>dd', '<cmd>bd<cr>', { desc = 'Delete Buffer' })
-vim.keymap.set('n', '<leader>da', '<cmd>%bdelete<cr>', { desc = 'Delete All Buffers' })
+vim.keymap.set('n', '<leader>dd', '<cmd>bd<cr>', { desc = 'Close Buffer' })
+vim.keymap.set('n', '<leader>da', '<cmd>%bdelete<cr>', { desc = 'Close All Buffers' })
 vim.keymap.set('n', '<leader>dx', '<cmd>bd!<cr>', { desc = 'Kill Buffer (Ignore Unsaved Changes)' })
 
 -- Execute line with bash
@@ -122,10 +126,14 @@ vim.keymap.set('n', '<leader>dc', function()
   end
 end, { desc = 'Open project/curl' })
 
--- Leader q: Neovim
-vim.keymap.set('n', '<leader>qm', '<cmd>Mason<cr>', { desc = 'Mason' })
-vim.keymap.set('n', '<leader>ql', '<cmd>Lazy<cr>', { desc = 'Lazy' })
-vim.keymap.set('n', '<leader>qs', '<cmd>w !sudo tee %<cr>', { desc = 'Sudo Write' })
+-- Leader z: nvim/Lua
+vim.keymap.set('n', '<leader>zm', '<cmd>Mason<cr>', { desc = 'Mason' })
+vim.keymap.set('n', '<leader>zl', '<cmd>Lazy<cr>', { desc = 'Lazy' })
+vim.keymap.set('n', '<leader>zs', '<cmd>w !sudo tee %<cr>', { desc = 'Sudo Write' })
+-- make different based on filetype? so same keymaps work for both .lua and .sh files
+vim.keymap.set('n', '<leader>zs', '<cmd>source %<CR>', { desc = 'Lua: Source file' })
+vim.keymap.set('n', '<leader>zx', ':.lua<CR>', { desc = 'Lua: Execute line' })
+vim.keymap.set('v', '<leader>zx', ':lua<CR>', { desc = 'Lua: Execute selection' })
 
 -- Leader t: Toggle
 vim.keymap.set('n', '<leader>tc', function()
@@ -135,6 +143,7 @@ end, { desc = 'Color Column' })
 vim.keymap.set('n', '<leader>tr', '<cmd>set relativenumber!<cr>', { desc = 'Relative Number' }) -- set rnu! or lua vim.opt.relativenumber = not vim.opt.relativenumber:get()
 vim.keymap.set('n', '<leader>ts', '<cmd>windo set scrollbind!<cr>', { desc = 'Scrollbind, in open windows' })
 vim.keymap.set('n', '<leader>tt', function()
+  ---@diagnostic disable-next-line: undefined-field
   vim.opt.showtabline = (vim.opt.showtabline:get() == 0) and 2 or 0
 end, { desc = 'Tab Line' })
 vim.keymap.set('n', '<leader>tw', '<cmd>set wrap!<cr>', { desc = 'Wrap' }) -- lua vim.opt.wrap = not vim.opt.wrap:get()

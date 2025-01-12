@@ -4,10 +4,7 @@
 -- Set <space> as the leader key
 -- Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
-
--- Netrw
-vim.g.netrw_liststyle = 3 -- Tree view
+vim.g.maplocalleader = '\\'
 
 -- Colorscheme
-vim.g.colorscheme = 'vscode'
+vim.g.colorscheme = 'catppuccin'
