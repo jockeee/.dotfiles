@@ -62,7 +62,7 @@ end
 abbr --add c cat
 abbr --add f fd
 abbr --add g rg
-abbr --add t tree
+abbr --add t 'tree -D'
 abbr --add v vim
 
 # tmux
