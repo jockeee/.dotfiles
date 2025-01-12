@@ -1,8 +1,22 @@
 return {
   {
     'saghen/blink.cmp',
+    lazy = false,
     version = '*',
-    dependencies = 'rafamadriz/friendly-snippets', -- optional: provides snippets for the snippet source
+    dependencies = {
+      'rafamadriz/friendly-snippets', -- optional: provides snippets for the snippet source
+      {
+        "folke/lazydev.nvim",
+        ft = "lua", -- only load on lua files
+        opts = {
+          library = {
+            -- See the configuration section for more details
+            -- Load luvit types when the `vim.uv` word is found
+            { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+          },
+        },
+      },
+    },
 
     ---@module 'blink.cmp'
     ---@type blink.cmp.Config

@@ -2,8 +2,7 @@
 -- plugins.lua
 
 return {
-  -- Lua
-  require 'user.plugins.lua',
+  { 'nvim-lua/plenary.nvim', lazy = false, }, -- lua functions that many plugins use
 
   -- Visual
   require 'user.plugins.colorscheme',
