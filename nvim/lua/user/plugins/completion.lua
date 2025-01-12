@@ -7,7 +7,6 @@ return {
       'rafamadriz/friendly-snippets', -- optional: provides snippets for the snippet source
       {
         "folke/lazydev.nvim",
-        ft = "lua", -- only load on lua files
         opts = {
           library = {
             -- See the configuration section for more details
