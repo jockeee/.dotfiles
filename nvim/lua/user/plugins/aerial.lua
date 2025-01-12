@@ -37,9 +37,9 @@ return {
         min_width = 40,          -- Default: 10
 
         -- key-value pairs of window-local options for aerial window (e.g. winhl)
-        win_opts = { -- Default: {}
-          winblend = 10,
-        },
+        -- win_opts = { -- Default: {}
+        --   winblend = 10,
+        -- },
 
         -- Determines the default direction to open the aerial window. The 'prefer'
         -- options will open the window in the other direction *if* there is a

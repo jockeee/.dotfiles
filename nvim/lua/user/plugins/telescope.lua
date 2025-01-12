@@ -218,6 +218,7 @@ return {
 
     -- vim.keymap.set('n', '<C-p>', builtin.find_files, { desc = 'Files' })
     vim.keymap.set('n', '<leader><leader>', builtin.find_files, { desc = 'Find Files' })
+    vim.keymap.set('n', '<leader>fa', builtin.resume, { desc = 'Resume' })
     vim.keymap.set('n', '<leader>fb', builtin.builtin, { desc = 'Telescope: builtin' })
     vim.keymap.set('n', '<leader>fd', builtin.diagnostics, { desc = 'Diagnostics' })
     -- vim.keymap.set('n', '<leader>ff', builtin.live_grep, { desc = 'Grep' }) -- Search for a string in your current working directory and get results live as you type, respects .gitignore. (Requires ripgrep)
