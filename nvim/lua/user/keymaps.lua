@@ -14,6 +14,7 @@ end)
 
 -- Exit terminal mode in the builtin terminal with <esc> (default: <C-\><C-n>).
 vim.keymap.set('t', '<esc>', '<C-\\><C-n>', { desc = 'Exit Terminal Mode' })
+vim.keymap.set({ 'n', 'v', 't' }, '`', '<cmd>Floaterminal<cr>', { desc = 'Toggle Floaterminal' })
 
 -- Yank with right mouse button
 vim.keymap.set('v', '<RightMouse>', 'y', { desc = 'Yank' })

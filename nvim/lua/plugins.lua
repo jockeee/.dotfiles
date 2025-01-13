@@ -26,7 +26,6 @@ return {
   -- Functionality
   require 'user.plugins.auto-session',       -- sessions based on working directory
   require 'user.plugins.harpoon',            -- quick navigation
-  require 'user.plugins.toggleterm',         -- terminal in a floating window
   require 'user.plugins.vim-tmux-navigator', -- tmux & split window navigation with C-hjkl\
 
   -- Formatting / LSP / Completion
