@@ -202,17 +202,17 @@ return {
     vim.keymap.set('n', '<leader>/', builtin.current_buffer_fuzzy_find, { desc = 'Find in current buffer' })
 
     -- Find nvim config files
-    vim.keymap.set("n", "<leader>fn", function()
+    vim.keymap.set('n', '<leader>fn', function()
       require('telescope.builtin').find_files {
-        cwd = vim.fn.stdpath("config")
+        cwd = vim.fn.stdpath 'config',
       }
     end, { desc = 'nvim' })
 
     -- Find lazy files
-    vim.keymap.set("n", "<space>fl", function()
+    vim.keymap.set('n', '<space>fl', function()
       require('telescope.builtin').find_files {
         ---@diagnostic disable-next-line: param-type-mismatch
-        cwd = vim.fs.joinpath(vim.fn.stdpath("data"), "lazy")
+        cwd = vim.fs.joinpath(vim.fn.stdpath 'data', 'lazy'),
       }
     end, { desc = 'Lazy' })
 
@@ -225,12 +225,11 @@ return {
     -- vim.keymap.set('n', '<leader>fg', telescope.extensions.live_grep_args.live_grep_args, { desc = 'Grep Args' })
     vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Help' })
     vim.keymap.set('n', '<leader>fk', builtin.keymaps, { desc = 'Keymap' })
-    vim.keymap.set('n', '<leader>fp', builtin.git_files, { desc = 'Git File' })                      -- Fuzzy search through the output of git ls-files command, respects .gitignore
+    vim.keymap.set('n', '<leader>fp', builtin.git_files, { desc = 'Git File' }) -- Fuzzy search through the output of git ls-files command, respects .gitignore
     vim.keymap.set('n', '<leader>fr', builtin.lsp_references, { desc = 'LSP: References' })
     vim.keymap.set('n', '<leader>fs', '<cmd>Telescope session-lens<cr>', { desc = 'auto-sessions' }) -- auto-session
-    vim.keymap.set('n', '<leader>ft', '<cmd>TodoTelescope<cr>', { desc = 'Todos' })                  -- todo-comments.nvim
-    vim.keymap.set('n', '<leader>fv', builtin.resume, { desc = 'Resume' })
-    vim.keymap.set('n', '<leader>fw', builtin.grep_string, { desc = 'Word Under Cursor' })           -- Searches for the string under your cursor or selection in your current working directory
+    vim.keymap.set('n', '<leader>ft', '<cmd>TodoTelescope<cr>', { desc = 'Todos' }) -- todo-comments.nvim
+    vim.keymap.set('n', '<leader>fw', builtin.grep_string, { desc = 'Word Under Cursor' }) -- Searches for the string under your cursor or selection in your current working directory
 
     --
     -- https://github.com/tjdevries/advent-of-nvim/blob/master/nvim/lua/config/telescope/multigrep.lua
@@ -245,21 +244,21 @@ return {
     --    ------------------------------------------------------------------------------------------
     --    foo bar  *.lua              search for 'foo bar' and show only files with '.lua' extension
     --    foo bar  **/plugins/**      search for 'foo bar' and show only files with 'plugins' in path
-    vim.keymap.set('n', '<leader>ff', require 'user.telescope.multigrep'.live_multigrep, { desc = 'Grep' })
+    vim.keymap.set('n', '<leader>ff', require('user.telescope.multigrep').live_multigrep, { desc = 'Grep' })
     -- require 'user.telescope.multigrep'.setup()
 
     -- Leader q: Play around
-    vim.keymap.set("n", "<space>qd", function()
-      local opts = require('telescope.themes').get_dropdown({
-        cwd = vim.fn.stdpath("config")
-      })
+    vim.keymap.set('n', '<space>qd', function()
+      local opts = require('telescope.themes').get_dropdown {
+        cwd = vim.fn.stdpath 'config',
+      }
       require('telescope.builtin').find_files(opts)
     end, { desc = 'Telescope Dropdown' })
 
-    vim.keymap.set("n", "<space>qi", function()
-      local opts = require('telescope.themes').get_ivy({
-        cwd = vim.fn.stdpath("config")
-      })
+    vim.keymap.set('n', '<space>qi', function()
+      local opts = require('telescope.themes').get_ivy {
+        cwd = vim.fn.stdpath 'config',
+      }
       require('telescope.builtin').find_files(opts)
     end, { desc = 'Telescope Ivy' })
   end,

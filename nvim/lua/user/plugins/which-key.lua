@@ -7,7 +7,7 @@ return {
   event = 'VeryLazy',
   opts = {},
   config = function()
-    local wk = require('which-key')
+    local wk = require 'which-key'
     wk.setup()
 
     -- Add groups to which-key
@@ -15,8 +15,8 @@ return {
       { '<leader>c', group = 'Code' },
       { '<leader>d', group = 'Buffer' },
       { '<leader>f', group = 'Find' },
-      { '<leader>g', group = 'Diffview',   mode = { 'n', 'v' } },
-      { '<leader>h', group = 'Git Hunk',   mode = { 'n', 'v' } },
+      { '<leader>g', group = 'Diffview', mode = { 'n', 'v' } },
+      { '<leader>h', group = 'Git Hunk', mode = { 'n', 'v' } },
       { '<leader>m', group = 'Multicursor' },
       { '<leader>q', group = 'Play Around' },
       { '<leader>t', group = 'Toggle' },

@@ -1,16 +1,12 @@
 --
 -- https://github.com/neovim/nvim-lspconfig
 -- Quickstart configs for Nvim LSP
-
--- Brief Aside: **What is LSP?**
 --
 -- LSP stands for Language Server Protocol.
 -- It's a protocol that helps editors and language tooling communicate in a standardized fashion.
 --
--- In general, you have a "server" which is some tool built to understand a particular
--- language (such as `gopls`, `lua_ls`, `rust_analyzer`, etc). These Language Servers
--- (sometimes called LSP servers, but that's kind of like ATM Machine) are standalone
--- processes that communicate with some "client" - in this case, nvim!
+-- In general, you have a "server" which is some tool built to understand a particular language.
+-- Language Servers, sometimes called LSP servers, are standalone processes that communicate with a "client", like nvim.
 --
 -- LSP provides nvim with features like:
 --  - Go to definition
@@ -22,71 +18,29 @@
 -- Language Servers are external tools that must be installed separately from nvim.
 -- This is where `mason` and related plugins come into play.
 --
--- If you're wondering about lsp vs treesitter, you can check out the wonderfully and elegantly composed help section.
 -- :h lsp-vs-treesitter
+-- :h lspconfig-all
 
 return {
   {
     'neovim/nvim-lspconfig',
     lazy = false,
     dependencies = {
-      -- {
-      --   "folke/lazydev.nvim",
-      --   ft = "lua", -- only load on lua files
-      --   opts = {
-      --     library = {
-      --       -- See the configuration section for more details
-      --       -- Load luvit types when the `vim.uv` word is found
-      --       { path = "${3rd}/luv/library", words = { "vim%.uv" } },
-      --     },
-      --   },
-      -- },
-      -- { -- optional blink completion source for require statements and module annotations
-      --   "saghen/blink.cmp",
-      --   version = '*',
-      --   opts = {
-      --     sources = {
-      --       -- add lazydev to your completion providers
-      --       default = { "lazydev", "lsp", "path", "snippets", "buffer" },
-      --       providers = {
-      --         lazydev = {
-      --           name = "LazyDev",
-      --           module = "lazydev.integrations.blink",
-      --           -- make lazydev completions top priority (see `:h blink.cmp`)
-      --           score_offset = 100,
-      --         },
-      --       },
-      --     },
-      --   },
-      -- },
+      -- https://github.com/williamboman/mason.nvim
+      -- Package manager for Neovim that runs everywhere Neovim runs.
+      -- Easily install and manage LSP servers, DAP servers, linters, and formatters.
+      -- Automatically install LSPs and related tools to stdpath for neovim
+      { 'williamboman/mason.nvim', config = true }, -- NOTE: Must be loaded before dependants
+      --
+      -- https://github.com/williamboman/mason-lspconfig.nvim
+      -- Extension to mason.nvim that makes it easier to use lspconfig with mason.nvim
+      'williamboman/mason-lspconfig.nvim',
+      --
+      -- https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim
+      -- Install and upgrade third party tools automatically
+      'WhoIsSethDaniel/mason-tool-installer.nvim',
     },
     config = function()
-      -- local capabilities = require('blink.cmp').get_lsp_capabilities()
-      -- require('lspconfig').lua_ls.setup { capabilites = capabilities }
-
-      local lua_ls_path = vim.fn.stdpath('cache') .. '/lua-language-server/'
-      local lua_ls_meta_path = vim.fn.stdpath('cache') .. '/lua-language-server/meta/'
-
-      require('lspconfig').lua_ls.setup {
-        -- cmd = {...},
-        -- filetypes { ...},
-        -- capabilities = {},
-        cmd = {
-          'lua-language-server',
-          '--logpath=',
-          lua_ls_path,
-          '--metapath=',
-          lua_ls_meta_path,
-        },
-        settings = {
-          Lua = {
-            diagnostics = {
-              globals = { 'vim' },
-            },
-          },
-        },
-      }
-
       vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
         callback = function(event)
@@ -118,8 +72,7 @@ return {
 
           -- FROM https://github.com/neovim/nvim-lspconfig
           -- keymap clash, C-k is for window navigation, you give it code signatures
-          vim.keymap.set('n', '<leader>cs', vim.lsp.buf.signature_help,
-            { buffer = event.buf, desc = 'LSP: ' .. 'Signature Help' })
+          vim.keymap.set('n', '<leader>cs', vim.lsp.buf.signature_help, { buffer = event.buf, desc = 'LSP: ' .. 'Signature Help' })
 
           -- Jump to the type of the word under your cursor.
           --  Useful when you're not sure what type a variable is and you want to see
@@ -137,10 +90,8 @@ return {
           map('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, 'Workspace symbols')
 
           -- FROM https://github.com/neovim/nvim-lspconfig
-          vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder,
-            { buffer = event.buf, desc = 'LSP: ' .. 'Add workspace folder' })
-          vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder,
-            { buffer = event.buf, desc = 'LSP: ' .. 'Remove workspace folder' })
+          vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, { buffer = event.buf, desc = 'LSP: ' .. 'Add workspace folder' })
+          vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, { buffer = event.buf, desc = 'LSP: ' .. 'Remove workspace folder' })
           vim.keymap.set('n', '<space>wl', function()
             print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
           end, { buffer = event.buf, desc = 'LSP: ' .. 'List workspace folders' })
@@ -149,8 +100,7 @@ return {
           -- or a suggestion from your LSP for this to activate.
           -- OLD map('<leader>ca', vim.lsp.buf.code_action, 'Code action')
           -- FROM https://github.com/neovim/nvim-lspconfig
-          vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action,
-            { buffer = event.buf, desc = 'LSP: ' .. 'Code action' })
+          vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, { buffer = event.buf, desc = 'LSP: ' .. 'Code action' })
 
           -- Find references for the word under your cursor.
           map('gr', require('telescope.builtin').lsp_references, 'Goto references')
@@ -207,6 +157,160 @@ return {
           end
         end,
       })
+
+      -- local lua_ls_path = vim.fn.stdpath('cache') .. '/lua-language-server/'
+      -- local lua_ls_meta_path = vim.fn.stdpath('cache') .. '/lua-language-server/meta/'
+      -- local lua_ls_template_path = vim.fn.stdpath('cache') .. '/lua-language-server/meta/template/'
+      --
+      -- require('lspconfig').lua_ls.setup {
+      --   -- cmd = {...},
+      --   -- filetypes { ...},
+      --   -- capabilities = {},
+      --   cmd = {
+      --     'lua-language-server',
+      --     '--logpath=',
+      --     lua_ls_path,
+      --     '--metapath=',
+      --     lua_ls_meta_path,
+      --   },
+      --   settings = {
+      --     Lua = {
+      --       diagnostics = {
+      --         globals = { 'vim' },
+      --       },
+      --       workspace = {
+      --         library = vim.tbl_extend("keep",
+      --           -- this will probably vary depending on setup, not sure if plugins like mason even install it.
+      --           { lua_ls_template_path },
+      --           -- and runtime-directories.
+      --           vim.api.nvim_get_runtime_file("", true)),
+      --       },
+      --     },
+      --   },
+      -- }
+
+      -- :h lspconfig-all
+      local servers = {
+
+        -- bash
+        bashls = {}, -- LSP: A language server for Bash
+
+        -- lua
+        lua_ls = { -- LSP: Lua language server
+          -- cmd = {...},
+          -- filetypes {...},
+          -- capabilities = {},
+          settings = {
+            Lua = {
+              completion = {
+                callSnippet = 'Replace',
+              },
+              diagnostics = {
+                globals = { 'vim' },
+              },
+              -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
+              -- diagnostics = { disable = { 'missing-fields' } },
+            },
+          },
+        },
+
+        -- Python
+        -- LSP: Fork of the python-language-server project, maintained by the Spyder IDE team and the community.
+        pylsp = {
+          settings = {
+            pylsp = {
+              plugins = {
+                pycodestyle = {
+                  enabled = true,
+                  ignore = { 'E501', 'W503' },
+                },
+                mypy = { enabled = true },
+              },
+            },
+          },
+        },
+
+        -- Golang
+        -- LSP: the official Go language server developed by the Go team  INFO: Requires Go
+        gopls = {
+          settings = {
+            gopls = {
+              analyses = {
+                unusedparams = true,
+              },
+              completeUnimported = false,
+              staticcheck = true,
+              gofumpt = true,
+            },
+            templateExtensions = { 'tmpl', 'gotmpl' },
+          },
+        },
+
+        -- LSP: HTML
+        -- https://github.com/microsoft/vscode-html-languageservice
+        html = {
+          filetypes = { 'html', 'tmpl', 'gotmpl', 'templ' },
+        },
+
+        -- LSP: CSS, SCSS & LESS
+        -- https://github.com/microsoft/vscode-css-languageservice
+        cssls = {},
+
+        -- LSP: Emmet
+        -- https://github.com/aca/emmet-ls
+        emmet_ls = {
+          filetypes = { 'css', 'eruby', 'html', 'javascript', 'javascriptreact', 'less', 'sass', 'scss', 'svelte', 'pug', 'typescriptreact', 'vue' },
+          init_options = {
+            html = {
+              options = {
+                -- For possible options, see: https://github.com/emmetio/emmet/blob/master/src/config.ts#L79-L267
+                ['bem.enabled'] = true,
+              },
+            },
+          },
+        },
+      }
+
+      require('mason').setup()
+
+      -- You can add other tools here that you want Mason to install for you, so that they are available from within Neovim.
+      local ensure_installed = vim.tbl_keys(servers or {})
+      vim.list_extend(ensure_installed, {
+        -- Bash
+        'shfmt', -- Formatter: A shell formatter (sh/bash/mksh)
+        'shellcheck', -- Linter: A static analysis tool for shell scripts
+        -- Lua
+        'stylua', -- Formatter: An opinionated Lua code formatter
+        -- Python
+        'black', -- Formatter: Black, the uncompromising Python code formatter
+        'isort', -- Formatter: isort is a Python utility / library to sort imports alphabetically
+        'mypy', -- Linter: Mypy is a static type checker for Python
+        -- Golang  INFO: Requires Go
+        'gofumpt', -- Formatter: A stricter gofmt
+        'goimports-reviser', -- Formatter: sorts goimports by 3-4 groups (stdlib, general, company, project dependencies)
+        'staticcheck', -- Linter: The advanced Go linter
+        'delve', -- DAP: Delve is a debugger for the Go programming language
+        -- Html/CSS
+        'prettier', -- Formatter: Prettier is an opinionated code formatter
+        -- 'prettierd', -- Formatter: Prettier, as a daemon, for ludicrous formatting speed - https://github.com/fsouza/prettierd#vim--neovim
+        'stylelint', -- Linter: A mighty CSS linter that helps you avoid errors and enforce conventions - https://stylelint.io
+        -- JSON
+        'jq', -- Command-line JSON processor - https://github.com/stedolan/jq
+        -- SQL
+        'sqlfluff', -- Formatter/Linter: SQLFluff is a dialect-flexible and configurable SQL linter.
+      })
+
+      require('mason-tool-installer').setup { ensure_installed = ensure_installed }
+
+      ---@diagnostic disable: missing-fields
+      require('mason-lspconfig').setup {
+        handlers = {
+          function(server_name)
+            local server = servers[server_name] or {}
+            require('lspconfig')[server_name].setup(server)
+          end,
+        },
+      }
     end,
   },
 }

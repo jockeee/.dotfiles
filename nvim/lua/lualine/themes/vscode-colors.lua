@@ -55,4 +55,3 @@ return {
     c = { bg = colors.bg, fg = colors.fg_light },
   },
 }
-

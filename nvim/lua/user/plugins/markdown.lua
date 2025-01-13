@@ -13,4 +13,3 @@ return {
   ---@type render.md.UserConfig
   opts = {},
 }
-

@@ -43,12 +43,12 @@ return {
         gitsigns.reset_hunk { vim.fn.line '.', vim.fn.line 'v' }
       end, { desc = 'Reset Git Hunk' })
       -- normal mode
-      map('n', '<leader>hs', gitsigns.stage_hunk, { desc = 'Git Stage Hunk' })
-      map('n', '<leader>hr', gitsigns.reset_hunk, { desc = 'Git Reset Hunk' })
-      map('n', '<leader>hS', gitsigns.stage_buffer, { desc = 'Git Stage Buffer' })
-      map('n', '<leader>hu', gitsigns.undo_stage_hunk, { desc = 'Git Undo Stage Hunk' })
-      map('n', '<leader>hR', gitsigns.reset_buffer, { desc = 'Git Reset Buffer' })
-      map('n', '<leader>hp', gitsigns.preview_hunk, { desc = 'Git Preview Hunk' })
+      map('n', '<leader>hs', gitsigns.stage_hunk, { desc = 'Stage Hunk' })
+      map('n', '<leader>hr', gitsigns.reset_hunk, { desc = 'Reset Hunk' })
+      map('n', '<leader>hu', gitsigns.undo_stage_hunk, { desc = 'Undo Stage Hunk' })
+      map('n', '<leader>hS', gitsigns.stage_buffer, { desc = 'Stage Buffer' })
+      map('n', '<leader>hR', gitsigns.reset_buffer, { desc = 'Reset Buffer' })
+      map('n', '<leader>hp', gitsigns.preview_hunk, { desc = 'Preview Hunk' })
       map('n', '<leader>hb', gitsigns.blame_line, { desc = 'Git Blame Line' })
       map('n', '<leader>hd', gitsigns.diffthis, { desc = 'Git Diff Against Index' })
       map('n', '<leader>hD', function()

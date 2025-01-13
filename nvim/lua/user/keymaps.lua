@@ -99,7 +99,7 @@ vim.keymap.set('n', '<leader>dd', '<cmd>bd<cr>', { desc = 'Close Buffer' })
 vim.keymap.set('n', '<leader>da', '<cmd>%bdelete<cr>', { desc = 'Close All Buffers' })
 vim.keymap.set('n', '<leader>dx', '<cmd>bd!<cr>', { desc = 'Kill Buffer (Ignore Unsaved Changes)' })
 
--- Execute line with bash
+-- Execute line, bash
 vim.keymap.set('n', '<leader>de', '<cmd>.w !bash<cr>', { desc = 'Execute line, bash' })
 vim.keymap.set('n', '<leader>dj', '<cmd>.w !bash | jq<cr>', { desc = 'Execute line, bash | jq' })
 vim.keymap.set('n', '<leader>dE', function()

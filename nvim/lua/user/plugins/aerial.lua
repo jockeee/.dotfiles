@@ -21,7 +21,7 @@ return {
   },
   dependencies = {
     'nvim-treesitter/nvim-treesitter', -- optional
-    'nvim-tree/nvim-web-devicons',     -- optional
+    'nvim-tree/nvim-web-devicons', -- optional
   },
   config = function()
     local aerial = require 'aerial'
@@ -34,7 +34,7 @@ return {
         -- max_width = {40, 0.2} means "the lesser of 40 columns or 20% of total"
         max_width = { 80, 0.2 }, -- Default: 40, 0.2
         width = nil,
-        min_width = 40,          -- Default: 10
+        min_width = 40, -- Default: 10
 
         -- key-value pairs of window-local options for aerial window (e.g. winhl)
         -- win_opts = { -- Default: {}
