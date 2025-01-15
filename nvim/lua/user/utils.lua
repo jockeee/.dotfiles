@@ -50,7 +50,7 @@ M.jl_buf_backward = function()
     local curBufNum = vim.fn.bufnr()
     local targetBufNum = curBufNum
 
-    while j > 1 and (curBufNum == targetBufNum or not vim.api.nvim_buf_is_valid(targetBufNum)) do
+    while j > 1 and (curBufNum == targetBufNum or not vim.api.nvim_buf_is_loaded(targetBufNum)) do
         j = j - 1
         targetBufNum = jumplist[j].bufnr
     end
@@ -73,11 +73,11 @@ M.jl_buf_forward = function()
     local targetBufNum = curBufNum
 
     -- find the next different buffer
-    while j < #jumplist and (curBufNum == targetBufNum or vim.api.nvim_buf_is_valid(targetBufNum) == false) do
+    while j < #jumplist and (curBufNum == targetBufNum or vim.api.nvim_buf_is_loaded(targetBufNum) == false) do
         j = j + 1
         targetBufNum = jumplist[j].bufnr
     end
-    while j + 1 <= #jumplist and jumplist[j + 1].bufnr == targetBufNum and vim.api.nvim_buf_is_valid(targetBufNum) do
+    while j + 1 <= #jumplist and jumplist[j + 1].bufnr == targetBufNum and vim.api.nvim_buf_is_loaded(targetBufNum) do
         j = j + 1
     end
 
