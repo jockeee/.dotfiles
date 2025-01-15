@@ -54,7 +54,8 @@ M.jl_buf_backward = function()
     j = j - 1
     targetBufNum = jumplist[j].bufnr
   end
-  if targetBufNum ~= curBufNum and vim.api.nvim_buf_is_valid(targetBufNum) then
+
+  if targetBufNum ~= curBufNum and vim.api.nvim_buf_is_loaded(targetBufNum) then
     jumpbackward(i - j)
   end
 end
@@ -79,7 +80,8 @@ M.jl_buf_forward = function()
   while j + 1 <= #jumplist and jumplist[j + 1].bufnr == targetBufNum and vim.api.nvim_buf_is_valid(targetBufNum) do
     j = j + 1
   end
-  if j <= #jumplist and targetBufNum ~= curBufNum and vim.api.nvim_buf_is_valid(targetBufNum) then
+
+  if j <= #jumplist and targetBufNum ~= curBufNum and vim.api.nvim_buf_is_loaded(targetBufNum) then
     jumpforward(j - i)
   end
 end
