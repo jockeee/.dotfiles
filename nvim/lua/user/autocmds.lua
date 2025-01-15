@@ -52,26 +52,29 @@ M.highlight_yank = function()
   })
 end
 
--- Go: Add missing imports on save using gopls
--- https://github.com/golang/tools/blob/master/gopls/doc/vim.md#neovim-imports
 M.go = function()
   vim.api.nvim_create_autocmd('BufWritePre', {
-    desc = 'Go: Add missing imports on save using gopls',
+    desc = 'Go: Add missing imports on save',
     group = vim.api.nvim_create_augroup('custom-go-add-missing-imports', { clear = true }),
     pattern = '*.go',
     callback = function()
-      if not (#vim.lsp.get_clients() > 0) then
+      if not (#vim.lsp.get_clients { 'gopls' } > 0) then
         return
       end
 
-      local params = vim.lsp.util.make_range_params(0, 'utf-8') {
+      local params = vim.lsp.util.make_range_params(0, 'utf-8')
+      params = {
         context = {
-          only = { 'source.organizeImports' },
+          only = {
+            'source.organizeImports',
+          },
         },
       }
-      -- buf_request_sync defaults to a 1000ms timeout.
-      -- Depending on your machine and codebase, you may want longer.
-      -- Add an additional argument after params if you find that you have to write the file twice for changes to be saved.
+
+      -- buf_request_sync defaults to a 1000ms timeout. Depending on your
+      -- machine and codebase, you may want longer. Add an additional
+      -- argument after params if you find that you have to write the file
+      -- twice for changes to be saved.
       -- E.g., vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, 3000)
       local result = vim.lsp.buf_request_sync(0, 'textDocument/codeAction', params)
       for cid, res in pairs(result or {}) do
