@@ -70,7 +70,7 @@ return {
       -- See the full "keymap" documentation for information on defining your own keymap.
       keymap = {
         -- set to 'none' to disable the 'default' preset
-        preset = 'default',
+        preset = 'none',
 
         -- disable a keymap from the preset
         -- ['<C-e>'] = {},
@@ -102,7 +102,7 @@ return {
         ['<C-n>'] = { 'select_next', 'fallback' },
 
         ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
-        ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
+        -- ['<C-f>'] = { 'scroll_documentation_down', 'fallback' }, -- disabled, C-f configured for copilot
 
         -- default
         -- ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },

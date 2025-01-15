@@ -7,7 +7,10 @@ local state = {
   floating = {
     buf = -1,
     win = -1,
+    mode = nil,
   },
+  cursor = nil,
+  mode = nil,
 }
 
 local function create_floating_window(opts)
@@ -48,14 +51,27 @@ local toggle_terminal = function()
   if not vim.api.nvim_win_is_valid(state.floating.win) then
     state.floating = create_floating_window { buf = state.floating.buf }
     if vim.bo[state.floating.buf].buftype ~= 'terminal' then
+      -- Create a new terminal
       vim.cmd.terminal()
+      vim.cmd 'startinsert'
+    else
+      -- Terminal is already running
+      -- Restore cursor position and mode
+      if state.mode == 't' then
+        vim.cmd 'startinsert'
+      elseif state.mode == 'v' or state.mode == 'V' or state.mode == '^V' then
+        vim.cmd 'normal! gv'
+      end
     end
   else
+    -- Save cursor position and mode
+    state.mode = vim.api.nvim_get_mode().mode
+    state.cursor = vim.api.nvim_win_get_cursor(0)
+
+    -- Hide window
     vim.api.nvim_win_hide(state.floating.win)
   end
-  vim.cmd 'normal i'
 end
 
--- Example usage:
 -- Create a floating window with default dimensions
 vim.api.nvim_create_user_command('Floaterminal', toggle_terminal, {})

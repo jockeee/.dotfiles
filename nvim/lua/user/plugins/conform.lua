@@ -43,7 +43,6 @@ return {
       fish = { 'fish_indent' },
       go = { 'goimports-reviser', 'injected' }, -- gopls runs gofumpt
       tmpl = { 'prettier' },
-      gotmpl = { 'prettier' },
       html = { 'prettier' },
       javascript = { 'prettier' },
       lua = { 'stylua' },
