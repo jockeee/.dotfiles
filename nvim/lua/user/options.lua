@@ -85,4 +85,4 @@ vim.opt.pumheight = 10 -- maximum number of items to show in the popup menu
 -- Sessions
 -- auto-session plugin suggests these sessionoptions
 -- https://github.com/rmagatti/auto-session#recommended-sessionoptions-config
-vim.opt.sessionoptions = 'blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions'
+vim.opt.sessionoptions = 'blank,buffers,curdir,folds,help,tabpages,winsize,winpos,localoptions' -- removed terminal

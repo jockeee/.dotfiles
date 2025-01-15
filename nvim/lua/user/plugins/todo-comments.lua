@@ -12,19 +12,19 @@
 --   TEST = alt = { "TESTING", "PASSED", "FAILED" }
 
 return {
-  'folke/todo-comments.nvim',
-  event = { 'BufReadPre', 'BufNewFile' },
-  dependencies = { 'nvim-lua/plenary.nvim' },
-  opts = {
-    highlight = {
-      multiline = false,
+    'folke/todo-comments.nvim',
+    event = { 'BufReadPre', 'BufNewFile' },
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    opts = {
+        highlight = {
+            multiline = false,
+        },
     },
-  },
-  config = function(_, opts)
-    local todo_comments = require 'todo-comments'
-    todo_comments.setup(opts)
+    config = function(_, opts)
+        local todo_comments = require 'todo-comments'
+        todo_comments.setup(opts)
 
-    vim.keymap.set('n', ']t', todo_comments.jump_next, { desc = 'Next todo comment' })
-    vim.keymap.set('n', '[t', todo_comments.jump_prev, { desc = 'Previous todo comment' })
-  end,
+        vim.keymap.set('n', ']t', todo_comments.jump_next, { desc = 'Next todo comment' })
+        vim.keymap.set('n', '[t', todo_comments.jump_prev, { desc = 'Previous todo comment' })
+    end,
 }
