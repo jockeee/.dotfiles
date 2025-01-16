@@ -40,6 +40,9 @@ if status is-interactive
     end
 
     function fish_user_key_bindings
+        # "Unbind" M-v
+        bind \ev true
+
         if command -q tmux-sessionizer.sh
             bind \eq 'tmux-sessionizer.sh ~; commandline -f repaint'
             bind \ew 'tmux-sessionizer.sh ~/.dotfiles; commandline -f repaint'
