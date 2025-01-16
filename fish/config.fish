@@ -40,7 +40,7 @@ if status is-interactive
     end
 
     function fish_user_key_bindings
-        # "Unbind" M-v
+        # "Unbind" M-v, default: edit current command in $EDITOR
         bind \ev true
 
         if command -q tmux-sessionizer.sh
