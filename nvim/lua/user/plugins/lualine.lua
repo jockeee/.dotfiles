@@ -11,73 +11,73 @@
 --    extensions = { 'nvim-tree' }
 
 return {
-    'nvim-lualine/lualine.nvim',
-    event = 'VimEnter',
-    dependencies = {
-        -- { 'nvim-tree/nvim-web-devicons', event = 'VeryLazy' }, -- for pretty icons, requires a nerd font
-        { 'AndreM222/copilot-lualine', event = 'VimEnter' },
+  'nvim-lualine/lualine.nvim',
+  event = 'VimEnter',
+  dependencies = {
+    -- { 'nvim-tree/nvim-web-devicons', event = 'VeryLazy' }, -- for pretty icons, requires a nerd font
+    { 'AndreM222/copilot-lualine', event = 'VimEnter' },
+  },
+  opts = {
+    options = {
+      theme = 'vscode-colors', -- default: auto, lua/lualine/themes/vscode-colors.lua
+      component_separators = '',
+      section_separators = '',
     },
-    opts = {
-        options = {
-            theme = 'vscode-colors', -- default: auto, lua/lualine/themes/vscode-colors.lua
-            component_separators = '',
-            section_separators = '',
+    sections = {
+      lualine_a = {}, -- default: 'mode'
+      lualine_b = {
+        {
+          'filename',
+          color = { gui = 'bold' },
         },
-        sections = {
-            lualine_a = {}, -- default: 'mode'
-            lualine_b = {
-                {
-                    'filename',
-                    color = { gui = 'bold' },
-                },
-            },
-            lualine_c = {
-                {
-                    'branch',
-                    icon = '',
-                },
-                {
-                    'filename',
-                    file_status = false,
-                    path = 1, -- 0 = filename, 1 = relative path, 2 = absolute path, 3 = relative to home
-                },
-                'diagnostics',
-                'diff',
-                -- 'aerial',
-            },
-            lualine_x = {
-                { 'copilot', show_colors = false },
-                'encoding',
-                'fileformat',
-                'filetype',
-            },
-            lualine_y = { 'progress' },
-            lualine_z = { 'location' }, -- default: 'location'
+      },
+      lualine_c = {
+        {
+          'branch',
+          icon = '',
         },
-        inactive_sections = {
-            lualine_a = {},
-            lualine_b = {},
-            lualine_c = {
-                {
-                    'filename',
-                    color = { gui = 'bold' },
-                },
-                {
-                    'filename',
-                    file_status = false,
-                    path = 1, -- 0 = filename, 1 = relative path, 2 = absolute path, 3 = relative to home
-                },
-                'diagnostics',
-            },
-            lualine_x = {
-                { 'copilot', show_colors = false },
-                'encoding',
-                'fileformat',
-                'filetype',
-            },
-            lualine_y = { 'progress' },
-            lualine_z = { 'location' }, -- default: 'location'
+        {
+          'filename',
+          file_status = false,
+          path = 1, -- 0 = filename, 1 = relative path, 2 = absolute path, 3 = relative to home
         },
-        -- extensions = { 'nvim-tree' },
+        'diagnostics',
+        'diff',
+        -- 'aerial',
+      },
+      lualine_x = {
+        { 'copilot', show_colors = false },
+        'encoding',
+        'fileformat',
+        'filetype',
+      },
+      lualine_y = { 'progress' },
+      lualine_z = { 'location' }, -- default: 'location'
     },
+    inactive_sections = {
+      lualine_a = {},
+      lualine_b = {},
+      lualine_c = {
+        {
+          'filename',
+          color = { gui = 'bold' },
+        },
+        {
+          'filename',
+          file_status = false,
+          path = 1, -- 0 = filename, 1 = relative path, 2 = absolute path, 3 = relative to home
+        },
+        'diagnostics',
+      },
+      lualine_x = {
+        { 'copilot', show_colors = false },
+        'encoding',
+        'fileformat',
+        'filetype',
+      },
+      lualine_y = { 'progress' },
+      lualine_z = { 'location' }, -- default: 'location'
+    },
+    -- extensions = { 'nvim-tree' },
+  },
 }

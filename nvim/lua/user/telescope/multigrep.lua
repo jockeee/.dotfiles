@@ -20,70 +20,71 @@ local conf = require('telescope.config').values
 local M = {}
 
 local live_multigrep = function(opts)
-    opts = opts or {}
-    opts.cwd = opts.cwd or vim.uv.cwd()
+  opts = opts or {}
+  opts.cwd = opts.cwd or vim.uv.cwd()
 
-    local finder = finders.new_async_job {
-        command_generator = function(prompt)
-            if not prompt or prompt == '' then
-                return nil
-            end
+  local finder = finders.new_async_job {
+    command_generator = function(prompt)
+      if not prompt or prompt == '' then
+        return nil
+      end
 
-            local pieces = vim.split(prompt, '  ')
-            local args = { 'rg' }
-            if pieces[1] then
-                table.insert(args, '-e')
-                table.insert(args, pieces[1])
-            end
+      local pieces = vim.split(prompt, '  ')
+      local args = { 'rg' }
+      if pieces[1] then
+        table.insert(args, '-e')
+        table.insert(args, pieces[1])
+      end
 
-            if pieces[2] then
-                table.insert(args, '-g')
-                table.insert(args, pieces[2])
-            end
+      if pieces[2] then
+        table.insert(args, '-g')
+        table.insert(args, pieces[2])
+      end
 
-            return vim.iter({
-                args,
-                {
-                    -- Default arguments
-                    '--color=never',
-                    '--no-heading', -- don't group matches by each file
-                    '--with-filename',
-                    '--line-number',
-                    '--column', -- show column numbers
-                    '--smart-case',
+      return vim
+        .iter({
+          args,
+          {
+            -- Default arguments
+            '--color=never',
+            '--no-heading', -- don't group matches by each file
+            '--with-filename',
+            '--line-number',
+            '--column', -- show column numbers
+            '--smart-case',
 
-                    -- Extra arguments
-                    -- '--no-ignore-vcs', -- don't exclude files specified in .gitignore
-                    '--follow', -- follow symbolic links
-                    '--hidden', -- search in hidden files (dotfiles)
+            -- Extra arguments
+            -- '--no-ignore-vcs', -- don't exclude files specified in .gitignore
+            '--follow', -- follow symbolic links
+            '--hidden', -- search in hidden files (dotfiles)
 
-                    -- Exclude the following patterns from search
-                    -- '--glob=!**/.idea/*',
-                    -- '--glob=!**/.vscode/*',
-                    -- '--glob=!**/build/*',
-                    -- '--glob=!**/dist/*',
-                    '--glob=!**/vendor/*',
-                    '--glob=!**/.git/*',
-                    '--glob=!**/yarn.lock',
-                    '--glob=!**/package-lock.json',
-                },
-            })
-                :flatten()
-                :totable()
-        end,
-        entry_maker = make_entry.gen_from_vimgrep(opts),
-        cwd = opts.cwd,
-    }
-
-    pickers
-        .new(opts, {
-            debounce = 100,
-            prompt_title = 'Multi Grep',
-            finder = finder,
-            previewer = conf.grep_previewer(opts),
-            sorter = require('telescope.sorters').empty(),
+            -- Exclude the following patterns from search
+            -- '--glob=!**/.idea/*',
+            -- '--glob=!**/.vscode/*',
+            -- '--glob=!**/build/*',
+            -- '--glob=!**/dist/*',
+            '--glob=!**/vendor/*',
+            '--glob=!**/.git/*',
+            '--glob=!**/yarn.lock',
+            '--glob=!**/package-lock.json',
+          },
         })
-        :find()
+        :flatten()
+        :totable()
+    end,
+    entry_maker = make_entry.gen_from_vimgrep(opts),
+    cwd = opts.cwd,
+  }
+
+  pickers
+    .new(opts, {
+      debounce = 100,
+      prompt_title = 'Multi Grep',
+      finder = finder,
+      previewer = conf.grep_previewer(opts),
+      sorter = require('telescope.sorters').empty(),
+    })
+    :find()
 end
 
 -- M.setup = function()
