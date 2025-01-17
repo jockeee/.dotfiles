@@ -37,9 +37,9 @@ return {
       respect_buf_cwd = true,
       sync_root_with_cwd = true,
 
-      -- sort = {
-      --   sorter = 'case_sensitive',
-      -- },
+      sort = {
+        sorter = 'case_sensitive', -- default: 'name'
+      },
       view = {
         width = 40,
         adaptive_size = true,
