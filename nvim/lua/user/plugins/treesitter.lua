@@ -1,11 +1,12 @@
 --
 -- https://github.com/nvim-treesitter/nvim-treesitter
 -- highlight, edit, and navigate code
---  :h nvim-treesitter
---  :h nvim-treesitter-commands
+--
+-- :h nvim-treesitter
+-- :h nvim-treesitter-commands
 --
 -- Incremental selection (included by default)
---  :h nvim-treesitter-incremental-selection-mod
+-- :h nvim-treesitter-incremental-selection-mod
 --
 -- ensure_installed
 --  https://github.com/nvim-treesitter/nvim-treesitter#supported-languages

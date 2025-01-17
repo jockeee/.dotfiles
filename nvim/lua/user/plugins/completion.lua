@@ -10,38 +10,6 @@ return {
     lazy = false,
     version = '*',
     dependencies = {
-      -- https://github.com/folke/lazydev.nvim
-      -- Faster LuaLS setup for Neovim
-      {
-        'folke/lazydev.nvim',
-        ft = 'lua',
-        opts = {
-          library = {
-            -- See the configuration section for more details
-            -- Load luvit types when the `vim.uv` word is found
-            { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
-          },
-        },
-      },
-
-      --
-      -- https://github.com/j-hui/fidget.nvim
-      -- Notifications and LSP progress messages
-      {
-        'j-hui/fidget.nvim',
-        opts = {
-          progress = { -- make fidget less noisy
-            suppress_on_insert = true, -- suppress new messages while in insert mode -- default: false
-            ignore_done_already = true, -- ignore new tasks that are already complete -- default: false
-            ignore_empty_message = true, -- ignore new tasks that don't contain a message  default: false
-
-            display = {
-              done_ttl = 1, -- time a message persist after completion
-            },
-          },
-        },
-      },
-
       'rafamadriz/friendly-snippets', -- optional: provides snippets for the snippet source
     },
 

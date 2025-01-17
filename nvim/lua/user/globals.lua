@@ -8,3 +8,7 @@ vim.g.maplocalleader = '\\'
 
 -- Colorscheme
 vim.g.colorscheme = 'catppuccin'
+
+-- Disable Netrw (nvim-tree)
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1

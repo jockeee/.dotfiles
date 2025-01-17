@@ -3,10 +3,12 @@
 
 return {
   { 'nvim-lua/plenary.nvim', lazy = false }, -- lua functions that many plugins use
+  { 'nvim-tree/nvim-web-devicons', event = 'VimEnter' }, -- for pretty icons, requires a nerd font
 
   -- Visual
   require 'user.plugins.colorscheme',
   require 'user.plugins.lualine', -- statusline
+  require 'user.plugins.nvim-tree', -- file explorer
   require 'user.plugins.oil', -- file explorer
   require 'user.plugins.telescope',
   require 'user.plugins.todo-comments', -- highlight todo, notes, etc in comments
