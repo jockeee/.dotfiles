@@ -27,23 +27,22 @@ return {
       lualine_a = {}, -- default: 'mode'
       lualine_b = {
         {
+          'filename',
+          color = { gui = 'bold' },
+        },
+      },
+      lualine_c = {
+        {
           'branch',
           icon = '',
         },
         {
           'filename',
           file_status = false,
-          color = { gui = 'bold' },
-        },
-      },
-      lualine_c = {
-        {
-          'filename',
-          file_status = false,
           path = 1, -- 0 = filename, 1 = relative path, 2 = absolute path, 3 = relative to home
         },
-        'diff',
         'diagnostics',
+        'diff',
         -- 'aerial',
       },
       lualine_x = {
