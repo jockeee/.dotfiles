@@ -1,9 +1,15 @@
 # .
-# .
+# VERSION 1.0.25
 
 ##
 ## Environment
 ##
+
+# .
+# .
+# .
+# .
+# .
 
 if test -z "$TMUX_DEFAULT_SESSION_NAME"
     set TMUX_DEFAULT_SESSION_NAME home
@@ -122,6 +128,7 @@ if test -n "$bat_cmd"
     end
 end
 
+# cdg (cd to git root directory)
 function cdg -d 'cd to git root directory'
     if not is_git_repo
         echo 'Error: Unable to locate a Git repository.'
@@ -334,6 +341,7 @@ if test -e /etc/os-release
                     echo
                 end
                 upd_fisher
+                upd_gh_extensions
                 upd_go
                 upd_npm
                 upd_npm_packages
@@ -355,6 +363,7 @@ if test -e /etc/os-release
                     echo
                 end
                 upd_fisher
+                upd_gh_extensions
                 upd_go
                 upd_npm
                 upd_npm_packages
@@ -368,6 +377,15 @@ function upd_fisher -d 'fisher update'
         echo -e '\e[3mfisher update\e[0m\n'
         fisher update 1>/dev/null
         # echo # above will not output anything unless there is an error
+    end
+end
+
+function upd_gh_extensions -d 'Github CLI extensions update'
+    if command -q gh
+        echo -e '\e[1mUpdating Github CLI extensions\e[0m'
+        echo -e '\e[3mgh extension upgrade --all\e[0m\n'
+        gh extension upgrade --all
+        echo
     end
 end
 
@@ -407,34 +425,11 @@ function upd_go -d 'golang update'
         echo -e '\e[3mhttps://go.dev/dl\e[0m'
         echo
 
-        # if neither curl nor wget found, exit
-        if not command -q curl -a command -q wget
-            echo "Error: Neither 'curl' nor 'wget' found"
-            return 1
-        end
-
-        # if jq not found, exit 
-        if not command -q jq
-            echo "Error: 'jq' not found"
-            return 1
-        end
-
-        # if sha256sum not found, exit
-        if not command -q sha256sum
-            echo "Error: 'sha256sum' not found"
-            return 1
-        end
-
-        # if mktemp not found, exit
-        if not command -q mktemp
-            echo "Error: 'mktemp' not found"
-            return 1
-        end
-
-        # if tar not found, exit
-        if not command -q tar
-            echo "Error: 'tar' not found"
-            return 1
+        for cmd in curl jq sha256sum tar
+            if not command -q $cmd
+                echo "Error: '$cmd' not found"
+                return 1
+            end
         end
 
         set os (uname -s | tr '[:upper:]' '[:lower:]')
@@ -446,11 +441,9 @@ function upd_go -d 'golang update'
         set download_url_base 'https://go.dev/dl/'
 
         # download json
-        if command -q curl
-            set go_dev_json (curl -s 'https://go.dev/dl/?mode=json')
-        else
-            set go_dev_json (wget -qO- 'https://go.dev/dl/?mode=json')
-        end
+        # go_dev_json=$(curl -s https://go.dev/dl/?mode=json)
+        # go_dev_json=$(wget -qO- https://go.dev/dl/?mode=json)
+        set go_dev_json (curl -s 'https://go.dev/dl/?mode=json')
 
         if test $status -ne 0
             echo "Error: Couldn't retrieve JSON response from 'https://go.dev/dl/?mode=json'"
@@ -511,13 +504,15 @@ function upd_go -d 'golang update'
                     return 1
             end
 
+            # temp file
+            # Using sudo with no password to install to /usr/local/go, need consistent path
+            # set temp_file (mktemp)
+            set temp_file /tmp/tmp.golang_install
+
             # download go
-            set temp_file "/tmp/tmp.golang_install"
-            if command -q curl
-                curl -L -o $temp_file "$download_url_base$download_filename"
-            else
-                wget -q --show-progress -O $temp_file "$download_url_base$download_filename"
-            end
+            # curl -L -o "$temp_file $download_url_base$download_filename"
+            # wget -q --show-progress -O "$temp_file $download_url_base$download_filename"
+            curl -L -o $temp_file "$download_url_base$download_filename"
 
             if test $status -ne 0
                 echo "Error: Download failed"
@@ -568,34 +563,11 @@ function install_go -d 'golang install'
     echo -e '\e[3mhttps://go.dev/dl\e[0m'
     echo
 
-    # if neither curl nor wget found, exit
-    if not command -q curl -a command -q wget
-        echo "Error: Neither 'curl' nor 'wget' found"
-        return 1
-    end
-
-    # if jq not found, exit 
-    if not command -q jq
-        echo "Error: 'jq' not found"
-        return 1
-    end
-
-    # if sha256sum not found, exit
-    if not command -q sha256sum
-        echo "Error: 'sha256sum' not found"
-        return 1
-    end
-
-    # if mktemp not found, exit
-    if not command -q mktemp
-        echo "Error: 'mktemp' not found"
-        return 1
-    end
-
-    # if tar not found, exit
-    if not command -q tar
-        echo "Error: 'tar' not found"
-        return 1
+    for cmd in curl jq sha256sum tar
+        if not command -q $cmd
+            echo "Error: '$cmd' not found"
+            return 1
+        end
     end
 
     set os (uname -s | tr '[:upper:]' '[:lower:]')
@@ -607,11 +579,9 @@ function install_go -d 'golang install'
     set download_url_base 'https://go.dev/dl/'
 
     # download json
-    if command -q curl
-        set go_dev_json (curl -s 'https://go.dev/dl/?mode=json')
-    else
-        set go_dev_json (wget -qO- 'https://go.dev/dl/?mode=json')
-    end
+    # go_dev_json=$(curl -s https://go.dev/dl/?mode=json)
+    # go_dev_json=$(wget -qO- https://go.dev/dl/?mode=json)
+    set go_dev_json (curl -s 'https://go.dev/dl/?mode=json')
 
     if test $status -ne 0
         echo "Error: Couldn't retrieve JSON response from 'https://go.dev/dl/?mode=json'"
@@ -648,13 +618,15 @@ function install_go -d 'golang install'
             return 1
     end
 
+    # temp file
+    # Using sudo with no password to install to /usr/local/go, need consistent path
+    # set temp_file (mktemp)
+    set temp_file /tmp/tmp.golang_install
+
     # download go
-    set temp_file (mktemp)
-    if command -q curl
-        curl -L -o $temp_file "$download_url_base$download_filename"
-    else
-        wget -q --show-progress -O $temp_file "$download_url_base$download_filename"
-    end
+    # curl -L -o "$temp_file $download_url_base$download_filename"
+    # wget -q --show-progress -O "$temp_file $download_url_base$download_filename"
+    curl -L -o $temp_file "$download_url_base$download_filename"
 
     if test $status -ne 0
         echo "Error: Download failed"
