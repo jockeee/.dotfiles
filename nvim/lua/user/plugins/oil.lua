@@ -7,7 +7,15 @@
 
 return {
   'stevearc/oil.nvim',
-  event = 'VimEnter',
+  keys = {
+    {
+      '-',
+      function()
+        require('oil').toggle_float()
+      end,
+      { desc = 'Oil' },
+    },
+  },
   -- dependencies = { 'nvim-tree/nvim-web-devicons' },
   -- dependencies = { { 'echasnovski/mini.icons', opts = {} } },
   ---@module 'oil'
@@ -54,10 +62,10 @@ return {
       },
     },
   },
-  config = function(_, opts)
-    local oil = require 'oil'
-    oil.setup(opts)
-
-    vim.keymap.set('n', '-', oil.toggle_float, { desc = 'Oil' })
-  end,
+  -- config = function(_, opts)
+  --   local oil = require 'oil'
+  --   oil.setup(opts)
+  --
+  --   -- vim.keymap.set('n', '-', oil.toggle_float, { desc = 'Oil' })
+  -- end,
 }

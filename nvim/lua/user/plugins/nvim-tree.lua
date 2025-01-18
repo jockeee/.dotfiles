@@ -28,7 +28,6 @@
 return {
   'nvim-tree/nvim-tree.lua',
   version = '*',
-  lazy = 'VimEnter',
   keys = { { '\\', '<cmd>NvimTreeToggle<cr>' } },
   config = function()
     require('nvim-tree').setup {

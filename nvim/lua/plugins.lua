@@ -2,10 +2,11 @@
 -- plugins.lua
 
 return {
-  { 'nvim-lua/plenary.nvim', lazy = false }, -- lua functions that many plugins use
-  { 'nvim-tree/nvim-web-devicons', event = 'VimEnter' }, -- for pretty icons, requires a nerd font
+  -- Lua
+  require 'user.plugins.plenary', -- lua functions that many plugins use
 
   -- Visual
+  { 'nvim-tree/nvim-web-devicons', event = 'VimEnter' }, -- for pretty icons, requires a nerd font
   require 'user.plugins.colorscheme',
   require 'user.plugins.lualine', -- statusline
   require 'user.plugins.nvim-tree', -- file explorer
@@ -44,6 +45,11 @@ return {
   -- SQL
   require 'user.plugins.vim-dadbod', -- vim-dadbod, vim-dadbod-ui, vim-dadbod-completion
 
+  -- AI
+
   -- local plugins
-  require 'user.plugins.dev',
+  -- require 'user.plugins.dev',
+
+  -- Test plugins
+  -- require 'user.plugins.test.dropbar',
 }
