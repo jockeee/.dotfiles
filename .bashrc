@@ -1,5 +1,5 @@
 # default distro ~/.bashrc above
-# VERSION 1.0.24
+# VERSION 1.0.25
 
 ##
 ## Environment
@@ -16,7 +16,7 @@ if [ -z "$TMUX_DEFAULT_SESSION_NAME" ]; then
 fi
 
 ##
-## ALIAS
+## Alias
 ##
 
 # ls options
@@ -29,6 +29,13 @@ alias laz='ls -laZ'
 alias ladz='ls -ladZ'
 alias lazd='ls -ladZ'
 alias man='man --nj'
+
+if type -P ~/.local/bin/nvim &>/dev/null; then
+    alias vim='~/.local/bin/nvim'
+fi
+
+alias fd='fd --hidden --no-ignore --no-ignore-parent'
+alias rg='rg --no-line-number --hidden --no-ignore --no-ignore-parent'
 alias wezterm='flatpak run org.wezfurlong.wezterm'
 
 if type -P btop &>/dev/null; then
@@ -59,8 +66,9 @@ fi
 
 # .
 alias c='cat'
-alias g='git'
-alias t='tree'
+alias f='fd'
+alias g='rg'
+alias t='tree -D'
 alias v='vim'
 
 # tmux
@@ -86,11 +94,8 @@ alias gr='git remote -v'
 alias grs='git reset'
 alias grs!='git reset --hard'
 alias gs='git status'
-
-if type -P git-forgit &>/dev/null; then
-    # alias d='git-forgit diff'
-    alias gd='git-forgit diff'
-    alias gl='git-forgit log'
+if type -P lazygit &>/dev/null; then
+    alias lg='lazygit'
 fi
 
 if type -P bat &>/dev/null; then
@@ -107,29 +112,25 @@ if type -P batcat &>/dev/null; then
     alias d='batdiff'
 fi
 
-if type -P npm &>/dev/null; then
-    alias n='npm'
-fi
-
-if type -P pnpm &>/dev/null; then
-    alias n='pnpm'
-    alias npm='pnpm'
-fi
+alias n='npm'
 
 ##
 ## Functions
 ##
 
 # You like the output of batdiff for quick overview.
-batdiff() {
-    if ! is_git_repo; then
-        echo 'Error: Unable to locate a Git repository.'
-        return 1
-    fi
+if [[ $bat_cmd ]]; then
+    batdiff() {
+        if ! is_git_repo; then
+            echo 'Error: Unable to locate a Git repository.'
+            return 1
+        fi
 
-    git diff --name-only --relative --diff-filter=d "$@" | xargs "$bat_cmd" --diff
-}
+        git diff --name-only --relative --diff-filter=d "$@" | xargs "$bat_cmd" --diff
+    }
+fi
 
+# cdg (cd to git root directory)
 cdg() {
     if ! is_git_repo; then
         echo 'Error: Unable to locate a Git repository.'
@@ -230,7 +231,32 @@ ww() {
         echo -e "\e[1mgit push\e[0m" && git push
 }
 
+# wwd (Outputs whatthecommit.com commit messages)
+# usage: wwd
+wwd() {
+    if ! type -P curl &>/dev/null; then
+        echo "Error: Unable to locate 'curl'"
+        return 1
+    fi
+
+    continue='n'
+    while [ "$continue" != "y" ] && [ "$continue" != "Y" ]; do
+        local message
+        if ! message=$(curl -s https://whatthecommit.com/index.txt); then
+            echo "Error: Couldn't retrieve a commit message from 'whatthecommit.com'"
+            return 1
+        fi
+
+        echo "Commit message: $message"
+        read -r -p "Do you want to use this commit message? [y/N/q]: " continue
+        if [ "$continue" = "q" ]; then
+            return 0
+        fi
+    done
+}
+
 # git-tidy (Git History Cleanup)
+# Usage: git-tidy [commit message]
 alias gt='git-tidy'
 git-tidy() {
     if ! is_git_repo; then
@@ -257,14 +283,21 @@ git-tidy() {
         return 1
     fi
 
+    # Commit message
+    commit_message="Git History Cleanup"
+    if [ $# -gt 0 ]; then
+        commit_message=$*
+    fi
+
     # Git History Cleanup
     echo -e '\n\n\e[1mGit History Cleanup\e[0m\n'
     git checkout --orphan latest_commit &&
         git add -A &&
-        git commit -m "Git History Cleanup" | grep -v " create mode " &&
+        git commit -m "$commit_message" | grep -v " create mode " &&
         git branch -D main &&
         git branch -m main
 
+    # shellcheck disable=SC2181  # running multiple commands in a row with '&&'
     if [[ $? -ne 0 ]]; then
         echo "Error: Couldn't clean up Git history"
         echo "Info: Backup available at $backup_dir"
@@ -308,6 +341,7 @@ upd_fedora() {
         /usr/bin/flatpak update -y
         echo
     fi
+    upd_gh_extensions
     upd_go
     upd_npm
     upd_npm_packages
@@ -326,9 +360,19 @@ upd_ubuntu() {
         sudo /usr/bin/snap refresh # requires sudo unless authenticated to a Ubuntu One/SSO account
         echo
     fi
+    upd_gh_extensions
     upd_go
     upd_npm
     upd_npm_packages
+}
+
+upd_gh_extensions() {
+    if type -P gh &>/dev/null; then
+        echo -e '\e[1mUpdating Github CLI extensions\e[0m'
+        echo -e '\e[3mgh extension upgrade --all\e[0m\n'
+        gh extension upgrade --all
+        echo
+    fi
 }
 
 upd_npm() {
@@ -352,20 +396,18 @@ upd_npm_packages() {
 }
 
 upd_go() {
+    # example download url: https://go.dev/dl/go1.22.3.linux-amd64.tar.gz
     if type -P /usr/local/go/bin/go &>/dev/null; then
         echo -e '\e[1mUpdating Go\e[0m'
         echo -e '\e[3mhttps://go.dev/dl\e[0m'
         echo
 
-        if ! type -P /usr/bin/curl &>/dev/null; then
-            echo "Error: 'curl' not found"
-            return 1
-        fi
-
-        if ! type -P /usr/bin/jq &>/dev/null; then
-            echo "Error: 'jq' not found"
-            return 1
-        fi
+        for cmd in curl jq sha256sum mktemp tar; do
+            if ! type -P $cmd &>/dev/null; then
+                echo "Error: '$cmd' not found"
+                return 1
+            fi
+        done
 
         os=$(uname -s | tr '[:upper:]' '[:lower:]')
         arch=$(uname -m)
@@ -373,16 +415,14 @@ upd_go() {
             arch='amd64'
         fi
         kind='archive'
-        temp_file="/tmp/tmp.golang_install"
         download_url_base='https://golang.org/dl/'
 
         # download json
-        local go_dev_json
         # go_dev_json=$(curl -s https://go.dev/dl/?mode=json)
         # go_dev_json=$(wget -qO- https://go.dev/dl/?mode=json)
+        local go_dev_json
         if ! go_dev_json=$(curl -s https://go.dev/dl/?mode=json); then
             echo "Error: Couldn't retrieve JSON response from 'https://go.dev/dl/?mode=json'"
-            rm $temp_file
             return 1
         fi
 
@@ -412,7 +452,6 @@ upd_go() {
 
         selected_json=$(echo "$go_dev_json" | jq -r --arg os "$os" --arg arch "$arch" --arg kind "$kind" --arg version "$latest_go_version" '.[0].files[] | select(.os == $os and .arch == $arch and .kind == $kind and .version == $version)')
 
-        # if selected_json isn't empty, set download_filename and download_checksum
         if [ -n "$selected_json" ]; then
             download_filename=$(echo "$selected_json" | jq -r '.filename')
             download_checksum=$(echo "$selected_json" | jq -r '.sha256')
@@ -431,7 +470,23 @@ upd_go() {
             # fi
             # echo
 
-            # Download go
+            # check archive type based on filename
+            case $download_filename in
+            '*.tar*')
+                archive_type='tar'
+                ;;
+            *)
+                echo "Error: Unknown archive type, expected a tar archive"
+                echo "Filename: $download_filename"
+                return 1
+                ;;
+            esac
+
+            # Using sudo with no password to install to /usr/local/go, need consistent path
+            # temp_file=$(mktemp)
+            temp_file=/tmp/tmp.golang_install
+
+            # download go
             # curl -L -o "$temp_file $download_url_base$download_filename"
             # wget -q --show-progress -O "$temp_file $download_url_base$download_filename"
             if ! curl -L -o "$temp_file $download_url_base$download_filename"; then
@@ -447,7 +502,7 @@ upd_go() {
                 return 1
             fi
 
-            # Verify checksum
+            # verify checksum
             checksum=$(sha256sum $temp_file | cut -d' ' -f1)
             if [ "$checksum" != "$download_checksum" ]; then
                 echo "Error: Checksum verification failed"
@@ -455,9 +510,15 @@ upd_go() {
                 return 1
             fi
 
-            # Update
+            # update
             sudo rm -rf /usr/local/go
-            sudo tar -C /usr/local -xzf $temp_file
+            if ! sudo tar -C /usr/local -xzf $temp_file; then
+                echo "Error: Archive extraction failed"
+                sudo rm -rf /usr/local/go
+                rm $temp_file
+                return 1
+            fi
+
             rm $temp_file
         else
             echo "No update available"
@@ -467,6 +528,113 @@ upd_go() {
         echo "Go version: $(/usr/local/go/bin/go version | awk '{print $3}')"
         echo
     fi
+}
+
+install_go() {
+    # example download url: https://go.dev/dl/go1.22.3.linux-amd64.tar.gz
+    echo -e '\e[1mInstalling golang\e[0m'
+    echo -e '\e[3mhttps://go.dev/dl\e[0m'
+    echo
+
+    for cmd in curl jq sha256sum tar; do
+        if ! type -P $cmd &>/dev/null; then
+            echo "Error: '$cmd' not found"
+            return 1
+        fi
+    done
+
+    os=$(uname -s | tr '[:upper:]' '[:lower:]')
+    arch=$(uname -m)
+    if [ "$arch" == 'x86_64' ]; then
+        arch='amd64'
+    fi
+    kind='archive'
+    download_url_base='https://golang.org/dl/'
+
+    # download json
+    # go_dev_json=$(curl -s https://go.dev/dl/?mode=json)
+    # go_dev_json=$(wget -qO- https://go.dev/dl/?mode=json)
+    local go_dev_json
+    if ! go_dev_json=$(curl -s https://go.dev/dl/?mode=json); then
+        echo "Error: Couldn't retrieve JSON response from 'https://go.dev/dl/?mode=json'"
+        return 1
+    fi
+
+    latest_go_version=$(echo "$go_dev_json" | jq -r '.[0].version')
+    selected_json=$(echo "$go_dev_json" | jq -r --arg os "$os" --arg arch "$arch" --arg kind "$kind" --arg version "$latest_go_version" '.[0].files[] | select(.os == $os and .arch == $arch and .kind == $kind and .version == $version)')
+
+    if [ -n "$selected_json" ]; then
+        download_filename=$(echo "$selected_json" | jq -r '.filename')
+        download_checksum=$(echo "$selected_json" | jq -r '.sha256')
+    else
+        echo "Error: Couldn't find the latest version for $os-$arch in the JSON response."
+        return 1
+    fi
+
+    echo "Version available: $latest_go_version"
+    echo
+
+    read -r -p "Do you want to install Go? [y/N] "
+    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+        return 0
+    fi
+    echo
+
+    # check archive type based on filename
+    case $download_filename in
+    '*.tar*')
+        archive_type='tar'
+        ;;
+    *)
+        echo "Error: Unknown archive type, expected a tar archive"
+        echo "Filename: $download_filename"
+        return 1
+        ;;
+    esac
+
+    # temp file
+    # Using sudo with no password to install to /usr/local/go, need consistent path
+    # temp_file=$(mktemp)
+    temp_file=/tmp/tmp.golang_install
+
+    # download go
+    # curl -L -o "$temp_file $download_url_base$download_filename"
+    # wget -q --show-progress -O "$temp_file $download_url_base$download_filename"
+    if ! curl -L -o "$temp_file $download_url_base$download_filename"; then
+        echo "Error: Download failed."
+        if [ -e $temp_file ]; then
+            rm $temp_file
+        fi
+        return 1
+    fi
+
+    if [ ! -e $temp_file ]; then
+        echo "Error: Couldn't find the downloaded archive"
+        return 1
+    fi
+
+    # verify checksum
+    checksum=$(sha256sum $temp_file | cut -d' ' -f1)
+    if [ "$checksum" != "$download_checksum" ]; then
+        echo "Error: Checksum verification failed"
+        rm $temp_file
+        return 1
+    fi
+
+    # install
+    sudo rm -rf /usr/local/go
+    if ! sudo tar -C /usr/local -xzf $temp_file; then
+        echo "Error: Archive extraction failed"
+        sudo rm -rf /usr/local/go
+        rm $temp_file
+        return 1
+    fi
+
+    rm $temp_file
+
+    echo
+    echo "Go version: $(/usr/local/go/bin/go version | awk '{print $3}')"
+    echo
 }
 
 upd_bashrc() {
