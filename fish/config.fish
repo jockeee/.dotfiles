@@ -1,4 +1,18 @@
+# .
+# VERSION 1.0.26
+
 if status is-interactive
+    # XDG Base Directory, User Directories
+    set -gx XDG_CONFIG_HOME "$HOME/.config" # User-specific configurations, analogous to /etc
+    set -gx XDG_CACHE_HOME "$HOME/.cache" # User-specific non-essential (cached) data, analogous to /var/cache
+    set -gx XDG_DATA_HOME "$HOME/.local/share" # User-specific data files, analogous to /usr/share
+    set -gx XDG_STATE_HOME "$HOME/.local/state" # User-specific state files, analogous to /var/lib
+
+    # Local environment
+    if test -f $XDG_CONFIG_HOME/fish/local.fish
+        source $XDG_CONFIG_HOME/fish/local.fish
+    end
+
     # Set fish_greeting to empty = not showing
     set -g fish_greeting
 
@@ -57,17 +71,6 @@ if status is-interactive
         source $HOME/.config/fish/alias.fish
     end
 
-    # Local settings
-    if test -f $HOME/.config/fish/local.fish
-        source $HOME/.config/fish/local.fish
-    end
-
-    # XDG Base Directory, User Directories
-    set -gx XDG_CONFIG_HOME "$HOME/.config" # User-specific configurations, analogous to /etc
-    set -gx XDG_CACHE_HOME "$HOME/.cache" # User-specific non-essential (cached) data, analogous to /var/cache
-    set -gx XDG_DATA_HOME "$HOME/.local/share" # User-specific data files, analogous to /usr/share
-    set -gx XDG_STATE_HOME "$HOME/.local/state" # User-specific state files, analogous to /var/lib
-
     # $PATH: ~/.local/bin
     if test -d $HOME/.local/bin
         fish_add_path $HOME/.local/bin
@@ -99,17 +102,13 @@ if status is-interactive
         fzf --fish | source
     end
 
+    # gitleaks
+    if command -q gitleaks
+        gitleaks completion fish
+    end
+
     # npm via nvm, and plugin jorgebucaran/nvm.fish
     if functions -q nvm
         nvm use lts 1>/dev/null
-    end
-
-    # pnpm
-    if command -q pnpm
-        set -gx PNPM_HOME "$XDG_DATA_HOME/pnpm"
-        # $PATH
-        if not string match -q -- $PNPM_HOME $PATH
-            fish_add_path $PNPM_HOME
-        end
     end
 end

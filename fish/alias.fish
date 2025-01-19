@@ -1,5 +1,5 @@
 # .
-# VERSION 1.0.25
+# VERSION 1.0.26
 
 ##
 ## Environment
