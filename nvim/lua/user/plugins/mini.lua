@@ -22,8 +22,8 @@ return {
     -- Icons
     -- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-icons.md
     -- Icons, via nerd font
-    require('mini.icons').setup()
-    MiniIcons.mock_nvim_web_devicons()
+    -- require('mini.icons').setup()
+    -- MiniIcons.mock_nvim_web_devicons()
 
     -- Bracketed
     -- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-bracketed.md

@@ -112,8 +112,8 @@ return {
 
           -- Extra arguments
           -- '--no-ignore-vcs', -- don't exclude files specified in .gitignore
-          '--follow', -- follow symbolic links
-          '--hidden', -- search in hidden files (dotfiles)
+          '--follow', -- follow symbolic links = show symlinked files
+          '--hidden', -- search in hidden files (dotfiles) = show hidden files
 
           -- Exclude the following patterns from search
           -- '--glob=!**/.idea/*',
@@ -128,7 +128,9 @@ return {
       },
       pickers = {
         find_files = {
-          hidden = true, -- default: false, show hidden files
+          -- hidden = true, -- default: false, show hidden files
+          -- follow = true, -- default: false, show symlinked files
+
           find_command = {
             'rg',
             -- Defualt arguments
@@ -136,6 +138,8 @@ return {
 
             -- Extra arguments
             -- '--no-ignore-vcs', -- don't exclude files specified in .gitignore
+            '--follow', -- follow symbolic links = show symlinked files
+            '--hidden', -- search in hidden files (dotfiles) = show hidden files
 
             -- Exclude the following patterns from search
             -- '--glob=!**/.idea/*',
@@ -231,6 +235,14 @@ return {
     vim.keymap.set('n', '<leader>ft', '<cmd>TodoTelescope<cr>', { desc = 'Todos' }) -- todo-comments.nvim
     vim.keymap.set('n', '<leader>fw', builtin.grep_string, { desc = 'Word Under Cursor' }) -- Searches for the string under your cursor or selection in your current working directory
 
+    -- Find Files (ivy)
+    vim.keymap.set('n', '<leader>fi', function()
+      local opts = require('telescope.themes').get_ivy {
+        cwd = vim.fn.stdpath 'config',
+      }
+      require('telescope.builtin').find_files(opts)
+    end, { desc = 'Files (ivy)' })
+
     --
     -- https://github.com/tjdevries/advent-of-nvim/blob/master/nvim/lua/config/telescope/multigrep.lua
     -- TJ - Advent of Neovim
@@ -245,21 +257,13 @@ return {
     --    foo bar  *.lua              search for 'foo bar' and show only files with '.lua' extension
     --    foo bar  **/plugins/**      search for 'foo bar' and show only files with 'plugins' in path
     vim.keymap.set('n', '<leader>ff', require('user.telescope.multigrep').live_multigrep, { desc = 'Grep' })
-    -- require 'user.telescope.multigrep'.setup()
 
-    -- Leader q: Play around
-    vim.keymap.set('n', '<space>qd', function()
-      local opts = require('telescope.themes').get_dropdown {
-        cwd = vim.fn.stdpath 'config',
-      }
-      require('telescope.builtin').find_files(opts)
-    end, { desc = 'Telescope Dropdown' })
-
-    vim.keymap.set('n', '<space>qi', function()
-      local opts = require('telescope.themes').get_ivy {
-        cwd = vim.fn.stdpath 'config',
-      }
-      require('telescope.builtin').find_files(opts)
-    end, { desc = 'Telescope Ivy' })
+    -- Play around
+    -- vim.keymap.set('n', '<leader>qd', function()
+    --   local opts = require('telescope.themes').get_dropdown {
+    --     cwd = vim.fn.stdpath 'config',
+    --   }
+    --   require('telescope.builtin').find_files(opts)
+    -- end, { desc = 'Telescope Dropdown' })
   end,
 }

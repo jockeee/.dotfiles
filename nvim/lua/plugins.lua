@@ -6,10 +6,10 @@ return {
   require 'user.plugins.plenary', -- lua functions that many plugins use
 
   -- Visual
-  { 'nvim-tree/nvim-web-devicons', event = 'VimEnter' }, -- for pretty icons, requires a nerd font
   require 'user.plugins.colorscheme',
   require 'user.plugins.lualine', -- statusline
   require 'user.plugins.nvim-tree', -- file explorer
+  require 'user.plugins.nvim-web-devicons', -- icons
   require 'user.plugins.oil', -- file explorer
   require 'user.plugins.telescope',
   require 'user.plugins.todo-comments', -- highlight todo, notes, etc in comments
@@ -18,7 +18,6 @@ return {
 
   -- Editing
   require 'user.plugins.aerial', -- code outline
-  require 'user.plugins.copilot',
   require 'user.plugins.mini', -- various small independent plugins/modules
   require 'user.plugins.multicursor',
   require 'user.plugins.nvim-autopairs', -- automatically insert or delete brackets, parens, quotes in pair
@@ -45,9 +44,11 @@ return {
   -- SQL
   require 'user.plugins.vim-dadbod', -- vim-dadbod, vim-dadbod-ui, vim-dadbod-completion
 
-  -- AI
+  -- Github Copilot
+  require 'user.plugins.copilot', -- inline code completion
+  require 'user.plugins.copilotchat', -- chat with copilot
 
-  -- local plugins
+  -- Local plugins
   -- require 'user.plugins.dev',
 
   -- Test plugins

@@ -1,13 +1,14 @@
 --
 -- https://github.com/zbirenbaum/copilot.lua
--- Lua replacement for copilot.vim
+-- Lua replacement for copilot.vim, Github Copilot for vim and nvim
 --
 -- https://github.com/zbirenbaum/copilot.lua#setup-and-configuration
 
 return {
   'zbirenbaum/copilot.lua',
+  event = 'VimEnter',
+  -- event = { 'BufReadPre', 'BufNewFile' },
   cmd = 'Copilot',
-  event = 'InsertEnter',
   opts = {
     filetypes = {
       sh = function()
