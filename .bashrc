@@ -1,5 +1,5 @@
 # default distro ~/.bashrc above
-# VERSION 1.0.25
+# VERSION 1.0.26
 
 ##
 ## Environment
@@ -13,6 +13,12 @@ export XDG_STATE_HOME="$HOME/.local/state" # User-specific state files, analogou
 
 if [ -z "$TMUX_DEFAULT_SESSION_NAME" ]; then
     TMUX_DEFAULT_SESSION_NAME=$(uname -n)
+fi
+
+# Local environment
+if [ -f "$XDG_CONFIG_HOME/bash/local.bash" ]; then
+    # shellcheck disable=SC1091
+    source "$XDG_CONFIG_HOME/bash/local.bash"
 fi
 
 ##
@@ -677,15 +683,35 @@ upd_bashrc() {
     echo
 }
 
+# $PATH: /usr/local/go/bin
+if [ -d /usr/local/go/bin ]; then
+    export PATH=/usr/local/go/bin:$PATH
+fi
+
+# $PATH: ~/go/bin
+if [ -d "$HOME/go/bin" ]; then
+    export PATH="$HOME/go/bin":$PATH
+fi
+
+# $PATH: ~/.cargo/bin
+if [ -d "$HOME/.cargo/bin" ]; then
+    export PATH="$HOME/.cargo/bin":$PATH
+fi
+
 # zoxide, smarter cd
-if type -P /usr/bin/zoxide &>/dev/null; then
+if type -P zoxide &>/dev/null; then
     eval "$(zoxide init --cmd cd bash)"
 fi
 
 # fzf
-if type -P /usr/bin/fzf &>/dev/null; then
+if type -P fzf &>/dev/null; then
     # Set up fzf key bindings and fuzzy completion
     eval "$(fzf --bash)"
+fi
+
+# gitleaks
+if type -P gitleaks &>/dev/null; then
+    eval "$(gitleaks completion bash)"
 fi
 
 # autocd
