@@ -102,6 +102,11 @@ if status is-interactive
         fzf --fish | source
     end
 
+    # gitleaks
+    if command -q gitleaks
+        gitleaks completion fish | source
+    end
+
     # npm via nvm, and plugin jorgebucaran/nvm.fish
     if functions -q nvm
         nvm use lts 1>/dev/null
