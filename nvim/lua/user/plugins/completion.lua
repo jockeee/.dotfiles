@@ -70,6 +70,7 @@ return {
         ['<C-n>'] = { 'select_next', 'fallback' },
 
         ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
+        ['<C-q>'] = { 'scroll_documentation_down', 'fallback' },
         -- ['<C-f>'] = { 'scroll_documentation_down', 'fallback' }, -- disabled, C-f configured for copilot
 
         -- default

@@ -21,7 +21,7 @@ return {
   },
   build = ':TSUpdate',
   opts = {
-    ensure_installed = { 'bash', 'c', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' },
+    ensure_installed = { 'bash', 'c', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'html' },
     auto_install = true, -- Automatically install missing parsers when entering buffer
     ignore_install = {}, -- List of parsers to ignore installing (or "all")
     highlight = {

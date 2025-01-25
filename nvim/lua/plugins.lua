@@ -44,9 +44,12 @@ return {
   -- SQL
   require 'user.plugins.vim-dadbod', -- vim-dadbod, vim-dadbod-ui, vim-dadbod-completion
 
+  -- HTTP
+  require 'user.plugins.hurl',
+
   -- Github Copilot
-  require 'user.plugins.copilot', -- inline code completion
-  require 'user.plugins.copilotchat', -- chat with copilot
+  -- require 'user.plugins.copilot', -- inline code completion
+  -- require 'user.plugins.copilotchat', -- chat with copilot
 
   -- Local plugins
   -- require 'user.plugins.dev',

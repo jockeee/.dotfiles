@@ -329,6 +329,8 @@ return {
         'jq', -- Command-line JSON processor - https://github.com/stedolan/jq
         -- SQL
         'sqlfluff', -- Formatter/Linter: SQLFluff is a dialect-flexible and configurable SQL linter.
+        -- XML
+        'xmlformatter', -- Formatter
       })
 
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }

@@ -95,6 +95,11 @@ return {
 
     telescope.setup {
       defaults = {
+        mappings = {
+          n = {
+            ['q'] = require('telescope.actions').close,
+          },
+        },
         file_ignore_patterns = {
           -- In lua patterns, dashes are interpreted as quantifier, so you have to escape them
           -- 'lazy%-lock.json',

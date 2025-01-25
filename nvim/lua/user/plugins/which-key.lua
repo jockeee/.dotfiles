@@ -21,6 +21,7 @@ return {
       { '<leader>p', group = 'Copilot Prompt' },
       { '<leader>q', group = 'Copilot Commands' },
       { '<leader>t', group = 'Toggle' },
+      { '<leader>v', group = 'Hurl' },
       { '<leader>w', group = 'Workspace' },
       { '<leader>x', group = 'Trouble' },
       { '<leader>z', group = 'nvim' },
