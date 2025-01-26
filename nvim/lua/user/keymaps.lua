@@ -108,24 +108,24 @@ vim.keymap.set('n', '<leader>dE', function()
   vim.fn.setreg('+', output)
 end, { desc = 'Execute line, bash > clipboard' })
 
--- open project/curl.sh in a split to the right
+-- open tests/curl.sh in a split to the right
 vim.keymap.set('n', '<leader>dc', function()
   local git_root = vim.fn.systemlist('git rev-parse --show-toplevel')[1]
   if not git_root or git_root == '' then
     print 'Not in a git repository'
   end
-  local project_curl = git_root .. '/project/curl.sh'
+  local tests_curl = git_root .. '/tests/curl.sh'
 
-  if vim.fn.filereadable(project_curl) == 1 then
+  if vim.fn.filereadable(tests_curl) == 1 then
     local width_percentage = 40
     local width = math.floor(vim.o.columns * (width_percentage / 100))
     vim.cmd 'vsplit'
     vim.cmd('vertical resize ' .. width)
-    vim.cmd('edit ' .. project_curl)
+    vim.cmd('edit ' .. tests_curl)
   else
-    print 'No project/curl.sh file found'
+    print 'No tests/curl.sh file found'
   end
-end, { desc = 'Open project/curl' })
+end, { desc = 'Open tests/curl.sh' })
 
 -- Leader z: nvim/Lua
 vim.keymap.set('n', '<leader>zm', '<cmd>Mason<cr>', { desc = 'Mason' })
