@@ -1,8 +1,8 @@
 --
 -- https://github.com/jellydn/hurl.nvim
--- Hurl, run and test HTTP requests with plain text.
+-- Run and test HTTP requests
 --
--- Hurl.nvim is a Neovim plugin designed to run HTTP requests directly from `.hurl` files.
+-- Hurl.nvim is a Neovim plugin designed to run HTTP requests directly from .hurl files.
 -- Elevate your API development workflow by executing and viewing responses without leaving your editor.
 --
 -- https://hurl.dev
