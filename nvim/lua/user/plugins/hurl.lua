@@ -12,6 +12,9 @@
 -- Hurl is a lightweight binary written in Rust.
 -- Under the hood, Hurl HTTP engine is powered by libcurl, one of the most powerful and reliable file transfer libraries.
 -- With its text file format, Hurl adds syntactic sugar to run and test HTTP requests, but it's still the curl that we love: fast, efficient and HTTP/3 ready.
+--
+-- Configuration
+-- https://github.com/jellydn/hurl.nvim#configuration
 
 return {
   'jellydn/hurl.nvim',
@@ -46,6 +49,7 @@ return {
     debug = false, -- Show debugging info
     show_notification = false, -- Show notification on run
     mode = 'split', -- Show response in popup or split
+    auto_close = false, -- "breaks" floaterminal
 
     env_file = {
       '.env.hurl',
