@@ -49,7 +49,7 @@ return {
     debug = false, -- Show debugging info
     show_notification = false, -- Show notification on run
     mode = 'split', -- Show response in popup or split
-    auto_close = false, -- "breaks" floaterminal
+    -- auto_close = true, -- default: true, which "breaks" floaterminal if you trigger it from this "mounted" split
 
     env_file = {
       '.env.hurl',
