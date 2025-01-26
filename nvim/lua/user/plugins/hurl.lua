@@ -31,7 +31,7 @@ return {
   ft = 'hurl',
   keys = {
     -- Run API request
-    { '<leader>R', '<cmd>HurlRunner<CR>', desc = 'Hurl: Run Requests, all in file' },
+    { '<leader>R', '<cmd>HurlRunner<CR>', desc = 'Hurl: Run All Requests, in current file' },
     { '<leader>r', '<cmd>HurlRunnerAt<CR>', desc = 'Hurl: Run Request, current entry' },
     { '<leader>ve', '<cmd>HurlRunnerToEntry<CR>', desc = 'Run Requests, to current entry, from file beginning' },
     { '<leader>vE', '<cmd>HurlRunnerToEnd<CR>', desc = 'Run Requests, from current entry, to file ending' },
