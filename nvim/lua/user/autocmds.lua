@@ -7,7 +7,7 @@ local M = {}
 M.startup = function()
   vim.api.nvim_create_autocmd('VimEnter', {
     desc = 'Open telescope find_files() on startup',
-    group = vim.api.nvim_create_augroup('open-telescope-find_files', { clear = true }),
+    group = vim.api.nvim_create_augroup('custom-open-telescope-find_files', { clear = true }),
     callback = function()
       if vim.fn.argv(0) == '' then
         -- package_exists check prevents error when lazy is doing installs on startup,
@@ -40,24 +40,25 @@ M.startup = function()
   })
 end
 
--- highlight when yanking (copying) text
--- :h vim.highlight.on_yank()
+-- highlight when yanking text
 M.highlight_yank = function()
   vim.api.nvim_create_autocmd('TextYankPost', {
-    desc = 'Highlight when yanking (copying) text',
-    group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
+    desc = 'Highlight when yanking text',
+    group = vim.api.nvim_create_augroup('custom-highlight-yank', { clear = true }),
     callback = function()
       vim.highlight.on_yank()
     end,
   })
 end
 
+-- https://github.com/golang/tools/blob/master/gopls/doc/vim.md#neovim-imports
 M.go = function()
   vim.api.nvim_create_autocmd('BufWritePre', {
     desc = 'Go: Add missing imports on save',
+    group = vim.api.nvim_create_augroup('custom-go-add-missing-imports', { clear = true }),
     pattern = '*.go',
     callback = function()
-      local params = vim.lsp.util.make_range_params()
+      local params = vim.lsp.util.make_range_params(0, vim.bo.fileencoding)
       params.context = { only = { 'source.organizeImports' } }
       -- buf_request_sync defaults to a 1000ms timeout. Depending on your
       -- machine and codebase, you may want longer. Add an additional
