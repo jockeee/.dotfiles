@@ -38,7 +38,7 @@ return {
     { '<leader>r', '<cmd>HurlRunnerAt<CR>', desc = 'Hurl: Run Request, current entry' },
     { '<leader>ve', '<cmd>HurlRunnerToEntry<CR>', desc = 'Run Requests, to current entry, from file beginning' },
     { '<leader>vE', '<cmd>HurlRunnerToEnd<CR>', desc = 'Run Requests, from current entry, to file ending' },
-    { '<leader>vm', '<cmd>HurlToggleMode<CR>', desc = 'Toggle Mode, split|popup' },
+    { '<leader>vm', '<cmd>HurlToggleMode<CR>', desc = 'Toggle Mode, split/popup' },
     { '<leader>vv', '<cmd>HurlVerbose<CR>', desc = 'Run Requests, verbose mode' },
     { '<leader>vV', '<cmd>HurlVeryVerbose<CR>', desc = 'Run Requests, very verbose mode' },
 
