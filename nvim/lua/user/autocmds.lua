@@ -55,22 +55,10 @@ end
 M.go = function()
   vim.api.nvim_create_autocmd('BufWritePre', {
     desc = 'Go: Add missing imports on save',
-    group = vim.api.nvim_create_augroup('custom-go-add-missing-imports', { clear = true }),
     pattern = '*.go',
     callback = function()
-      if not (#vim.lsp.get_clients { 'gopls' } > 0) then
-        return
-      end
-
-      local params = vim.lsp.util.make_range_params(0, 'utf-8')
-      params = {
-        context = {
-          only = {
-            'source.organizeImports',
-          },
-        },
-      }
-
+      local params = vim.lsp.util.make_range_params()
+      params.context = { only = { 'source.organizeImports' } }
       -- buf_request_sync defaults to a 1000ms timeout. Depending on your
       -- machine and codebase, you may want longer. Add an additional
       -- argument after params if you find that you have to write the file
