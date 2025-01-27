@@ -159,9 +159,12 @@ vim.keymap.set('v', '<leader>zx', ':lua<CR>', { desc = 'Lua: Execute selection' 
 
 -- Leader t: Toggle
 vim.keymap.set('n', '<leader>tl', function()
-  vim.opt.colorcolumn = vim.inspect(vim.opt.colorcolumn:get()) == '{}' and { 80, 96 } or {}
+  vim.opt.colorcolumn = vim.inspect(vim.opt.colorcolumn:get()) == '{}' and { 96 } or {}
 end, { desc = 'Color Column Limits' })
--- vim.keymap.set('n', '<leader>th', '<cmd>set cursorline!<cr>', { desc = 'Hightlight Line' }) -- lua vim.opt.cursorline = not vim.opt.cursorline:get()
+-- vim.keymap.set('n', '<leader>tl', function()
+--   vim.opt.colorcolumn = vim.inspect(vim.opt.colorcolumn:get()) == '{}' and { 80, 96 } or {}
+-- end, { desc = 'Color Column Limits' })
+vim.keymap.set('n', '<leader>tc', '<cmd>set cursorline!<cr>', { desc = 'Hightlight Line' }) -- lua vim.opt.cursorline = not vim.opt.cursorline:get()
 vim.keymap.set('n', '<leader>tr', '<cmd>set relativenumber!<cr>', { desc = 'Relative Number' }) -- set rnu! or lua vim.opt.relativenumber = not vim.opt.relativenumber:get()
 vim.keymap.set('n', '<leader>ts', '<cmd>windo set scrollbind!<cr>', { desc = 'Scrollbind, in open windows' })
 vim.keymap.set('n', '<leader>tt', function()

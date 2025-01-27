@@ -139,9 +139,9 @@ return {
       multiwindow = true,
     }
 
-    vim.keymap.set('n', '<leader>tc', function()
+    vim.keymap.set('n', '<leader>tx', function()
       context.toggle()
-    end, { desc = 'Context' })
+    end, { desc = 'Treesitter: Context (top lines)' })
   end,
 }
 

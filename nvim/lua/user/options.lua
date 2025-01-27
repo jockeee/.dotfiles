@@ -60,6 +60,9 @@ vim.opt.splitbelow = true -- put new windows below current -- default: off
 vim.opt.undofile = true
 vim.opt.undolevels = 1000 -- default: 1000
 
+-- Swap files
+vim.opt.swapfile = false
+
 -- Decrease update time
 vim.opt.updatetime = 250 -- save swap file and trigger CursorHold
 vim.opt.timeoutlen = 1000 -- default: 1000, time in milliseconds to wait for a mapped sequence to complete, also "time until which-key triggers"

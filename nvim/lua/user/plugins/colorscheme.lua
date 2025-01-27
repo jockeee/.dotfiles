@@ -24,6 +24,10 @@ return {
         return {
           MsgArea = { fg = '#b1b1b1', bg = '#1f1f1f' },
           Comment = { fg = '#818181' },
+          ColorColumn = { bg = '#1b1b29' },
+          TabLine = { bg = '#1f1f1f' }, -- tab not selected
+          TabLineSel = { bg = '#1f1f1f' }, -- tab selected
+          TabLineFill = { bg = '#1f1f1f' }, -- tabline row
           ['@string.special.url'] = { style = {} },
         }
       end,

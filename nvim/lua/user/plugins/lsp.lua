@@ -186,6 +186,26 @@ return {
               vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
             end, 'Inlay Hints')
           end
+
+          -- Use trouble
+          -- Configure diagnostic options
+          -- :h vim.diagnostic.Opts
+          -- vim.diagnostic.config {
+          --   -- virtual_text = true, -- default: false
+          --   -- signs = true,
+          --   -- underline = true,
+          --   -- update_in_insert = false,
+          --   -- severity_sort = true,
+          -- }
+
+          -- Use trouble
+          -- https://github.com/neovim/nvim-lspconfig/wiki/UI-Customization#show-line-diagnostics-automatically-in-hover-window
+          -- vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
+          --   group = vim.api.nvim_create_augroup('float_diagnostic', { clear = true }),
+          --   callback = function()
+          --     vim.diagnostic.open_float(nil, { focus = false })
+          --   end,
+          -- })
         end,
       })
 

@@ -37,5 +37,7 @@ return {
       desc = 'Quickfix List (Trouble)',
     },
   },
-  config = true,
+  opts = {
+    focus = true, -- Focus the window when opened
+  },
 }
