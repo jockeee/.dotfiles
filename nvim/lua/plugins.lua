@@ -55,5 +55,6 @@ return {
   -- require 'user.plugins.dev',
 
   -- Test plugins
+  -- require 'user.plugins.test.bufferline', -- test as tabline
   -- require 'user.plugins.test.dropbar',
 }

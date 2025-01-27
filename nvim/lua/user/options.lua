@@ -19,7 +19,8 @@ vim.opt.signcolumn = 'yes' -- always show sign column
 vim.opt.showmode = false -- show current mode (insert, normal, visual, etc) in bottom bar
 vim.opt.colorcolumn = '' -- right margin column
 vim.opt.showcmd = false -- show command in bottom bar -- default: on
-vim.opt.showtabline = 0 -- hide tabline
+vim.opt.showtabline = 2 -- default: 1, 0=never, 1=only if there are at least two tab pages, 2=always
+vim.opt.tabline = '%!v:lua.MyTabline()'
 
 -- Line Numbers
 vim.opt.number = true -- shows absolute line number on cursor line (when relative number is on)

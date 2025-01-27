@@ -12,3 +12,14 @@ vim.g.colorscheme = 'catppuccin'
 -- Disable Netrw (nvim-tree)
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
+
+-- MyTabline
+function MyTabline()
+  local tabline = ''
+  for tabnr = 1, vim.fn.tabpagenr '$' do
+    local current = (tabnr == vim.fn.tabpagenr()) and '%#TabLineSel#' or '%#TabLine#'
+    tabline = tabline .. current .. ' Tab ' .. tabnr .. ' '
+  end
+  tabline = tabline .. '%#TabLineFill#'
+  return tabline
+end

@@ -70,6 +70,20 @@ end, { desc = 'Next Buffer' })
 vim.keymap.set({ 'n', 'v' }, '<leader>+', '<cmd>tabnew<cr>', { desc = 'New Tab' })
 vim.keymap.set({ 'i', 'n', 'v', 't' }, '<M-v>', '<cmd>tabprevious<cr>', { desc = 'Previous Tab' })
 vim.keymap.set({ 'i', 'n', 'v', 't' }, '<M-b>', '<cmd>tabnext<cr>', { desc = 'Next Tab' })
+vim.keymap.set({ 'i', 'n', 'v', 't' }, '<S-M-v>', function()
+  local current_tab = vim.fn.tabpagenr()
+  if current_tab > 1 then
+    vim.cmd '-tabmove'
+  end
+end, { desc = 'Move Tab Left' })
+
+vim.keymap.set({ 'i', 'n', 'v', 't' }, '<S-M-b>', function()
+  local current_tab = vim.fn.tabpagenr()
+  local total_tabs = vim.fn.tabpagenr '$'
+  if current_tab < total_tabs then
+    vim.cmd '+tabmove'
+  end
+end, { desc = 'Move Tab Right' })
 for idx, char in ipairs { 'z', 'x', 'c' } do
   vim.keymap.set({ 'n', 'v' }, string.format('<M-%s>', char), string.format('%sgt', idx))
 end
