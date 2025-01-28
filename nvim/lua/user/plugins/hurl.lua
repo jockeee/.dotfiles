@@ -50,10 +50,10 @@ return {
     show_notification = false, -- Show notification on run
     mode = 'split', -- Show response in popup or split
     -- auto_close = true, -- default: true, which "breaks" floaterminal if you trigger it from this "mounted" split
+    -- split_position = 'right', -- default: right
+    -- split_size = '50%', -- default: 50%
 
-    env_file = {
-      '.env.hurl',
-    },
+    env_file = { '.env.hurl' },
 
     -- Default formatter
     formatters = {
