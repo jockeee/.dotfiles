@@ -187,7 +187,7 @@ vim.keymap.set('n', '<leader>dc', function()
   local tests_curl = git_root .. '/tests/curl.sh'
 
   if vim.fn.filereadable(tests_curl) == 1 then
-    local width_percentage = 40
+    local width_percentage = 50
     local width = math.floor(vim.o.columns * (width_percentage / 100))
     vim.cmd 'vsplit'
     vim.cmd('vertical resize ' .. width)
