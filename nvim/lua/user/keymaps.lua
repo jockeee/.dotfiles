@@ -172,8 +172,6 @@ vim.keymap.set('n', '<leader>de', function()
     end
   end
 end, { desc = 'Execute line, bash' })
-
-vim.keymap.set('n', '<leader>dj', '<cmd>.w !bash | jq<cr>', { desc = 'Execute line, bash | jq' })
 vim.keymap.set('n', '<leader>dE', function()
   local line = vim.fn.getline '.'
   local output = vim.fn.system('bash -c ' .. vim.fn.shellescape(line))
