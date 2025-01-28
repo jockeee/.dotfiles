@@ -167,6 +167,8 @@ vim.keymap.set('n', '<leader>de', function()
     else
       print(headers .. body)
     end
+  else
+    print(result)
   end
 end, { desc = 'Execute line, bash' })
 vim.keymap.set('n', '<leader>dE', function()
