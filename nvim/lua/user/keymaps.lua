@@ -150,11 +150,9 @@ vim.keymap.set('n', '<leader>de', function()
     --   print('HTTP Status Code: ' .. status_code)
     -- end
 
-    -- headers and body
-    local headers, body = '', ''
-    if line:match '%-i' or line:match '%--include' then
-      headers, body = result:match '^(.-\r?\n\r?\n)(.*)'
-    else
+    local headers, body = result:match '^(.-\r?\n\r?\n)(.*)'
+    if not headers then
+      headers = ''
       body = result
     end
 
