@@ -124,8 +124,7 @@ vim.keymap.set('n', '<leader>dx', '<cmd>bd!<cr>', { desc = 'Kill Buffer (Ignore 
 -- vim.keymap.set('n', '<leader>de', '<cmd>.w !bash<cr>', { desc = 'Execute line, bash' })
 vim.keymap.set('n', '<leader>de', function()
   local line = vim.fn.getline '.'
-  local cmd = string.format('bash -c "%s"', line)
-  local result = vim.fn.system(cmd)
+  local result = vim.fn.system(line)
   local exit_code = vim.v.shell_error
 
   if exit_code ~= 0 then
