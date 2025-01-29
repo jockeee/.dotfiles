@@ -44,6 +44,7 @@ alias fd='fd --hidden --no-ignore --no-ignore-parent'
 alias rg='rg --no-line-number --hidden --no-ignore --no-ignore-parent'
 alias wezterm='flatpak run org.wezfurlong.wezterm'
 
+alias b='top'
 if type -P btop &>/dev/null; then
     alias top='btop'
 fi
@@ -73,6 +74,7 @@ fi
 # .
 alias c='cat'
 alias f='fd'
+alias r='rg'
 alias g='rg'
 alias t='tree -D'
 alias v='vim'
