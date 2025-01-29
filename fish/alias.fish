@@ -38,6 +38,7 @@ alias fd 'fd --hidden --no-ignore --no-ignore-parent'
 alias rg 'rg --no-line-number --hidden --no-ignore --no-ignore-parent'
 alias wezterm 'flatpak run org.wezfurlong.wezterm'
 
+abb --add b btop
 if command -q btop
     abbr --add top btop
 end
