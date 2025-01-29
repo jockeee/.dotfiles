@@ -67,6 +67,7 @@ end
 # c<space> expands to cat, c<enter> behaves like an alias
 abbr --add c cat
 abbr --add f fd
+abbr --add r rg
 abbr --add g rg
 abbr --add t 'tree -D'
 abbr --add v vim
