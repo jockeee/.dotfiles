@@ -4,22 +4,6 @@
 -- :Telescope colorscheme
 
 return {
-  -- https://github.com/tjdevries/colorbuddy.nvim
-  -- Your color buddy for making cool neovim color schemes
-  -- {
-  --   'tjdevries/colorbuddy.nvim',
-  --   lazy = false,
-  --   priority = 1000,
-  --   config = function()
-  --     vim.cmd.colorscheme 'gruvbuddy'
-  --
-  --     vim.cmd.highlight 'TabLine guibg=#1f1f1f' -- tab not selected
-  --     vim.cmd.highlight 'TabLineSel guibg=#1f1f1f' -- tab selected
-  --     vim.cmd.highlight 'TabLineFill guibg=#1f1f1f' -- tabline row
-  --     vim.cmd.highlight '@string.special.url term=none cterm=none'
-  --   end,
-  -- },
-
   -- https://github.com/catppuccin/nvim
   -- Soothing pastel theme for (Neo)vim
   {
@@ -60,6 +44,22 @@ return {
       -- vim.cmd.highlight '@string.special.url term=none cterm=none'
     end,
   },
+
+  -- https://github.com/tjdevries/colorbuddy.nvim
+  -- Your color buddy for making cool neovim color schemes
+  -- {
+  --   'tjdevries/colorbuddy.nvim',
+  --   lazy = false,
+  --   priority = 1000,
+  --   config = function()
+  --     vim.cmd.colorscheme 'gruvbuddy'
+  --
+  --     vim.cmd.highlight 'TabLine guibg=#1f1f1f' -- tab not selected
+  --     vim.cmd.highlight 'TabLineSel guibg=#1f1f1f' -- tab selected
+  --     vim.cmd.highlight 'TabLineFill guibg=#1f1f1f' -- tabline row
+  --     vim.cmd.highlight '@string.special.url term=none cterm=none'
+  --   end,
+  -- },
 
   -- {
   --   'ellisonleao/gruvbox.nvim',
@@ -249,6 +249,23 @@ return {
   --   },
   --   init = function()
   --     vim.cmd.colorscheme 'onedark'
+  --   end,
+  -- },
+
+  -- https://github.com/shaunsingh/nord.nvim
+  -- {
+  --   'shaunsingh/nord.nvim',
+  --   lazy = false,
+  --   priority = 1000,
+  --   init = function()
+  --     vim.cmd.colorscheme 'nord'
+  --
+  --     vim.cmd.highlight 'MsgArea guifg=#b1b1b1 guibg=#1f1f1f'
+  --     vim.cmd.highlight 'ColorColumn guibg=#1b1b29'
+  --     vim.cmd.highlight 'TabLine guibg=#1f1f1f' -- tab not selected
+  --     vim.cmd.highlight 'TabLineSel guibg=#1f1f1f' -- tab selected
+  --     vim.cmd.highlight 'TabLineFill guibg=#1f1f1f' -- tabline row
+  --     vim.cmd.highlight '@string.special.url term=none cterm=none'
   --   end,
   -- },
 }
