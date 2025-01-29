@@ -19,6 +19,7 @@ return {
   },
   opts = {
     options = {
+      -- theme = vim.g.colorscheme, -- default: 'auto'
       theme = 'vscode-colors', -- default: auto, lua/lualine/themes/vscode-colors.lua
       component_separators = '',
       section_separators = '',

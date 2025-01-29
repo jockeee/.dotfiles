@@ -7,7 +7,7 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = '\\'
 
 -- Colorscheme
-vim.g.colorscheme = 'catppuccin'
+vim.g.colorscheme = 'catppuccin' -- lazy.lua and lualine.lua
 
 -- Disable Netrw (nvim-tree)
 vim.g.loaded_netrw = 1

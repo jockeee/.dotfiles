@@ -4,6 +4,22 @@
 -- :Telescope colorscheme
 
 return {
+  -- https://github.com/tjdevries/colorbuddy.nvim
+  -- Your color buddy for making cool neovim color schemes
+  -- {
+  --   'tjdevries/colorbuddy.nvim',
+  --   lazy = false,
+  --   priority = 1000,
+  --   config = function()
+  --     vim.cmd.colorscheme 'gruvbuddy'
+  --
+  --     vim.cmd.highlight 'TabLine guibg=#1f1f1f' -- tab not selected
+  --     vim.cmd.highlight 'TabLineSel guibg=#1f1f1f' -- tab selected
+  --     vim.cmd.highlight 'TabLineFill guibg=#1f1f1f' -- tabline row
+  --     vim.cmd.highlight '@string.special.url term=none cterm=none'
+  --   end,
+  -- },
+
   -- https://github.com/catppuccin/nvim
   -- Soothing pastel theme for (Neo)vim
   {
@@ -22,9 +38,9 @@ return {
       -- },
       custom_highlights = function()
         return {
-          MsgArea = { fg = '#b1b1b1', bg = '#1f1f1f' },
           -- Comment = { fg = '#818181' },
-          ColorColumn = { bg = '#1b1b29' },
+          ColorColumn = { bg = '#1b1b29' }, -- column limit
+          MsgArea = { fg = '#b1b1b1', bg = '#1f1f1f' },
           TabLine = { bg = '#1f1f1f' }, -- tab not selected
           TabLineSel = { bg = '#1f1f1f' }, -- tab selected
           TabLineFill = { bg = '#1f1f1f' }, -- tabline row
@@ -34,10 +50,35 @@ return {
     },
     init = function()
       vim.cmd.colorscheme 'catppuccin'
+
+      -- vim.cmd.highlight '@comment guifg=#818181'
       -- vim.cmd.highlight 'MsgArea guifg=#b1b1b1 guibg=#1f1f1f'
-      -- vim.cmd.highlight '@comment guifg=#787878'
+      -- vim.cmd.highlight 'ColorColumn guibg=#1b1b29' -- column limit
+      -- vim.cmd.highlight 'TabLine guibg=#1f1f1f' -- tab not selected
+      -- vim.cmd.highlight 'TabLineSel guibg=#1f1f1f' -- tab selected
+      -- vim.cmd.highlight 'TabLineFill guibg=#1f1f1f' -- tabline row
+      -- vim.cmd.highlight '@string.special.url term=none cterm=none'
     end,
   },
+
+  -- {
+  --   'ellisonleao/gruvbox.nvim',
+  --   lazy = false,
+  --   priority = 1000,
+  --   config = true,
+  --   init = function()
+  --     vim.o.background = 'dark'
+  --     vim.cmd.colorscheme 'gruvbox'
+  --
+  --     -- vim.cmd.highlight '@comment guifg=#818181'
+  --     vim.cmd.highlight 'MsgArea guifg=#b1b1b1 guibg=#1f1f1f'
+  --     vim.cmd.highlight 'ColorColumn guibg=#1b1b29'
+  --     vim.cmd.highlight 'TabLine guibg=#1f1f1f' -- tab not selected
+  --     vim.cmd.highlight 'TabLineSel guibg=#1f1f1f' -- tab selected
+  --     vim.cmd.highlight 'TabLineFill guibg=#1f1f1f' -- tabline row
+  --     vim.cmd.highlight '@string.special.url term=none cterm=none'
+  --   end,
+  -- },
 
   -- https://github.com/Mofiqul/vscode.nvim
   -- nvim/Vim color scheme inspired by Dark+ and Light+ theme in Visual Studio Code
