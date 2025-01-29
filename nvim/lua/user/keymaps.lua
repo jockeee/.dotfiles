@@ -125,35 +125,32 @@ vim.keymap.set('n', '<leader>dx', '<cmd>bd!<cr>', { desc = 'Kill Buffer (Ignore 
 vim.keymap.set('n', '<leader>de', function()
   local line = vim.fn.getline '.'
 
-  -- is curl download file command
-  if line:match '^curl' then
-    if line:match '%-o' then
-      -- Call curl download asynchronously
-      vim.fn.jobstart(line, {
-        on_stdout = function(_, data)
-          if data then
-            for _, d in ipairs(data) do
-              print(d)
-            end
+  if line:match '^curl' and line:match '%-o' then
+    -- curl download file, async job
+    vim.fn.jobstart(line, {
+      on_stdout = function(_, data)
+        if data then
+          for _, d in ipairs(data) do
+            print(d)
           end
-        end,
-        on_stderr = function(_, data)
-          if data then
-            for _, d in ipairs(data) do
-              print('Error: ' .. d)
-            end
+        end
+      end,
+      on_stderr = function(_, data)
+        if data then
+          for _, d in ipairs(data) do
+            print('Error: ' .. d)
           end
-        end,
-        on_exit = function(_, exit_code)
-          if exit_code ~= 0 then
-            print('Async command failed with exit code: ' .. exit_code)
-          else
-            print 'Async command executed successfully'
-          end
-        end,
-      })
-      return
-    end
+        end
+      end,
+      on_exit = function(_, exit_code)
+        if exit_code ~= 0 then
+          print('Async command failed with exit code: ' .. exit_code)
+        else
+          print 'Async command executed successfully'
+        end
+      end,
+    })
+    return
   end
 
   local result = vim.fn.system(line)
@@ -174,7 +171,7 @@ vim.keymap.set('n', '<leader>de', function()
     end
   end
 
-  -- is curl command
+  -- curl command
   if line:match '^curl' then
     local headers, body = '', ''
     local parts = vim.split(result, '\r?\n\r?\n')
