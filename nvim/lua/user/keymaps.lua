@@ -176,10 +176,14 @@ vim.keymap.set('n', '<leader>de', function()
 
   -- is curl command
   if line:match '^curl' then
-    local headers, body = result:match '^(.-\r?\n\r?\n)(.*)'
-    if not headers then
-      headers = ''
-      body = result
+    local headers, body = '', ''
+    local parts = vim.split(result, '\r?\n\r?\n')
+    for i, part in ipairs(parts) do
+      if i < #parts then
+        headers = headers .. part .. '\r\n\r\n'
+      else
+        body = part
+      end
     end
 
     if body:match '^%s*{' or body:match '^%s*%[' then
