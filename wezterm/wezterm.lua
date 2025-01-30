@@ -14,6 +14,12 @@ config = {
       height = '100%',
     },
   },
+  window_padding = {
+    left = 0, -- default: 8
+    right = 0, -- default: 8
+    top = 8, -- default: 8
+    bottom = 8, -- default: 8
+  },
   font_size = 14,
   line_height = 1.05,
   -- harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' }, -- disable ligatures
