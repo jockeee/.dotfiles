@@ -20,8 +20,8 @@ return {
   opts = {
     options = {
       -- theme = 'auto',
-      theme = vim.g.colorscheme,
-      -- theme = 'vscode-colors', -- lua/lualine/themes/vscode-colors.lua
+      -- theme = vim.g.colorscheme,
+      theme = 'vscode-colors', -- lua/lualine/themes/vscode-colors.lua
       component_separators = '',
       section_separators = '',
     },
@@ -30,7 +30,7 @@ return {
       lualine_b = {
         {
           'filename',
-          color = { gui = 'bold' },
+          color = { gui = 'bold', bg = '#1f1f1f' },
         },
       },
       lualine_c = {

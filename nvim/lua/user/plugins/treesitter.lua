@@ -109,7 +109,6 @@ return {
     require('nvim-treesitter.configs').setup(opts)
 
     vim.treesitter.language.register('html', 'tmpl')
-    vim.treesitter.language.register('html', 'gotmpl')
 
     -- There are additional nvim-treesitter modules that you can use to interact with nvim-treesitter.
     --
