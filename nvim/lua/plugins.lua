@@ -6,7 +6,8 @@ return {
   require 'user.plugins.plenary', -- lua functions that many plugins use
 
   -- Visual
-  require 'user.plugins.colorscheme.catppuccin',
+  -- require 'user.plugins.colorscheme.catppuccin',
+  require 'user.plugins.colorscheme.nordic',
   require 'user.plugins.lualine', -- statusline
   require 'user.plugins.nvim-tree', -- file explorer
   require 'user.plugins.nvim-web-devicons', -- icons
