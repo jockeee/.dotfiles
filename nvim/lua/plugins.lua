@@ -7,6 +7,7 @@ return {
 
   -- Visual
   -- require 'user.plugins.colorscheme.catppuccin',
+  -- require 'user.plugins.colorscheme.vscode',
   require 'user.plugins.colorscheme.nordic',
   require 'user.plugins.lualine', -- statusline
   require 'user.plugins.nvim-tree', -- file explorer

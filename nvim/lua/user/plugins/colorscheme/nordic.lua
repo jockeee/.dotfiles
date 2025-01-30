@@ -10,8 +10,11 @@ return {
       vim.cmd.colorscheme 'nordic'
       vim.g.colorscheme = 'nordic' -- lazy.lua and lualine.lua
 
+      local bg = '#242933' -- default nordic bg color, #242933
+
+      -- vim.cmd.highlight 'Normal guibg=#1f1f1f'
       vim.cmd.highlight 'MsgArea guifg=#b1b1b1 guibg=#1f1f1f'
-      vim.cmd.highlight 'FoldColumn guibg=#242933' -- same as bg
+      vim.cmd.highlight('FoldColumn guibg=' .. bg)
       -- vim.cmd.highlight 'ColorColumn guibg=#1b1b29'
       -- vim.cmd.highlight 'StatusLine guibg=#2c2c2c' -- status line "separator", active
       -- vim.cmd.highlight 'StatusLineNC guibg=#2c2c2c' -- status line "separator", inactive
