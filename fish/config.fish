@@ -1,6 +1,9 @@
 # .
 # VERSION 1.0.26
 
+# Set fish_greeting to empty = not showing
+set -g fish_greeting
+
 if status is-interactive
     # XDG Base Directory, User Directories
     set -gx XDG_CONFIG_HOME "$HOME/.config" # User-specific configurations, analogous to /etc
@@ -12,9 +15,6 @@ if status is-interactive
     if test -f $XDG_CONFIG_HOME/fish/local.fish
         source $XDG_CONFIG_HOME/fish/local.fish
     end
-
-    # Set fish_greeting to empty = not showing
-    set -g fish_greeting
 
     # Remove underlines
     set fish_color_valid_path # default: '--underline'
