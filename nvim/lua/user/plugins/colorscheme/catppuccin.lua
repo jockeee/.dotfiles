@@ -9,9 +9,9 @@ return {
     lazy = false,
     priority = 1000,
     opts = {
-      styles = {
-        comments = {}, -- Default: "italics"
-      },
+      -- styles = {
+      --   comments = {}, -- Default: "italics"
+      -- },
       -- color_overrides = {
       --   mocha = {
       --     base = '#1f1f1f', -- background color

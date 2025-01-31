@@ -7,20 +7,55 @@ return {
     lazy = false,
     priority = 1000,
     init = function()
+      local nordic = require 'nordic'
+
+      -- https://www.color-hex.com/color/1f1f1f
+      local bg = '#1f1f1f'
+      -- local bg_shade1 = '#1b1b1b'
+
+      nordic.setup {
+
+        -- overriding colors in the base palette
+        on_palette = function(palette)
+          -- Backgrounds
+          palette.gray0 = bg -- default: #242933,
+
+          -- Floating windows
+          palette.black1 = bg
+
+          -- Cursorline Background
+          palette.black0 = bg
+        end,
+
+        -- setting colors after the palette has been applied
+        -- see: https://github.com/AlexvZyl/nordic.nvim/blob/main/lua/nordic/colors/init.lua
+        after_palette = function(palette)
+          local U = require 'nordic.utils'
+          palette.bg_fold = bg
+          palette.bg_visual = U.blend(palette.orange.base, palette.bg, 0.15)
+          palette.comment = U.blend(palette.gray0, palette.fg, 0.5)
+        end,
+
+        italic_comments = true,
+        bright_border = true,
+        telescope = {
+          -- Available styles: `classic`, `flat`.
+          style = 'classic',
+        },
+      }
+
       vim.cmd.colorscheme 'nordic'
       vim.g.colorscheme = 'nordic' -- lazy.lua and lualine.lua
 
-      local bg = '#242933' -- default nordic bg color, #242933
-
-      -- vim.cmd.highlight 'Normal guibg=#1f1f1f'
-      vim.cmd.highlight 'MsgArea guifg=#b1b1b1 guibg=#1f1f1f'
-      vim.cmd.highlight('FoldColumn guibg=' .. bg)
+      vim.cmd.highlight 'WinSeparator guifg=#2c2c2c' -- window separator
+      vim.cmd.highlight('MsgArea guifg=#b1b1b1 guibg=' .. bg)
+      -- vim.cmd.highlight('FoldColumn guibg=' .. bg)
       -- vim.cmd.highlight 'ColorColumn guibg=#1b1b29'
       -- vim.cmd.highlight 'StatusLine guibg=#2c2c2c' -- status line "separator", active
       -- vim.cmd.highlight 'StatusLineNC guibg=#2c2c2c' -- status line "separator", inactive
-      -- vim.cmd.highlight 'TabLine guibg=#1f1f1f' -- tab not selected
-      -- vim.cmd.highlight 'TabLineSel guibg=#1f1f1f' -- tab selected
-      -- vim.cmd.highlight 'TabLineFill guibg=#1f1f1f' -- tabline row
+      vim.cmd.highlight('TabLine guifg=#7c7d83 guibg=' .. bg) -- tab not selected
+      vim.cmd.highlight('TabLineSel guibg=' .. bg) -- tab selected
+      vim.cmd.highlight('TabLineFill guibg=' .. bg) -- tabline row
       -- vim.cmd.highlight '@string.special.url term=none cterm=none'
     end,
   },

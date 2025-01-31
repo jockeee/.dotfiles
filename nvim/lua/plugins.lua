@@ -5,10 +5,13 @@ return {
   -- Lua
   require 'user.plugins.plenary', -- lua functions that many plugins use
 
-  -- Visual
+  -- Colorscheme
   -- require 'user.plugins.colorscheme.catppuccin',
   -- require 'user.plugins.colorscheme.vscode',
   require 'user.plugins.colorscheme.nordic',
+  -- require 'user.plugins.colorscheme.kanagawa',
+
+  -- Visual
   require 'user.plugins.lualine', -- statusline
   require 'user.plugins.nvim-tree', -- file explorer
   require 'user.plugins.nvim-web-devicons', -- icons
