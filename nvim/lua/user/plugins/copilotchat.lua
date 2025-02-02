@@ -96,10 +96,14 @@ return {
     },
     build = 'make tiktoken', -- Only on MacOS or Linux
     opts = {
+      model = 'claude-3.5-sonnet', -- default: gpt-4o
       highlight_headers = false, -- Highlight headers in chat, disable if using markdown renderers (like render-markdown.nvim)
-    },
-    keymaps = {
-      ['<C-l>'] = false,
+      mappings = {
+        reset = {
+          normal = '', -- default: <C-l>, empty = disabled
+          insert = '', -- default: <C-l>, empty = disabled
+        },
+      },
     },
     config = function(_, opts)
       local cc = require 'CopilotChat'
