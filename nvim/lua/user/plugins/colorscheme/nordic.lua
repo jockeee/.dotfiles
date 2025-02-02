@@ -47,7 +47,6 @@ return {
       vim.cmd.colorscheme 'nordic'
       vim.g.colorscheme = 'nordic' -- lazy.lua and lualine.lua
 
-      vim.cmd.highlight 'WinSeparator guifg=#2c2c2c' -- window separator
       vim.cmd.highlight('MsgArea guifg=#b1b1b1 guibg=' .. bg)
       -- vim.cmd.highlight('FoldColumn guibg=' .. bg)
       -- vim.cmd.highlight 'ColorColumn guibg=#1b1b29'
@@ -56,6 +55,8 @@ return {
       vim.cmd.highlight('TabLine guifg=#7c7d83 guibg=' .. bg) -- tab not selected
       vim.cmd.highlight('TabLineSel guibg=' .. bg) -- tab selected
       vim.cmd.highlight('TabLineFill guibg=' .. bg) -- tabline row
+      vim.cmd.highlight 'WinSeparator guifg=#2c2c2c' -- window separator
+      -- vim.cmd.highlight 'LineNr guifg=#2c2c2c' -- line numbers
       -- vim.cmd.highlight '@string.special.url term=none cterm=none'
     end,
   },
