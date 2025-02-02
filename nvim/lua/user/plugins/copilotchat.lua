@@ -98,6 +98,9 @@ return {
     opts = {
       highlight_headers = false, -- Highlight headers in chat, disable if using markdown renderers (like render-markdown.nvim)
     },
+    keymaps = {
+      ['<C-l>'] = false,
+    },
     config = function(_, opts)
       local cc = require 'CopilotChat'
       cc.setup(opts)
@@ -117,19 +120,19 @@ return {
       vim.keymap.set({ 'n', 'v' }, '<leader>qq', '<cmd>CopilotChat<CR>', { desc = 'Chat' })
       vim.keymap.set({ 'n', 'v' }, '<leader>qa', '<cmd>CopilotChatAgents<CR>', { desc = 'Agents' })
       vim.keymap.set({ 'n', 'v' }, '<leader>qm', '<cmd>CopilotChatModels<CR>', { desc = 'Models' })
-      vim.keymap.set({ 'n', 'v' }, '<leader>qr', '<cmd>CopilotChatReset<CR>', { desc = 'Reset chat' })
+      vim.keymap.set({ 'n', 'v' }, '<leader>ql', '<cmd>CopilotChatReset<CR>', { desc = 'Reset chat' }) -- default: C-l
       vim.keymap.set({ 'n', 'v' }, '<leader>qs', '<cmd>CopilotChatStop<CR>', { desc = 'Stop output' })
 
       -- Prompts
       --    :CopilotChat<PromptName>  Ask a question with a specific prompt.
       --                              For example, :CopilotChatExplain will ask a question with the Explain prompt. See Prompts for more information.
-      vim.keymap.set({ 'n', 'v' }, '<leader>pc', '<cmd>CopilotChatCommit<CR>', { desc = 'Commit Message' })
-      vim.keymap.set({ 'n', 'v' }, '<leader>pd', '<cmd>CopilotChatDocs<CR>', { desc = 'Add Docs' })
-      vim.keymap.set({ 'n', 'v' }, '<leader>pe', '<cmd>CopilotChatExplain<CR>', { desc = 'Explain' })
-      vim.keymap.set({ 'n', 'v' }, '<leader>pf', '<cmd>CopilotChatFix<CR>', { desc = 'Fix' })
-      vim.keymap.set({ 'n', 'v' }, '<leader>po', '<cmd>CopilotChatOptimize<CR>', { desc = 'Optimize' })
-      vim.keymap.set({ 'n', 'v' }, '<leader>pr', '<cmd>CopilotChatReview<CR>', { desc = 'Review' })
-      vim.keymap.set({ 'n', 'v' }, '<leader>pr', '<cmd>CopilotChatTests<CR>', { desc = 'Generate Tests' })
+      vim.keymap.set({ 'n', 'v' }, '<leader>qc', '<cmd>CopilotChatCommit<CR>', { desc = 'Prompt: Commit Message' })
+      vim.keymap.set({ 'n', 'v' }, '<leader>qd', '<cmd>CopilotChatDocs<CR>', { desc = 'Prompt: Add Docs' })
+      vim.keymap.set({ 'n', 'v' }, '<leader>qe', '<cmd>CopilotChatExplain<CR>', { desc = 'Prompt: Explain' })
+      vim.keymap.set({ 'n', 'v' }, '<leader>qf', '<cmd>CopilotChatFix<CR>', { desc = 'Prompt: Fix' })
+      vim.keymap.set({ 'n', 'v' }, '<leader>qo', '<cmd>CopilotChatOptimize<CR>', { desc = 'Prompt: Optimize' })
+      vim.keymap.set({ 'n', 'v' }, '<leader>qr', '<cmd>CopilotChatReview<CR>', { desc = 'Prompt: Review' })
+      vim.keymap.set({ 'n', 'v' }, '<leader>qt', '<cmd>CopilotChatTests<CR>', { desc = 'Prompt: Generate Tests' })
     end,
   },
 }
