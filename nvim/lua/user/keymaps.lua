@@ -110,7 +110,7 @@ vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show Diagn
 
 -- Leader d: Buffer (document)
 vim.keymap.set('n', '<leader>dd', '<cmd>bd<cr>', { desc = 'Close Buffer' })
-vim.keymap.set('n', '<leader>da', '<cmd>%bdelete<cr>', { desc = 'Close All Buffers' })
+vim.keymap.set('n', '<leader>da', '<cmd>%bdelete!<cr>', { desc = 'Close All Buffers' })
 -- vim.keymap.set('n', '<leader>da', function()
 --   for _, buf in ipairs(vim.api.nvim_list_bufs()) do
 --     if vim.api.nvim_buf_is_valid(buf) and vim.bo[buf].buftype ~= 'terminal' then
