@@ -22,6 +22,7 @@ config = {
   -- },
   font_size = 14,
   line_height = 1.05,
+  warn_about_missing_glyphs = false,
   -- harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' }, -- disable ligatures
 }
 
