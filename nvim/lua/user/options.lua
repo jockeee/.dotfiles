@@ -20,6 +20,7 @@ vim.opt.showmode = false -- show current mode (insert, normal, visual, etc) in b
 vim.opt.colorcolumn = '' -- right margin column
 vim.opt.showcmd = false -- show command in bottom bar -- default: on
 vim.opt.showtabline = 2 -- default: 1, 0=never, 1=only if there are at least two tab pages, 2=always
+vim.opt.guicursor:append 't:blinkon0' -- disable cursor blinking
 vim.opt.tabline = '%!v:lua.MyTabline()'
 
 -- Line Numbers
