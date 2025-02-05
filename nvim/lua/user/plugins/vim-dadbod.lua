@@ -30,6 +30,6 @@ return {
     vim.g.db_ui_use_nerd_fonts = 1
 
     -- https://github.com/kristijanhusak/vim-dadbod-ui#save-location
-    vim.g.db_ui_save_location = vim.fn.stdpath 'data' .. '/db_ui' -- Default: ~/.local/share/db_ui
+    -- vim.g.db_ui_save_location = vim.fn.stdpath 'data' .. '/db_ui' -- Default: ~/.local/share/db_ui
   end,
 }
