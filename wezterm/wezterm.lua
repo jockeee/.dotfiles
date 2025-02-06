@@ -14,6 +14,7 @@ config = {
       height = '100%',
     },
   },
+  window_decorations = 'NONE',
   -- window_padding = {
   --   left = 0, -- default: 8
   --   right = 0, -- default: 8
