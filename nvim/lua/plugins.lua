@@ -32,7 +32,8 @@ return {
 
   -- Functionality
   require 'user.plugins.auto-session', -- sessions based on working directory
-  require 'user.plugins.harpoon', -- quick navigation
+  require 'user.plugins.flash', -- quick navigation, buffer
+  require 'user.plugins.harpoon', -- quick navigation, files
   require 'user.plugins.vim-tmux-navigator', -- tmux & split window navigation with C-hjkl\
 
   -- Formatting / LSP / Completion
