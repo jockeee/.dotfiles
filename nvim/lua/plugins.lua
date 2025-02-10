@@ -6,9 +6,9 @@ return {
   require 'user.plugins.plenary', -- lua functions that many plugins use
 
   -- Colorscheme
+  require 'user.plugins.colorscheme.nordic',
   -- require 'user.plugins.colorscheme.catppuccin',
   -- require 'user.plugins.colorscheme.vscode',
-  require 'user.plugins.colorscheme.nordic',
   -- require 'user.plugins.colorscheme.kanagawa',
 
   -- Visual
