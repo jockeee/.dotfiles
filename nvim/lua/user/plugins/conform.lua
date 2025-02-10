@@ -46,7 +46,7 @@ return {
       tmpl = { 'prettier' },
       html = { 'prettier' },
       javascript = { 'prettier' },
-      lua = { 'stylua' },
+      -- lua = { 'stylua' }, -- using luals formatter
       python = { 'isort', 'black' },
       json = { 'jq' },
       sql = { 'sqlfluff' },
