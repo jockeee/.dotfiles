@@ -45,7 +45,7 @@ return {
     },
     {
       '<c-s>',
-      mode = { 'c' },
+      mode = { 'c' }, -- command mode
       function()
         require('flash').toggle()
       end,
