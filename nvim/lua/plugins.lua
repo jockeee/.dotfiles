@@ -34,7 +34,8 @@ return {
   require 'user.plugins.auto-session', -- sessions based on working directory
   require 'user.plugins.flash', -- quick navigation, buffer
   require 'user.plugins.harpoon', -- quick navigation, files
-  require 'user.plugins.vim-tmux-navigator', -- tmux & split window navigation with C-hjkl\
+  require 'user.plugins.smart-splits', -- window navigation
+  -- require 'user.plugins.vim-tmux-navigator', -- window navigation
 
   -- Formatting / LSP / Completion
   require 'user.plugins.conform',
