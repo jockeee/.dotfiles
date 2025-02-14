@@ -1,5 +1,5 @@
 # default distro ~/.bashrc above
-# VERSION 1.0.26
+# VERSION 1.0.27
 
 ##
 ## Environment
@@ -697,6 +697,11 @@ fi
 # $PATH: ~/.cargo/bin
 if [ -d "$HOME/.cargo/bin" ]; then
     export PATH="$HOME/.cargo/bin":$PATH
+fi
+
+# wezterm
+if type -P wezterm &>/dev/null; then
+    eval "$(wezterm shell-completion --shell bash)"
 fi
 
 # zoxide, smarter cd
