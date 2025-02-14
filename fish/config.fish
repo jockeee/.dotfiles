@@ -1,5 +1,5 @@
 # .
-# VERSION 1.0.26
+# VERSION 1.0.27
 
 # Set fish_greeting to empty = not showing
 set -g fish_greeting
@@ -89,6 +89,11 @@ if status is-interactive
     # $PATH: ~/.cargo/bin
     if test -d $HOME/.cargo/bin
         fish_add_path $HOME/.cargo/bin
+    end
+
+    # wezterm
+    if command -q wezterm
+        wezterm shell-completion --shell fish | source
     end
 
     # Zoxide, smarter cd
