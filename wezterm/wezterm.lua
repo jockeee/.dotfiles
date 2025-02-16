@@ -233,6 +233,17 @@ config.keys = {
   -- Send C-l
   { key = 'l', mods = 'LEADER|CTRL', action = wezterm.action.SendKey { key = 'l', mods = 'CTRL' } },
 
+  {
+    key = 'p',
+    mods = 'LEADER|CTRL',
+    action = wezterm.action.ShowLauncherArgs { flags = 'FUZZY|TABS|LAUNCH_MENU_ITEMS|DOMAINS|KEY_ASSIGNMENTS|WORKSPACES|COMMANDS', fuzzy_help_text = ': ' },
+  },
+  {
+    key = 'w',
+    mods = 'LEADER',
+    action = wezterm.action.ShowLauncher,
+  },
+
   -- Workspaces (sessions)
   --
   -- Workspaces are used to group related terminal tabs and panes together.
@@ -247,17 +258,8 @@ config.keys = {
     mods = 'LEADER',
     action = wezterm.action.ShowLauncherArgs { flags = 'FUZZY|WORKSPACES', fuzzy_help_text = ': ' },
   },
-  {
-    key = 'p',
-    mods = 'LEADER|CTRL',
-    action = wezterm.action.ShowLauncherArgs { flags = 'FUZZY|TABS|LAUNCH_MENU_ITEMS|DOMAINS|KEY_ASSIGNMENTS|WORKSPACES|COMMANDS', fuzzy_help_text = ': ' },
-  },
-  {
-    key = 'w',
-    mods = 'LEADER',
-    action = wezterm.action.ShowLauncher,
-  },
 
+  -- Switch to workspace
   { key = 'q', mods = 'META', action = wezterm.action { SwitchToWorkspace = { name = 'home' } } },
   { key = 'w', mods = 'META', action = wezterm.action { SwitchToWorkspace = { name = '.dot' } } },
   { key = 'e', mods = 'META', action = wezterm.action { SwitchToWorkspace = { name = 'nvim' } } },
@@ -298,7 +300,6 @@ config.keys = {
   -- { key = 'l', mods = 'CTRL', action = act.ActivatePaneDirection 'Right' },
 
   -- Copy mode
-  { key = '[', mods = 'LEADER', action = wezterm.action.ActivateCopyMode },
   { key = 'PageUp', mods = 'NONE', action = wezterm.action.ActivateCopyMode },
 
   -- Quick select
