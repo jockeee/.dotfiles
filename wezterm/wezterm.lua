@@ -1,8 +1,6 @@
 --
 -- wezterm.lua
 
--- TODO: sessionizer
-
 local wezterm = require 'wezterm'
 local act = wezterm.action
 local mux = wezterm.mux
@@ -276,6 +274,22 @@ config.keys = {
   { key = '%', mods = 'LEADER|SHIFT', action = wezterm.action.SplitHorizontal { domain = 'CurrentPaneDomain' } }, -- left to right, split along horizontal line
   { key = '"', mods = 'LEADER|SHIFT', action = wezterm.action.SplitVertical { domain = 'CurrentPaneDomain' } }, -- top to bottom, split along vertical line
   { key = 'z', mods = 'LEADER', action = wezterm.action.TogglePaneZoomState },
+  {
+    key = '@',
+    mods = 'LEADER|SHIFT',
+    action = wezterm.action.SplitPane {
+      direction = 'Down',
+      size = { Percent = 16 },
+    },
+  },
+  {
+    key = 'h',
+    mods = 'LEADER',
+    action = wezterm.action.Multiple {
+      wezterm.action.ActivatePaneDirection 'Up',
+      wezterm.action.TogglePaneZoomState,
+    },
+  },
 
   -- Using smart-splits plugin instead
   -- { key = 'j', mods = 'CTRL', action = act.ActivatePaneDirection 'Down' },
