@@ -238,11 +238,6 @@ config.keys = {
     mods = 'LEADER|CTRL',
     action = wezterm.action.ShowLauncherArgs { flags = 'FUZZY|TABS|LAUNCH_MENU_ITEMS|DOMAINS|KEY_ASSIGNMENTS|WORKSPACES|COMMANDS', fuzzy_help_text = ': ' },
   },
-  {
-    key = 'w',
-    mods = 'LEADER',
-    action = wezterm.action.ShowLauncher,
-  },
 
   -- Workspaces (sessions)
   --
