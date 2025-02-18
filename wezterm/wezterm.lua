@@ -104,12 +104,12 @@ if wezterm.config_builder then
 end
 
 -- This causes `wezterm` to act as though it was started as `wezterm connect unix` by default, connecting to the unix domain on startup.
--- config.unix_domains = {
---   {
---     name = 'unix',
---   },
--- }
--- config.default_gui_startup_args = { 'connect', 'unix' }
+config.unix_domains = {
+  {
+    name = 'unix',
+  },
+}
+config.default_gui_startup_args = { 'connect', 'unix' }
 
 config = {
   automatically_reload_config = true,
