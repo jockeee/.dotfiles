@@ -32,6 +32,43 @@ local function tab_title(tab)
   return tab.active_pane.title
 end
 
+-- Function to switch to a workspace or create it if it doesn't exist
+local function switch_to_workspace_or_create(workspace, cwd)
+  local current_workspace = mux.get_active_workspace()
+  local all_workspaces = mux.get_workspace_names()
+
+  if workspace == current_workspace then
+    return
+  end
+
+  for _, w in ipairs(all_workspaces) do
+    if w == workspace then
+      mux.set_active_workspace(workspace)
+      wezterm.GLOBAL.previous_workspace = current_workspace
+      return
+    end
+  end
+
+  -- If workspace doesn't exist, create and switch to it by spawning a new window
+  mux.spawn_window {
+    workspace = workspace,
+    cwd = cwd,
+  }
+  mux.set_active_workspace(workspace)
+  wezterm.GLOBAL.previous_workspace = current_workspace
+end
+
+local switch_to_previous_workspace = function(window, pane)
+  local current_workspace = mux.get_active_workspace() -- window:active_workspace()
+  local previous_workspace = wezterm.GLOBAL.previous_workspace
+
+  if current_workspace == previous_workspace or wezterm.GLOBAL.previous_workspace == nil then
+    return
+  end
+
+  switch_to_workspace_or_create(previous_workspace)
+end
+
 --
 -- Events
 --
@@ -71,34 +108,29 @@ wezterm.on('update-status', function(window, pane)
 end)
 
 wezterm.on('gui-startup', function(cmd)
-  -- allow `wezterm start -- something` to affect what we spawn in our initial window
-  local args = {}
-  if cmd then
-    args = cmd.args
-  end
-
   local home = os.getenv 'HOME'
 
-  local tab, pane, window = mux.spawn_window {
+  mux.spawn_window {
     workspace = 'home',
+    cwd = home,
   }
 
-  local tab, pane, window = mux.spawn_window {
+  mux.spawn_window {
     workspace = '.dot',
     cwd = home .. '/.dotfiles',
   }
 
-  local tab, pane, window = mux.spawn_window {
+  mux.spawn_window {
     workspace = 'nvim',
     cwd = home .. '/.dotfiles/nvim',
   }
 
-  local tab, pane, window = mux.spawn_window {
+  mux.spawn_window {
     workspace = 'code',
     cwd = home .. '/code',
   }
 
-  local tab, pane, window = mux.spawn_window {
+  mux.spawn_window {
     workspace = 'pass',
     cwd = home .. '/.password-store',
   }
@@ -119,7 +151,6 @@ wezterm.on('gui-startup', function(cmd)
   -- may as well kick off a build in that pane
   -- build_pane:send_text 'air\n'
 
-  -- We want to startup in this workspace
   mux.set_active_workspace 'home'
 end)
 
@@ -240,26 +271,47 @@ config.keys = {
   },
 
   -- Workspaces (sessions)
-  --
-  -- Workspaces are used to group related terminal tabs and panes together.
-  -- This is useful for organizing different tasks or projects.
-  -- You can switch between workspaces to focus on different tasks without closing and reopening terminal sessions.
-  --
-  -- Domains represent different environments or contexts in which terminal sessions run.
-  -- They can be local shells, remote SSH sessions, or other types of connections.
-  -- Domains allow you to manage multiple connections and sessions within the same terminal application.
   {
     key = 's',
     mods = 'LEADER',
     action = wezterm.action.ShowLauncherArgs { flags = 'FUZZY|WORKSPACES', fuzzy_help_text = ': ' },
   },
+  { key = 'L', mods = 'LEADER', action = wezterm.action_callback(function()
+    switch_to_previous_workspace()
+  end) },
 
   -- Switch to workspace
-  { key = 'q', mods = 'META', action = wezterm.action { SwitchToWorkspace = { name = 'home' } } },
-  { key = 'w', mods = 'META', action = wezterm.action { SwitchToWorkspace = { name = '.dot' } } },
-  { key = 'e', mods = 'META', action = wezterm.action { SwitchToWorkspace = { name = 'nvim' } } },
-  { key = 'r', mods = 'META', action = wezterm.action { SwitchToWorkspace = { name = 'code' } } },
-  { key = 't', mods = 'META', action = wezterm.action { SwitchToWorkspace = { name = 'pass' } } },
+  -- {
+  --   key = 'q',
+  --   mods = 'META',
+  --   action = wezterm.action_callback(function()
+  --     local workspace = 'home'
+  --     local workspaces = mux.get_workspace_names()
+  --
+  --     if workspace == mux.get_active_workspace() then
+  --       return
+  --     end
+  --
+  --     for _, w in ipairs(workspaces) do
+  --       if w == workspace then
+  --         mux.set_active_workspace(workspace)
+  --         return
+  --       end
+  --     end
+  --
+  --     local home = os.getenv 'HOME'
+  --     mux.spawn_window {
+  --       workspace = workspace,
+  --       cwd = home,
+  --     }
+  --     mux.set_active_workspace(workspace)
+  --   end),
+  -- },
+  -- { key = 'q', mods = 'META', action = act.SwitchToWorkspace { name = 'home' } },
+  -- { key = 'w', mods = 'META', action = act.SwitchToWorkspace { name = '.dot' } },
+  -- { key = 'e', mods = 'META', action = act.SwitchToWorkspace { name = 'nvim' } },
+  -- { key = 'r', mods = 'META', action = act.SwitchToWorkspace { name = 'code' } },
+  -- { key = 't', mods = 'META', action = act.SwitchToWorkspace { name = 'pass' } },
 
   -- Tabs (windows)
   { key = 'c', mods = 'LEADER', action = wezterm.action.SpawnTab 'CurrentPaneDomain' },
@@ -305,6 +357,24 @@ config.keys = {
     action = wezterm.action.Search { Regex = '[a-f0-9]{6,}' },
   },
 }
+
+local def_workspaces = {
+  q = { name = 'home', cwd = os.getenv 'HOME' },
+  w = { name = '.dot', cwd = os.getenv 'HOME' .. '/.dotfiles' },
+  e = { name = 'nvim', cwd = os.getenv 'HOME' .. '/.dotfiles/nvim' },
+  r = { name = 'code', cwd = os.getenv 'HOME' .. '/code' },
+  t = { name = 'pass', cwd = os.getenv 'HOME' .. '/.password-store' },
+}
+
+for key, ws in pairs(def_workspaces) do
+  table.insert(config.keys, {
+    key = key,
+    mods = 'META',
+    action = wezterm.action_callback(function()
+      switch_to_workspace_or_create(ws.name, ws.cwd)
+    end),
+  })
+end
 
 --
 -- Hyperlinks
