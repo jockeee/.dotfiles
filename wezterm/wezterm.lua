@@ -5,76 +5,14 @@ local wezterm = require 'wezterm'
 local act = wezterm.action
 local mux = wezterm.mux
 
---
--- Functions
---
-
--- Equivalent to POSIX basename(3)
--- Given "/foo/bar" returns "bar"
-local function basename(s)
-  return string.gsub(s, '(.*[/\\])(.*)', '%2')
-end
-
-local function tab_title(tab)
-  -- Prefer the title that was set via `tab:set_title()` or `wezterm cli set-tab-title`,
-  local title = tab.tab_title
-  if title and #title > 0 then
-    return title
-  end
-
-  --- Active pane's process name
-  title = basename(tab.active_pane.foreground_process_name)
-  if title and #title > 0 then
-    return title
-  end
-
-  -- Fallback, active pane's title
-  return tab.active_pane.title
-end
-
--- Function to switch to a workspace or create it if it doesn't exist
-local function switch_to_workspace_or_create(workspace, cwd)
-  local current_workspace = mux.get_active_workspace()
-  local all_workspaces = mux.get_workspace_names()
-
-  if workspace == current_workspace then
-    return
-  end
-
-  for _, w in ipairs(all_workspaces) do
-    if w == workspace then
-      mux.set_active_workspace(workspace)
-      wezterm.GLOBAL.previous_workspace = current_workspace
-      return
-    end
-  end
-
-  -- If workspace doesn't exist, create and switch to it by spawning a new window
-  mux.spawn_window {
-    workspace = workspace,
-    cwd = cwd,
-  }
-  mux.set_active_workspace(workspace)
-  wezterm.GLOBAL.previous_workspace = current_workspace
-end
-
-local switch_to_previous_workspace = function(window, pane)
-  local current_workspace = mux.get_active_workspace() -- window:active_workspace()
-  local previous_workspace = wezterm.GLOBAL.previous_workspace
-
-  if current_workspace == previous_workspace or wezterm.GLOBAL.previous_workspace == nil then
-    return
-  end
-
-  switch_to_workspace_or_create(previous_workspace)
-end
+local utils = require 'utils'
 
 --
 -- Events
 --
 
 wezterm.on('format-tab-title', function(tab, tabs, panes, config, hover, max_width)
-  local title = tab_title(tab)
+  local title = utils.tab_title(tab)
 
   local zoomed = ''
   if tab.active_pane.is_zoomed then
@@ -86,7 +24,7 @@ end)
 
 wezterm.on('update-status', function(window, pane)
   local formatted = ''
-  local text = ' ' .. wezterm.mux.get_active_workspace() .. ' '
+  local text = ' ' .. mux.get_active_workspace() .. ' '
 
   if window:leader_is_active() then
     -- wezterm.format() returns a string, not a table
@@ -166,12 +104,12 @@ if wezterm.config_builder then
 end
 
 -- This causes `wezterm` to act as though it was started as `wezterm connect unix` by default, connecting to the unix domain on startup.
-config.unix_domains = {
-  {
-    name = 'unix',
-  },
-}
-config.default_gui_startup_args = { 'connect', 'unix' }
+-- config.unix_domains = {
+--   {
+--     name = 'unix',
+--   },
+-- }
+-- config.default_gui_startup_args = { 'connect', 'unix' }
 
 config = {
   automatically_reload_config = true,
@@ -277,7 +215,7 @@ config.keys = {
     action = wezterm.action.ShowLauncherArgs { flags = 'FUZZY|WORKSPACES', fuzzy_help_text = ': ' },
   },
   { key = 'L', mods = 'LEADER', action = wezterm.action_callback(function()
-    switch_to_previous_workspace()
+    utils.switch_to_previous_workspace()
   end) },
 
   -- Switch to workspace
@@ -371,7 +309,7 @@ for key, ws in pairs(def_workspaces) do
     key = key,
     mods = 'META',
     action = wezterm.action_callback(function()
-      switch_to_workspace_or_create(ws.name, ws.cwd)
+      utils.switch_to_workspace_or_create(ws.name, ws.cwd)
     end),
   })
 end
