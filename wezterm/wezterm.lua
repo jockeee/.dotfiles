@@ -7,6 +7,12 @@ local mux = wezterm.mux
 
 local utils = require 'utils'
 
+local path_home = os.getenv 'HOME'
+local color_bg = '#1f1f1f'
+local color_fg_active = '#b1b1b1'
+local color_fg_hover = '#909090'
+local color_fg_inactive = '#7c7d83'
+
 --
 -- Events
 --
@@ -19,7 +25,7 @@ wezterm.on('format-tab-title', function(tab, tabs, panes, config, hover, max_wid
     zoomed = ' '
   end
 
-  return '  ' .. zoomed .. title
+  return ' ' .. zoomed .. title .. ' '
 end)
 
 wezterm.on('update-status', function(window, pane)
@@ -29,15 +35,15 @@ wezterm.on('update-status', function(window, pane)
   if window:leader_is_active() then
     -- wezterm.format() returns a string, not a table
     formatted = wezterm.format {
-      { Foreground = { Color = '#b1b1b1' } },
-      { Background = { Color = '#1f1f1f' } },
+      { Foreground = { Color = color_fg_active } },
+      { Background = { Color = color_bg } },
       { Text = text },
     }
   else
     -- wezterm.format() returns a string, not a table
     formatted = wezterm.format {
-      { Foreground = { Color = '#7c7d83' } },
-      { Background = { Color = '#1f1f1f' } },
+      { Foreground = { Color = color_fg_inactive } },
+      { Background = { Color = color_bg } },
       { Text = text },
     }
   end
@@ -143,7 +149,7 @@ config = {
   background = {
     {
       source = {
-        Color = '#1f1f1f',
+        Color = color_bg,
       },
       width = '100%',
       height = '100%',
@@ -156,27 +162,27 @@ config = {
   },
   colors = {
     tab_bar = {
-      background = '#1f1f1f',
+      background = color_bg,
       active_tab = {
-        bg_color = '#1f1f1f',
-        fg_color = '#b1b1b1',
+        bg_color = color_bg,
+        fg_color = color_fg_active,
         intensity = 'Bold', -- default: Normal - Half, Normal, Bold
       },
       inactive_tab = {
-        bg_color = '#1f1f1f',
-        fg_color = '#7c7d83',
+        bg_color = color_bg,
+        fg_color = color_fg_inactive,
       },
       -- inactive_tab_hover = {
-      --   bg_color = '#1f1f1f',
-      --   fg_color = '#909090',
+      --   bg_color = color_bg,
+      --   fg_color = color_fg_hover,
       -- },
       new_tab = {
-        bg_color = '#1f1f1f',
-        fg_color = '#1f1f1f',
+        bg_color = color_bg,
+        fg_color = color_bg, -- "hidden"
       },
       new_tab_hover = {
-        bg_color = '#1f1f1f',
-        fg_color = '#909090',
+        bg_color = color_bg,
+        fg_color = color_fg_hover,
       },
     },
   },
@@ -296,15 +302,15 @@ config.keys = {
   },
 }
 
-local def_workspaces = {
-  q = { name = 'home', cwd = os.getenv 'HOME' },
-  w = { name = '.dot', cwd = os.getenv 'HOME' .. '/.dotfiles' },
-  e = { name = 'nvim', cwd = os.getenv 'HOME' .. '/.dotfiles/nvim' },
-  r = { name = 'code', cwd = os.getenv 'HOME' .. '/code' },
-  t = { name = 'pass', cwd = os.getenv 'HOME' .. '/.password-store' },
+local default_workspace_bindings = {
+  q = { name = 'home', cwd = path_home },
+  w = { name = '.dot', cwd = path_home .. '/.dotfiles' },
+  e = { name = 'nvim', cwd = path_home .. '/.dotfiles/nvim' },
+  r = { name = 'code', cwd = path_home .. '/code' },
+  t = { name = 'pass', cwd = path_home .. '/.password-store' },
 }
 
-for key, ws in pairs(def_workspaces) do
+for key, ws in pairs(default_workspace_bindings) do
   table.insert(config.keys, {
     key = key,
     mods = 'META',
