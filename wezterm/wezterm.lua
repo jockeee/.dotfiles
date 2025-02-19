@@ -13,6 +13,14 @@ local color_fg_active = '#b1b1b1'
 local color_fg_hover = '#909090'
 local color_fg_inactive = '#7c7d83'
 
+local default_workspaces = {
+  q = { name = 'home', cwd = path_home },
+  w = { name = '.dot', cwd = path_home .. '/.dotfiles' },
+  e = { name = 'nvim', cwd = path_home .. '/.dotfiles/nvim' },
+  r = { name = 'code', cwd = path_home .. '/code' },
+  t = { name = 'pass', cwd = path_home .. '/.password-store' },
+}
+
 --
 -- Events
 --
@@ -52,49 +60,12 @@ wezterm.on('update-status', function(window, pane)
 end)
 
 wezterm.on('gui-startup', function(cmd)
-  local home = os.getenv 'HOME'
-
-  mux.spawn_window {
-    workspace = 'home',
-    cwd = home,
-  }
-
-  mux.spawn_window {
-    workspace = '.dot',
-    cwd = home .. '/.dotfiles',
-  }
-
-  mux.spawn_window {
-    workspace = 'nvim',
-    cwd = home .. '/.dotfiles/nvim',
-  }
-
-  mux.spawn_window {
-    workspace = 'code',
-    cwd = home .. '/code',
-  }
-
-  mux.spawn_window {
-    workspace = 'pass',
-    cwd = home .. '/.password-store',
-  }
-
-  -- Set a workspace for coding
-  -- Top pane is for the editor, bottom pane is for the build tool
-  -- local project_dir = home .. '/code'
-  -- local tab, build_pane, window = mux.spawn_window {
-  --   workspace = 'code',
-  --   cwd = project_dir,
-  --   args = args,
-  -- }
-  -- local editor_pane = build_pane:split {
-  --   direction = 'Top',
-  --   size = 0.95,
-  --   cwd = project_dir,
-  -- }
-  -- may as well kick off a build in that pane
-  -- build_pane:send_text 'air\n'
-
+  for _, ws in pairs(default_workspaces) do
+    mux.spawn_window {
+      workspace = ws.name,
+      cwd = ws.cwd,
+    }
+  end
   mux.set_active_workspace 'home'
 end)
 
@@ -302,15 +273,7 @@ config.keys = {
   },
 }
 
-local default_workspace_bindings = {
-  q = { name = 'home', cwd = path_home },
-  w = { name = '.dot', cwd = path_home .. '/.dotfiles' },
-  e = { name = 'nvim', cwd = path_home .. '/.dotfiles/nvim' },
-  r = { name = 'code', cwd = path_home .. '/code' },
-  t = { name = 'pass', cwd = path_home .. '/.password-store' },
-}
-
-for key, ws in pairs(default_workspace_bindings) do
+for key, ws in pairs(default_workspaces) do
   table.insert(config.keys, {
     key = key,
     mods = 'META',
