@@ -174,22 +174,22 @@ config.leader = {
 
 config.keys = {
   -- Send C-s
-  { key = 's', mods = 'LEADER|CTRL', action = wezterm.action.SendKey { key = 's', mods = 'CTRL' } },
+  { key = 's', mods = 'LEADER|CTRL', action = act.SendKey { key = 's', mods = 'CTRL' } },
 
   -- Send C-l
-  { key = 'l', mods = 'LEADER|CTRL', action = wezterm.action.SendKey { key = 'l', mods = 'CTRL' } },
+  { key = 'l', mods = 'LEADER|CTRL', action = act.SendKey { key = 'l', mods = 'CTRL' } },
 
   {
     key = 'p',
     mods = 'LEADER|CTRL',
-    action = wezterm.action.ShowLauncherArgs { flags = 'FUZZY|TABS|LAUNCH_MENU_ITEMS|DOMAINS|KEY_ASSIGNMENTS|WORKSPACES|COMMANDS', fuzzy_help_text = ': ' },
+    action = act.ShowLauncherArgs { flags = 'FUZZY|TABS|LAUNCH_MENU_ITEMS|DOMAINS|KEY_ASSIGNMENTS|WORKSPACES|COMMANDS', fuzzy_help_text = ': ' },
   },
 
   -- Workspaces (sessions)
   {
     key = 's',
     mods = 'LEADER',
-    action = wezterm.action.ShowLauncherArgs { flags = 'FUZZY|WORKSPACES', fuzzy_help_text = ': ' },
+    action = act.ShowLauncherArgs { flags = 'FUZZY|WORKSPACES', fuzzy_help_text = ': ' },
   },
   { key = 'L', mods = 'LEADER', action = wezterm.action_callback(function()
     utils.switch_to_previous_workspace()
@@ -229,19 +229,20 @@ config.keys = {
   -- { key = 't', mods = 'META', action = act.SwitchToWorkspace { name = 'pass' } },
 
   -- Tabs (windows)
-  { key = 'c', mods = 'LEADER', action = wezterm.action.SpawnTab 'CurrentPaneDomain' },
-  { key = 'l', mods = 'LEADER', action = wezterm.action.ActivateLastTab },
-  { key = 'n', mods = 'LEADER', action = wezterm.action.ActivateTabRelative(1) },
-  { key = 'p', mods = 'LEADER', action = wezterm.action.ActivateTabRelative(-1) },
+  { key = 'c', mods = 'LEADER', action = act.SpawnTab 'CurrentPaneDomain' },
+  { key = 'l', mods = 'LEADER', action = act.ActivateLastTab },
+  { key = 'n', mods = 'LEADER', action = act.ActivateTabRelative(1) },
+  { key = 'p', mods = 'LEADER', action = act.ActivateTabRelative(-1) },
 
   -- Panes (splits)
-  { key = '%', mods = 'LEADER|SHIFT', action = wezterm.action.SplitHorizontal { domain = 'CurrentPaneDomain' } }, -- left to right, split along horizontal line
-  { key = '"', mods = 'LEADER|SHIFT', action = wezterm.action.SplitVertical { domain = 'CurrentPaneDomain' } }, -- top to bottom, split along vertical line
-  { key = 'z', mods = 'LEADER', action = wezterm.action.TogglePaneZoomState },
+  { key = '%', mods = 'LEADER|SHIFT', action = act.SplitHorizontal { domain = 'CurrentPaneDomain' } }, -- left to right, split along horizontal line
+  { key = '"', mods = 'LEADER|SHIFT', action = act.SplitVertical { domain = 'CurrentPaneDomain' } }, -- top to bottom, split along vertical line
+  { key = 'z', mods = 'LEADER', action = act.TogglePaneZoomState },
+  { key = 'X', mods = 'LEADER', action = act.CloseCurrentPane { confirm = true } },
   {
     key = '@',
     mods = 'LEADER|SHIFT',
-    action = wezterm.action.SplitPane {
+    action = act.SplitPane {
       direction = 'Down',
       size = { Percent = 16 },
     },
@@ -249,9 +250,9 @@ config.keys = {
   {
     key = 'h',
     mods = 'LEADER',
-    action = wezterm.action.Multiple {
-      wezterm.action.ActivatePaneDirection 'Up',
-      wezterm.action.TogglePaneZoomState,
+    action = act.Multiple {
+      act.ActivatePaneDirection 'Up',
+      act.TogglePaneZoomState,
     },
   },
 
@@ -262,14 +263,14 @@ config.keys = {
   -- { key = 'l', mods = 'CTRL', action = act.ActivatePaneDirection 'Right' },
 
   -- Copy mode
-  { key = 'PageUp', mods = 'NONE', action = wezterm.action.ActivateCopyMode },
+  { key = 'PageUp', mods = 'NONE', action = act.ActivateCopyMode },
 
   -- Quick select
   { key = 'f', mods = 'LEADER', action = act.QuickSelect },
   {
     key = '/',
     mods = 'LEADER',
-    action = wezterm.action.Search { Regex = '[a-f0-9]{6,}' },
+    action = act.Search { Regex = '[a-f0-9]{6,}' },
   },
 }
 
