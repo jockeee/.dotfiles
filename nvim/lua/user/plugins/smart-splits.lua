@@ -7,6 +7,7 @@ return {
   'mrjones2014/smart-splits.nvim',
   lazy = false,
   opts = {
+    at_edge = 'stop',
     disable_multiplexer_nav_when_zoomed = false, -- default: true
   },
   config = function(_, opts)
