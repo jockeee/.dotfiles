@@ -1,4 +1,4 @@
-; SQL highlighting when you have
+; SQL highlighting when we have
 ; stmt = `
 ;   ... SQL ...`
 left: (expression_list
@@ -9,7 +9,7 @@ right: (expression_list
     (raw_string_literal_content) @injection.content (#set! injection.language "sql"))
 )
 
-; SQL highlighting when you have
+; SQL highlighting when we have
 ; query = `
 ;   ... SQL ...`
 left: (expression_list
