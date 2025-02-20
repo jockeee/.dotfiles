@@ -238,7 +238,11 @@ config.keys = {
   { key = '%', mods = 'LEADER|SHIFT', action = act.SplitHorizontal { domain = 'CurrentPaneDomain' } }, -- left to right, split along horizontal line
   { key = '"', mods = 'LEADER|SHIFT', action = act.SplitVertical { domain = 'CurrentPaneDomain' } }, -- top to bottom, split along vertical line
   { key = 'z', mods = 'LEADER', action = act.TogglePaneZoomState },
+
+  -- https://wezterm.org/config/lua/config/skip_close_confirmation_for_processes_named.html
+  -- shell processes will not never show a confirmation dialog.
   { key = 'X', mods = 'LEADER', action = act.CloseCurrentPane { confirm = true } },
+
   {
     key = '@',
     mods = 'LEADER|SHIFT',
