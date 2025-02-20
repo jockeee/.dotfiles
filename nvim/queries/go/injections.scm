@@ -8,3 +8,15 @@ right: (expression_list
   (raw_string_literal
     (raw_string_literal_content) @injection.content (#set! injection.language "sql"))
 )
+
+; SQL highlighting when you have
+; query = `
+;   ... SQL ...`
+left: (expression_list
+  (identifier) @var_name (#eq? @var_name "query")
+)
+right: (expression_list
+  (raw_string_literal
+    (raw_string_literal_content) @injection.content (#set! injection.language "sql"))
+)
+
