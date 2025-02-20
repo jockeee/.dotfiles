@@ -126,8 +126,8 @@ vim.keymap.set('n', '<leader>dx', '<cmd>bd!<cr>', { desc = 'Kill Buffer (Ignore 
 vim.keymap.set('n', '<leader>de', function()
   local line = vim.fn.getline '.'
 
+  -- curl file download, async job
   if line:match '^curl' and line:match '%-o' then
-    -- curl download file, async job
     vim.fn.jobstart(line, {
       on_stdout = function(_, data)
         if data then
