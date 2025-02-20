@@ -240,8 +240,7 @@ config.keys = {
   { key = 'z', mods = 'LEADER', action = act.TogglePaneZoomState },
 
   -- https://wezterm.org/config/lua/config/skip_close_confirmation_for_processes_named.html
-  -- shell processes will not never show a confirmation dialog.
-  { key = 'X', mods = 'LEADER', action = act.CloseCurrentPane { confirm = true } },
+  { key = 'x', mods = 'LEADER', action = act.CloseCurrentPane { confirm = true } },
 
   {
     key = '@',
