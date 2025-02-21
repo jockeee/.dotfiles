@@ -13,9 +13,7 @@ local color_fg_active = '#b1b1b1'
 local color_fg_hover = '#909090'
 local color_fg_inactive = '#7c7d83'
 
-wezterm.GLOBAL = wezterm.GLOBAL or {} -- persist across config reloads
-
--- Store default workspaces in wezterm.GLOBAL to prevent scrambling after config reload
+wezterm.GLOBAL = wezterm.GLOBAL or {}
 wezterm.GLOBAL.default_workspaces = wezterm.GLOBAL.default_workspaces
   or {
     q = { name = 'home', cwd = path_home },
@@ -29,7 +27,7 @@ wezterm.GLOBAL.default_workspaces = wezterm.GLOBAL.default_workspaces
 -- Events
 --
 
-wezterm.on('gui-startup', function(cmd)
+wezterm.on('gui-startup', function()
   local existing_workspaces = mux.get_workspace_names()
 
   for _, ws in pairs(wezterm.GLOBAL.default_workspaces) do
