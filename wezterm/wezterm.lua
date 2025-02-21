@@ -248,14 +248,16 @@ config.keys = {
   -- https://wezterm.org/config/lua/config/skip_close_confirmation_for_processes_named.html
   { key = 'x', mods = 'LEADER', action = act.CloseCurrentPane { confirm = true } },
 
+  -- build split, create
   {
     key = '@',
     mods = 'LEADER|SHIFT',
     action = act.SplitPane {
       direction = 'Down',
-      size = { Percent = 16 },
+      size = { Percent = 14 },
     },
   },
+  -- build split, hide
   {
     key = 'h',
     mods = 'LEADER',
