@@ -29,6 +29,15 @@ M.tab_title = function(tab)
   return tab.active_pane.title
 end
 
+M.workspace_exists = function(existing_workspaces, workspace)
+  for _, w in ipairs(existing_workspaces) do
+    if w == workspace then
+      return true
+    end
+  end
+  return false
+end
+
 M.switch_to_workspace_or_create = function(workspace, cwd)
   local current_workspace = mux.get_active_workspace()
   local all_workspaces = mux.get_workspace_names()

@@ -13,17 +13,36 @@ local color_fg_active = '#b1b1b1'
 local color_fg_hover = '#909090'
 local color_fg_inactive = '#7c7d83'
 
-local default_workspaces = {
-  q = { name = 'home', cwd = path_home },
-  w = { name = '.dot', cwd = path_home .. '/.dotfiles' },
-  e = { name = 'nvim', cwd = path_home .. '/.dotfiles/nvim' },
-  r = { name = 'code', cwd = path_home .. '/code' },
-  t = { name = 'pass', cwd = path_home .. '/.password-store' },
-}
+wezterm.GLOBAL = wezterm.GLOBAL or {} -- persist across config reloads
+
+-- Store default workspaces in wezterm.GLOBAL to prevent scrambling after config reload
+wezterm.GLOBAL.default_workspaces = wezterm.GLOBAL.default_workspaces
+  or {
+    q = { name = 'home', cwd = path_home },
+    w = { name = '.dot', cwd = path_home .. '/.dotfiles' },
+    e = { name = 'nvim', cwd = path_home .. '/.dotfiles/nvim' },
+    r = { name = 'code', cwd = path_home .. '/code' },
+    t = { name = 'pass', cwd = path_home .. '/.password-store' },
+  }
 
 --
 -- Events
 --
+
+wezterm.on('gui-startup', function(cmd)
+  local existing_workspaces = mux.get_workspace_names()
+
+  for _, ws in pairs(wezterm.GLOBAL.default_workspaces) do
+    if not utils.workspace_exists(existing_workspaces, ws.name) then
+      mux.spawn_window {
+        workspace = ws.name,
+        cwd = ws.cwd,
+      }
+    end
+  end
+
+  mux.set_active_workspace 'home'
+end)
 
 wezterm.on('format-tab-title', function(tab, tabs, panes, config, hover, max_width)
   local title = utils.tab_title(tab)
@@ -59,16 +78,6 @@ wezterm.on('update-status', function(window, pane)
   window:set_left_status(formatted)
 end)
 
-wezterm.on('gui-startup', function(cmd)
-  for _, ws in pairs(default_workspaces) do
-    mux.spawn_window {
-      workspace = ws.name,
-      cwd = ws.cwd,
-    }
-  end
-  mux.set_active_workspace 'home'
-end)
-
 --
 -- Config
 --
@@ -80,7 +89,6 @@ if wezterm.config_builder then
   config = wezterm.config_builder()
 end
 
--- This causes `wezterm` to act as though it was started as `wezterm connect unix` by default, connecting to the unix domain on startup.
 config.unix_domains = {
   {
     name = 'unix',
@@ -277,7 +285,7 @@ config.keys = {
   },
 }
 
-for key, ws in pairs(default_workspaces) do
+for key, ws in pairs(wezterm.GLOBAL.default_workspaces) do
   table.insert(config.keys, {
     key = key,
     mods = 'META',
