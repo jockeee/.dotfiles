@@ -245,8 +245,23 @@ config.keys = {
   { key = '"', mods = 'LEADER|SHIFT', action = act.SplitVertical { domain = 'CurrentPaneDomain' } }, -- top to bottom, split along vertical line
   { key = 'z', mods = 'LEADER', action = act.TogglePaneZoomState },
 
+  -- close pane
   -- https://wezterm.org/config/lua/config/skip_close_confirmation_for_processes_named.html
   { key = 'x', mods = 'LEADER', action = act.CloseCurrentPane { confirm = true } },
+
+  -- kill process
+  {
+    key = 'k',
+    mods = 'LEADER',
+    action = wezterm.action_callback(function(window, pane)
+      local process_info = pane:get_foreground_process_info()
+
+      if process_info then
+        local pid = process_info.pid
+        os.execute('kill -9 ' .. pid)
+      end
+    end),
+  },
 
   -- build split, create
   {
