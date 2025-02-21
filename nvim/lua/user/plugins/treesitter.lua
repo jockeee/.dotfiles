@@ -134,7 +134,7 @@ return {
 
     local context = require 'treesitter-context'
     context.setup {
-      enable = true,
+      enable = false,
       multiwindow = true,
     }
 
