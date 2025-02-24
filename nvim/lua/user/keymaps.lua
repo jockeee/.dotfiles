@@ -250,3 +250,4 @@ vim.keymap.set('n', '<leader>tt', function()
   vim.opt.showtabline = (vim.opt.showtabline:get() == 0) and 2 or 0
 end, { desc = 'Tab Line' })
 vim.keymap.set('n', '<leader>tw', '<cmd>set wrap!<cr>', { desc = 'Wrap' }) -- lua vim.opt.wrap = not vim.opt.wrap:get()
+vim.keymap.set('n', '<leader>w', '<cmd>set wrap!<cr>', { desc = 'Toggle: Wrap' }) -- lua vim.opt.wrap = not vim.opt.wrap:get()
