@@ -76,6 +76,11 @@ wezterm.on('update-status', function(window, pane)
   window:set_left_status(formatted)
 end)
 
+wezterm.on('copy-mode-yank', function(window, pane)
+  window:perform_action(act.CopyTo 'ClipboardAndPrimarySelection', pane)
+  window:perform_action(act.ClearSelection, pane)
+end)
+
 --
 -- Config
 --
@@ -247,11 +252,11 @@ config.keys = {
 
   -- close pane
   -- https://wezterm.org/config/lua/config/skip_close_confirmation_for_processes_named.html
-  { key = 'x', mods = 'LEADER', action = act.CloseCurrentPane { confirm = true } },
+  { key = 'X', mods = 'LEADER', action = act.CloseCurrentPane { confirm = true } },
 
   -- kill process
   {
-    key = 'k',
+    key = 'K',
     mods = 'LEADER',
     action = wezterm.action_callback(function(window, pane)
       local process_info = pane:get_foreground_process_info()
@@ -269,7 +274,7 @@ config.keys = {
     mods = 'LEADER|SHIFT',
     action = act.SplitPane {
       direction = 'Down',
-      size = { Percent = 14 },
+      size = { Percent = 10 },
     },
   },
   -- build split, hide
@@ -290,6 +295,8 @@ config.keys = {
 
   -- Copy mode
   { key = 'PageUp', mods = 'NONE', action = act.ActivateCopyMode },
+  { key = 'k', mods = 'LEADER', action = act.ActivateCopyMode },
+  { key = 'C', mods = 'LEADER', action = act.ClearSelection },
 
   -- Quick select
   { key = 'f', mods = 'LEADER', action = act.QuickSelect },
@@ -314,7 +321,8 @@ end
 -- Hyperlinks
 --
 
-config.hyperlink_rules = wezterm.default_hyperlink_rules()
+-- config.hyperlink_rules = {} -- disable hyperlinks
+-- config.hyperlink_rules = wezterm.default_hyperlink_rules()
 -- make username/project paths clickable. this implies paths like the following are for github.
 -- ( "nvim-treesitter/nvim-treesitter" | wbthomason/packer.nvim | wezterm/wezterm | "wezterm/wezterm.git" )
 -- as long as a full url hyperlink regex exists above this it should not match a full url to
