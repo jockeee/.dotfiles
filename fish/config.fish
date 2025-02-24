@@ -1,5 +1,5 @@
 # .
-# VERSION 1.0.27
+# VERSION 28
 
 # Set fish_greeting to empty = not showing
 set -g fish_greeting
@@ -34,7 +34,7 @@ if status is-interactive
     function fish_title
         # emacs' "term" is basically the only term that can't handle it.
         if not set -q INSIDE_EMACS; or string match -vq '*,term:*' -- $INSIDE_EMACS
-            # If we're connected via ssh, we print the hostname.
+            # If connected via ssh, use the hostname.
             set -l ssh
             set -q SSH_TTY
             and set ssh "["(prompt_hostname | string sub -l 10 | string collect)"]"
