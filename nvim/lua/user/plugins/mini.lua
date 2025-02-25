@@ -47,7 +47,22 @@ return {
     --    sF    find surrounding, backwards
     --    sh    highlight surrounding
     --    sr    replace surrounding
-    require('mini.surround').setup()
+    require('mini.surround').setup {
+      mappings = {
+        add = '<leader>sa', -- Add surrounding in Normal and Visual modes
+        delete = '<leader>sd', -- Delete surrounding
+        find = '<leader>sf', -- Find surrounding (to the right)
+        find_left = '<leader>sF', -- Find surrounding (to the left)
+        highlight = '<leader>sh', -- Highlight surrounding
+        replace = '<leader>sr', -- Replace surrounding
+        update_n_lines = '<leader>sn', -- Update `n_lines`
+        suffix_last = 'p', -- Suffix to search with "prev" method, shows up when doing <leader>sf/F
+        suffix_next = 'n', -- Suffix to search with "next" method, shows up when doing <leader>sf/F
+      },
+
+      -- Number of lines within which surrounding is searched
+      n_lines = 20,
+    }
 
     -- Split/Join
     -- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-splitjoin.md

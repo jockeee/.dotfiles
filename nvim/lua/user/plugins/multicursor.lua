@@ -63,16 +63,16 @@ return {
     end, { desc = 'Multicursor: Add matching word/selection, prev' })
 
     -- Skip adding a new cursor by matching word/selection
-    vim.keymap.set({ 'n', 'v' }, '<leader>s', function()
+    vim.keymap.set({ 'n', 'v' }, '<leader>mn', function()
       mc.matchSkipCursor(1)
-    end, { desc = 'Multicursor: Skip matching word/selection, next' })
-    vim.keymap.set({ 'n', 'v' }, '<leader>S', function()
+    end, { desc = 'Skip matching word/selection, next' })
+    vim.keymap.set({ 'n', 'v' }, '<leader>mp', function()
       mc.matchSkipCursor(-1)
-    end, { desc = 'Multicursor: Skip matching word/selection, prev' })
+    end, { desc = 'Skip matching word/selection, prev' })
 
-    vim.keymap.set('n', '<leader>mgv', mc.restoreCursors, { desc = 'Multicursor: Restore cursors' })
+    vim.keymap.set('n', '<leader>mgv', mc.restoreCursors, { desc = 'Restore cursors' })
     vim.keymap.set('n', '<leader>ma', mc.alignCursors, { desc = 'Align cursor columns' })
-    vim.keymap.set({ 'n', 'v' }, '<leader>mA', mc.matchAllAddCursors, { desc = 'MultiCursor: Add all matches' })
+    vim.keymap.set({ 'n', 'v' }, '<leader>mA', mc.matchAllAddCursors, { desc = 'Add all matches' })
     vim.keymap.set({ 'n', 'v' }, '<leader>mx', mc.deleteCursor, { desc = 'Delete the main cursor' })
     -- vim.keymap.set({ 'n', 'v' }, '<C-q>', mc.toggleCursor) -- Easy way to add and remove cursors using the main cursor.
     -- vim.keymap.set({ 'n', 'v' }, '<leader>m<C-q>', mc.duplicateCursors, { desc = 'Clone every cursor and disable the originals' })
