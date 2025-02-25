@@ -29,20 +29,29 @@ return {
       lualine_a = {}, -- default: 'mode'
       lualine_b = {
         {
-          'filename',
-          color = { gui = 'bold', bg = '#1f1f1f' },
-        },
-      },
-      lualine_c = {
-        {
           'branch',
           icon = '',
         },
         {
           'filename',
-          file_status = false,
+          color = { gui = 'bold' },
           path = 1, -- 0 = filename, 1 = relative path, 2 = absolute path, 3 = relative to home
         },
+        -- {
+        --   'filename',
+        --   color = { gui = 'bold', bg = '#1f1f1f' },
+        -- },
+      },
+      lualine_c = {
+        -- {
+        --   'branch',
+        --   icon = '',
+        -- },
+        -- {
+        --   'filename',
+        --   file_status = false,
+        --   path = 1, -- 0 = filename, 1 = relative path, 2 = absolute path, 3 = relative to home
+        -- },
         'diagnostics',
         'diff',
         -- 'aerial',
@@ -58,17 +67,19 @@ return {
     },
     inactive_sections = {
       lualine_a = {},
-      lualine_b = {},
-      lualine_c = {
+      lualine_b = {
         {
           'filename',
           color = { gui = 'bold' },
-        },
-        {
-          'filename',
-          file_status = false,
           path = 1, -- 0 = filename, 1 = relative path, 2 = absolute path, 3 = relative to home
         },
+      },
+      lualine_c = {
+        -- {
+        --   'filename',
+        --   file_status = false,
+        --   path = 1, -- 0 = filename, 1 = relative path, 2 = absolute path, 3 = relative to home
+        -- },
         'diagnostics',
       },
       lualine_x = {
