@@ -22,7 +22,7 @@ return {
       { '<leader>q', group = 'Copilot Commands' },
       { '<leader>t', group = 'Toggle' },
       { '<leader>v', group = 'Hurl' },
-      { '<leader>w', group = 'Workspace' },
+      { '<leader>W', group = 'Workspace' }, -- L-w is short version of L-tw, toggle wrap
       { '<leader>x', group = 'Trouble' },
       { '<leader>z', group = 'nvim' },
     }
