@@ -55,8 +55,8 @@ return {
   require 'user.plugins.hurl',
 
   -- Github Copilot
-  -- require 'user.plugins.copilot', -- inline code completion
-  -- require 'user.plugins.copilotchat', -- chat with copilot
+  require 'user.plugins.copilot', -- inline code completion
+  require 'user.plugins.copilotchat', -- chat with copilot
 
   -- Local plugins
   -- require 'user.plugins.dev',
