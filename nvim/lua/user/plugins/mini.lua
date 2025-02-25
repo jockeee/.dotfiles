@@ -54,7 +54,7 @@ return {
         find = '<leader>sf', -- Find surrounding (to the right)
         find_left = '<leader>sF', -- Find surrounding (to the left)
         highlight = '<leader>sh', -- Highlight surrounding
-        replace = '<leader>sr', -- Replace surrounding
+        replace = '<leader>sc', -- Replace surrounding "change"
         update_n_lines = '<leader>sn', -- Update `n_lines`
         suffix_last = 'p', -- Suffix to search with "prev" method, shows up when doing <leader>sf/F
         suffix_next = 'n', -- Suffix to search with "next" method, shows up when doing <leader>sf/F
