@@ -121,9 +121,9 @@ return {
           map('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, 'Workspace symbols')
 
           -- FROM https://github.com/neovim/nvim-lspconfig
-          vim.keymap.set('n', '<leader>Wa', vim.lsp.buf.add_workspace_folder, { buffer = event.buf, desc = 'LSP: ' .. 'Add workspace folder' })
-          vim.keymap.set('n', '<leader>Wr', vim.lsp.buf.remove_workspace_folder, { buffer = event.buf, desc = 'LSP: ' .. 'Remove workspace folder' })
-          vim.keymap.set('n', '<leader>Wl', function()
+          vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, { buffer = event.buf, desc = 'LSP: ' .. 'Add workspace folder' })
+          vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, { buffer = event.buf, desc = 'LSP: ' .. 'Remove workspace folder' })
+          vim.keymap.set('n', '<leader>wl', function()
             print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
           end, { buffer = event.buf, desc = 'LSP: ' .. 'List workspace folders' })
 

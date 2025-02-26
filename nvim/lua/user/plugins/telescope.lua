@@ -218,7 +218,7 @@ return {
     end, { desc = 'nvim' })
 
     -- Find lazy files
-    vim.keymap.set('n', '<space>fl', function()
+    vim.keymap.set('n', '<leader>fl', function()
       require('telescope.builtin').find_files {
         ---@diagnostic disable-next-line: param-type-mismatch
         cwd = vim.fs.joinpath(vim.fn.stdpath 'data', 'lazy'),

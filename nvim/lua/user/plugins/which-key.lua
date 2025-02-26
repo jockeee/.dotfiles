@@ -1,14 +1,16 @@
 --
 -- https://github.com/folke/which-key.nvim
 -- WhichKey displays a popup with possible keybindings of the command you started typing.
+--
+-- :checkhealth which-key
 
 return {
   'folke/which-key.nvim',
   event = 'VeryLazy',
   opts = {},
-  config = function()
+  config = function(_, opts)
     local wk = require 'which-key'
-    wk.setup()
+    wk.setup(opts)
 
     -- Add groups to which-key
     wk.add {
@@ -23,7 +25,7 @@ return {
       { '<leader>s', group = 'Surround' },
       { '<leader>t', group = 'Toggle' },
       { '<leader>v', group = 'Hurl' },
-      { '<leader>W', group = 'Workspace' }, -- L-w is short version of L-tw, toggle wrap
+      { '<leader>w', group = 'Workspace' },
       { '<leader>x', group = 'Trouble' },
       { '<leader>z', group = 'nvim' },
     }
