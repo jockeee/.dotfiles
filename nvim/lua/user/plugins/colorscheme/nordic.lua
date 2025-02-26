@@ -9,12 +9,10 @@ return {
     init = function()
       local nordic = require 'nordic'
 
-      -- https://www.color-hex.com/color/1f1f1f
+      local fg = '#b1b1b1'
       local bg = '#1f1f1f'
-      -- local bg_shade1 = '#1b1b1b'
 
       nordic.setup {
-
         -- overriding colors in the base palette
         on_palette = function(palette)
           -- Backgrounds
@@ -47,7 +45,7 @@ return {
       vim.cmd.colorscheme 'nordic'
       vim.g.colorscheme = 'nordic' -- lazy.lua and lualine.lua
 
-      vim.cmd.highlight('MsgArea guifg=#b1b1b1 guibg=' .. bg)
+      vim.cmd.highlight('MsgArea guifg=' .. fg .. ' guibg=' .. bg)
       -- vim.cmd.highlight('FoldColumn guibg=' .. bg)
       -- vim.cmd.highlight 'ColorColumn guibg=#1b1b29'
       -- vim.cmd.highlight 'StatusLine guibg=#2c2c2c' -- status line "separator", active

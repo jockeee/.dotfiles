@@ -22,7 +22,6 @@ return {
       { '<leader>m', group = 'Multicursor' },
       { '<leader>p', group = 'Copilot Prompt' },
       { '<leader>q', group = 'Copilot Commands' },
-      { '<leader>s', group = 'Surround' },
       { '<leader>t', group = 'Toggle' },
       { '<leader>v', group = 'Hurl' },
       { '<leader>w', group = 'Workspace' },
