@@ -125,6 +125,7 @@ vim.keymap.set('n', '<leader>dx', '<cmd>bd!<cr>', { desc = 'Kill Buffer (Ignore 
 -- vim.keymap.set('n', '<leader>de', '<cmd>.w !bash<cr>', { desc = 'Execute line, bash' })
 vim.keymap.set('n', '<leader>de', function()
   local line = vim.fn.getline '.'
+  local cmd = '$ ' .. line .. '\n\n'
 
   -- curl file download, async job
   if line:match '^curl' and line:match '%-o' then
@@ -139,15 +140,15 @@ vim.keymap.set('n', '<leader>de', function()
       on_stderr = function(_, data)
         if data then
           for _, d in ipairs(data) do
-            print('Error: ' .. d)
+            print(cmd .. 'Error: ' .. d)
           end
         end
       end,
       on_exit = function(_, exit_code)
         if exit_code ~= 0 then
-          print('Async command failed with exit code: ' .. exit_code)
+          print(cmd .. 'Async command failed with exit code: ' .. exit_code)
         else
-          print 'Async command executed successfully'
+          print(cmd .. 'Async command executed successfully')
         end
       end,
     })
@@ -159,15 +160,15 @@ vim.keymap.set('n', '<leader>de', function()
 
   if exit_code ~= 0 then
     if exit_code == 127 then
-      print 'Command not found'
+      print(cmd .. 'Command not found')
       return
     elseif line:match '^curl' then
       if exit_code == 7 then
-        print "curl: couldn't connect to host"
+        print(cmd .. "curl: couldn't connect to host")
         return
       end
     else
-      print('Command failed with exit code: ' .. exit_code)
+      print(cmd .. 'Command failed with exit code: ' .. exit_code)
       return
     end
   end
@@ -189,16 +190,16 @@ vim.keymap.set('n', '<leader>de', function()
       local jq_cmd = string.format('echo %s | jq', vim.fn.shellescape(body))
       local jq_result = vim.fn.system(jq_cmd)
       if vim.v.shell_error == 0 then
-        print(headers .. jq_result)
+        print(cmd .. headers .. jq_result)
       else
-        print(headers .. body)
+        print(cmd .. headers .. body)
       end
     else
       -- not json
-      print(headers .. body)
+      print(cmd .. headers .. body)
     end
   else
-    print(result)
+    print(cmd .. result)
   end
 end, { desc = 'Execute line, bash' })
 vim.keymap.set('n', '<leader>dE', function()
