@@ -17,6 +17,7 @@ return {
   require 'user.plugins.nvim-web-devicons', -- icons
   require 'user.plugins.oil', -- file explorer
   require 'user.plugins.telescope',
+  -- require 'user.plugins.snacks-picker',
   require 'user.plugins.todo-comments', -- highlight todo, notes, etc in comments
   require 'user.plugins.trouble', -- pretty diagnostics, references, telescope results, quickfix and location list
   require 'user.plugins.which-key', -- show keybinds

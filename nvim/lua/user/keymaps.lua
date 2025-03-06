@@ -60,12 +60,8 @@ vim.keymap.set('v', '<M-k>', ":m '<-2<cr>gv=gv", { desc = 'Move Up' })
 -- Buffer
 -- vim.keymap.set('n', '<S-h>', '<cmd>bprevious<cr>', { desc = 'Prev Buffer' })
 -- vim.keymap.set('n', '<S-l>', '<cmd>bnext<cr>', { desc = 'Next Buffer' })
-vim.keymap.set('n', '<S-h>', function()
-  require('user.utils').jl_buf_backward()
-end, { desc = 'Prev Buffer' })
-vim.keymap.set('n', '<S-l>', function()
-  require('user.utils').jl_buf_forward()
-end, { desc = 'Next Buffer' })
+vim.keymap.set('n', '<S-h>', function() require('user.utils').jl_buf_backward() end, { desc = 'Prev Buffer' })
+vim.keymap.set('n', '<S-l>', function() require('user.utils').jl_buf_forward() end, { desc = 'Next Buffer' })
 
 -- Tabs
 vim.keymap.set({ 'n', 'v' }, '<leader>+', '<cmd>tabnew<cr>', { desc = 'New Tab' })
@@ -73,17 +69,13 @@ vim.keymap.set({ 'i', 'n', 'v', 't' }, '<M-v>', '<cmd>tabprevious<cr>', { desc =
 vim.keymap.set({ 'i', 'n', 'v', 't' }, '<M-b>', '<cmd>tabnext<cr>', { desc = 'Next Tab' })
 vim.keymap.set({ 'i', 'n', 'v', 't' }, '<S-M-v>', function()
   local current_tab = vim.fn.tabpagenr()
-  if current_tab > 1 then
-    vim.cmd '-tabmove'
-  end
+  if current_tab > 1 then vim.cmd '-tabmove' end
 end, { desc = 'Move Tab Left' })
 
 vim.keymap.set({ 'i', 'n', 'v', 't' }, '<S-M-b>', function()
   local current_tab = vim.fn.tabpagenr()
   local total_tabs = vim.fn.tabpagenr '$'
-  if current_tab < total_tabs then
-    vim.cmd '+tabmove'
-  end
+  if current_tab < total_tabs then vim.cmd '+tabmove' end
 end, { desc = 'Move Tab Right' })
 for idx, char in ipairs { 'z', 'x', 'c' } do
   vim.keymap.set({ 'n', 'v' }, string.format('<M-%s>', char), string.format('%sgt', idx))
@@ -211,9 +203,7 @@ end, { desc = 'Execute line, bash > clipboard' })
 -- open tests/curl.sh in a split to the right
 vim.keymap.set('n', '<leader>dc', function()
   local git_root = vim.fn.systemlist('git rev-parse --show-toplevel')[1]
-  if not git_root or git_root == '' then
-    print 'Not in a git repository'
-  end
+  if not git_root or git_root == '' then print 'Not in a git repository' end
   local tests_curl = git_root .. '/tests/curl.sh'
 
   if vim.fn.filereadable(tests_curl) == 1 then
@@ -237,9 +227,12 @@ vim.keymap.set('n', '<leader>zx', ':.lua<CR>', { desc = 'Lua: Execute line' })
 vim.keymap.set('v', '<leader>zx', ':lua<CR>', { desc = 'Lua: Execute selection' })
 
 -- Leader t: Toggle
-vim.keymap.set('n', '<leader>tl', function()
-  vim.opt.colorcolumn = vim.inspect(vim.opt.colorcolumn:get()) == '{}' and { 96 } or {}
-end, { desc = 'Color Column Limits' })
+vim.keymap.set(
+  'n',
+  '<leader>tl',
+  function() vim.opt.colorcolumn = vim.inspect(vim.opt.colorcolumn:get()) == '{}' and { 96 } or {} end,
+  { desc = 'Color Column Limits' }
+)
 -- vim.keymap.set('n', '<leader>tl', function()
 --   vim.opt.colorcolumn = vim.inspect(vim.opt.colorcolumn:get()) == '{}' and { 80, 96 } or {}
 -- end, { desc = 'Color Column Limits' })

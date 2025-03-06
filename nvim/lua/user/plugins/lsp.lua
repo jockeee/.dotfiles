@@ -75,9 +75,7 @@ return {
       vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
         callback = function(event)
-          local map = function(keys, func, desc)
-            vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
-          end
+          local map = function(keys, func, desc) vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc }) end
 
           -- This is not Goto Definition, this is Goto Declaration.
           --  For example, in C this would take you to the header
@@ -123,9 +121,12 @@ return {
           -- FROM https://github.com/neovim/nvim-lspconfig
           vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, { buffer = event.buf, desc = 'LSP: ' .. 'Add workspace folder' })
           vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, { buffer = event.buf, desc = 'LSP: ' .. 'Remove workspace folder' })
-          vim.keymap.set('n', '<leader>wl', function()
-            print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-          end, { buffer = event.buf, desc = 'LSP: ' .. 'List workspace folders' })
+          vim.keymap.set(
+            'n',
+            '<leader>wl',
+            function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end,
+            { buffer = event.buf, desc = 'LSP: ' .. 'List workspace folders' }
+          )
 
           -- Execute a code action, usually your cursor needs to be on top of an error
           -- or a suggestion from your LSP for this to activate.
@@ -182,9 +183,7 @@ return {
           -- code, if the language server you are using supports them.
           -- This may be unwanted, since they displace some of your code.
           if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
-            map('<leader>th', function()
-              vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
-            end, 'Inlay Hints')
+            map('<leader>th', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf }) end, 'Inlay Hints')
           end
 
           -- Use trouble
@@ -258,9 +257,8 @@ return {
               },
               diagnostics = {
                 globals = { 'vim' },
+                disable = { 'missing-fields' }, -- Ignore Lua_LS's noisy `missing-fields` warnings
               },
-              -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-              -- diagnostics = { disable = { 'missing-fields' } },
             },
           },
         },

@@ -211,11 +211,16 @@ return {
     vim.keymap.set('n', '<leader>/', builtin.current_buffer_fuzzy_find, { desc = 'Find in current buffer' })
 
     -- Find nvim config files
-    vim.keymap.set('n', '<leader>fn', function()
-      require('telescope.builtin').find_files {
-        cwd = vim.fn.stdpath 'config',
-      }
-    end, { desc = 'nvim' })
+    vim.keymap.set(
+      'n',
+      '<leader>fn',
+      function()
+        require('telescope.builtin').find_files {
+          cwd = vim.fn.stdpath 'config',
+        }
+      end,
+      { desc = 'nvim' }
+    )
 
     -- Find lazy files
     vim.keymap.set('n', '<leader>fl', function()

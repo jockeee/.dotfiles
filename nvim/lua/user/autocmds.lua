@@ -15,26 +15,20 @@ M.startup = function()
         local package_exists
 
         -- if there are more than one window open in the current tab, do nothing (could be lazy ui)
-        if #vim.api.nvim_tabpage_list_wins(0) > 1 then
-          return
-        end
+        if #vim.api.nvim_tabpage_list_wins(0) > 1 then return end
 
         -- If an auto-session session exists for current working directory, do nothing (unless it's an empty buffer)
         package_exists, _ = pcall(require, 'auto-session')
         if package_exists then
           if require('auto-session').session_exists_for_cwd() then
             -- If there are more than an empty buffer open, do nothing
-            if vim.api.nvim_list_bufs() ~= 1 and vim.api.nvim_buf_get_name(0) ~= '' then
-              return
-            end
+            if vim.api.nvim_list_bufs() ~= 1 and vim.api.nvim_buf_get_name(0) ~= '' then return end
           end
         end
 
         -- Open telescope find_files()
         package_exists, _ = pcall(require, 'telescope.builtin')
-        if package_exists then
-          require('telescope.builtin').find_files()
-        end
+        if package_exists then require('telescope.builtin').find_files() end
       end
     end,
   })
@@ -45,9 +39,7 @@ M.highlight_yank = function()
   vim.api.nvim_create_autocmd('TextYankPost', {
     desc = 'Highlight when yanking text',
     group = vim.api.nvim_create_augroup('custom-highlight-yank', { clear = true }),
-    callback = function()
-      vim.highlight.on_yank()
-    end,
+    callback = function() vim.highlight.on_yank() end,
   })
 end
 

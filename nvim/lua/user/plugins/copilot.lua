@@ -13,9 +13,7 @@ return {
     filetypes = {
       sh = function()
         -- Disable Copilot for .env files
-        if string.match(vim.fs.basename(vim.api.nvim_buf_get_name(0)), '^%.env.*') then
-          return false
-        end
+        if string.match(vim.fs.basename(vim.api.nvim_buf_get_name(0)), '^%.env.*') then return false end
         return true
       end,
       text = false, -- Disable Copilot for text files

@@ -23,26 +23,18 @@ end
 
 M.hl_search_index_clear = function()
   local ns = vim.api.nvim_get_namespaces().search
-  if ns ~= nil then
-    vim.api.nvim_buf_clear_namespace(0, ns, 0, -1)
-  end
+  if ns ~= nil then vim.api.nvim_buf_clear_namespace(0, ns, 0, -1) end
 end
 
 -- https://github.com/kwkarlwang/bufjump.nvim/blob/master/lua/bufjump.lua
-local jumpbackward = function(num)
-  vim.cmd([[execute "normal! ]] .. tostring(num) .. [[\<c-o>"]])
-end
+local jumpbackward = function(num) vim.cmd([[execute "normal! ]] .. tostring(num) .. [[\<c-o>"]]) end
 
-local jumpforward = function(num)
-  vim.cmd([[execute "normal! ]] .. tostring(num) .. [[\<c-i>"]])
-end
+local jumpforward = function(num) vim.cmd([[execute "normal! ]] .. tostring(num) .. [[\<c-i>"]]) end
 
 M.jl_buf_backward = function()
   local getjumplist = vim.fn.getjumplist()
   local jumplist = getjumplist[1]
-  if #jumplist == 0 then
-    return
-  end
+  if #jumplist == 0 then return end
 
   -- plus one because of one index
   local i = getjumplist[2] + 1
@@ -55,17 +47,13 @@ M.jl_buf_backward = function()
     targetBufNum = jumplist[j].bufnr
   end
 
-  if targetBufNum ~= curBufNum and vim.api.nvim_buf_is_loaded(targetBufNum) then
-    jumpbackward(i - j)
-  end
+  if targetBufNum ~= curBufNum and vim.api.nvim_buf_is_loaded(targetBufNum) then jumpbackward(i - j) end
 end
 
 M.jl_buf_forward = function()
   local getjumplist = vim.fn.getjumplist()
   local jumplist = getjumplist[1]
-  if #jumplist == 0 then
-    return
-  end
+  if #jumplist == 0 then return end
 
   local i = getjumplist[2] + 1
   local j = i
@@ -81,9 +69,7 @@ M.jl_buf_forward = function()
     j = j + 1
   end
 
-  if j <= #jumplist and targetBufNum ~= curBufNum and vim.api.nvim_buf_is_loaded(targetBufNum) then
-    jumpforward(j - i)
-  end
+  if j <= #jumplist and targetBufNum ~= curBufNum and vim.api.nvim_buf_is_loaded(targetBufNum) then jumpforward(j - i) end
 end
 
 return M

@@ -26,9 +26,7 @@ return {
           show_buffer_close_icons = false,
           custom_filter = function(buf_number, buf_numbers)
             -- filter out filetypes you don't want to see
-            if vim.bo[buf_number].filetype ~= 'NvimTree' then
-              return true
-            end
+            if vim.bo[buf_number].filetype ~= 'NvimTree' then return true end
           end,
           -- offsets = {
           --   {
