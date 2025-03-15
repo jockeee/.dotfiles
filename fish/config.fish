@@ -57,13 +57,19 @@ if status is-interactive
         # "Unbind" M-v, default: edit current command in $EDITOR
         bind \ev true
 
-        # if command -q tmux-sessionizer.sh
-        #     bind \eq 'tmux-sessionizer.sh ~; commandline -f repaint'
-        #     bind \ew 'tmux-sessionizer.sh ~/.dotfiles; commandline -f repaint'
-        #     bind \ee 'tmux-sessionizer.sh dot nvim; commandline -f repaint'
-        #     bind \er 'tmux-sessionizer.sh code; commandline -f repaint'
-        #     bind \et 'tmux-sessionizer.sh pass; commandline -f repaint'
-        # end
+        # bind \eq true
+        # bind \ew true
+        # bind \ee true
+        # bind \er true
+        # bind \et true
+
+        if command -q tmux-sessionizer.sh
+            bind \eq 'tmux-sessionizer.sh ~; commandline -f repaint'
+            bind \ew 'tmux-sessionizer.sh ~/.dotfiles; commandline -f repaint'
+            bind \ee 'tmux-sessionizer.sh dot nvim; commandline -f repaint'
+            bind \er 'tmux-sessionizer.sh code; commandline -f repaint'
+            bind \et 'tmux-sessionizer.sh pass; commandline -f repaint'
+        end
     end
 
     # Alias
