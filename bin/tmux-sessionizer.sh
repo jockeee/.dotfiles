@@ -102,7 +102,7 @@ case $selected in
     session_name="home"
     ;;
 "$HOME"/.dotfiles)
-    session_name="dot"
+    session_name="dotf"
     ;;
 esac
 
