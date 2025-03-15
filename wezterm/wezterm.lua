@@ -42,6 +42,11 @@ config = {
       height = '100%',
     },
   },
+  -- Dimming of inactive panes
+  inactive_pane_hsb = {
+    saturation = 1.0, -- 1.0 = keep as-is
+    brightness = 1.0, -- 1.0 = keep as-is
+  },
 }
 
 --
@@ -60,6 +65,17 @@ config.leader = {
 config.keys = {
   -- Send C-b
   { key = 'b', mods = 'LEADER|CTRL', action = act.SendKey { key = 'b', mods = 'CTRL' } },
+
+  -- Tabs (windows)
+  { key = 'c', mods = 'LEADER', action = act.SpawnTab 'CurrentPaneDomain' },
+  { key = 'l', mods = 'LEADER', action = act.ActivateLastTab },
+  { key = 'n', mods = 'LEADER', action = act.ActivateTabRelative(1) },
+  { key = 'p', mods = 'LEADER', action = act.ActivateTabRelative(-1) },
+
+  -- Panes (splits)
+  { key = '%', mods = 'LEADER|SHIFT', action = act.SplitHorizontal { domain = 'CurrentPaneDomain' } }, -- left to right, split along horizontal line
+  { key = '"', mods = 'LEADER|SHIFT', action = act.SplitVertical { domain = 'CurrentPaneDomain' } }, -- top to bottom, split along vertical line
+  { key = 'z', mods = 'LEADER', action = act.TogglePaneZoomState },
 
   -- close pane
   -- https://wezterm.org/config/lua/config/skip_close_confirmation_for_processes_named.html
