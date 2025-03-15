@@ -248,7 +248,7 @@ return {
     -- Find Files (ivy)
     vim.keymap.set('n', '<leader>fi', function()
       local opts = require('telescope.themes').get_ivy {
-        cwd = vim.fn.stdpath 'config',
+        -- cwd = vim.fn.stdpath 'config',
       }
       require('telescope.builtin').find_files(opts)
     end, { desc = 'Files (ivy)' })
