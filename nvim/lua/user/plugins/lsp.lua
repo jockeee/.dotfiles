@@ -291,14 +291,14 @@ return {
               staticcheck = true,
               gofumpt = true,
             },
-            templateExtensions = { 'tmpl', 'gotmpl' },
+            templateExtensions = { 'tmpl' },
           },
         },
 
         -- LSP: HTML
         -- https://github.com/microsoft/vscode-html-languageservice
         html = {
-          filetypes = { 'html', 'tmpl', 'gotmpl', 'templ' },
+          filetypes = { 'html', 'template', 'templ' },
         },
 
         -- LSP: CSS, SCSS & LESS
