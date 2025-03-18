@@ -3,6 +3,9 @@
 -- Floating toggle-able terminal | TJ
 -- https://www.youtube.com/watch?v=5PIiKDES_wc
 
+local width_ratio = 0.88
+local height_ratio = 0.74
+
 local state = {
   floating = {
     buf = -1,
@@ -14,8 +17,8 @@ local state = {
 
 local function create_floating_window(opts)
   opts = opts or {}
-  local width = opts.width or math.floor(vim.o.columns * 0.8)
-  local height = opts.height or math.floor(vim.o.lines * 0.8)
+  local width = opts.width or math.floor(vim.o.columns * width_ratio)
+  local height = opts.height or math.floor(vim.o.lines * height_ratio)
 
   -- Calculate the position to center the window
   local col = math.floor((vim.o.columns - width) / 2)
