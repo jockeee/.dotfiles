@@ -38,6 +38,7 @@ return {
     },
   },
   opts = {
+    auto_jump = true, -- auto jump to the item when there's only one
     focus = true, -- Focus the window when opened
   },
 }
