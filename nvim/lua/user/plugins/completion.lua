@@ -132,8 +132,6 @@ return {
             score_offset = 100,
           },
         },
-        -- Disable cmdline completions
-        -- cmdline = {},
       },
     },
     opts_extend = { 'sources.default' },
