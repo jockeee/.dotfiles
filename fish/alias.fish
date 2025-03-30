@@ -1,5 +1,5 @@
 # .
-# VERSION 28
+# VERSION 29
 
 ##
 ## Environment
@@ -25,6 +25,7 @@ alias l 'ls -l'
 alias la 'ls -lA'
 alias ld 'ls -ld'
 alias laa 'ls -la'
+alias lag 'ls -lA --group-directories-first'
 alias laz 'ls -laZ'
 alias ladz 'ls -ladZ'
 alias lazd 'ls -ladZ'
@@ -417,6 +418,457 @@ function upd_npm_packages -d 'npm update global packages'
         sudo /usr/local/bin/npm update
         echo
     end
+end
+
+function upd_nvim_release -d 'nvim (release)'
+    if command -q ~/.build/nvim/bin/nvim
+        echo -e '\e[1mUpdating nvim (release)\e[0m'
+        echo -e '\e[3mhttps://github.com/neovim/neovim\e[0m'
+        echo
+
+        for cmd in ninja-build cmake gcc make unzip gettext curl
+            if not command -q $cmd
+                echo "Error: '$cmd' not found"
+                return 1
+            end
+        end
+
+        # download json
+        # set json (gh api /repos/neovim/neovim/releases/latest)
+        set json (curl -sL https://api.github.com/repos/neovim/neovim/releases/latest)
+
+        if test $status -ne 0
+            echo "Error: Couldn't retrieve JSON response from 'https://api.github.com/repos/neovim/neovim/releases/latest'"
+            return 1
+        end
+
+        set current_version (nvim --version | grep 'NVIM' | awk '{print $2}')
+        set latest_version (echo $json | jq -r '.tag_name')
+
+        set current_major (echo $current_version | sed 's/v//' | cut -d- -f1 | cut -d. -f1) # cut on -, if we have a pre-release version installed
+        set current_minor (echo $current_version | sed 's/v//' | cut -d- -f1 | cut -d. -f2)
+        set current_patch (echo $current_version | sed 's/v//' | cut -d- -f1 | cut -d. -f3)
+
+        set latest_major (echo $latest_version | sed 's/v//' | cut -d- -f1 | cut -d. -f1)
+        set latest_minor (echo $latest_version | sed 's/v//' | cut -d- -f1 | cut -d. -f2)
+        set latest_patch (echo $latest_version | sed 's/v//' | cut -d- -f1 | cut -d. -f3)
+
+        set need_update 0
+        if test $current_major -lt $latest_major
+            set need_update 1
+        else if test $current_major -eq $latest_major
+            if test $current_minor -lt $latest_minor
+                set need_update 1
+            else if test $current_minor -eq $latest_minor
+                if test $current_patch -lt $latest_patch
+                    set need_update 1
+                end
+            end
+        end
+
+        if test $need_update -eq 1
+            echo "Update available: $current_version -> $latest_version"
+            echo
+
+            # read -P "Do you want to update? [y/N]: " continue
+            # if test $continue != "y" -a $continue != "Y"
+            #   return 0
+            # end
+            # echo
+
+            set tarball_url (echo $json | jq -r '.tarball_url')
+
+            if test -z "$tarball_url"
+                echo "Error: Couldn't find the tarball URL in the JSON response"
+                return 1
+            end
+
+            # "security check" aka https, github.com and repo neovim/neovim
+            if not test (echo $tarball_url | cut -c1-42) = "https://api.github.com/repos/neovim/neovim"
+                echo "Error: Unexpected tarball URL"
+                echo "URL: $tarball_url"
+                echo "Expected: https://api.github.com/repos/neovim/neovim ..."
+                return 1
+            end
+
+            # temp file
+            set temp_file (mktemp)
+
+            # download tarball of latest release
+            curl -sL -o $temp_file $tarball_url
+
+            if test $status -ne 0
+                echo "Error: Download failed"
+                if test -e $temp_file
+                    rm $temp_file
+                end
+                return 1
+            end
+
+            if not test -e $temp_file
+                echo "Error: Couldn't find the downloaded archive"
+                return 1
+            end
+
+            set build_dir ~/.build/neovim
+            set install_dir ~/.build/nvim
+
+            # backup
+            if test -e $install_dir
+                # while backup dir exists, keep adding -N
+                set backup_dir ~/.build/nvim-working-$(date +%F)
+                set backup_count 1
+                while test -e $backup_dir
+                    set backup_dir ~/.build/nvim-working-$(date +%F)-$backup_count
+                    set backup_count (math $backup_count + 1)
+                end
+
+                mv $install_dir $backup_dir
+                echo "Info: Backup available at $backup_dir"
+                echo
+            end
+
+            # remove old build
+            if test -e $build_dir
+                rm -rf $build_dir
+            end
+
+            # extract
+            mkdir -p $build_dir
+            sudo tar -C $build_dir -xf $temp_file
+
+            if test $status -ne 0
+                echo "Error: Archive extraction failed"
+                sudo rm -rf /usr/local/go
+                rm $temp_file
+                return 1
+            end
+
+            rm $temp_file
+
+            # remember current CWD
+            set user_cwd $PWD
+
+            # build
+            set build_dir (ls -d $build_dir/*) # get the extracted directory inside build_dir, something like neovim-neovim-xxxxxxx
+            cd $build_dir
+            make CMAKE_BUILD_TYPE=RelWithDebInfo
+            if test $status -ne 0
+                echo "Error: Couldn't build neovim"
+                if test -n "$backup_dir"
+                    echo "Info: Backup available at $backup_dir"
+                end
+                return 1
+            end
+
+            # install
+            make install CMAKE_INSTALL_PREFIX=$install_dir
+
+            # create symling in ~/.local/bin if it doesn't exist
+            if not test -e ~/.local/bin/nvim
+                mkdir -p ~/.local/bin
+                ln -s $install_dir/bin/nvim ~/.local/bin/nvim
+            end
+
+            # restore CWD
+            cd $user_cwd
+        else
+            echo "No update available"
+        end
+
+        echo
+        echo "nvim version: $(nvim --version | grep 'NVIM' | awk '{print $2}')"
+        echo
+    end
+end
+
+function install_nvim_release -d 'nvim (release)'
+    echo -e '\e[1mInstalling nvim (release)\e[0m'
+    echo -e '\e[3mhttps://github.com/neovim/neovim\e[0m'
+    echo
+
+    for cmd in ninja-build cmake gcc make unzip gettext curl
+        if not command -q $cmd
+            echo "Error: '$cmd' not found"
+            return 1
+        end
+    end
+
+    # download json
+    # set json (gh api /repos/neovim/neovim/releases/latest)
+    set json (curl -sL https://api.github.com/repos/neovim/neovim/releases/latest)
+
+    if test $status -ne 0
+        echo "Error: Couldn't retrieve JSON response from 'https://api.github.com/repos/neovim/neovim/releases/latest'"
+        return 1
+    end
+
+    set tarball_url (echo $json | jq -r '.tarball_url')
+
+    if test -z "$tarball_url"
+        echo "Error: Couldn't find the tarball URL in the JSON response"
+        return 1
+    end
+
+    # "security check" aka https, github.com and repo neovim/neovim
+    if not test (echo $tarball_url | cut -c1-42) = "https://api.github.com/repos/neovim/neovim"
+        echo "Error: Unexpected tarball URL"
+        echo "URL: $tarball_url"
+        echo "Expected: https://api.github.com/repos/neovim/neovim ..."
+        return 1
+    end
+
+    # temp file
+    set temp_file (mktemp)
+
+    # download tarball of latest release
+    curl -sL -o $temp_file $tarball_url
+
+    if test $status -ne 0
+        echo "Error: Download failed"
+        if test -e $temp_file
+            rm $temp_file
+        end
+        return 1
+    end
+
+    if not test -e $temp_file
+        echo "Error: Couldn't find the downloaded archive"
+        return 1
+    end
+
+    set build_dir ~/.build/neovim
+    set install_dir ~/.build/nvim
+
+    # backup
+    if test -e $install_dir
+        # while backup dir exists, keep adding -N
+        set backup_dir ~/.build/nvim-working-$(date +%F)
+        set backup_count 1
+        while test -e $backup_dir
+            set backup_dir ~/.build/nvim-working-$(date +%F)-$backup_count
+            set backup_count (math $backup_count + 1)
+        end
+
+        mv $install_dir $backup_dir
+        echo "Info: Backup available at $backup_dir"
+        echo
+    end
+
+    # remove old build
+    if test -e $build_dir
+        rm -rf $build_dir
+    end
+
+    # extract
+    mkdir -p $build_dir
+    tar -C $build_dir -xf $temp_file
+
+    if test $status -ne 0
+        echo "Error: Archive extraction failed"
+        sudo rm -rf /usr/local/go
+        rm $temp_file
+        return 1
+    end
+
+    rm $temp_file
+
+    # remember current CWD
+    set user_cwd $PWD
+
+    # build
+    set build_dir (ls -d $build_dir/*) # get the extracted directory inside build_dir, something like neovim-neovim-xxxxxxx
+    cd $build_dir
+    make CMAKE_BUILD_TYPE=RelWithDebInfo
+    if test $status -ne 0
+        echo "Error: Couldn't build neovim"
+        if test -n "$backup_dir"
+            echo "Info: Backup available at $backup_dir"
+        end
+        return 1
+    end
+
+    # install
+    make install CMAKE_INSTALL_PREFIX=$install_dir
+
+    # create symling in ~/.local/bin if it doesn't exist
+    if not test -e ~/.local/bin/nvim
+        mkdir -p ~/.local/bin
+        ln -s $install_dir/bin/nvim ~/.local/bin/nvim
+    end
+
+    # restore CWD
+    cd $user_cwd
+
+    echo
+    echo "nvim version: $(nvim --version | grep 'NVIM' | awk '{print $2}')"
+    echo
+end
+
+# below not battle tested, for reference
+# function upd_nvim_release_branch -d 'nvim (release branch, i.e release-0.11)'
+#     if command -q ~/.build/nvim/bin/nvim
+#         echo -e '\e[1mUpdating nvim\e[0m'
+#         echo -e '\e[3mhttps://github.com/neovim/neovim\e[0m'
+#         echo -e '\e[3mPrerequisites: ninja-build cmake gcc make unzip gettext curl glibc-gconv-extra\e[0m'
+#         echo
+#
+#         for cmd in ninja-build cmake gcc make unzip gettext curl
+#             if not command -q $cmd
+#                 echo "Error: '$cmd' not found"
+#                 return 1
+#             end
+#         end
+#
+#         # download json, get latest release tag
+#         # set json (gh api /repos/neovim/neovim/releases/latest)
+#         set json (curl -s -L https://api.github.com/repos/neovim/neovim/releases/latest)
+#
+#         if test $status -ne 0
+#             echo "Error: Couldn't retrieve JSON response from 'https://api.github.com/repos/neovim/neovim/releases/latest'"
+#             return 1
+#         end
+#
+#         set latest_release_tag (echo $json | jq -r '.tag_name')
+#         set latest_major (echo $latest_release_tag | sed 's/v//' | cut -d- -f1 | cut -d. -f1)
+#         set latest_minor (echo $latest_release_tag | sed 's/v//' | cut -d- -f1 | cut -d. -f2)
+#
+#         # https://github.com/neovim/neovim/branches
+#         set branch_name "release-$latest_major.$latest_minor"
+#
+#         set build_dir ~/.build/neovim
+#         set install_dir ~/.build/nvim
+#
+#         # backup
+#         if test -e $install_dir
+#             # while backup dir exists, keep adding -N
+#             set backup_dir ~/.build/nvim-working-$(date +%F)
+#             set backup_count 1
+#             while test -e $backup_dir
+#                 set backup_dir ~/.build/nvim-working-$(date +%F)-$backup_count
+#                 set backup_count (math $backup_count + 1)
+#             end
+#
+#             mv $install_dir $backup_dir
+#             echo "Info: Backup available at $backup_dir"
+#             echo
+#         end
+#
+#         # remove old build
+#         if test -e $build_dir
+#             rm -rf $build_dir
+#         end
+#
+#         # clone
+#         git clone https://github.com/neovim/neovim --depth 1 --branch $branch_name $build_dir
+#         if test $status -ne 0
+#             echo "Error: Couldn't clone neovim"
+#             if test -n "$backup_dir"
+#                 echo "Info: Backup available at $backup_dir"
+#             end
+#             return 1
+#         end
+#
+#         # build
+#         cd $build_dir
+#         make CMAKE_BUILD_TYPE=RelWithDebInfo
+#         if test $status -ne 0
+#             echo "Error: Couldn't build neovim"
+#             if test -n "$backup_dir"
+#                 echo "Info: Backup available at $backup_dir"
+#             end
+#             return 1
+#         end
+#
+#         # install
+#         make install CMAKE_INSTALL_PREFIX=$install_dir
+#
+#         # create symling in ~/.local/bin if it doesn't exist
+#         if not test -e ~/.local/bin/nvim
+#             mkdir -p ~/.local/bin
+#             ln -s $install_dir/bin/nvim ~/.local/bin/nvim
+#         end
+#
+#         echo
+#         echo "nvim version: $(nvim --version | grep 'NVIM' | awk '{print $2}')"
+#         echo
+#     end
+# end
+
+function install_nvim_nightly -d 'nvim (nightly)'
+    echo -e '\e[1mInstalling nvim (nightly)\e[0m'
+    echo -e '\e[3mhttps://github.com/neovim/neovim\e[0m'
+    echo
+
+    for cmd in ninja-build cmake gcc make unzip gettext curl
+        if not command -q $cmd
+            echo "Error: '$cmd' not found"
+            return 1
+        end
+    end
+
+    set build_dir ~/.build/neovim
+    set install_dir ~/.build/nvim
+
+    # backup
+    if test -e $install_dir
+        # while backup dir exists, keep adding -N
+        set backup_dir ~/.build/nvim-working-$(date +%F)
+        set backup_count 1
+        while test -e $backup_dir
+            set backup_dir ~/.build/nvim-working-$(date +%F)-$backup_count
+            set backup_count (math $backup_count + 1)
+        end
+
+        mv $install_dir $backup_dir
+        echo "Info: Backup available at $backup_dir"
+        echo
+    end
+
+    # remove old build
+    if test -e $build_dir
+        rm -rf $build_dir
+    end
+
+    # clone
+    git clone https://github.com/neovim/neovim --depth 1 $build_dir
+    if test $status -ne 0
+        echo "Error: Couldn't clone neovim"
+        if test -n "$backup_dir"
+            echo "Info: Backup available at $backup_dir"
+        end
+        return 1
+    end
+
+    # remember current CWD
+    set user_cwd $PWD
+
+    # build
+    cd $build_dir
+    make CMAKE_BUILD_TYPE=RelWithDebInfo
+    if test $status -ne 0
+        echo "Error: Couldn't build neovim"
+        if test -n "$backup_dir"
+            echo "Info: Backup available at $backup_dir"
+        end
+        return 1
+    end
+
+    # install
+    make install CMAKE_INSTALL_PREFIX=$install_dir
+
+    # create symling in ~/.local/bin if it doesn't exist
+    if not test -e ~/.local/bin/nvim
+        mkdir -p ~/.local/bin
+        ln -s $install_dir/bin/nvim ~/.local/bin/nvim
+    end
+
+    # restore CWD
+    cd $user_cwd
+
+    echo
+    echo "nvim version: $(nvim --version | grep 'NVIM' | awk '{print $2}')"
+    echo
 end
 
 function upd_go -d 'golang update'
