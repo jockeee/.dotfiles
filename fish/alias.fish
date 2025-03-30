@@ -539,7 +539,7 @@ function upd_nvim_release -d 'nvim (release)'
 
             if test $status -ne 0
                 echo "Error: Archive extraction failed"
-                sudo rm -rf /usr/local/go
+                sudo rm -rf $build_dir
                 rm $temp_file
                 return 1
             end
