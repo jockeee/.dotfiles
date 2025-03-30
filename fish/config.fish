@@ -54,14 +54,14 @@ if status is-interactive
     end
 
     function fish_user_key_bindings
-        # "Unbind" M-v, default: edit current command in $EDITOR
-        bind \ev true
+        bind \ev true # "Unbind" M-v, default: edit current command in $EDITOR
 
-        # bind \eq true
-        # bind \ew true
-        # bind \ee true
-        # bind \er true
-        # bind \et true
+        # When using wezterm without tmux, keybinds defined in wezterm
+        # bind --erase \eq
+        # bind --erase \ew
+        # bind --erase \ee
+        # bind --erase \er
+        # bind --erase \et
 
         if command -q tmux-sessionizer.sh
             bind \eq 'tmux-sessionizer.sh ~; commandline -f repaint'
