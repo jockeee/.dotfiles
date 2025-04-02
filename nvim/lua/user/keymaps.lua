@@ -19,6 +19,14 @@ vim.keymap.set({ 'n', 'v', 't' }, '`', '<cmd>Floaterminal<cr>', { desc = 'Toggle
 -- Yank with right mouse button
 vim.keymap.set('v', '<RightMouse>', 'y', { desc = 'Yank' })
 
+-- Yank current line without line breaks
+vim.keymap.set('n', 'yl', function()
+  local line = vim.fn.getline '.'
+  line = line:gsub('\n', '') -- remove line breaks
+  line = line:gsub('^%s*(.-)%s*$', '%1') -- remove leading/trailing whitespace
+  vim.fn.setreg('+', line)
+end, { desc = 'Yank Line, content only' })
+
 -- Save file
 vim.keymap.set({ 'n', 'v' }, '<C-w><C-w>', '<cmd>w<cr>', { desc = 'Save File' })
 
