@@ -16,16 +16,10 @@ end)
 vim.keymap.set('t', '<esc>', '<C-\\><C-n>', { desc = 'Exit Terminal Mode' })
 vim.keymap.set({ 'n', 'v', 't' }, '`', '<cmd>Floaterminal<cr>', { desc = 'Toggle Floaterminal' })
 
--- Yank with right mouse button
-vim.keymap.set('v', '<RightMouse>', 'y', { desc = 'Yank' })
-
--- Yank current line without line breaks
-vim.keymap.set('n', 'yl', function()
-  local line = vim.fn.getline '.'
-  line = line:gsub('\n', '') -- remove line breaks
-  line = line:gsub('^%s*(.-)%s*$', '%1') -- remove leading/trailing whitespace
-  vim.fn.setreg('+', line)
-end, { desc = 'Yank Line, content only' })
+-- Yank
+vim.keymap.set('v', '<RightMouse>', 'y', { desc = 'Yank' }) -- Yank with right mouse button
+vim.keymap.set('n', 'yc', '^vg_y', { desc = 'Yank Line Content' })
+vim.keymap.set('n', 'yl', '^vg_y', { desc = 'Yank Line Content' })
 
 -- Save file
 vim.keymap.set({ 'n', 'v' }, '<C-w><C-w>', '<cmd>w<cr>', { desc = 'Save File' })
