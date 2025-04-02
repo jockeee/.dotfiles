@@ -28,7 +28,7 @@ return {
       completion = {
         -- 'prefix' will fuzzy match on the text before the cursor
         -- 'full' will fuzzy match on the text before and after the cursor
-        keyword = { range = 'full' },
+        keyword = { range = 'prefix' }, -- default: 'prefix'
 
         -- Show documentation when selecting a completion item
         documentation = { auto_show = true, auto_show_delay_ms = 500 },
