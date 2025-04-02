@@ -57,6 +57,7 @@ return {
         -- 'aerial',
       },
       lualine_x = {
+        'aerial',
         { 'copilot', show_colors = false },
         'encoding',
         'fileformat',
@@ -83,6 +84,7 @@ return {
         'diagnostics',
       },
       lualine_x = {
+        'aerial',
         { 'copilot', show_colors = false },
         'encoding',
         'fileformat',
