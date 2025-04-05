@@ -113,6 +113,15 @@ if command -q batcat
 end
 
 abbr --add n npm
+abbr --add nx npx
+
+if command -q pnpm
+    abbr --add n pnpm
+    abbr --add nx pnpx
+    abbr --add npm pnpm
+    abbr --add npx pnpx
+end
+
 
 ##
 ## Functions
