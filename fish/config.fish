@@ -1,5 +1,5 @@
 # .
-# VERSION 29
+# VERSION 30
 
 # Set fish_greeting to empty = not showing
 set -g fish_greeting
