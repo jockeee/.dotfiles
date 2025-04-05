@@ -295,20 +295,21 @@ return {
           },
         },
 
-        -- LSP: HTML
-        -- https://github.com/microsoft/vscode-html-languageservice
+        -- HTML
+        -- LSP: https://github.com/microsoft/vscode-html-languageservice
         html = {
           filetypes = { 'html', 'template', 'templ' },
         },
 
-        -- LSP: CSS, SCSS & LESS
-        -- https://github.com/microsoft/vscode-css-languageservice
+        -- CSS
+        -- css preposessors: sass, less, scss
+        -- LSP: https://github.com/microsoft/vscode-css-languageservice
         cssls = {},
 
-        -- LSP: Emmet
+        -- Emmet
         -- https://github.com/aca/emmet-ls
         emmet_ls = {
-          filetypes = { 'css', 'eruby', 'html', 'javascript', 'javascriptreact', 'less', 'sass', 'scss', 'svelte', 'pug', 'typescriptreact', 'vue' },
+          filetypes = { 'html', 'css', 'javascript' },
           init_options = {
             html = {
               options = {
@@ -318,6 +319,14 @@ return {
             },
           },
         },
+
+        -- Tailwind
+        tailwindcss = {
+          filetypes = { 'html', 'javascript' },
+        },
+
+        -- PHP
+        intelephense = {},
       }
 
       require('mason').setup()
