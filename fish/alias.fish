@@ -913,7 +913,7 @@ function build_nvim_release -d 'nvim (release)'
     echo -e '\e[3mhttps://github.com/neovim/neovim\e[0m'
     echo
 
-    for cmd in ninja-build cmake gcc make unzip gettext curl
+    for cmd in ninja cmake gcc make unzip gettext curl
         if not command -q $cmd
             echo "Error: '$cmd' not found"
             return 1
