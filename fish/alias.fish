@@ -479,11 +479,11 @@ function upd_nvim_release -d 'nvim (release)'
             echo "Update available: $current_version -> $latest_version"
             echo
 
-            # read -P "Do you want to update? [y/N]: " continue
-            # if test $continue != "y" -a $continue != "Y"
-            #   return 0
-            # end
-            # echo
+            read -P "Do you want to update? [y/N]: " continue
+            if test $continue != y -a $continue != Y
+                return 0
+            end
+            echo
 
             set tarball_url (echo $json | jq -r '.tarball_url')
 
@@ -589,6 +589,323 @@ function upd_nvim_release -d 'nvim (release)'
         echo "nvim version: $(nvim --version | grep 'NVIM' | awk '{print $2}')"
         echo
     end
+end
+
+function upd_go -d 'golang update'
+    # example download url: https://go.dev/dl/go1.22.3.linux-amd64.tar.gz
+    if command -q /usr/local/go/bin/go
+        echo -e '\e[1mUpdating golang\e[0m'
+        echo -e '\e[3mhttps://go.dev/dl\e[0m'
+        echo
+
+        for cmd in curl jq sha256sum tar
+            if not command -q $cmd
+                echo "Error: '$cmd' not found"
+                return 1
+            end
+        end
+
+        set os (uname -s | tr '[:upper:]' '[:lower:]')
+        set arch (uname -m)
+        if test $arch = x86_64
+            set arch amd64
+        end
+        set kind archive
+        set download_url_base 'https://go.dev/dl/'
+
+        # download json
+        # json=$(curl -s https://go.dev/dl/?mode=json)
+        # json=$(wget -qO- https://go.dev/dl/?mode=json)
+        set json (curl -s 'https://go.dev/dl/?mode=json')
+
+        if test $status -ne 0
+            echo "Error: Couldn't retrieve JSON response from 'https://go.dev/dl/?mode=json'"
+            return 1
+        end
+
+        set current_go_version (/usr/local/go/bin/go version | awk '{print $3}')
+        set latest_go_version (echo $json | jq -r '.[0].version')
+
+        set current_major (echo $current_go_version | sed 's/go//' | cut -d. -f1)
+        set current_minor (echo $current_go_version | sed 's/go//' | cut -d. -f2)
+        set current_patch (echo $current_go_version | sed 's/go//' | cut -d. -f3)
+
+        set latest_major (echo $latest_go_version | sed 's/go//' | cut -d. -f1)
+        set latest_minor (echo $latest_go_version | sed 's/go//' | cut -d. -f2)
+        set latest_patch (echo $latest_go_version | sed 's/go//' | cut -d. -f3)
+
+        set need_update 0
+        if test $current_major -lt $latest_major
+            set need_update 1
+        else if test $current_major -eq $latest_major
+            if test $current_minor -lt $latest_minor
+                set need_update 1
+            else if test $current_minor -eq $latest_minor
+                if test $current_patch -lt $latest_patch
+                    set need_update 1
+                end
+            end
+        end
+
+        set selected_json (echo $json | jq -r --arg os "$os" --arg arch "$arch" --arg kind "$kind" --arg version "$latest_go_version" '.[0].files[] | select(.os == $os and .arch == $arch and .kind == $kind and .version == $version)')
+
+        if test -n "$selected_json"
+            set download_filename (echo $selected_json | jq -r '.filename')
+            set download_checksum (echo $selected_json | jq -r '.sha256')
+        else
+            echo "Error: Couldn't find the latest version for $os-$arch in the JSON response"
+            return 1
+        end
+
+        if test $need_update -eq 1
+            echo "Update available: $current_go_version -> $latest_go_version"
+            echo
+
+            # read -P "Do you want to update? [y/N]: " continue
+            # if test $continue != "y" -a $continue != "Y"
+            #   return 0
+            # end
+            # echo
+
+            # check archive type based on filename
+            switch $download_filename
+                case '*.tar*'
+                    set archive_type tar
+                case '*'
+                    echo "Error: Unknown archive type, expected a tar archive"
+                    echo "Filename: $download_filename"
+                    return 1
+            end
+
+            # temp file
+            set temp_file (mktemp)
+
+            # download go
+            # curl -L -o "$temp_file $download_url_base$download_filename"
+            # wget -q --show-progress -O "$temp_file $download_url_base$download_filename"
+            curl -L -o $temp_file "$download_url_base$download_filename"
+
+            if test $status -ne 0
+                echo "Error: Download failed"
+                if test -e $temp_file
+                    rm $temp_file
+                end
+                return 1
+            end
+
+            if not test -e $temp_file
+                echo "Error: Couldn't find the downloaded archive"
+                return 1
+            end
+
+            # verify checksum
+            set checksum (sha256sum $temp_file | cut -d' ' -f1)
+            if test $checksum != $download_checksum
+                echo "Error: Checksum verification failed"
+                rm $temp_file
+                return 1
+            end
+
+            # update
+            sudo rm -rf /usr/local/go
+            sudo tar -C /usr/local -xf $temp_file
+
+            if test $status -ne 0
+                echo "Error: Archive extraction failed"
+                sudo rm -rf /usr/local/go
+                rm $temp_file
+                return 1
+            end
+
+            rm $temp_file
+        else
+            echo "No update available"
+        end
+
+        echo
+        echo "Go version: $(/usr/local/go/bin/go version | awk '{print $3}')"
+        echo
+    end
+end
+
+function install_go -d 'golang install'
+    # example download url: https://go.dev/dl/go1.22.3.linux-amd64.tar.gz
+    echo -e '\e[1mInstalling golang\e[0m'
+    echo -e '\e[3mhttps://go.dev/dl\e[0m'
+    echo
+
+    for cmd in curl jq sha256sum tar
+        if not command -q $cmd
+            echo "Error: '$cmd' not found"
+            return 1
+        end
+    end
+
+    set os (uname -s | tr '[:upper:]' '[:lower:]')
+    set arch (uname -m)
+    if test $arch = x86_64
+        set arch amd64
+    end
+    set kind archive
+    set download_url_base 'https://go.dev/dl/'
+
+    # download json
+    # json=$(curl -s https://go.dev/dl/?mode=json)
+    # json=$(wget -qO- https://go.dev/dl/?mode=json)
+    set json (curl -s 'https://go.dev/dl/?mode=json')
+
+    if test $status -ne 0
+        echo "Error: Couldn't retrieve JSON response from 'https://go.dev/dl/?mode=json'"
+        return 1
+    end
+
+    set latest_go_version (echo $json | jq -r '.[0].version')
+    set selected_json (echo $json | jq -r --arg os "$os" --arg arch "$arch" --arg kind "$kind" --arg version "$latest_go_version" '.[0].files[] | select(.os == $os and .arch == $arch and .kind == $kind and .version == $version)')
+
+    if test -n "$selected_json"
+        set download_filename (echo $selected_json | jq -r '.filename')
+        set download_checksum (echo $selected_json | jq -r '.sha256')
+    else
+        echo "Error: Couldn't find the latest version for $os-$arch in the JSON response"
+        return 1
+    end
+
+    echo "Version available: $latest_go_version"
+    echo
+
+    read -P "Do you want to install Go? [y/N]: " continue
+    if test $continue != y -a $continue != Y
+        return 0
+    end
+    echo
+
+    # check archive type based on filename
+    switch $download_filename
+        case '*.tar*'
+            set archive_type tar
+        case '*'
+            echo "Error: Unknown archive type, expected a tar archive"
+            echo "Filename: $download_filename"
+            return 1
+    end
+
+    # temp file
+    set temp_file (mktemp)
+
+    # download go
+    # curl -L -o "$temp_file $download_url_base$download_filename"
+    # wget -q --show-progress -O "$temp_file $download_url_base$download_filename"
+    curl -L -o $temp_file "$download_url_base$download_filename"
+
+    if test $status -ne 0
+        echo "Error: Download failed"
+        if test -e $temp_file
+            rm $temp_file
+        end
+        return 1
+    end
+
+    if not test -e $temp_file
+        echo "Error: Couldn't find the downloaded archive"
+        return 1
+    end
+
+    # verify checksum
+    set checksum (sha256sum $temp_file | cut -d' ' -f1)
+    if test $checksum != $download_checksum
+        echo "Error: Checksum verification failed"
+        rm $temp_file
+        return 1
+    end
+
+    # install
+    sudo rm -rf /usr/local/go
+    sudo tar -C /usr/local -xf $temp_file
+
+    if test $status -ne 0
+        echo "Error: Archive extraction failed"
+        sudo rm -rf /usr/local/go
+        rm $temp_file
+        return 1
+    end
+
+    rm $temp_file
+
+    echo
+    echo "Go version: $(/usr/local/go/bin/go version | awk '{print $3}')"
+    echo
+end
+
+function install_fzf -d 'Install fzf release'
+    echo -e '\e[1mInstalling fzf\e[0m'
+    echo -e '\e[3mhttps://github.com/junegunn/fzf\e[0m'
+    echo
+
+    set repo junegunn/fzf
+
+    # download json
+    # set json (gh api /repos/neovim/neovim/releases/latest)
+    set json (curl -sL https://api.github.com/repos/$repo/releases/latest)
+
+    if test $status -ne 0
+        echo "Error: Couldn't retrieve JSON response from 'https://api.github.com/repos/$repo/releases/latest'"
+        return 1
+    end
+
+    set tarball_url (echo $json | jq -r '.tarball_url')
+
+    if test -z "$tarball_url"
+        echo "Error: Couldn't find the tarball URL in the JSON response"
+        return 1
+    end
+
+    # "security check" aka https, github.com and same repo
+    if not test (echo $tarball_url | cut -c1-42) = "https://api.github.com/repos/$repo"
+        echo "Error: Unexpected tarball URL"
+        echo "URL: $tarball_url"
+        echo "Expected: https://api.github.com/repos/$repo ..."
+        return 1
+    end
+
+    # temp file
+    set temp_file (mktemp)
+
+    # download tarball of latest release
+    curl -sL -o $temp_file $tarball_url
+
+    if test $status -ne 0
+        echo "Error: Download failed"
+        if test -e $temp_file
+            rm $temp_file
+        end
+        return 1
+    end
+
+    if not test -e $temp_file
+        echo "Error: Couldn't find the downloaded archive"
+        return 1
+    end
+
+    # remove old binary
+    if test -e /usr/local/bin/fzf
+        sudo rm -rf /usr/local/bin/fzf
+    end
+
+    # extract
+    tar -C /usr/local/bin -xf $temp_file
+
+    if test $status -ne 0
+        echo "Error: Archive extraction failed"
+        sudo rm -rf /usr/local/fzf
+        rm $temp_file
+        return 1
+    end
+
+    rm $temp_file
+
+    echo
+    echo "fzf version: $(fzf --version)"
+    echo
 end
 
 function install_nvim_release -d 'nvim (release)'
@@ -877,254 +1194,5 @@ function install_nvim_nightly -d 'nvim (nightly)'
 
     echo
     echo "nvim version: $(nvim --version | grep 'NVIM' | awk '{print $2}')"
-    echo
-end
-
-function upd_go -d 'golang update'
-    # example download url: https://go.dev/dl/go1.22.3.linux-amd64.tar.gz
-    if command -q /usr/local/go/bin/go
-        echo -e '\e[1mUpdating golang\e[0m'
-        echo -e '\e[3mhttps://go.dev/dl\e[0m'
-        echo
-
-        for cmd in curl jq sha256sum tar
-            if not command -q $cmd
-                echo "Error: '$cmd' not found"
-                return 1
-            end
-        end
-
-        set os (uname -s | tr '[:upper:]' '[:lower:]')
-        set arch (uname -m)
-        if test $arch = x86_64
-            set arch amd64
-        end
-        set kind archive
-        set download_url_base 'https://go.dev/dl/'
-
-        # download json
-        # go_dev_json=$(curl -s https://go.dev/dl/?mode=json)
-        # go_dev_json=$(wget -qO- https://go.dev/dl/?mode=json)
-        set go_dev_json (curl -s 'https://go.dev/dl/?mode=json')
-
-        if test $status -ne 0
-            echo "Error: Couldn't retrieve JSON response from 'https://go.dev/dl/?mode=json'"
-            return 1
-        end
-
-        set current_go_version (/usr/local/go/bin/go version | awk '{print $3}')
-        set latest_go_version (echo $go_dev_json | jq -r '.[0].version')
-
-        set current_major (echo $current_go_version | sed 's/go//' | cut -d. -f1)
-        set current_minor (echo $current_go_version | sed 's/go//' | cut -d. -f2)
-        set current_patch (echo $current_go_version | sed 's/go//' | cut -d. -f3)
-
-        set latest_major (echo $latest_go_version | sed 's/go//' | cut -d. -f1)
-        set latest_minor (echo $latest_go_version | sed 's/go//' | cut -d. -f2)
-        set latest_patch (echo $latest_go_version | sed 's/go//' | cut -d. -f3)
-
-        set need_update 0
-        if test $current_major -lt $latest_major
-            set need_update 1
-        else if test $current_major -eq $latest_major
-            if test $current_minor -lt $latest_minor
-                set need_update 1
-            else if test $current_minor -eq $latest_minor
-                if test $current_patch -lt $latest_patch
-                    set need_update 1
-                end
-            end
-        end
-
-        set selected_json (echo $go_dev_json | jq -r --arg os "$os" --arg arch "$arch" --arg kind "$kind" --arg version "$latest_go_version" '.[0].files[] | select(.os == $os and .arch == $arch and .kind == $kind and .version == $version)')
-
-        if test -n "$selected_json"
-            set download_filename (echo $selected_json | jq -r '.filename')
-            set download_checksum (echo $selected_json | jq -r '.sha256')
-        else
-            echo "Error: Couldn't find the latest version for $os-$arch in the JSON response"
-            return 1
-        end
-
-        if test $need_update -eq 1
-            echo "Update available: $current_go_version -> $latest_go_version"
-            echo
-
-            # read -P "Do you want to update? [y/N]: " continue
-            # if test $continue != "y" -a $continue != "Y"
-            #   return 0
-            # end
-            # echo
-
-            # check archive type based on filename
-            switch $download_filename
-                case '*.tar*'
-                    set archive_type tar
-                case '*'
-                    echo "Error: Unknown archive type, expected a tar archive"
-                    echo "Filename: $download_filename"
-                    return 1
-            end
-
-            # temp file
-            # Using sudo with no password to install to /usr/local/go, need consistent path
-            # set temp_file (mktemp)
-            set temp_file /tmp/tmp.golang_install
-
-            # download go
-            # curl -L -o "$temp_file $download_url_base$download_filename"
-            # wget -q --show-progress -O "$temp_file $download_url_base$download_filename"
-            curl -L -o $temp_file "$download_url_base$download_filename"
-
-            if test $status -ne 0
-                echo "Error: Download failed"
-                if test -e $temp_file
-                    rm $temp_file
-                end
-                return 1
-            end
-
-            if not test -e $temp_file
-                echo "Error: Couldn't find the downloaded archive"
-                return 1
-            end
-
-            # verify checksum
-            set checksum (sha256sum $temp_file | cut -d' ' -f1)
-            if test $checksum != $download_checksum
-                echo "Error: Checksum verification failed"
-                rm $temp_file
-                return 1
-            end
-
-            # update
-            sudo rm -rf /usr/local/go
-            sudo tar -C /usr/local -xf $temp_file
-
-            if test $status -ne 0
-                echo "Error: Archive extraction failed"
-                sudo rm -rf /usr/local/go
-                rm $temp_file
-                return 1
-            end
-
-            rm $temp_file
-        else
-            echo "No update available"
-        end
-
-        echo
-        echo "Go version: $(/usr/local/go/bin/go version | awk '{print $3}')"
-        echo
-    end
-end
-
-function install_go -d 'golang install'
-    # example download url: https://go.dev/dl/go1.22.3.linux-amd64.tar.gz
-    echo -e '\e[1mInstalling golang\e[0m'
-    echo -e '\e[3mhttps://go.dev/dl\e[0m'
-    echo
-
-    for cmd in curl jq sha256sum tar
-        if not command -q $cmd
-            echo "Error: '$cmd' not found"
-            return 1
-        end
-    end
-
-    set os (uname -s | tr '[:upper:]' '[:lower:]')
-    set arch (uname -m)
-    if test $arch = x86_64
-        set arch amd64
-    end
-    set kind archive
-    set download_url_base 'https://go.dev/dl/'
-
-    # download json
-    # go_dev_json=$(curl -s https://go.dev/dl/?mode=json)
-    # go_dev_json=$(wget -qO- https://go.dev/dl/?mode=json)
-    set go_dev_json (curl -s 'https://go.dev/dl/?mode=json')
-
-    if test $status -ne 0
-        echo "Error: Couldn't retrieve JSON response from 'https://go.dev/dl/?mode=json'"
-        return 1
-    end
-
-    set latest_go_version (echo $go_dev_json | jq -r '.[0].version')
-    set selected_json (echo $go_dev_json | jq -r --arg os "$os" --arg arch "$arch" --arg kind "$kind" --arg version "$latest_go_version" '.[0].files[] | select(.os == $os and .arch == $arch and .kind == $kind and .version == $version)')
-
-    if test -n "$selected_json"
-        set download_filename (echo $selected_json | jq -r '.filename')
-        set download_checksum (echo $selected_json | jq -r '.sha256')
-    else
-        echo "Error: Couldn't find the latest version for $os-$arch in the JSON response"
-        return 1
-    end
-
-    echo "Version available: $latest_go_version"
-    echo
-
-    read -P "Do you want to install Go? [y/N]: " continue
-    if test $continue != y -a $continue != Y
-        return 0
-    end
-    echo
-
-    # check archive type based on filename
-    switch $download_filename
-        case '*.tar*'
-            set archive_type tar
-        case '*'
-            echo "Error: Unknown archive type, expected a tar archive"
-            echo "Filename: $download_filename"
-            return 1
-    end
-
-    # temp file
-    # Using sudo with no password to install to /usr/local/go, need consistent path
-    # set temp_file (mktemp)
-    set temp_file /tmp/tmp.golang_install
-
-    # download go
-    # curl -L -o "$temp_file $download_url_base$download_filename"
-    # wget -q --show-progress -O "$temp_file $download_url_base$download_filename"
-    curl -L -o $temp_file "$download_url_base$download_filename"
-
-    if test $status -ne 0
-        echo "Error: Download failed"
-        if test -e $temp_file
-            rm $temp_file
-        end
-        return 1
-    end
-
-    if not test -e $temp_file
-        echo "Error: Couldn't find the downloaded archive"
-        return 1
-    end
-
-    # verify checksum
-    set checksum (sha256sum $temp_file | cut -d' ' -f1)
-    if test $checksum != $download_checksum
-        echo "Error: Checksum verification failed"
-        rm $temp_file
-        return 1
-    end
-
-    # install
-    sudo rm -rf /usr/local/go
-    sudo tar -C /usr/local -xf $temp_file
-
-    if test $status -ne 0
-        echo "Error: Archive extraction failed"
-        sudo rm -rf /usr/local/go
-        rm $temp_file
-        return 1
-    end
-
-    rm $temp_file
-
-    echo
-    echo "Go version: $(/usr/local/go/bin/go version | awk '{print $3}')"
     echo
 end
