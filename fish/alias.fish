@@ -115,7 +115,7 @@ end
 abbr --add n npm
 abbr --add nx npx
 
-if command -q pnpm
+if type -q pnpm
     abbr --add n pnpm
     abbr --add nx pnpx
     abbr --add npm pnpm
