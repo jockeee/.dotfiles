@@ -69,3 +69,10 @@ if [ -d ~/.config/eza ]; then
 else
     ln -s ~/.dotfiles/eza ~/.config/.
 fi
+
+# hidden
+if [ -f ~/.hidden ]; then
+    echo "[info]: ~/.config/hidden already exists, skipping symlink creation."
+else
+    ln -s ~/.dotfiles/.hidden ~/.
+fi
