@@ -115,11 +115,6 @@ end
 abbr --add n npm
 abbr --add nx npx
 
-# npm via nvm, and plugin jorgebucaran/nvm.fish
-if functions -q nvm
-    nvm use latest 1>/dev/null
-end
-
 if type -q pnpm
     abbr --add n pnpm
     abbr --add nx pnpx

@@ -119,9 +119,9 @@ if status is-interactive
     end
 
     # npm via nvm, and plugin jorgebucaran/nvm.fish
-    # if functions -q nvm
-    #     nvm use latest 1>/dev/null
-    # end
+    if functions -q nvm
+        nvm use latest 1>/dev/null
+    end
 
     # pnpm
     if command -q pnpm
