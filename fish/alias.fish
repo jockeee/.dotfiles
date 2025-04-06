@@ -860,7 +860,7 @@ function install_fzf -d 'Install fzf release'
     end
 
     # "security check" aka https, github.com and same repo
-    if not string match -q "^https://api.github.com/repos/$repo/*" $tarball_url
+    if not string match --quiet --regex "^https://api.github.com/repos/$repo/.*" $tarball_url
         echo "Error: Unexpected tarball URL"
         echo "URL:"
         echo "$tarball_url"
@@ -944,7 +944,7 @@ function build_nvim_release -d 'nvim (release)'
     end
 
     # "security check" aka https, github.com and same repo
-    if not string match -q "^https://api.github.com/repos/$repo/*" $tarball_url
+    if not string match --quiet --regex "^https://api.github.com/repos/$repo/.*" $tarball_url
         echo "Error: Unexpected tarball URL"
         echo "URL:"
         echo "$tarball_url"
