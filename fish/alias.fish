@@ -862,10 +862,8 @@ function install_fzf -d 'Install fzf release'
     # "security check" aka https, github.com and same repo
     if not string match --quiet --regex "^https://api.github.com/repos/$repo/.*" $tarball_url
         echo "Error: Unexpected tarball URL"
-        echo "URL:"
-        echo "$tarball_url"
-        echo "Expecpted:"
-        echo "https://api.github.com/repos/$repo/ ..."
+        echo -e "URL:\t\t$tarball_url"
+        echo -e "Expecpted:\thttps://api.github.com/repos/$repo/ ..."
         return 1
     end
 
