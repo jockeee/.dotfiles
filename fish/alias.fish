@@ -908,7 +908,7 @@ function install_fzf -d 'Install fzf release'
     echo
 end
 
-function install_nvim_release -d 'nvim (release)'
+function build_nvim_release -d 'nvim (release)'
     echo -e '\e[1mInstalling nvim (release)\e[0m'
     echo -e '\e[3mhttps://github.com/neovim/neovim\e[0m'
     echo
@@ -921,6 +921,9 @@ function install_nvim_release -d 'nvim (release)'
     end
 
     set repo neovim/neovim
+
+    set build_dir ~/.build/neovim
+    set install_dir ~/.build/nvim
 
     # download json
     # set json (gh api /repos/neovim/neovim/releases/latest)
@@ -965,9 +968,6 @@ function install_nvim_release -d 'nvim (release)'
         return 1
     end
 
-    set build_dir ~/.build/neovim
-    set install_dir ~/.build/nvim
-
     # backup
     if test -e $install_dir
         # while backup dir exists, keep adding -N
@@ -994,7 +994,7 @@ function install_nvim_release -d 'nvim (release)'
 
     if test $status -ne 0
         echo "Error: Archive extraction failed"
-        sudo rm -rf /usr/local/go
+        sudo rm -rf $build_dir
         rm $temp_file
         return 1
     end
@@ -1123,7 +1123,7 @@ end
 #     end
 # end
 
-function install_nvim_nightly -d 'nvim (nightly)'
+function build_nvim_nightly -d 'nvim (nightly)'
     echo -e '\e[1mInstalling nvim (nightly)\e[0m'
     echo -e '\e[3mhttps://github.com/neovim/neovim\e[0m'
     echo
