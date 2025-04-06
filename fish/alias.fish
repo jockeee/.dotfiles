@@ -862,8 +862,8 @@ function install_fzf -d 'Install fzf release'
     # "security check" aka https, github.com and same repo
     if not test (echo $tarball_url | grep -q "^https://api.github.com/repos/$repo")
         echo "Error: Unexpected tarball URL"
-        echo "URL: $tarball_url"
-        echo "Expected: https://api.github.com/repos/$repo ..."
+        echo "URL:\t$tarball_url"
+        echo "Expected:\thttps://api.github.com/repos/$repo ..."
         return 1
     end
 
@@ -1128,7 +1128,7 @@ function install_nvim_nightly -d 'nvim (nightly)'
     echo -e '\e[3mhttps://github.com/neovim/neovim\e[0m'
     echo
 
-    for cmd in ninja-build cmake gcc make unzip gettext curl
+    for cmd in ninja cmake gcc make unzip gettext curl
         if not command -q $cmd
             echo "Error: '$cmd' not found"
             return 1
