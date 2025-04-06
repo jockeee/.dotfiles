@@ -10,6 +10,7 @@ return {
     lazy = false,
     version = '*',
     dependencies = {
+      'saghen/blink.compat', -- optional: compatibility layer for nvim-cmp
       'rafamadriz/friendly-snippets', -- optional: provides snippets for the snippet source
     },
 
@@ -123,6 +124,7 @@ return {
       -- Remove 'buffer' if you don't want text completions, by default it's only enabled when LSP returns no items
       sources = {
         -- add lazydev to your completion providers
+        -- default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer', 'emoji' },
         default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer' },
         providers = {
           lazydev = {
@@ -131,6 +133,18 @@ return {
             -- make lazydev completions top priority (see `:h blink.cmp`)
             score_offset = 100,
           },
+          -- emoji = {
+          --   name = 'emoji',
+          --   module = 'blink.compat.source',
+          --   -- overwrite kind of suggestion
+          --   transform_items = function(ctx, items)
+          --     local kind = require('blink.cmp.types').CompletionItemKind.Text
+          --     for i = 1, #items do
+          --       items[i].kind = kind
+          --     end
+          --     return items
+          --   end,
+          -- },
         },
       },
     },
