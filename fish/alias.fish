@@ -623,16 +623,16 @@ function upd_go -d 'golang update'
             return 1
         end
 
-        set current_go_version (/usr/local/go/bin/go version | awk '{print $3}')
-        set latest_go_version (echo $json | jq -r '.[0].version')
+        set current_version (/usr/local/go/bin/go version | awk '{print $3}')
+        set latest_version (echo $json | jq -r '.[0].version')
 
-        set current_major (echo $current_go_version | sed 's/go//' | cut -d. -f1)
-        set current_minor (echo $current_go_version | sed 's/go//' | cut -d. -f2)
-        set current_patch (echo $current_go_version | sed 's/go//' | cut -d. -f3)
+        set current_major (echo $current_version | sed 's/go//' | cut -d. -f1)
+        set current_minor (echo $current_version | sed 's/go//' | cut -d. -f2)
+        set current_patch (echo $current_version | sed 's/go//' | cut -d. -f3)
 
-        set latest_major (echo $latest_go_version | sed 's/go//' | cut -d. -f1)
-        set latest_minor (echo $latest_go_version | sed 's/go//' | cut -d. -f2)
-        set latest_patch (echo $latest_go_version | sed 's/go//' | cut -d. -f3)
+        set latest_major (echo $latest_version | sed 's/go//' | cut -d. -f1)
+        set latest_minor (echo $latest_version | sed 's/go//' | cut -d. -f2)
+        set latest_patch (echo $latest_version | sed 's/go//' | cut -d. -f3)
 
         set need_update 0
         if test $current_major -lt $latest_major
@@ -647,7 +647,7 @@ function upd_go -d 'golang update'
             end
         end
 
-        set selected_json (echo $json | jq -r --arg os "$os" --arg arch "$arch" --arg kind "$kind" --arg version "$latest_go_version" '.[0].files[] | select(.os == $os and .arch == $arch and .kind == $kind and .version == $version)')
+        set selected_json (echo $json | jq -r --arg os "$os" --arg arch "$arch" --arg kind "$kind" --arg version "$latest_version" '.[0].files[] | select(.os == $os and .arch == $arch and .kind == $kind and .version == $version)')
 
         if test -n "$selected_json"
             set download_filename (echo $selected_json | jq -r '.filename')
@@ -658,7 +658,7 @@ function upd_go -d 'golang update'
         end
 
         if test $need_update -eq 1
-            echo "Update available: $current_go_version -> $latest_go_version"
+            echo "Update available: $current_version -> $latest_version"
             echo
 
             # read -P "Do you want to update? [y/N]: " continue
@@ -759,8 +759,8 @@ function install_go -d 'golang install'
         return 1
     end
 
-    set latest_go_version (echo $json | jq -r '.[0].version')
-    set selected_json (echo $json | jq -r --arg os "$os" --arg arch "$arch" --arg kind "$kind" --arg version "$latest_go_version" '.[0].files[] | select(.os == $os and .arch == $arch and .kind == $kind and .version == $version)')
+    set latest_version (echo $json | jq -r '.[0].version')
+    set selected_json (echo $json | jq -r --arg os "$os" --arg arch "$arch" --arg kind "$kind" --arg version "$latest_version" '.[0].files[] | select(.os == $os and .arch == $arch and .kind == $kind and .version == $version)')
 
     if test -n "$selected_json"
         set download_filename (echo $selected_json | jq -r '.filename')
@@ -770,7 +770,7 @@ function install_go -d 'golang install'
         return 1
     end
 
-    echo "Version available: $latest_go_version"
+    echo "Version available: $latest_version"
     echo
 
     read -P "Do you want to install Go? [y/N]: " continue
@@ -836,12 +836,20 @@ function install_go -d 'golang install'
     echo
 end
 
-function install_fzf -d 'Install fzf release'
-    echo -e '\e[1mInstalling fzf\e[0m'
-    echo -e '\e[3mhttps://github.com/junegunn/fzf\e[0m'
-    echo
+function install_fzf_release -d 'Install fzf release'
+    # echo -e '\e[1mInstalling fzf\e[0m'
+    # echo -e '\e[3mhttps://github.com/junegunn/fzf\e[0m'
+    # echo
 
     set repo junegunn/fzf
+
+    set os (uname -s | tr '[:upper:]' '[:lower:]')
+    set arch (uname -m)
+    if test $arch = x86_64
+        set arch amd64
+    end
+    set os_arch (string join _ $os $arch)
+
 
     # download json
     # set json (gh api /repos/neovim/neovim/releases/latest)
@@ -852,26 +860,27 @@ function install_fzf -d 'Install fzf release'
         return 1
     end
 
-    set tarball_url (echo $json | jq -r '.tarball_url')
+    set latest_release_tag (echo $json | jq -r '.tag_name')
+    set latest_release (echo $json | jq -r '.name')
+    set latest_major (echo $latest_release_tag | sed 's/v//' | cut -d- -f1 | cut -d. -f1)
+    set latest_minor (echo $latest_release_tag | sed 's/v//' | cut -d- -f1 | cut -d. -f2)
+    set latest_patch (echo $latest_release_tag | sed 's/v//' | cut -d- -f1 | cut -d. -f3)
 
-    if test -z "$tarball_url"
-        echo "Error: Couldn't find the tarball URL in the JSON response"
+    set archive_name "fzf-$latest_release-$os_arch.tar.gz"
+    set selected_json (echo $json | jq -r --arg archive_name "$archive_name" '.assets[] | select(.name == $archive_name)')
+
+    if test -n "$selected_json"
+        set browser_download_url (echo $selected_json | jq -r '.browser_download_url')
+    else
+        echo "Error: Couldn't find the latest version for $os-$arch in the JSON response"
         return 1
     end
 
-    # "security check" aka https, github.com and same repo
-    if not string match --quiet --regex "^https://api.github.com/repos/$repo/.*" $tarball_url
-        echo "Error: Unexpected tarball URL"
-        echo -e "URL:\t\t$tarball_url"
-        echo -e "Expecpted:\thttps://api.github.com/repos/$repo/ ..."
-        return 1
-    end
-
-    # temp file
+    # # temp file
     set temp_file (mktemp)
 
-    # download tarball of latest release
-    curl -sL -o $temp_file $tarball_url
+    # # download tarball of latest release
+    curl -sL -o $temp_file $browser_download_url
 
     if test $status -ne 0
         echo "Error: Download failed"
@@ -892,11 +901,11 @@ function install_fzf -d 'Install fzf release'
     end
 
     # extract
-    tar -C /usr/local/bin -xf $temp_file
+    sudo tar -C /usr/local/bin -xf $temp_file
 
     if test $status -ne 0
         echo "Error: Archive extraction failed"
-        sudo rm -rf /usr/local/fzf
+        sudo rm -rf /usr/local/bin/fzf
         rm $temp_file
         return 1
     end
