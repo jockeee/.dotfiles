@@ -1,5 +1,4 @@
-# default distro ~/.bashrc above
-# VERSION 28
+## VERSION 28
 
 ##
 ## Environment
@@ -478,10 +477,9 @@ upd_go() {
             # echo
 
             # check archive type based on filename
+            # example: go1.24.2.linux-amd64.tar.gz
             case $download_filename in
-            '*.tar*')
-                archive_type='tar'
-                ;;
+            *.tar*) ;;
             *)
                 echo "Error: Unknown archive type, expected a tar archive"
                 echo "Filename: $download_filename"
@@ -496,7 +494,7 @@ upd_go() {
             # download go
             # curl -L -o "$temp_file $download_url_base$download_filename"
             # wget -q --show-progress -O "$temp_file $download_url_base$download_filename"
-            if ! curl -L -o "$temp_file $download_url_base$download_filename"; then
+            if ! curl -L -o "$temp_file" "$download_url_base$download_filename"; then
                 echo "Error: Download failed."
                 if [ -e $temp_file ]; then
                     rm $temp_file
@@ -588,10 +586,9 @@ install_go() {
     echo
 
     # check archive type based on filename
+    # example: go1.24.2.linux-amd64.tar.gz
     case $download_filename in
-    '*.tar*')
-        archive_type='tar'
-        ;;
+    *.tar*) ;;
     *)
         echo "Error: Unknown archive type, expected a tar archive"
         echo "Filename: $download_filename"
@@ -607,10 +604,10 @@ install_go() {
     # download go
     # curl -L -o "$temp_file $download_url_base$download_filename"
     # wget -q --show-progress -O "$temp_file $download_url_base$download_filename"
-    if ! curl -L -o "$temp_file $download_url_base$download_filename"; then
+    if ! curl -L -o "$temp_file" "$download_url_base$download_filename"; then
         echo "Error: Download failed."
         if [ -e $temp_file ]; then
-            rm $temp_file
+            rm -f $temp_file
         fi
         return 1
     fi
@@ -641,46 +638,6 @@ install_go() {
 
     echo
     echo "Go version: $(/usr/local/go/bin/go version | awk '{print $3}')"
-    echo
-}
-
-upd_bashrc() {
-    echo -e '\e[1mUpdating ~/.bashrc\e[0m\n'
-
-    if [ ! -e ~/.dotfiles/.bashrc ]; then
-        echo "Error: Couldn't find ~/.dotfiles/.bashrc"
-        return 1
-    fi
-
-    # create backup
-    if [ -e ~/.bashrc ]; then
-        cp ~/.bashrc ~/.bashrc.bak
-    fi
-
-    # remove current additions
-    if ! sed -i '/# default distro ~\/.bashrc above/,$ d' ~/.bashrc; then
-        echo "Error: Couldn't clean ~/.bashrc from current additions."
-        mv ~/.bashrc.bak ~/.bashrc
-        return 1
-    fi
-
-    # add new additions
-    if ! cat ~/.dotfiles/.bashrc >>~/.bashrc; then
-        echo "Error: Couldn't update ~/.bashrc"
-        mv ~/.bashrc.bak ~/.bashrc
-        return 1
-    fi
-
-    # source ~/.bashrc
-    if ! source "$HOME/.bashrc"; then
-        echo "Error: Couldn't source ~/.bashrc"
-        mv ~/.bashrc.bak ~/.bashrc
-        return 1
-    fi
-
-    rm -f ~/.bashrc.bak
-
-    echo "Version: $(grep -E "^# VERSION" ~/.bashrc | cut -d' ' -f3)"
     echo
 }
 
