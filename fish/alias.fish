@@ -860,7 +860,7 @@ function install_fzf -d 'Install fzf release'
     end
 
     # "security check" aka https, github.com and same repo
-    if not test (echo $tarball_url | cut -c1-42) = "https://api.github.com/repos/$repo"
+    if not test (echo $tarball_url | grep -q "^https://api.github.com/repos/$repo")
         echo "Error: Unexpected tarball URL"
         echo "URL: $tarball_url"
         echo "Expected: https://api.github.com/repos/$repo ..."
@@ -920,12 +920,14 @@ function install_nvim_release -d 'nvim (release)'
         end
     end
 
+    set repo neovim/neovim
+
     # download json
     # set json (gh api /repos/neovim/neovim/releases/latest)
-    set json (curl -sL https://api.github.com/repos/neovim/neovim/releases/latest)
+    set json (curl -sL https://api.github.com/repos/$repo/releases/latest)
 
     if test $status -ne 0
-        echo "Error: Couldn't retrieve JSON response from 'https://api.github.com/repos/neovim/neovim/releases/latest'"
+        echo "Error: Couldn't retrieve JSON response from 'https://api.github.com/repos/$repo/releases/latest'"
         return 1
     end
 
@@ -936,11 +938,11 @@ function install_nvim_release -d 'nvim (release)'
         return 1
     end
 
-    # "security check" aka https, github.com and repo neovim/neovim
-    if not test (echo $tarball_url | cut -c1-42) = "https://api.github.com/repos/neovim/neovim"
+    # "security check" aka https, github.com and same repo
+    if not test (echo $tarball_url | grep -q "^https://api.github.com/repos/$repo")
         echo "Error: Unexpected tarball URL"
         echo "URL: $tarball_url"
-        echo "Expected: https://api.github.com/repos/neovim/neovim ..."
+        echo "Expected: https://api.github.com/repos/$repo ..."
         return 1
     end
 
