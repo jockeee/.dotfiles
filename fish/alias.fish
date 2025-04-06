@@ -120,7 +120,7 @@ if functions -q nvm
     nvm use latest 1>/dev/null
 end
 
-if command -q pnpm
+if type -q pnpm
     abbr --add n pnpm
     abbr --add nx pnpx
     abbr --add npm pnpm
