@@ -88,6 +88,28 @@ return {
     --   -- For major updates, this must be adjusted manually.
     --   version = '^1.0.0',
     -- },
+
+    {
+      'allaman/emoji.nvim',
+      -- ft = "markdown", -- adjust to your needs
+      dependencies = {
+        -- util for handling paths
+        'nvim-lua/plenary.nvim',
+        -- optional for nvim-cmp integration
+        -- "hrsh7th/nvim-cmp",
+        -- optional for telescope integration
+        'nvim-telescope/telescope.nvim',
+        -- optional for fzf-lua integration via vim.ui.select
+        -- "ibhagwan/fzf-lua",
+      },
+      opts = {
+        -- default is false, also needed for blink.cmp integration!
+        -- enable_cmp_integration = true,
+        -- optional if your plugin installation directory
+        -- is not vim.fn.stdpath("data") .. "/lazy/
+        -- plugin_path = vim.fn.expand '$HOME/plugins/',
+      },
+    },
   },
   config = function()
     local telescope = require 'telescope'
@@ -196,6 +218,7 @@ return {
     require('telescope').load_extension 'fzf'
     -- require('telescope').load_extension 'live_grep_args'
     require('telescope').load_extension 'ui-select'
+    require('telescope').load_extension 'emoji'
 
     local builtin = require 'telescope.builtin'
 
@@ -235,6 +258,7 @@ return {
     vim.keymap.set('n', '<leader>fa', builtin.resume, { desc = 'Resume' })
     vim.keymap.set('n', '<leader>fb', builtin.builtin, { desc = 'Telescope: builtin' })
     vim.keymap.set('n', '<leader>fd', builtin.diagnostics, { desc = 'Diagnostics' })
+    vim.keymap.set('n', '<leader>fe', telescope.extensions.emoji.emoji, { desc = 'Emoji' })
     -- vim.keymap.set('n', '<leader>ff', builtin.live_grep, { desc = 'Grep' }) -- Search for a string in your current working directory and get results live as you type, respects .gitignore. (Requires ripgrep)
     -- vim.keymap.set('n', '<leader>fg', telescope.extensions.live_grep_args.live_grep_args, { desc = 'Grep Args' })
     vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Help' })
