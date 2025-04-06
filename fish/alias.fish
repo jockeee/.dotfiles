@@ -836,7 +836,7 @@ function install_go -d 'golang install'
     echo
 end
 
-function install_fzf_release -d 'Install fzf release'
+function install_fzf -d 'Install fzf release'
     # echo -e '\e[1mInstalling fzf\e[0m'
     # echo -e '\e[3mhttps://github.com/junegunn/fzf\e[0m'
     # echo
