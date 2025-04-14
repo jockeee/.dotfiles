@@ -416,44 +416,53 @@ end
 function upd_npm -d 'npm update'
     if functions -q nvm
         if command -q pnpm
-            echo -e '\e[1mUpdating pnpm (lts) -- user\e[0m'
-            echo -e '\e[3mnvm use lts, pnpm self-update, pnpm install -g npm@latest\e[0m\n'
+            echo -e '\e[1mUpdating npm -- user\e[0m'
+            echo -e '\e[3mnvm use ..., pnpm self-update, pnpm install -g npm@latest\e[0m\n'
             nvm use lts 1>/dev/null
             pnpm self-update 1>/dev/null
             pnpm install -g npm@latest 1>/dev/null
             echo
-            echo "NVM lts: $(nvm current)"
-            echo "NPM version: $(pnpm --version)"
+            echo -e '\e[1mLTS\e[0m'
+            echo "Node: $(nvm current)"
+            echo "NPM: $(pnpm --version)"
             echo
-
-            echo -e '\e[1mUpdating pnpm (latest) -- user\e[0m'
-            echo -e '\e[3mnvm use latest, pnpm self-update, pnpm install -g npm@latest\e[0m\n'
             nvm use latest 1>/dev/null
             pnpm self-update 1>/dev/null
             pnpm install -g npm@latest 1>/dev/null
             echo
-            echo "NVM latest: $(nvm current)"
-            echo "NPM version: $(pnpm --version)"
+            echo -e '\e[1mLatest\e[0m'
+            echo "Node: $(nvm current)"
+            echo "NPM: $(pnpm --version)"
             echo
         else
-            echo -e '\e[1mUpdating npm (lts) -- user\e[0m'
-            echo -e '\e[3mnvm use lts, npm install -g npm@latest\e[0m\n'
+            echo -e '\e[1mUpdating npm -- user\e[0m'
+            echo -e '\e[3mnvm use ..., npm install -g npm@latest\e[0m\n'
             nvm use lts 1>/dev/null
             npm install -g npm@latest 1>/dev/null
             echo
-            echo "NVM lts: $(nvm current)"
-            echo "NPM version: $(npm --version)"
+            echo -e '\e[1mLTS\e[0m'
+            echo "Node: $(nvm current)"
+            echo "NPM: $(pnpm --version)"
             echo
-
-            echo -e '\e[1mUpdating npm (latest) -- user\e[0m'
-            echo -e '\e[3mnvm use latest, npm install -g npm@latest\e[0m\n'
             nvm use latest 1>/dev/null
             npm install -g npm@latest 1>/dev/null
             echo
-            echo "NVM latest: $(nvm current)"
-            echo "NPM version: $(npm --version)"
+            echo -e '\e[1mLatest\e[0m'
+            echo "Node: $(nvm current)"
+            echo "NPM: $(pnpm --version)"
             echo
         end
+    end
+
+    if not functions -q nvm; and command -q /usr/local/bin/npm
+        command -q /usr/local/bin/npm
+        echo -e '\e[1mUpdating npm\e[0m'
+        echo -e '\e[3msudo npm install -g npm@latest\e[0m'
+        sudo /usr/local/bin/npm install -g npm@latest
+        echo
+        echo "Node: $(node --version)"
+        echo "NPM: $(/usr/local/bin/npm --version)"
+        echo
     end
 end
 
