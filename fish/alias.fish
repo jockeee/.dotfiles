@@ -419,17 +419,13 @@ function upd_npm -d 'npm update'
             nvm use lts 1>/dev/null
             pnpm self-update 1>/dev/null
             pnpm install -g npm@latest 1>/dev/null
-            echo
-            echo -e '\e[1mLTS\e[0m'
-            echo "Node: $(nvm current)"
+            echo "Node: $(nvm current) (lts)"
             echo "PNPM: $(pnpm --version)"
             echo
             nvm use latest 1>/dev/null
             pnpm self-update 1>/dev/null
             pnpm install -g npm@latest 1>/dev/null
-            echo
-            echo -e '\e[1mLatest\e[0m'
-            echo "Node: $(nvm current)"
+            echo "Node: $(nvm current) (latest)"
             echo "PNPM: $(pnpm --version)"
             echo
         else
