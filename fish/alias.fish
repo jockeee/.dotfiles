@@ -445,7 +445,6 @@ function upd_npm -d 'npm update'
     end
 
     if not functions -q nvm; and command -q /usr/local/bin/npm
-        command -q /usr/local/bin/npm
         echo -e '\e[1mUpdating npm\e[0m'
         echo -e '\e[3msudo npm install -g npm@latest\e[0m'
         sudo /usr/local/bin/npm install -g npm@latest
