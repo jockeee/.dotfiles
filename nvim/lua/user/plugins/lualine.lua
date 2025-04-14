@@ -52,12 +52,12 @@ return {
         --   file_status = false,
         --   path = 1, -- 0 = filename, 1 = relative path, 2 = absolute path, 3 = relative to home
         -- },
+        'aerial',
         'diagnostics',
         'diff',
         -- 'aerial',
       },
       lualine_x = {
-        'aerial',
         { 'copilot', show_colors = false },
         'encoding',
         'fileformat',
@@ -81,10 +81,10 @@ return {
         --   file_status = false,
         --   path = 1, -- 0 = filename, 1 = relative path, 2 = absolute path, 3 = relative to home
         -- },
+        'aerial',
         'diagnostics',
       },
       lualine_x = {
-        'aerial',
         { 'copilot', show_colors = false },
         'encoding',
         'fileformat',
