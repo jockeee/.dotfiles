@@ -127,8 +127,6 @@ if functions -q nvm
 end
 
 if command -q pnpm
-    alias npm pnpm
-    alias npx pnpx
     abbr --add n pnpm
     abbr --add nx pnpx
     abbr --add npm pnpm
@@ -417,14 +415,14 @@ function upd_npm -d 'npm update'
     if functions -q nvm
         if command -q pnpm
             echo -e '\e[1mUpdating npm -- user\e[0m'
-            echo -e '\e[3mnvm use ..., pnpm self-update, pnpm install -g npm@latest\e[0m\n'
+            echo -e '\e[3mnvm use .., pnpm self-update, pnpm install -g npm@latest\e[0m\n'
             nvm use lts 1>/dev/null
             pnpm self-update 1>/dev/null
             pnpm install -g npm@latest 1>/dev/null
             echo
             echo -e '\e[1mLTS\e[0m'
             echo "Node: $(nvm current)"
-            echo "NPM: $(pnpm --version)"
+            echo "PNPM: $(pnpm --version)"
             echo
             nvm use latest 1>/dev/null
             pnpm self-update 1>/dev/null
@@ -432,24 +430,20 @@ function upd_npm -d 'npm update'
             echo
             echo -e '\e[1mLatest\e[0m'
             echo "Node: $(nvm current)"
-            echo "NPM: $(pnpm --version)"
+            echo "PNPM: $(pnpm --version)"
             echo
         else
             echo -e '\e[1mUpdating npm -- user\e[0m'
-            echo -e '\e[3mnvm use ..., npm install -g npm@latest\e[0m\n'
+            echo -e '\e[3mnvm use .., npm install -g npm@latest\e[0m\n'
             nvm use lts 1>/dev/null
             npm install -g npm@latest 1>/dev/null
-            echo
-            echo -e '\e[1mLTS\e[0m'
-            echo "Node: $(nvm current)"
-            echo "NPM: $(pnpm --version)"
+            echo "Node: $(nvm current) (lts)"
+            echo "NPM: $(npm --version)"
             echo
             nvm use latest 1>/dev/null
             npm install -g npm@latest 1>/dev/null
-            echo
-            echo -e '\e[1mLatest\e[0m'
-            echo "Node: $(nvm current)"
-            echo "NPM: $(pnpm --version)"
+            echo "Node: $(nvm current) (latest)"
+            echo "NPM: $(npm --version)"
             echo
         end
     end
