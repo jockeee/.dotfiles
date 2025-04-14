@@ -1,5 +1,5 @@
 # .
-# VERSION 30
+# VERSION 31
 
 ##
 ## Environment
@@ -96,7 +96,7 @@ abbr --add gr 'git remote -v'
 abbr --add grs 'git reset'
 abbr --add grs! 'git reset --hard'
 abbr --add gs 'git status'
-if type -q lazygit
+if command -q lazygit
     abbr --add lg lazygit
 end
 
@@ -120,7 +120,9 @@ if functions -q nvm
     nvm use latest 1>/dev/null
 end
 
-if type -q pnpm
+if command -q pnpm
+    alias npm pnpm
+    alias npx pnpx
     abbr --add n pnpm
     abbr --add nx pnpx
     abbr --add npm pnpm
@@ -406,33 +408,68 @@ function upd_gh_extensions -d 'Github CLI extensions update'
 end
 
 function upd_npm -d 'npm update'
-    if command -q /usr/local/bin/npm
-        echo -e '\e[1mUpdating npm\e[0m'
-        echo -e '\e[3msudo npm install -g npm@latest\e[0m'
-        sudo /usr/local/bin/npm install -g npm@latest
-        echo
-        echo "NPM version: $(/usr/local/bin/npm --version)"
-        echo
-    end
     if functions -q nvm
-        echo -e '\e[1mUpdating npm\e[0m'
-        echo -e '\e[3mnvm use lts, npm install -g npm@latest\e[0m\n'
-        nvm use lts
-        npm install -g npm@latest
-        echo
-        echo "NPM version: $(npm --version)"
-        echo
+        if command -q pnpm
+            echo -e '\e[1mUser: Updating pnpm (latest)\e[0m'
+            echo -e '\e[3mnvm use latest, pnpm self-update, pnpm install -g npm@latest\e[0m\n'
+            nvm use latest
+            pnpm self-update
+            pnpm install -g npm@latest
+            echo
+        else
+            # echo -e '\e[1mUser: Updating npm (lts)\e[0m'
+            # echo -e '\e[3mnvm use lts, npm install -g npm@latest\e[0m\n'
+            # nvm use lts
+            # npm install -g npm@latest
+            # echo
+            # echo "NPM version: $(npm --version)"
+            # echo
+            echo -e '\e[1mUser: Updating npm (latest)\e[0m'
+            echo -e '\e[3mnvm use latest, npm install -g npm@latest\e[0m\n'
+            nvm use latest
+            npm install -g npm@latest
+            echo
+            echo "NPM version: $(npm --version)"
+            echo
+        end
     end
 end
 
-function upd_npm_packages -d 'npm update global packages'
-    if command -q /usr/local/bin/npm
-        echo -e '\e[1mUpdating npm packages\e[0m'
-        echo -e '\e[3msudo npm update\e[0m'
-        sudo /usr/local/bin/npm update
-        echo
-    end
-end
+# function upd_npm -d 'npm update'
+#     if command -q /usr/local/bin/npm
+#         echo -e '\e[1mUpdating npm\e[0m'
+#         echo -e '\e[3msudo npm install -g npm@latest\e[0m'
+#         sudo /usr/local/bin/npm install -g npm@latest
+#         echo
+#         echo "NPM version: $(/usr/local/bin/npm --version)"
+#         echo
+#     end
+#     if functions -q nvm
+#         echo -e '\e[1mFor user, updating npm (lts)\e[0m'
+#         echo -e '\e[3mnvm use lts, npm install -g npm@latest\e[0m\n'
+#         nvm use lts
+#         npm install -g npm@latest
+#         echo
+#         echo "NPM version: $(npm --version)"
+#         echo
+#         echo -e '\e[1mFor user, updating npm (latest)\e[0m'
+#         echo -e '\e[3mnvm use latest, npm install -g npm@latest\e[0m\n'
+#         nvm use latest
+#         npm install -g npm@latest
+#         echo
+#         echo "NPM version: $(npm --version)"
+#         echo
+#     end
+# end
+
+# function upd_npm_packages -d 'npm update global packages'
+#     if command -q /usr/local/bin/npm
+#         echo -e '\e[1mUpdating npm packages\e[0m'
+#         echo -e '\e[3msudo npm update\e[0m'
+#         sudo /usr/local/bin/npm update
+#         echo
+#     end
+# end
 
 function upd_nvim_release -d 'nvim (release)'
     if command -q ~/.build/nvim/bin/nvim
