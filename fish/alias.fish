@@ -418,7 +418,7 @@ function upd_npm -d 'npm update'
         if command -q pnpm
             echo -e '\e[1mUpdating pnpm (lts) -- user\e[0m'
             echo -e '\e[3mnvm use lts, pnpm self-update, pnpm install -g npm@latest\e[0m\n'
-            nvm use lts
+            nvm use lts 1>/dev/null
             pnpm self-update 1>/dev/null
             pnpm install -g npm@latest 1>/dev/null
             echo
@@ -428,7 +428,7 @@ function upd_npm -d 'npm update'
 
             echo -e '\e[1mUpdating pnpm (latest) -- user\e[0m'
             echo -e '\e[3mnvm use latest, pnpm self-update, pnpm install -g npm@latest\e[0m\n'
-            nvm use latest
+            nvm use latest 1>/dev/null
             pnpm self-update 1>/dev/null
             pnpm install -g npm@latest 1>/dev/null
             echo
@@ -438,7 +438,7 @@ function upd_npm -d 'npm update'
         else
             echo -e '\e[1mUpdating npm (lts) -- user\e[0m'
             echo -e '\e[3mnvm use lts, npm install -g npm@latest\e[0m\n'
-            nvm use lts
+            nvm use lts 1>/dev/null
             npm install -g npm@latest 1>/dev/null
             echo
             echo "NVM lts: $(nvm current)"
@@ -447,7 +447,7 @@ function upd_npm -d 'npm update'
 
             echo -e '\e[1mUpdating npm (latest) -- user\e[0m'
             echo -e '\e[3mnvm use latest, npm install -g npm@latest\e[0m\n'
-            nvm use latest
+            nvm use latest 1>/dev/null
             npm install -g npm@latest 1>/dev/null
             echo
             echo "NVM latest: $(nvm current)"
