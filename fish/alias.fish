@@ -368,7 +368,7 @@ if test -e /etc/os-release
                 upd_gh_extensions
                 upd_go
                 upd_npm
-                upd_npm_packages
+                # upd_npm_packages
             end
         case ubuntu
             function upd -d 'system update, snap apps update, fisher plugins update'
@@ -390,7 +390,7 @@ if test -e /etc/os-release
                 upd_gh_extensions
                 upd_go
                 upd_npm
-                upd_npm_packages
+                # upd_npm_packages
             end
     end
 end
@@ -416,25 +416,41 @@ end
 function upd_npm -d 'npm update'
     if functions -q nvm
         if command -q pnpm
+            echo -e '\e[1mUser: Updating pnpm (lts)\e[0m'
+            echo -e '\e[3mnvm use lts, pnpm self-update, pnpm install -g npm@latest\e[0m\n'
+            nvm use lts
+            pnpm self-update
+            pnpm install -g npm@latest
+            echo
+            echo "NVM lts: $(nvm current)"
+            echo "NPM version: $(pnpm --version)"
+            echo
+
             echo -e '\e[1mUser: Updating pnpm (latest)\e[0m'
             echo -e '\e[3mnvm use latest, pnpm self-update, pnpm install -g npm@latest\e[0m\n'
             nvm use latest
             pnpm self-update
             pnpm install -g npm@latest
             echo
+            echo "NVM latest: $(nvm current)"
+            echo "NPM version: $(pnpm --version)"
+            echo
         else
-            # echo -e '\e[1mUser: Updating npm (lts)\e[0m'
-            # echo -e '\e[3mnvm use lts, npm install -g npm@latest\e[0m\n'
-            # nvm use lts
-            # npm install -g npm@latest
-            # echo
-            # echo "NPM version: $(npm --version)"
-            # echo
+            echo -e '\e[1mUser: Updating npm (lts)\e[0m'
+            echo -e '\e[3mnvm use lts, npm install -g npm@latest\e[0m\n'
+            nvm use lts
+            npm install -g npm@latest
+            echo
+
+            echo "Using nvm version: $(nvm current)"
+            echo "NPM version: $(npm --version)"
+            echo
             echo -e '\e[1mUser: Updating npm (latest)\e[0m'
             echo -e '\e[3mnvm use latest, npm install -g npm@latest\e[0m\n'
             nvm use latest
             npm install -g npm@latest
             echo
+            echo "Using nvm version: $(nvm current)"
             echo "NPM version: $(npm --version)"
             echo
         end
