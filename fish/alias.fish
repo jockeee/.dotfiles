@@ -108,6 +108,7 @@ end
 
 if command -q batcat
     set bat_cmd batcat
+    alias bat batcat
     alias cat 'batcat -pp'
     abbr --add d batdiff
 end
