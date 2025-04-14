@@ -19,6 +19,11 @@ end
 ## Alias and Abbreviations
 ##
 
+# from v4.0.1
+# Abbreviations can now be restricted to specific commands. For instance:
+# abbr --add --command git back 'reset --hard HEAD^'
+# will expand `back` to `reset --hard HEAD^`, but only when the command is `git`
+
 # ls options
 #   -A, --almost-all: do not list implied . and ..
 alias l 'ls -l'
