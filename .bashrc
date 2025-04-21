@@ -15,9 +15,9 @@ if [ -z "$TMUX_DEFAULT_SESSION_NAME" ]; then
 fi
 
 # Local environment
-if [ -f "$XDG_CONFIG_HOME/bash/local.bash" ]; then
+if [ -f "$HOME/.local/local.bash" ]; then
     # shellcheck disable=SC1091
-    source "$XDG_CONFIG_HOME/bash/local.bash"
+    source "$HOME/.local/local.bash"
 fi
 
 ##
