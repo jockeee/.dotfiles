@@ -12,8 +12,8 @@ if status is-interactive
     set -gx XDG_STATE_HOME "$HOME/.local/state" # User-specific state files, analogous to /var/lib
 
     # Local environment
-    if test -f $XDG_CONFIG_HOME/fish/local.fish
-        source $XDG_CONFIG_HOME/fish/local.fish
+    if test -f $HOME/.local/local.fish
+        source $HOME/.local/local.fish
     end
 
     # Remove underlines
