@@ -67,7 +67,7 @@ else
         selected=$(
             printf '%s\n' "${sessions[@]}" | fzf \
                 --height=~1% \
-                --tmux=center,28%,9 \
+                --tmux=center,28%,10 \
                 --layout=reverse \
                 --info=inline-right \
                 --color="pointer:#7c7d83,current-bg:-1" \
