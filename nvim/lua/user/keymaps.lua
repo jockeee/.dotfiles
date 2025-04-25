@@ -80,7 +80,7 @@ vim.keymap.set({ 'i', 'n', 'v', 't' }, '<S-M-b>', function()
   if current_tab < total_tabs then vim.cmd '+tabmove' end
 end, { desc = 'Move Tab Right' })
 for idx, char in ipairs { 'z', 'x', 'c' } do
-  vim.keymap.set({ 'n', 'v' }, string.format('<M-%s>', char), string.format('%sgt', idx))
+  vim.keymap.set({ 'n', 'v' }, string.format('<M-%s>', char), string.format('%sgt', idx), { desc = 'Switch to tab ' .. idx })
 end
 
 -- Indenting
