@@ -1,14 +1,19 @@
 #!/usr/bin/env bash
 
+usage() {
+    echo "Usage: $(basename "$0") [-n session_name] [path or path query]"
+    echo
+    echo "Options"
+    echo "  -n session_name  Name of new tmux session"
+    echo "  path query       Path or path query"
+}
+
 zoxide_query() {
     if ! type -P zoxide &>/dev/null; then
-        echo ""
         return
     fi
 
-    if [[ -z $1 ]]; then
-        echo ""
-    else
+    if [[ -n $1 ]]; then
         local query=$*
         # shellcheck disable=SC2086
         zoxide query $query 2>/dev/null
@@ -25,9 +30,30 @@ kill_session() {
     fi
 }
 
+# -n option, session name
+while getopts ":n:" opt; do
+    case $opt in
+    n)
+        session_name="$OPTARG"
+        ;;
+    \?)
+        usage
+        exit 1
+        ;;
+    :)
+        usage
+        exit 1
+        ;;
+    esac
+done
+shift $((OPTIND - 1)) # Remove parsed options
+
 if [[ $# -gt 0 ]]; then
     selected=$*
 else
+    if [[ -n $session_name ]]; then
+        echo "[INFO]: -n option ignored, no path or query provided."
+    fi
     while :; do
         mapfile -t sessions < <(tmux list-sessions -F "#{session_name} #{session_last_attached}" 2>/dev/null | sort -k2r | awk '{print $1}')
 
@@ -41,7 +67,7 @@ else
         selected=$(
             printf '%s\n' "${sessions[@]}" | fzf \
                 --height=~1% \
-                --tmux=center,28%,14% \
+                --tmux=center,28%,9 \
                 --layout=reverse \
                 --info=inline-right \
                 --color="pointer:#7c7d83,current-bg:-1" \
@@ -97,14 +123,16 @@ fi
 selected="${selected/#\~/$HOME}" # tilde expansion of user input from fzf popup
 selected=${selected%/}           # remove trailing slash from selected, if any
 
-case $selected in
-"$HOME")
-    session_name="home"
-    ;;
-"$HOME"/.dotfiles)
-    session_name="dotf"
-    ;;
-esac
+if [[ -z $session_name ]]; then
+    case $selected in
+    "$HOME")
+        session_name="home"
+        ;;
+    "$HOME"/.dotfiles)
+        session_name="dotf"
+        ;;
+    esac
+fi
 
 if [[ -z $session_name ]]; then
     session_name=${selected##*[ /\\]} # session_name is the last part of selected, separators: space, \ or /
