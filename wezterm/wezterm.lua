@@ -82,4 +82,9 @@ config.keys = {
   { key = 'X', mods = 'LEADER', action = act.CloseCurrentPane { confirm = true } },
 }
 
+-- Local config
+local local_config_path = os.getenv 'HOME' .. '/.local/wezterm.lua'
+local ok, local_config = pcall(function() return require(local_config_path:gsub('%.lua$', '')) end)
+if ok and type(local_config) == 'function' then config = local_config(config) end
+
 return config
