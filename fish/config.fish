@@ -67,7 +67,8 @@ if status is-interactive
             bind \eq 'tmux-sessionizer.sh ~; commandline -f repaint'
             bind \ew 'tmux-sessionizer.sh ~/.dotfiles; commandline -f repaint'
             bind \ee 'tmux-sessionizer.sh dot nvim; commandline -f repaint'
-            bind \er 'tmux-sessionizer.sh code; commandline -f repaint'
+            bind \er 'tmux-sessionizer.sh -n dev1 code; commandline -f repaint'
+            bind \ef 'tmux-sessionizer.sh -n dev2 code; commandline -f repaint'
             bind \et 'tmux-sessionizer.sh pass; commandline -f repaint'
         end
     end
