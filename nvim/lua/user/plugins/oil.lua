@@ -74,7 +74,10 @@ return {
       show_hidden = true, -- Show files and directories that start with "."
     },
     float = {
-      padding = 20, -- Padding around the floating window
+      padding = 2, -- Padding around the floating window
+      -- max_width and max_height can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
+      max_width = 0.7,
+      max_height = 0.5,
       border = 'rounded',
       win_options = {
         -- winblend = 10,
