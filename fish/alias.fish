@@ -28,7 +28,7 @@ end
 #   -A, --almost-all: do not list implied . and ..
 alias l 'ls -l'
 alias la 'ls -lA'
-alias ld 'ls -ld'
+alias lad 'ls -ld'
 alias laa 'ls -la'
 alias lag 'ls -lA --group-directories-first'
 alias laz 'ls -laZ'
@@ -132,7 +132,6 @@ if command -q pnpm
     abbr --add npm pnpm
     abbr --add npx pnpx
 end
-
 
 ##
 ## Functions
@@ -911,7 +910,6 @@ function install_fzf -d 'Install fzf release'
         set arch amd64
     end
     set os_arch (string join _ $os $arch)
-
 
     # download json
     # set json (gh api /repos/neovim/neovim/releases/latest)
