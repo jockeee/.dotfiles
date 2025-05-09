@@ -28,7 +28,7 @@ fi
 #   -A, --almost-all: do not list implied . and ..
 alias l='ls -l'
 alias la='ls -lA'
-alias ld='ls -ld'
+alias lad='ls -ld'
 alias laa='ls -la'
 alias laz='ls -laZ'
 alias ladz='ls -ladZ'
