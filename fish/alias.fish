@@ -127,6 +127,8 @@ if functions -q nvm
 end
 
 if command -q pnpm
+    alias npx pnpx
+    alias npm pnpm
     abbr --add n pnpm
     abbr --add nx pnpx
     abbr --add npm pnpm
