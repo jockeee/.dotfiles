@@ -83,8 +83,11 @@ config.keys = {
 }
 
 -- Local config
-local local_config_path = os.getenv 'HOME' .. '/.local/wezterm.lua'
-local ok, local_config = pcall(function() return require(local_config_path:gsub('%.lua$', '')) end)
-if ok and type(local_config) == 'function' then config = local_config(config) end
+_G.config = config
+local local_config = os.getenv 'HOME' .. '/.local/wezterm.lua'
+if io.open(local_config, 'r') then
+  local ok, err = pcall(dofile, local_config)
+  if not ok then wezterm.log_error(err) end
+end
 
 return config
