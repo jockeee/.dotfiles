@@ -30,6 +30,11 @@ return {
       ['goimports-reviser'] = {
         prepend_args = { '-rm-unused' },
       },
+      html5_noselfclose = {
+        command = 'sed',
+        args = { [[s/ \/>/>/g]] },
+        stdin = true,
+      },
     },
     formatters_by_ft = { -- Specify formatters by filetype
       -- Run multiple formatters sequentially
@@ -42,7 +47,7 @@ return {
       go = { 'goimports-reviser', 'injected' }, -- gopls runs gofumpt
       hurl = { 'hurlfmt' },
       template = { 'prettier' },
-      html = { 'prettier' },
+      html = { 'prettier', 'html5_noselfclose' },
       javascript = { 'prettier' },
       lua = { 'stylua' },
       python = { 'isort', 'black' },
