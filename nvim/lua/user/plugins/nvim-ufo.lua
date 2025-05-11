@@ -16,6 +16,12 @@ return {
     provider_selector = function()
       return { 'lsp', 'indent' }
     end,
+    close_fold_kinds_for_ft = {
+      -- Run `UfoInspect` for details if your provider has extended the kinds.
+      default = { 'region' }, -- 'comment', 'imports', 'region'
+      -- json = { 'array' },
+      -- c = { 'comment', 'region' },
+    },
   },
   config = function(_, opts)
     local ufo = require 'ufo'
