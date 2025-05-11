@@ -16,8 +16,7 @@ return {
     provider_selector = function()
       return { 'lsp', 'indent' }
     end,
-    close_fold_kinds_for_ft = {
-      -- Run `UfoInspect` for details if your provider has extended the kinds.
+    close_fold_kinds_for_ft = { -- Run `UfoInspect` for details if your provider has extended the kinds.
       default = { 'region' }, -- 'comment', 'imports', 'region'
       lua = {},
       -- json = { 'array' },
