@@ -43,8 +43,8 @@ vim.opt.wrap = false -- default: on
 vim.opt.breakindent = true -- wrapped lines will continue visually indented
 
 -- Folding
-vim.opt.foldenable = true
 vim.opt.foldcolumn = '0'
+vim.opt.foldenable = true
 vim.opt.foldlevel = 99
 vim.opt.foldlevelstart = 99
 -- vim.o.fillchars = 'eob: ,fold: ,foldopen:,foldsep: ,foldclose:'
