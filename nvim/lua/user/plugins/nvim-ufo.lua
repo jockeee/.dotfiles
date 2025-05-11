@@ -8,7 +8,7 @@
 
 return {
   'kevinhwang91/nvim-ufo',
-  event = { 'BufReadPre', 'BufNewFile' },
+  event = { 'VimEnter' },
   dependencies = {
     'kevinhwang91/promise-async',
   },

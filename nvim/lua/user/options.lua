@@ -47,8 +47,9 @@ vim.opt.foldenable = true
 vim.opt.foldcolumn = '0'
 vim.opt.foldlevel = 99
 vim.opt.foldlevelstart = 99
-vim.o.foldmethod = 'expr'
-vim.o.foldexpr = 'v:lua.vim.lsp.foldexpr()'
+-- vim.o.fillchars = 'eob: ,fold: ,foldopen:,foldsep: ,foldclose:'
+-- vim.o.foldmethod = 'expr'
+-- vim.o.foldexpr = 'v:lua.vim.lsp.foldexpr()'
 
 -- Search Settings
 -- Case-insensitive searching UNLESS \C or capital in search
