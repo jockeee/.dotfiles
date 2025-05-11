@@ -40,10 +40,11 @@ return {
   require 'user.plugins.smart-splits', -- window navigation
   -- require 'user.plugins.vim-tmux-navigator', -- window navigation
 
-  -- Formatting / LSP / Completion
+  -- Formatting, LSP, Completion, Linting
   require 'user.plugins.conform',
   require 'user.plugins.lsp',
   require 'user.plugins.completion',
+  require 'user.plugins.linting',
 
   -- Git
   require 'user.plugins.gitsigns', -- adds git related signs to the gutter, and utilities for managing changes

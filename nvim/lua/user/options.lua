@@ -72,7 +72,7 @@ vim.opt.swapfile = false
 
 -- Decrease update time
 vim.opt.updatetime = 250 -- save swap file and trigger CursorHold
-vim.opt.timeoutlen = 300 -- default: 1000, time in milliseconds to wait for a mapped sequence to complete
+vim.opt.timeoutlen = 1000 -- default: 1000, time in milliseconds to wait for a mapped sequence to complete
 
 -- How neovim will display certain whitespace in the editor.
 vim.opt.list = false -- show invisible characters (tabs...)
