@@ -56,6 +56,10 @@ return {
       vim.cmd.highlight 'WinSeparator guifg=#2c2c2c' -- window separator
       -- vim.cmd.highlight 'LineNr guifg=#2c2c2c' -- line numbers
       -- vim.cmd.highlight '@string.special.url term=none cterm=none'
+
+      -- html
+      vim.cmd.highlight '@tag.delimiter.html guifg=#7c7d83' -- html tag delimiter
+      vim.cmd.highlight '@none.html guifg=#868686' -- html tag delimiter
     end,
   },
 }

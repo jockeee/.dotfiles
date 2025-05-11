@@ -143,6 +143,7 @@ return {
           -- Jump to the definition of the word under your cursor.
           --  This is where a variable was first declared, or where a function is defined, etc.
           --  To jump back, press <C-t>.
+          map('gd', require('telescope.builtin').lsp_definitions, 'Goto Definition')
           map('grd', require('telescope.builtin').lsp_definitions, 'Goto Definition')
           -- FROM https://github.com/neovim/nvim-lspconfig
           -- vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { buffer = event.buf })
@@ -427,6 +428,7 @@ return {
         'staticcheck', -- Linter: The advanced Go linter
         'delve', -- DAP: Delve is a debugger for the Go programming language
         -- Html/CSS
+        'htmlhint', -- Linter: The Static Code Analysis Tool for your HTML
         'prettier', -- Formatter: Prettier is an opinionated code formatter
         -- 'prettierd', -- Formatter: Prettier, as a daemon, for ludicrous formatting speed - https://github.com/fsouza/prettierd#vim--neovim
         'stylelint', -- Linter: A mighty CSS linter that helps you avoid errors and enforce conventions - https://stylelint.io

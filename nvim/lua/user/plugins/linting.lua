@@ -1,6 +1,8 @@
 --
 -- https://github.com/mfussenegger/nvim-lint
 -- An asynchronous linter plugin for Neovim complementary to the built-in Language Server Protocol support.
+--
+-- https://github.com/mfussenegger/nvim-lint#available-linters
 
 return {
   'mfussenegger/nvim-lint',
@@ -9,6 +11,8 @@ return {
     local lint = require 'lint'
 
     lint.linters_by_ft = {
+      -- If shellcheck is installed, bash-language-server will automatically call
+      html = { 'htmlhint' },
       css = { 'stylelint' },
     }
 
