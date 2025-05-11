@@ -62,8 +62,12 @@ vim.keymap.set('v', '<M-k>', ":m '<-2<cr>gv=gv", { desc = 'Move Up' })
 -- Buffer
 -- vim.keymap.set('n', '<S-h>', '<cmd>bprevious<cr>', { desc = 'Prev Buffer' })
 -- vim.keymap.set('n', '<S-l>', '<cmd>bnext<cr>', { desc = 'Next Buffer' })
-vim.keymap.set('n', '<S-h>', function() require('user.utils').jl_buf_backward() end, { desc = 'Prev Buffer' })
-vim.keymap.set('n', '<S-l>', function() require('user.utils').jl_buf_forward() end, { desc = 'Next Buffer' })
+vim.keymap.set('n', '<S-h>', function()
+  require('user.utils').jl_buf_backward()
+end, { desc = 'Prev Buffer' })
+vim.keymap.set('n', '<S-l>', function()
+  require('user.utils').jl_buf_forward()
+end, { desc = 'Next Buffer' })
 
 -- Tabs
 vim.keymap.set({ 'n', 'v' }, '<leader>+', '<cmd>tabnew<cr>', { desc = 'New Tab' })
@@ -114,6 +118,18 @@ vim.keymap.set('n', '<leader>da', '<cmd>%bdelete!<cr>', { desc = 'Close All Buff
 --   end
 -- end, { desc = 'Close All Buffers, Except Terminals' })
 vim.keymap.set('n', '<leader>dx', '<cmd>bd!<cr>', { desc = 'Kill Buffer (Ignore Unsaved Changes)' })
+
+-- Convert unicode escapes to utf-8 characters
+vim.keymap.set('n', '<leader>du', function()
+  local buf = vim.api.nvim_get_current_buf()
+  local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
+  for i, line in ipairs(lines) do
+    lines[i] = line:gsub('\\u([%da-fA-F]+)', function(hex)
+      return vim.fn.nr2char(tonumber(hex, 16))
+    end)
+  end
+  vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+end, { desc = 'Convert Unicode Escapes' })
 
 -- Execute line, bash
 -- vim.keymap.set('n', '<leader>de', '<cmd>.w !bash<cr>', { desc = 'Execute line, bash' })
@@ -229,12 +245,9 @@ vim.keymap.set('n', '<leader>zx', ':.lua<CR>', { desc = 'Lua: Execute line' })
 vim.keymap.set('v', '<leader>zx', ':lua<CR>', { desc = 'Lua: Execute selection' })
 
 -- Leader t: Toggle
-vim.keymap.set(
-  'n',
-  '<leader>tl',
-  function() vim.opt.colorcolumn = vim.inspect(vim.opt.colorcolumn:get()) == '{}' and { 96 } or {} end,
-  { desc = 'Color Column Limits' }
-)
+vim.keymap.set('n', '<leader>tl', function()
+  vim.opt.colorcolumn = vim.inspect(vim.opt.colorcolumn:get()) == '{}' and { 96 } or {}
+end, { desc = 'Color Column Limits' })
 -- vim.keymap.set('n', '<leader>tl', function()
 --   vim.opt.colorcolumn = vim.inspect(vim.opt.colorcolumn:get()) == '{}' and { 80, 96 } or {}
 -- end, { desc = 'Color Column Limits' })

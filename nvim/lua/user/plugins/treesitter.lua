@@ -21,7 +21,7 @@ return {
   },
   build = ':TSUpdate',
   opts = {
-    ensure_installed = { 'bash', 'c', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'html' },
+    ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' },
     auto_install = true, -- Automatically install missing parsers when entering buffer
     ignore_install = {}, -- List of parsers to ignore installing (or "all")
     highlight = {
@@ -138,7 +138,9 @@ return {
       multiwindow = true,
     }
 
-    vim.keymap.set('n', '<leader>tx', function() context.toggle() end, { desc = 'Treesitter: Context (top lines)' })
+    vim.keymap.set('n', '<leader>tx', function()
+      context.toggle()
+    end, { desc = 'Treesitter: Context (top lines)' })
   end,
 }
 

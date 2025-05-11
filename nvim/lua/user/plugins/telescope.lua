@@ -98,7 +98,7 @@ return {
         -- optional for nvim-cmp integration
         -- "hrsh7th/nvim-cmp",
         -- optional for telescope integration
-        'nvim-telescope/telescope.nvim',
+        -- 'nvim-telescope/telescope.nvim',
         -- optional for fzf-lua integration via vim.ui.select
         -- "ibhagwan/fzf-lua",
       },
@@ -234,16 +234,11 @@ return {
     vim.keymap.set('n', '<leader>/', builtin.current_buffer_fuzzy_find, { desc = 'Find in current buffer' })
 
     -- Find nvim config files
-    vim.keymap.set(
-      'n',
-      '<leader>fn',
-      function()
-        require('telescope.builtin').find_files {
-          cwd = vim.fn.stdpath 'config',
-        }
-      end,
-      { desc = 'nvim' }
-    )
+    vim.keymap.set('n', '<leader>fn', function()
+      require('telescope.builtin').find_files {
+        cwd = vim.fn.stdpath 'config',
+      }
+    end, { desc = 'nvim' })
 
     -- Find lazy files
     vim.keymap.set('n', '<leader>fl', function()

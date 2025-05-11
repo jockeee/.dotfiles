@@ -26,15 +26,15 @@ return {
     'neovim/nvim-lspconfig',
     lazy = false,
     dependencies = {
-      -- https://github.com/williamboman/mason.nvim
+      -- https://github.com/mason-org/mason.nvim
       -- Package manager for Neovim that runs everywhere Neovim runs.
       -- Easily install and manage LSP servers, DAP servers, linters, and formatters.
       -- Automatically install LSPs and related tools to stdpath for neovim
-      { 'williamboman/mason.nvim', config = true }, -- NOTE: Must be loaded before dependants
+      { 'mason-org/mason.nvim', config = true }, -- NOTE: Must be loaded before dependants
 
-      -- https://github.com/williamboman/mason-lspconfig.nvim
+      -- https://github.com/mason-org/mason-lspconfig.nvim
       -- Extension to mason.nvim that makes it easier to use lspconfig with mason.nvim
-      'williamboman/mason-lspconfig.nvim',
+      'mason-org/mason-lspconfig.nvim',
 
       -- https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim
       -- Install and upgrade third party tools automatically
@@ -70,74 +70,117 @@ return {
           },
         },
       },
+
+      -- Allows extra capabilities provided by blink.cmp
+      'saghen/blink.cmp',
     },
     config = function()
       vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
         callback = function(event)
-          local map = function(keys, func, desc) vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc }) end
+          local map = function(keys, func, desc, mode)
+            mode = mode or 'n'
+            vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
+          end
 
-          -- This is not Goto Definition, this is Goto Declaration.
-          --  For example, in C this would take you to the header
-          map('gD', vim.lsp.buf.declaration, 'Goto Declaration')
+          -- ==============================================================================
+          -- DEFAULTS                                                *lsp-defaults*
+          --
+          -- When the Nvim LSP client starts it enables diagnostics |vim.diagnostic| (see
+          -- |vim.diagnostic.config()| to customize). It also sets various default options,
+          -- listed below, if (1) the language server supports the functionality and (2)
+          -- the options are empty or were set by the builtin runtime (ftplugin) files. The
+          -- options are not restored when the LSP client is stopped or detached.
+          --
+          -- - 'omnifunc' is set to |vim.lsp.omnifunc()|, use |i_CTRL-X_CTRL-O| to trigger
+          --   completion.
+          -- - 'tagfunc' is set to |vim.lsp.tagfunc()|. This enables features like
+          --   go-to-definition, |:tjump|, and keymaps like |CTRL-]|, |CTRL-W_]|,
+          --   |CTRL-W_}| to utilize the language server.
+          -- - 'formatexpr' is set to |vim.lsp.formatexpr()|, so you can format lines via
+          --   |gq| if the language server supports it.
+          --   - To opt out of this use |gw| instead of gq, or clear 'formatexpr' on |LspAttach|.
+          -- - |K| is mapped to |vim.lsp.buf.hover()| unless |'keywordprg'| is customized or
+          --   a custom keymap for `K` exists.
+          --
+          --                                           *grr* *gra* *grn* *gri* *i_CTRL-S*
+          -- Some keymaps are created unconditionally when Nvim starts:
+          -- - "grn" is mapped in Normal mode to |vim.lsp.buf.rename()|
+          -- - "gra" is mapped in Normal and Visual mode to |vim.lsp.buf.code_action()|
+          -- - "grr" is mapped in Normal mode to |vim.lsp.buf.references()|
+          -- - "gri" is mapped in Normal mode to |vim.lsp.buf.implementation()|
+          -- - "gO" is mapped in Normal mode to |vim.lsp.buf.document_symbol()|
+          -- - CTRL-S is mapped in Insert mode to |vim.lsp.buf.signature_help()|
+          --
+          -- If not wanted, these keymaps can be removed at any time using
+          -- |vim.keymap.del()| or |:unmap| (see also |gr-default|).
+
+          -- gr_ = goto reference ...
+
+          -- Rename the variable under your cursor.
+          --  Most Language Servers support renaming across files, etc.
+          map('grn', vim.lsp.buf.rename, 'Rename')
+
+          -- Execute a code action, usually your cursor needs to be on top of an error
+          -- or a suggestion from your LSP for this to activate.
+          map('gra', vim.lsp.buf.code_action, 'Code Action', { 'n', 'x' })
+          -- 2025-1
+          -- Execute a code action, usually your cursor needs to be on top of an error
+          -- or a suggestion from your LSP for this to activate.
+          -- OLD map('<leader>ca', vim.lsp.buf.code_action, 'Code action')
+          -- FROM https://github.com/neovim/nvim-lspconfig
+          -- vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, { buffer = event.buf, desc = 'LSP: ' .. 'Code action' })
+
+          -- Find references for the word under your cursor.
+          map('grr', require('telescope.builtin').lsp_references, 'Goto references')
+          -- FROM https://github.com/neovim/nvim-lspconfig
+          -- vim.keymap.set('n', 'gr', vim.lsp.buf.references, { buffer = event.buf })
+
+          -- Jump to the implementation of the word under your cursor.
+          --  Useful when your language has ways of declaring types without an actual implementation.
+          map('gri', require('telescope.builtin').lsp_implementations, 'Goto Implementation')
 
           -- Jump to the definition of the word under your cursor.
           --  This is where a variable was first declared, or where a function is defined, etc.
           --  To jump back, press <C-t>.
-          map('gd', require('telescope.builtin').lsp_definitions, 'Goto Definition')
+          map('grd', require('telescope.builtin').lsp_definitions, 'Goto Definition')
           -- FROM https://github.com/neovim/nvim-lspconfig
           -- vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { buffer = event.buf })
 
+          -- This is not Goto Definition, this is Goto Declaration.
+          --  In C this would take you to the header
+          map('grD', vim.lsp.buf.declaration, 'Goto Declaration')
+
+          -- Fuzzy find all the symbols in your current document.
+          --  Symbols are things like variables, functions, types, etc.
+          -- map('gO', require('telescope.builtin').lsp_document_symbols, 'Document Symbols')
+          map('<leader>ds', require('telescope.builtin').lsp_document_symbols, 'Document symbols')
+
+          -- Fuzzy find all the symbols in your current workspace.
+          --  Similar to document symbols, except searches over your entire project.
+          -- map('gW', require('telescope.builtin').lsp_dynamic_workspace_symbols, 'Workspace Symbols')
+          map('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, 'Workspace symbols')
+
+          -- Jump to the type of the word under your cursor.
+          --  Useful when you're not sure what type a variable is and you want to see
+          --  the definition of its *type*, not where it was *defined*.
+          map('grt', require('telescope.builtin').lsp_type_definitions, 'Type Definition')
+          -- map('<leader>dD', require('telescope.builtin').lsp_type_definitions, 'Type Definition')
+
           -- Opens a popup that displays documentation about the word under your cursor
           --  :help K for why this keymap
-          map('K', vim.lsp.buf.hover, 'Show Documentation')
-
-          -- Jump to the implementation of the word under your cursor.
-          --  Useful when your language has ways of declaring types without an actual implementation.
-          map('gi', require('telescope.builtin').lsp_implementations, 'Goto Implementation')
-          -- FROM https://github.com/neovim/nvim-lspconfig
-          -- keymap clash, gi is 'Move to the last insertion and INSERT', could remap but going with kickstart.nvim keymap gI
-          -- vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, { buffer = event.buf })
+          -- map('K', vim.lsp.buf.hover, 'Show Documentation')
 
           -- FROM https://github.com/neovim/nvim-lspconfig
           -- keymap clash, C-k is for window navigation, you give it code signatures
           vim.keymap.set('n', '<leader>cs', vim.lsp.buf.signature_help, { buffer = event.buf, desc = 'LSP: ' .. 'Signature Help' })
 
-          -- Jump to the type of the word under your cursor.
-          --  Useful when you're not sure what type a variable is and you want to see
-          --  the definition of its *type*, not where it was *defined*.
-          map('<leader>dD', require('telescope.builtin').lsp_type_definitions, 'Type Definition')
-          -- FROM https://github.com/neovim/nvim-lspconfig
-          -- vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, { buffer = event.buf })
-
-          -- Fuzzy find all the symbols in your current document.
-          --  Symbols are things like variables, functions, types, etc.
-          map('<leader>ds', require('telescope.builtin').lsp_document_symbols, 'Document symbols')
-
-          -- Fuzzy find all the symbols in your current workspace
-          --  Similar to document symbols, except searches over your whole project.
-          map('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, 'Workspace symbols')
-
           -- FROM https://github.com/neovim/nvim-lspconfig
           vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, { buffer = event.buf, desc = 'LSP: ' .. 'Add workspace folder' })
           vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, { buffer = event.buf, desc = 'LSP: ' .. 'Remove workspace folder' })
-          vim.keymap.set(
-            'n',
-            '<leader>wl',
-            function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end,
-            { buffer = event.buf, desc = 'LSP: ' .. 'List workspace folders' }
-          )
-
-          -- Execute a code action, usually your cursor needs to be on top of an error
-          -- or a suggestion from your LSP for this to activate.
-          -- OLD map('<leader>ca', vim.lsp.buf.code_action, 'Code action')
-          -- FROM https://github.com/neovim/nvim-lspconfig
-          vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, { buffer = event.buf, desc = 'LSP: ' .. 'Code action' })
-
-          -- Find references for the word under your cursor.
-          map('gr', require('telescope.builtin').lsp_references, 'Goto references')
-          -- FROM https://github.com/neovim/nvim-lspconfig
-          -- vim.keymap.set('n', 'gr', vim.lsp.buf.references, { buffer = event.buf })
+          vim.keymap.set('n', '<leader>wl', function()
+            print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+          end, { buffer = event.buf, desc = 'LSP: ' .. 'List workspace folders' })
 
           -- format document
           -- use conform instead (in autoformat.lua) which fallbacks to LSP if no other formatter is available
@@ -156,7 +199,7 @@ return {
           --   hl-LspReferenceRead
           --   hl-LspReferenceWrite
           local client = vim.lsp.get_client_by_id(event.data.client_id)
-          if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
+          if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight, event.buf) then
             local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
             vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
               buffer = event.buf,
@@ -179,12 +222,43 @@ return {
             })
           end
 
-          -- The following code creates a keymap to toggle inlay hints in your
-          -- code, if the language server you are using supports them.
+          -- The following code creates a keymap to toggle inlay hints in your code, if the language server you are using supports them.
           -- This may be unwanted, since they displace some of your code.
-          if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
-            map('<leader>th', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf }) end, 'Inlay Hints')
+          if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint, event.buf) then
+            map('<leader>th', function()
+              vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
+            end, 'Inlay Hints')
           end
+
+          -- Use trouble
+          -- Diagnostic Config
+          -- See :help vim.diagnostic.Opts
+          -- vim.diagnostic.config {
+          --   severity_sort = true,
+          --   float = { border = 'rounded', source = 'if_many' },
+          --   underline = { severity = vim.diagnostic.severity.ERROR },
+          --   signs = {
+          --     text = {
+          --       [vim.diagnostic.severity.ERROR] = '󰅚 ',
+          --       [vim.diagnostic.severity.WARN] = '󰀪 ',
+          --       [vim.diagnostic.severity.INFO] = '󰋽 ',
+          --       [vim.diagnostic.severity.HINT] = '󰌶 ',
+          --     },
+          --   } or {},
+          --   virtual_text = {
+          --     source = 'if_many',
+          --     spacing = 2,
+          --     format = function(diagnostic)
+          --       local diagnostic_message = {
+          --         [vim.diagnostic.severity.ERROR] = diagnostic.message,
+          --         [vim.diagnostic.severity.WARN] = diagnostic.message,
+          --         [vim.diagnostic.severity.INFO] = diagnostic.message,
+          --         [vim.diagnostic.severity.HINT] = diagnostic.message,
+          --       }
+          --       return diagnostic_message[diagnostic.severity]
+          --     end,
+          --   },
+          -- }
 
           -- Use trouble
           -- Configure diagnostic options
@@ -238,6 +312,12 @@ return {
       --     },
       --   },
       -- }
+
+      -- LSP servers and clients are able to communicate to each other what features they support.
+      --  By default, Neovim doesn't support everything that is in the LSP specification.
+      --  When you add blink.cmp, luasnip, etc. Neovim now has *more* capabilities.
+      --  So, we create new capabilities with blink.cmp, and then broadcast that to the servers.
+      local capabilities = require('blink.cmp').get_lsp_capabilities()
 
       -- :h lspconfig-all
       local servers = {
@@ -321,15 +401,13 @@ return {
         },
 
         -- Tailwind
-        tailwindcss = {
-          filetypes = { 'html', 'javascript' },
-        },
+        -- tailwindcss = {
+        --   filetypes = { 'html', 'javascript' },
+        -- },
 
         -- PHP
         intelephense = {},
       }
-
-      require('mason').setup()
 
       -- You can add other tools here that you want Mason to install for you, so that they are available from within Neovim.
       local ensure_installed = vim.tbl_keys(servers or {})
@@ -364,9 +442,14 @@ return {
 
       ---@diagnostic disable: missing-fields
       require('mason-lspconfig').setup {
+        ensure_installed = {}, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer)
+        automatic_installation = false,
         handlers = {
           function(server_name)
             local server = servers[server_name] or {}
+            -- This handles overriding only values explicitly passed by the server configuration above.
+            -- Useful when disabling certain features of an LSP (for example, turning off formatting for ts_ls)
+            server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
             require('lspconfig')[server_name].setup(server)
           end,
         },

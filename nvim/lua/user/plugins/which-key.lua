@@ -6,8 +6,12 @@
 
 return {
   'folke/which-key.nvim',
-  event = 'VeryLazy',
-  opts = {},
+  event = 'VimEnter',
+  opts = {
+    -- delay between pressing a key and opening which-key (milliseconds)
+    -- this setting is independent of vim.opt.timeoutlen
+    delay = 0,
+  },
   config = function(_, opts)
     local wk = require 'which-key'
     wk.setup(opts)

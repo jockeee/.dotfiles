@@ -10,7 +10,12 @@ vim.opt.mousemodel = 'extend' -- default: popup_setpos
 
 -- Clipboard
 -- Sync clipboard between os and neovim
-vim.opt.clipboard = 'unnamedplus'
+--  Schedule the setting after `UiEnter` because it can increase startup-time.
+--  Remove this option if you want your OS clipboard to remain independent.
+--  :help 'clipboard'
+vim.schedule(function()
+  vim.opt.clipboard = 'unnamedplus'
+end)
 
 -- Appearance
 vim.opt.termguicolors = true -- true color support (24-bit)
@@ -38,11 +43,12 @@ vim.opt.wrap = false -- default: on
 vim.opt.breakindent = true -- wrapped lines will continue visually indented
 
 -- Folding
-vim.opt.foldcolumn = '1'
-vim.opt.foldmethod = 'manual'
+vim.opt.foldenable = true
+vim.opt.foldcolumn = '0'
 vim.opt.foldlevel = 99
 vim.opt.foldlevelstart = 99
-vim.opt.foldenable = true -- default: on
+vim.o.foldmethod = 'expr'
+vim.o.foldexpr = 'v:lua.vim.lsp.foldexpr()'
 
 -- Search Settings
 -- Case-insensitive searching UNLESS \C or capital in search
@@ -59,14 +65,13 @@ vim.opt.splitbelow = true -- put new windows below current -- default: off
 
 -- Save undo history
 vim.opt.undofile = true
-vim.opt.undolevels = 1000 -- default: 1000
 
 -- Swap files
 vim.opt.swapfile = false
 
 -- Decrease update time
 vim.opt.updatetime = 250 -- save swap file and trigger CursorHold
-vim.opt.timeoutlen = 1000 -- default: 1000, time in milliseconds to wait for a mapped sequence to complete, also "time until which-key triggers"
+vim.opt.timeoutlen = 300 -- default: 1000, time in milliseconds to wait for a mapped sequence to complete
 
 -- How neovim will display certain whitespace in the editor.
 vim.opt.list = false -- show invisible characters (tabs...)
@@ -83,6 +88,11 @@ vim.opt.scrolloff = 10 -- lines of context
 
 -- Minimal number of screen columns to keep to the left and to the right of the cursor.
 vim.opt.sidescrolloff = 20 -- columns of context
+
+-- if performing an operation that would fail due to unsaved changes in the buffer (like `:q`),
+-- instead raise a dialog asking if you wish to save the current file(s)
+--  :help 'confirm'
+vim.opt.confirm = true
 
 -- PopUpMenu
 vim.opt.pumheight = 10 -- maximum number of items to show in the popup menu
