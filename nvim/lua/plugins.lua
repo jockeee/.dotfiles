@@ -21,6 +21,7 @@ return {
   require 'user.plugins.todo-comments', -- highlight todo, notes, etc in comments
   require 'user.plugins.trouble', -- pretty diagnostics, references, telescope results, quickfix and location list
   require 'user.plugins.which-key', -- show keybinds
+  require 'user.plugins.nvim-colorizer', -- colorize color codes
 
   -- Editing
   require 'user.plugins.aerial', -- code outline
@@ -32,7 +33,6 @@ return {
   require 'user.plugins.sideways', -- move function arguments (parameters) left and right
   require 'user.plugins.treesj', -- split/join blocks of code -- Disabled: testing mini-splitjoin
   require 'user.plugins.treesitter', -- highlight, edit, and navigate code
-  require 'user.plugins.nvim-colorizer', -- colorize hex color codes
 
   -- Functionality
   require 'user.plugins.auto-session', -- sessions based on working directory
