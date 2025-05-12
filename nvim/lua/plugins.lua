@@ -32,6 +32,7 @@ return {
   require 'user.plugins.sideways', -- move function arguments (parameters) left and right
   require 'user.plugins.treesj', -- split/join blocks of code -- Disabled: testing mini-splitjoin
   require 'user.plugins.treesitter', -- highlight, edit, and navigate code
+  require 'user.plugins.nvim-colorizer', -- colorize hex color codes
 
   -- Functionality
   require 'user.plugins.auto-session', -- sessions based on working directory
