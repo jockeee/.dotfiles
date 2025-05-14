@@ -402,9 +402,9 @@ return {
         },
 
         -- Tailwind
-        -- tailwindcss = {
-        --   filetypes = { 'html', 'javascript' },
-        -- },
+        tailwindcss = {
+          filetypes = { 'html', 'javascript', 'php' },
+        },
 
         -- PHP
         intelephense = {},

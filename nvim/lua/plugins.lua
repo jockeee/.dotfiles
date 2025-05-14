@@ -21,7 +21,7 @@ return {
   require 'user.plugins.todo-comments', -- highlight todo, notes, etc in comments
   require 'user.plugins.trouble', -- pretty diagnostics, references, telescope results, quickfix and location list
   require 'user.plugins.which-key', -- show keybinds
-  require 'user.plugins.nvim-colorizer', -- colorize color codes
+  -- require 'user.plugins.nvim-colorizer', -- colorize color codes
 
   -- Editing
   require 'user.plugins.aerial', -- code outline

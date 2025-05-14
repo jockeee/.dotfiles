@@ -13,7 +13,7 @@ return {
     lint.linters_by_ft = {
       -- If shellcheck is installed, bash-language-server will automatically call
       html = { 'htmlhint' },
-      css = { 'stylelint' },
+      -- css = { 'stylelint' },
     }
 
     vim.api.nvim_create_autocmd({ 'BufWritePost', 'BufReadPost', 'InsertLeave' }, {

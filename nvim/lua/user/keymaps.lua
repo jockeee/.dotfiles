@@ -16,8 +16,17 @@ end)
 vim.keymap.set('t', '<esc>', '<C-\\><C-n>', { desc = 'Exit Terminal Mode' })
 vim.keymap.set({ 'n', 'v', 't' }, '`', '<cmd>Floaterminal<cr>', { desc = 'Toggle Floaterminal' })
 
+-- Mouse, right click
+-- visual mode, yank
+vim.keymap.set('v', '<RightMouse>', 'y', { desc = 'Yank' })
+-- normal mode, toggle fold
+vim.keymap.set('n', '<RightMouse>', function()
+  local mouse = vim.fn.getmousepos()
+  vim.api.nvim_win_set_cursor(0, { mouse.line, mouse.column })
+  vim.cmd 'normal! za'
+end, { desc = 'Toggle Fold' })
+
 -- Yank
-vim.keymap.set('v', '<RightMouse>', 'y', { desc = 'Yank' }) -- Yank with right mouse button
 vim.keymap.set('n', 'yc', '^vg_y', { desc = 'Yank Line Content' })
 vim.keymap.set('n', 'yl', '^vg_y', { desc = 'Yank Line Content' })
 
