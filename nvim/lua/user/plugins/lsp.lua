@@ -383,9 +383,12 @@ return {
         },
 
         -- CSS
-        -- css preposessors: sass, less, scss
         -- LSP: https://github.com/microsoft/vscode-css-languageservice
+        -- Language Server Protocol implementation for CSS, SCSS & LESS.
         cssls = {},
+        -- LSP: https://github.com/vunguyentuan/vscode-css-variables
+        -- Autocompletion and go-to-definition for project-wide CSS variables.
+        css_variables = {},
 
         -- Emmet
         -- https://github.com/aca/emmet-ls

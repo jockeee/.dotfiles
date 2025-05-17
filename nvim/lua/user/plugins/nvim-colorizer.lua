@@ -2,8 +2,28 @@
 -- https://github.com/catgoose/nvim-colorizer.lua
 -- The fastest Neovim colorizer
 --
--- Alternative:
---  https://github.com/echasnovski/mini.hipatterns
+-- Alternatives:
+--  https://github.com/echasnovski/mini.hipatterns/blob/main/doc/mini-hipatterns.txt says:
+--  # Comparisons ~
+-- - 'folke/todo-comments':
+--     - Oriented for "TODO", "NOTE", "FIXME" like patterns, while this module
+--       can work with any Lua patterns and computable highlight groups.
+--     - Has functionality beyond text highlighting (sign placing,
+--       "telescope.nvim" extension, etc.), while this module only focuses on
+--       highlighting text.
+-- - 'folke/paint.nvim':
+--     - Mostly similar to this module, but with slightly less functionality,
+--       such as computed pattern and highlight group, asynchronous delay, etc.
+-- - 'NvChad/nvim-colorizer.lua':
+--     - Oriented for color highlighting, while this module can work with any
+--       Lua patterns and computable highlight groups.
+--     - Has more built-in color spaces to highlight, while this module out of
+--       the box provides only hex color highlighting
+--       (see |MiniHipatterns.gen_highlighter.hex_color()|). Other types are
+--       also possible to implement.
+-- - 'uga-rosa/ccc.nvim':
+--     - Has more than color highlighting functionality, which is compared to
+--       this module in the same way as 'NvChad/nvim-colorizer.lua'.
 
 return {
   'catgoose/nvim-colorizer.lua',
