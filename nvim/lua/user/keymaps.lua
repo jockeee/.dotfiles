@@ -35,6 +35,18 @@ end, { desc = 'Toggle Fold' })
 vim.keymap.set('n', 'yc', '^vg_y', { desc = 'Yank Line Content' })
 vim.keymap.set('n', 'yl', '^vg_y', { desc = 'Yank Line Content' })
 
+-- Keep clipboard content
+vim.keymap.set({ 'n', 'x' }, 'c', '"ac')
+vim.keymap.set({ 'n', 'x' }, 'C', '"aC')
+vim.keymap.set({ 'n', 'x' }, 'd', '"ad')
+vim.keymap.set({ 'n', 'x' }, 'D', '"aD')
+vim.keymap.set({ 'n', 'x' }, 's', '"as')
+vim.keymap.set({ 'n', 'x' }, 'S', '"aS')
+vim.keymap.set({ 'n', 'x' }, 'x', '"ax')
+vim.keymap.set({ 'n', 'x' }, 'X', '"aX')
+vim.keymap.set('x', 'p', '"adP')
+vim.keymap.set('x', 'P', '"adP')
+
 -- Save file
 vim.keymap.set({ 'n', 'v' }, '<C-w><C-w>', '<cmd>w<cr>', { desc = 'Save File' })
 
