@@ -10,6 +10,13 @@ return {
   -- event = { 'BufReadPre', 'BufNewFile' },
   cmd = 'Copilot',
   opts = {
+    server_opts_overrides = {
+      settings = {
+        telemetry = {
+          telemetryLevel = 'off',
+        },
+      },
+    },
     filetypes = {
       sh = function()
         -- Disable Copilot for .env files

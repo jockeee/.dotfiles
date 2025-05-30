@@ -80,6 +80,9 @@ config.keys = {
   -- close pane
   -- https://wezterm.org/config/lua/config/skip_close_confirmation_for_processes_named.html
   { key = 'X', mods = 'LEADER', action = act.CloseCurrentPane { confirm = true } },
+
+  -- unicode popup
+  { key = 'u', mods = 'LEADER', action = act.CharSelect },
 }
 
 -- Local config

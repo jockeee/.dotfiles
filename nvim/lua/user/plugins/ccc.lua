@@ -28,15 +28,27 @@
 return {
   'uga-rosa/ccc.nvim',
   event = 'BufReadPre',
-  opts = {
-    highlighter = {
-      auto_enable = true,
-      lsp = true,
-    },
-  },
-  config = function(_, opts)
+  config = function()
     local ccc = require 'ccc'
-    ccc.setup(opts)
+    ccc.setup {
+      highlighter = {
+        auto_enable = true,
+        lsp = true,
+      },
+      inputs = {
+        ccc.input.rgb, -- default
+        ccc.input.hsl, -- default
+        ccc.input.cmyk, -- default
+        ccc.input.oklch,
+      },
+      outputs = {
+        ccc.output.hex, -- default
+        ccc.output.hex_short, -- default
+        ccc.output.css_rgb, -- default
+        ccc.output.css_hsl, -- default
+        ccc.output.css_oklch,
+      },
+    }
 
     vim.keymap.set('n', '<leader>fc', '<cmd>CccPick<cr>', { desc = 'Color Picker' })
     vim.keymap.set('n', '<leader>cc', '<cmd>CccConvert<cr>', { desc = 'Convert Color' })

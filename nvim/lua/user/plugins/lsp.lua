@@ -390,6 +390,14 @@ return {
         -- Autocompletion and go-to-definition for project-wide CSS variables.
         css_variables = {},
 
+        -- JS
+        ts_ls = {
+          root_dir = require('lspconfig').util.root_pattern { 'package.json', 'tsconfig.json' },
+          single_file_support = false,
+          settings = {},
+        },
+        eslint = {},
+
         -- Emmet
         -- https://github.com/aca/emmet-ls
         emmet_ls = {
