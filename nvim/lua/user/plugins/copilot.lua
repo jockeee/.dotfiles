@@ -11,13 +11,13 @@ return {
   cmd = 'Copilot',
   opts = {
     filetypes = {
-      [''] = false,
+      [''] = false, -- disable for buffers with no filetype
       sh = function()
-        -- Disable Copilot for .env files
+        -- disable copilot for .env files
         if string.match(vim.fs.basename(vim.api.nvim_buf_get_name(0)), '^%.env.*') then return false end
         return true
       end,
-      text = false, -- Disable Copilot for text files
+      text = false, -- disable copilot for text files
     },
     server_opts_overrides = {
       settings = {
