@@ -14,7 +14,7 @@ return {
       -- Disable Copilot if filetype is empty
       if vim.bo.filetype == '' then return false end
       -- Disable Copilot for certain file patterns
-      local disabled_patterns = { '^%.env.*', '%.key$', '%.fullchain$' }
+      local disabled_patterns = { '^%.env.*', '^*.%.key$', '^*.%.fullchain$' }
       local filename = vim.fs.basename(vim.api.nvim_buf_get_name(0))
       for _, pattern in ipairs(disabled_patterns) do
         if string.match(filename, pattern) then return false end
