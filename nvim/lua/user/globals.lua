@@ -1,16 +1,23 @@
 --
 -- globals.lua
 
--- Set <space> as the leader key
--- Must happen before plugins are loaded (otherwise wrong leader will be used)
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
+local fn, g, opt = vim.fn, vim.g, vim.opt
+
+-- disable providers
+-- :healthcheck providers
+g.loaded_node_provider = 0
+g.loaded_perl_provider = 0
+g.loaded_python3_provider = 0
+g.loaded_ruby_provider = 0
+
+g.mapleader = ' '
+g.maplocalleader = ' '
 
 -- Disable Netrw (nvim-tree)
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
+g.loaded_netrw = 1
+g.loaded_netrwPlugin = 1
 
-vim.g.colorscheme = 'nordic'
+g.colorscheme = 'nordic'
 
 -- MyTabline
 function MyTabline()

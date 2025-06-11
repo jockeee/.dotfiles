@@ -77,6 +77,7 @@ abbr --add r rg
 abbr --add g rg
 abbr --add t tree
 abbr --add v vim
+abbr --add vv 'NVIM_APPNAME=nvim-clean vim'
 
 # tmux
 # https://github.com/lewisacidic/fish-tmux-abbr

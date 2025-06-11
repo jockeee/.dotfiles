@@ -4,9 +4,11 @@
 -- :h vim.opt
 -- :h option-list
 
+local fn, g, opt = vim.fn, vim.g, vim.opt
+
 -- Mouse
-vim.opt.mouse = 'a'
-vim.opt.mousemodel = 'extend' -- default: popup_setpos
+-- vim.opt.mouse = 'a'
+-- vim.opt.mousemodel = 'extend' -- default: popup_setpos
 
 -- Clipboard
 -- Sync clipboard between os and neovim
@@ -75,8 +77,8 @@ vim.opt.updatetime = 250 -- save swap file and trigger CursorHold
 vim.opt.timeoutlen = 1000 -- default: 1000, time in milliseconds to wait for a mapped sequence to complete
 
 -- How neovim will display certain whitespace in the editor.
-vim.opt.list = false -- show invisible characters (tabs...)
--- vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+vim.opt.list = true -- show invisible characters (tabs...)
+vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
 -- Preview substitutions live, as you type!
 vim.opt.inccommand = 'split'

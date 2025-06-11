@@ -56,7 +56,7 @@ return {
   require 'user.plugins.markdown',
 
   -- SQL
-  require 'user.plugins.vim-dadbod', -- vim-dadbod, vim-dadbod-ui, vim-dadbod-completion
+  -- require 'user.plugins.vim-dadbod', -- vim-dadbod, vim-dadbod-ui, vim-dadbod-completion
 
   -- HTTP
   require 'user.plugins.hurl',

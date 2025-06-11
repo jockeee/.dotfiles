@@ -1,10 +1,6 @@
 --
 -- filetypes.lua
 
--- .templ
--- https://templ.guide/commands-and-tools/ide-support/#neovim--050
--- vim.filetype.add { extension = { templ = 'templ' } }
-
 vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
   group = vim.api.nvim_create_augroup('DetectAnsibleYaml', { clear = true }),
   pattern = { '*.yml', '*.yaml' },

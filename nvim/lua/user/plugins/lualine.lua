@@ -75,7 +75,7 @@ return {
         'fileformat',
         'filetype',
       },
-      lualine_y = { 'progress' },
+      lualine_y = { '' }, -- default: 'progress'
       lualine_z = { 'location' }, -- default: 'location'
     },
     inactive_sections = {
@@ -104,7 +104,7 @@ return {
         'fileformat',
         'filetype',
       },
-      lualine_y = { 'progress' },
+      lualine_y = { '' }, -- default: 'progress'
       lualine_z = { 'location' }, -- default: 'location'
     },
     extensions = { 'nvim-tree' },
