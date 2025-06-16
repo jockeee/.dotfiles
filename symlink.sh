@@ -55,7 +55,7 @@ fi
 if [ -d ~/.config/nvim ]; then
     echo "[info]: ~/.config/nvim already exists, skipping symlink creation."
 else
-    ln -s ~/.dotfiles/nvim ~/.config/.
+    ln -s ~/.dotfiles/nvim-lazy-telescope ~/.config/.
 fi
 
 # bat
