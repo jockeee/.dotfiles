@@ -3,72 +3,69 @@
 
 return {
   -- Lua
-  require 'user.plugins.plenary', -- lua functions that many plugins use
+  require 'plugin.plenary', -- lua functions that many plugins use
 
   -- Colorscheme
-  require 'user.plugins.colorscheme.nordic',
-  -- require 'user.plugins.colorscheme.catppuccin',
-  -- require 'user.plugins.colorscheme.vscode',
-  -- require 'user.plugins.colorscheme.kanagawa',
+  require 'plugin.colorscheme.nordic',
+  -- require 'plugin.colorscheme.catppuccin',
+  -- require 'plugin.colorscheme.vscode',
+  -- require 'plugin.colorscheme.kanagawa',
 
   -- Visual
-  require 'user.plugins.lualine', -- statusline
-  require 'user.plugins.nvim-tree', -- file explorer
-  require 'user.plugins.nvim-web-devicons', -- icons
-  require 'user.plugins.oil', -- file explorer
-  require 'user.plugins.telescope',
-  -- require 'user.plugins.snacks-picker',
-  require 'user.plugins.todo-comments', -- highlight todo, notes, etc in comments
-  require 'user.plugins.trouble', -- pretty diagnostics, references, telescope results, quickfix and location list
-  require 'user.plugins.which-key', -- show keybinds
-  -- require 'user.plugins.oklch-color-picker', -- colorize color codes
-  require 'user.plugins.ccc', -- colorize color codes
-  -- require 'user.plugins.nvim-colorizer', -- colorize color codes
+  require 'plugin.lualine', -- statusline
+  require 'plugin.nvim-tree', -- file explorer
+  require 'plugin.nvim-web-devicons', -- icons
+  require 'plugin.oil', -- file explorer
+  require 'plugin.telescope',
+  -- require 'plugin.snacks-picker',
+  require 'plugin.todo-comments', -- highlight todo, notes, etc in comments
+  require 'plugin.trouble', -- pretty diagnostics, references, telescope results, quickfix and location list
+  require 'plugin.which-key', -- show keybinds
+  -- require 'plugin.oklch-color-picker', -- colorize color codes
+  require 'plugin.ccc', -- colorize color codes
+  -- require 'plugin.nvim-colorizer', -- colorize color codes
 
   -- Editing
-  require 'user.plugins.aerial', -- code outline
-  require 'user.plugins.nvim-ufo', -- folding
-  require 'user.plugins.mini', -- various small independent plugins/modules
-  require 'user.plugins.multicursor',
-  require 'user.plugins.nvim-autopairs', -- automatically insert or delete brackets, parens, quotes in pair
-  require 'user.plugins.nvim-surround', -- add/change/delete surrounding delimiter pairs with ease
-  require 'user.plugins.sideways', -- move function arguments (parameters) left and right
-  require 'user.plugins.treesj', -- split/join blocks of code -- Disabled: testing mini-splitjoin
-  require 'user.plugins.treesitter', -- highlight, edit, and navigate code
+  require 'plugin.aerial', -- code outline
+  require 'plugin.nvim-ufo', -- folding
+  require 'plugin.mini', -- various small independent plugins/modules
+  require 'plugin.multicursor',
+  require 'plugin.nvim-autopairs', -- automatically insert or delete brackets, parens, quotes in pair
+  require 'plugin.nvim-surround', -- add/change/delete surrounding delimiter pairs with ease
+  require 'plugin.sideways', -- move function arguments (parameters) left and right
+  require 'plugin.treesj', -- split/join blocks of code -- Disabled: testing mini-splitjoin
+  require 'plugin.treesitter', -- highlight, edit, and navigate code
 
   -- Functionality
-  require 'user.plugins.auto-session', -- sessions based on working directory
-  require 'user.plugins.flash', -- quick navigation, buffer
-  require 'user.plugins.harpoon', -- quick navigation, files
-  require 'user.plugins.smart-splits', -- window navigation
-  -- require 'user.plugins.vim-tmux-navigator', -- window navigation
+  require 'plugin.auto-session', -- sessions based on working directory
+  require 'plugin.flash', -- quick navigation, buffer
+  require 'plugin.harpoon', -- quick navigation, files
+  require 'plugin.smart-splits', -- window navigation
+  -- require 'plugin.vim-tmux-navigator', -- window navigation
 
   -- Formatting, LSP, Completion, Linting
-  require 'user.plugins.conform',
-  require 'user.plugins.lsp',
-  require 'user.plugins.completion',
-  require 'user.plugins.linting',
+  require 'plugin.conform',
+  require 'plugin.lsp',
+  require 'plugin.completion',
+  require 'plugin.linting',
 
   -- Git
-  require 'user.plugins.gitsigns', -- adds git related signs to the gutter, and utilities for managing changes
-
-  -- Markdown
-  require 'user.plugins.markdown',
+  require 'plugin.gitsigns', -- adds git related signs to the gutter, and utilities for managing changes
 
   -- SQL
-  -- require 'user.plugins.vim-dadbod', -- vim-dadbod, vim-dadbod-ui, vim-dadbod-completion
+  -- require 'plugin.vim-dadbod', -- vim-dadbod, vim-dadbod-ui, vim-dadbod-completion
 
   -- HTTP
-  require 'user.plugins.hurl',
+  require 'plugin.hurl',
 
   -- Github Copilot
-  require 'user.plugins.copilot', -- inline code completion
-  require 'user.plugins.copilotchat', -- chat with copilot
+  require 'plugin.copilot', -- inline code completion
+  require 'plugin.copilotchat', -- chat with copilot
 
   -- Local plugins
-  -- require 'user.plugins.dev',
+  -- require 'plugin.dev',
 
   -- Test plugins
-  -- require 'user.plugins.test.bufferline', -- test as tabline
-  -- require 'user.plugins.test.dropbar',
+  -- require 'plugin.test.bufferline', -- test as tabline
+  -- require 'plugin.test.dropbar',
 }

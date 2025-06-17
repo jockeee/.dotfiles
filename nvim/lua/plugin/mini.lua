@@ -11,9 +11,7 @@ return {
     require('mini.ai').setup {
       n_lines = 500, -- number of lines within which textobject is searched
     }
-
     require('mini.icons').setup()
-
     -- require('mini.statusline').setup()
   end,
 }

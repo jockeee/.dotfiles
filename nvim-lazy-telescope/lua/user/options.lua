@@ -24,12 +24,17 @@ opt.termguicolors = true -- true color support (24-bit)
 opt.background = 'dark' -- colorschemes that can be light or dark will be made dark
 opt.colorcolumn = '' -- right margin column
 opt.cursorline = false -- highlight current line
+opt.inccommand = 'split' -- d: nosplit, preview substitutions live as you type
 opt.signcolumn = 'yes' -- always show sign column
 opt.showmode = false -- show current mode (insert, normal, visual, etc) in bottom bar
 opt.showcmd = false -- show command in bottom bar -- default: on
 opt.showtabline = 1 -- default: 1, 0=never, 1=only if there are at least two tab pages, 2=always
 opt.tabline = '%!v:lua.User.Tabline()'
 -- opt.guicursor:append 't:blinkon0' -- cursor blinking, it's too beautiful, hypnotic.
+
+opt.pumheight = 10 -- popupmenu, maximum number of items to show in the popup menu
+opt.scrolloff = 10 -- lines of context, minimal number of screen lines to keep above and below the cursor.
+opt.sidescrolloff = 20 -- columns of context, minimal number of screen columns to keep to the left and to the right of the cursor.
 
 -- if performing an operation that would fail due to unsaved changes in the buffer (like `:q`),
 -- instead raise a dialog asking if you wish to save the current file(s)
@@ -76,6 +81,9 @@ opt.splitbelow = true -- put new windows below current -- default: off
 opt.undofile = true
 
 -- Swap files
+-- Careful: All text will be in memory:
+--  - Don't use this for big files.
+--  - Recovery will be impossible!
 opt.swapfile = false
 
 -- Decrease update time
@@ -85,20 +93,6 @@ opt.timeoutlen = 1000 -- default: 1000, time in milliseconds to wait for a mappe
 -- How neovim will display certain whitespace in the editor.
 opt.list = true -- show invisible characters (tabs...)
 opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
-
--- Preview substitutions live, as you type!
-opt.inccommand = 'split'
-
--- Show which line your cursor is on
-
--- Minimal number of screen lines to keep above and below the cursor.
-opt.scrolloff = 10 -- lines of context
-
--- Minimal number of screen columns to keep to the left and to the right of the cursor.
-opt.sidescrolloff = 20 -- columns of context
-
--- PopUpMenu
-opt.pumheight = 10 -- maximum number of items to show in the popup menu
 
 -- Sessions
 -- auto-session plugin suggests these sessionoptions

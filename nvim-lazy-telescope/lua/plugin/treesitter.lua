@@ -1,5 +1,6 @@
 --
--- https://github.com/nvim-treesitter/nvim-treesitter
+-- nvim-treesitter/nvim-treesitter
+
 -- highlight, edit, and navigate code
 --
 -- :h nvim-treesitter
@@ -13,7 +14,8 @@
 
 return {
   'nvim-treesitter/nvim-treesitter',
-  event = { 'BufReadPre', 'BufNewFile' },
+  lazy = false,
+  -- event = { 'BufReadPre', 'BufNewFile' },
   dependencies = {
     'nvim-treesitter/nvim-treesitter-context',
     'nvim-treesitter/nvim-treesitter-textobjects',

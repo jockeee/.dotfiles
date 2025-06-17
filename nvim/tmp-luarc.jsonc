@@ -1,0 +1,26 @@
+{
+  // Set Lua runtime version
+  "Lua": {
+    "runtime": {
+      "version": "LuaJIT" // Neovim uses LuaJIT
+    },
+
+    // Recognize Neovim globals like "vim"
+    "diagnostics": {
+      "globals": ["vim"]
+    },
+
+    // Disable telemetry
+    "telemetry": {
+      "enable": false
+    }
+  },
+
+  // Define the workspace and prevent scanning for 3rd party deps
+  "workspace": {
+    "checkThirdParty": true, // don't scan for rockspecs or similar
+    "library": [
+      "${3rd}/nvim/library" // add Neovim runtime for completion & types
+    ]
+  }
+}

@@ -4,7 +4,7 @@
 -- Automatic indentation style detection for Neovim
 
 return {
-  'NMAC427/guess-indent.nvim', -- Detect tabstop and shiftwidth automatically
+  'NMAC427/guess-indent.nvim',
   event = 'BufReadPre',
   opts = {},
 }

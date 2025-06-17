@@ -8,8 +8,8 @@ vim.keymap.set({ 'n', 'v' }, '<space>', '<nop>')
 -- vim.keymap.set('n', '<esc>', '<cmd>nohlsearch<cr><cmd>lua require("user.utils").hl_search_index_clear()<cr>')
 vim.keymap.set('n', '<esc>', function()
   vim.cmd 'nohlsearch'
-  require('user.utils').hl_search_index_clear()
-  require('multicursor-nvim').clearCursors()
+  require('user.utils').search_index_clear()
+  -- require('multicursor-nvim').clearCursors()
 end)
 vim.api.nvim_create_autocmd('TermOpen', {
   callback = function()
@@ -28,7 +28,9 @@ vim.keymap.set('v', '<RightMouse>', 'y', { desc = 'Yank' })
 vim.keymap.set('n', '<RightMouse>', function()
   local mouse = vim.fn.getmousepos()
   vim.api.nvim_win_set_cursor(0, { mouse.line, mouse.column })
-  if vim.fn.foldclosed '.' ~= -1 then vim.cmd 'normal! za' end
+  if vim.fn.foldclosed '.' ~= -1 then
+    vim.cmd 'normal! za'
+  end
 end, { desc = 'Toggle Fold' })
 
 -- Yank
@@ -101,13 +103,17 @@ vim.keymap.set({ 'i', 'n', 'v', 't' }, '<M-v>', '<cmd>tabprevious<cr>', { desc =
 vim.keymap.set({ 'i', 'n', 'v', 't' }, '<M-b>', '<cmd>tabnext<cr>', { desc = 'Next Tab' })
 vim.keymap.set({ 'i', 'n', 'v', 't' }, '<S-M-v>', function()
   local current_tab = vim.fn.tabpagenr()
-  if current_tab > 1 then vim.cmd '-tabmove' end
+  if current_tab > 1 then
+    vim.cmd '-tabmove'
+  end
 end, { desc = 'Move Tab Left' })
 
 vim.keymap.set({ 'i', 'n', 'v', 't' }, '<S-M-b>', function()
   local current_tab = vim.fn.tabpagenr()
   local total_tabs = vim.fn.tabpagenr '$'
-  if current_tab < total_tabs then vim.cmd '+tabmove' end
+  if current_tab < total_tabs then
+    vim.cmd '+tabmove'
+  end
 end, { desc = 'Move Tab Right' })
 for idx, char in ipairs { 'z', 'x', 'c' } do
   vim.keymap.set({ 'n', 'v' }, string.format('<M-%s>', char), string.format('%sgt', idx), { desc = 'Switch to tab ' .. idx })
@@ -120,7 +126,7 @@ vim.keymap.set('v', '>', '>gv')
 -- Search index
 local keys = { 'n', 'N', '*', '#', 'g*', 'g#' }
 for _, key in ipairs(keys) do
-  vim.keymap.set('n', key, key .. '<cmd>lua require("user.utils").hl_search_index()<cr>', { desc = 'Search Index' })
+  vim.keymap.set('n', key, key .. '<cmd>lua require("user.utils").search_index()<cr>', { desc = 'Search Index' })
 end
 
 -- Quickfix
@@ -247,7 +253,9 @@ end, { desc = 'Execute line, bash > clipboard' })
 -- open tests/curl.sh in a split to the right
 vim.keymap.set('n', '<leader>dc', function()
   local git_root = vim.fn.systemlist('git rev-parse --show-toplevel')[1]
-  if not git_root or git_root == '' then print 'Not in a git repository' end
+  if not git_root or git_root == '' then
+    print 'Not in a git repository'
+  end
   local tests_curl = git_root .. '/tests/curl.sh'
 
   if vim.fn.filereadable(tests_curl) == 1 then
