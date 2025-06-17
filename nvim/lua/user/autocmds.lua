@@ -10,7 +10,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
--- disable copilot, swap, backup & undo for certain filetypes and paths
+-- disable swap, backup, undo & copilot for certain filetypes and paths
 vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
   callback = function()
     local path = vim.fn.expand '%:p' or ''
