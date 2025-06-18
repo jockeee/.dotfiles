@@ -8,58 +8,80 @@ return {
     priority = 1000,
     init = function()
       local nordic = require 'nordic'
+      local utils = require 'nordic.utils'
 
-      local fg = '#b1b1b1'
       local bg = '#1f1f1f'
+      local fg = '#b1b1b1'
 
       nordic.setup {
-        -- overriding colors in the base palette
         on_palette = function(palette)
-          -- Backgrounds
-          palette.gray0 = bg -- default: #242933,
-
-          -- Floating windows
-          palette.black1 = bg
-
-          -- Cursorline Background
-          palette.black0 = bg
+          -- Override base palette
+          palette.gray0 = bg -- gray0 used for default background
+          -- palette.black1 = bg -- floating window background
+          -- palette.black0 = bg -- cursorline background
         end,
 
         -- setting colors after the palette has been applied
         -- see: https://github.com/AlexvZyl/nordic.nvim/blob/main/lua/nordic/colors/init.lua
         after_palette = function(palette)
-          local U = require 'nordic.utils'
           palette.bg_fold = bg
-          palette.bg_visual = U.blend(palette.orange.base, palette.bg, 0.15)
-          palette.comment = U.blend(palette.gray0, palette.fg, 0.5)
+          palette.bg_visual = utils.blend(palette.orange.base, palette.bg, 0.15)
+          palette.comment = utils.blend(palette.gray0, palette.fg, 0.5)
         end,
 
         italic_comments = true,
         bright_border = true,
         telescope = {
           -- Available styles: `classic`, `flat`.
-          style = 'classic',
+          style = 'classic', --
         },
       }
 
       vim.cmd.colorscheme 'nordic'
       vim.g.colorscheme = 'nordic' -- lazy.lua and lualine.lua
 
-      vim.cmd.highlight('MsgArea guifg=' .. fg .. ' guibg=' .. bg)
-      -- vim.cmd.highlight('FoldColumn guibg=' .. bg)
-      -- vim.cmd.highlight 'ColorColumn guibg=#1b1b29'
-      -- vim.cmd.highlight 'StatusLine guibg=#2c2c2c' -- status line "separator", active
-      -- vim.cmd.highlight 'StatusLineNC guibg=#2c2c2c' -- status line "separator", inactive
-      vim.cmd.highlight('TabLine guifg=#7c7d83 guibg=' .. bg) -- tab not selected
-      vim.cmd.highlight('TabLineSel guibg=' .. bg) -- tab selected
-      vim.cmd.highlight('TabLineFill guibg=' .. bg) -- tabline row
-      vim.cmd.highlight 'WinSeparator guifg=#2c2c2c' -- window separator
-      -- vim.cmd.highlight 'LineNr guifg=#2c2c2c' -- line numbers
-      -- vim.cmd.highlight '@string.special.url term=none cterm=none'
+      local palette = require 'nordic.colors'
 
-      -- html
-      vim.cmd.highlight '@tag.delimiter.html guifg=#7c7d83' -- html tag delimiter
-      vim.cmd.highlight '@none.html guifg=#868686' -- html tag delimiter
+      -- UI
+      vim.api.nvim_set_hl(0, 'NormalFloat', { bg = bg })
+      vim.api.nvim_set_hl(0, 'CursorLine', {
+        bg = utils.blend('#000000', palette.bg, 0.15),
+      })
+      vim.api.nvim_set_hl(0, 'MsgArea', { fg = fg, bg = bg })
+      vim.api.nvim_set_hl(0, 'TabLine', { fg = '#7c7d83', bg = bg }) -- tab not selected
+      vim.api.nvim_set_hl(0, 'TabLineSel', { bg = bg }) -- tab selected
+      vim.api.nvim_set_hl(0, 'TabLineFill', { bg = bg }) -- tabline row
+      vim.api.nvim_set_hl(0, 'WinSeparator', { fg = '#2c2c2c' }) -- window separator
+      -- vim.api.nvim_set_hl(0, "LineNr", { fg = "#2c2c2c" })
+      -- vim.api.nvim_set_hl(0, "FoldColumn", { bg = bg })
+      -- vim.api.nvim_set_hl(0, "ColorColumn", { bg = "#1b1b29" })
+      -- vim.api.nvim_set_hl(0, "StatusLine", { bg = "#2c2c2c" })
+      -- vim.api.nvim_set_hl(0, "StatusLineNC", { bg = "#2c2c2c" })
+
+      -- LSP reference highlights
+      local orangedark = utils.blend(palette.orange.dim, palette.bg, 0.08)
+
+      vim.api.nvim_set_hl(0, 'LspReferenceText', {
+        bg = orangedark,
+        -- bg = utils.blend(palette.orange.dim, palette.bg, 0.08),
+      })
+
+      vim.api.nvim_set_hl(0, 'LspReferenceRead', {
+        bg = orangedark,
+        -- bg = utils.blend(palette.orange.dim, palette.bg, 0.08),
+        -- bg = utils.blend(palette.blue1, palette.bg, 0.10),
+      })
+
+      vim.api.nvim_set_hl(0, 'LspReferenceWrite', {
+        bg = orangedark,
+        -- bg = utils.blend(palette.orange.dim, palette.bg, 0.08),
+        -- bg = utils.blend(palette.red.base, palette.bg, 0.12),
+      })
+
+      -- Treesitter HTML
+      vim.api.nvim_set_hl(0, '@tag.delimiter.html', { fg = '#7c7d83' }) -- html tag delimiter
+      vim.api.nvim_set_hl(0, '@none.html', { fg = '#868686' }) -- html special none
+      -- vim.api.nvim_set_hl(0, "@string.special.url", { bold = false, underline = false })
     end,
   },
 }

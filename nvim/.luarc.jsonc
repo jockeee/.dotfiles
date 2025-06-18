@@ -25,7 +25,7 @@
     "globals": [
       "vim",       // Neovim API global
       "require",   // Lua require function
-      "use",       // Packer or lazy.nvim plugin loader, add if you use it
+      // "use",       // Packer or lazy.nvim plugin loader, add if you use it
       // Add your project-specific globals here if needed, e.g.:
       // "AwesomeGlobal"
     ]

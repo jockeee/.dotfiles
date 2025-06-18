@@ -77,7 +77,8 @@ abbr --add r rg
 abbr --add g rg
 abbr --add t tree
 abbr --add v vim
-abbr --add vo 'NVIM_APPNAME=nvim-prev vim'
+abbr --add vo 'NVIM_APPNAME=nvim-prev vim' # old
+abbr --add vn 'NVIM_APPNAME=nvim-test vim' # new
 
 # tmux
 # https://github.com/lewisacidic/fish-tmux-abbr
