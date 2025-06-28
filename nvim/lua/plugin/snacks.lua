@@ -91,7 +91,7 @@ return {
     vim.keymap.set('n', '<leader>fk', snacks.picker.keymaps, { desc = 'keymaps' })
     vim.keymap.set('n', '<leader>fg', snacks.picker.git_grep, { desc = 'git grep' })
     vim.keymap.set('n', '<leader>fp', snacks.picker.git_files, { desc = 'git files' }) -- project files
-    vim.keymap.set('n', '<leader>fw', snacks.picker.grep_word, { desc = 'word' }) -- string under cursor or selection
+    vim.keymap.set({ 'n', 'x' }, '<leader>fw', snacks.picker.grep_word, { desc = 'word' }) -- string under cursor or selection
 
     -- Open a project from zoxide
     -- :lua Snacks.picker.zoxide(opts?)
