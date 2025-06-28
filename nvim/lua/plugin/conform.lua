@@ -23,9 +23,11 @@ return {
       lsp_format = 'fallback',
     },
     formatters_by_ft = {
-      sh = { 'shfmt' },
+      css = { 'prettierd' },
       fish = { 'fish_indent' },
+      html = { 'prettierd' },
       lua = { 'stylua' },
+      sh = { 'shfmt' },
       -- Conform can also run multiple formatters sequentially
       -- python = { "isort", "black" },
       --

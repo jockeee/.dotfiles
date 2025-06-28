@@ -32,7 +32,7 @@ return {
     -- ensure_installed
     --  "base"  kickstart.nvim
     --  regex   Snacks.picker
-    ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'regex', 'vim', 'vimdoc' },
+    ensure_installed = { 'bash', 'c', 'css', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'regex', 'vim', 'vimdoc' },
     auto_install = true, -- autoinstall languages that are not installed
     highlight = {
       enable = true,

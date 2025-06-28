@@ -8,7 +8,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(event)
     local map = function(keys, func, desc, mode)
       mode = mode or 'n'
-      vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'lsp ' .. desc })
+      vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'Lsp: ' .. desc })
     end
 
     map('grn', vim.lsp.buf.rename, 'rename') -- most language servers support renaming across files
@@ -29,7 +29,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint, event.buf) then
       vim.keymap.set('n', '<leader>ti', function()
         vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
-      end, { desc = 'lsp inlay hints' })
+      end, { desc = 'Lsp: inlay hints' })
     end
   end,
 })

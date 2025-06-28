@@ -5,6 +5,8 @@
 -- Pickers
 --  :h snacks-picker-sources
 --  https://github.com/folke/snacks.nvim/blob/main/docs/picker.md#-sources
+--  default keybinds for pickers use <M-char>, same in Explorer.
+--    M-h   hidden files
 
 -- files and grep support adding options like:
 --  `foo -- -e=lua` to the command, so you can filter the results.
@@ -18,17 +20,31 @@ return {
   opts = {
     bigfile = {},
     explorer = {},
-    image = {},
+    ---@type snacks.image.Config
+    image = {
+      doc = {
+        -- render the image inline in the buffer
+        -- if your env doesn't support unicode placeholders, this will be disabled
+        -- takes precedence over `opts.float` on supported terminals
+        inline = true, -- healthcheck says wezterm is not supported
+        -- render the image in a floating window
+        -- only used if `opts.inline` is disabled
+        float = false,
+        max_width = 40, -- d: 80
+        max_height = 20, -- d: 40
+      },
+    },
     lazygit = {},
     ---@type snacks.picker.Config
     picker = {
-      layout = {
-        preset = 'ivy',
-      },
+      -- layout = {
+      --   preset = 'ivy',
+      -- },
       sources = {
         files = {
-          hidden = true, -- include dotfiles
+          hidden = false, -- include dotfiles
           -- no_ignore = true,   -- show files ignored by .gitignore
+          exclude = { '*.woff*' },
         },
         explorer = {
           hidden = true, -- include dotfiles
@@ -58,6 +74,8 @@ return {
   config = function(_, opts)
     local snacks = require 'snacks'
     snacks.setup(opts)
+
+    vim.keymap.set('n', '<leader>ci', snacks.image.hover, { desc = 'Snacks: image' })
 
     vim.keymap.set('n', '<leader>g', snacks.lazygit.open, { desc = 'Lazygit' })
 

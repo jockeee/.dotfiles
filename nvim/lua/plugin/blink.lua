@@ -47,7 +47,8 @@ return { -- Completion
 
     sources = {
       -- add lazydev to your completion providers
-      default = { 'lazydev', 'lsp', 'path', 'snippets' },
+      -- default = { 'lazydev', 'lsp', 'path', 'snippets' },
+      default = { 'lazydev', 'lsp', 'path' },
       providers = {
         lazydev = {
           name = 'LazyDev',
