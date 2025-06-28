@@ -15,9 +15,9 @@ vim.diagnostic.config {
       [vim.diagnostic.severity.HINT] = '󰌶 ',
     },
   },
-  virtual_lines = {
-    current_line = true,
-  },
+  -- virtual_lines = {
+  --   current_line = true,
+  -- },
   -- virtual_lines = true,
   -- virtual_text = {
   --   current_line = true,
@@ -26,8 +26,25 @@ vim.diagnostic.config {
   -- },
 }
 
+-- Toggle virtual lines
+vim.keymap.set('n', '<leader>tv', function()
+  local config = vim.diagnostic.config()
+  local current = config and config.virtual_lines
+
+  local enabled = false
+  if type(current) == 'table' then
+    ---@diagnostic disable-next-line: undefined-field
+    enabled = current.enabled or false
+  elseif type(current) == 'boolean' then
+    enabled = current
+  end
+
+  vim.diagnostic.config { virtual_lines = not enabled }
+end, { desc = 'Diagnostic: virtual lines' })
+
+vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Diagnostic: show message' })
+
 -- Diagnostics (https://github.com/neovim/nvim-lspconfig)
 -- vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Prev Diagnostic Message' }) -- included in v0.11, [d
 -- vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Next Diagnostic Message' }) -- included in v0.11, ]d
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Diagnostic: show message' })
 -- vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open Diagnostic Quickfix List' }) -- trouble, leader-xx
