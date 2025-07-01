@@ -192,6 +192,9 @@ config.keys = {
   -- Send C-l
   { key = 'l', mods = 'LEADER|CTRL', action = act.SendKey { key = 'l', mods = 'CTRL' } },
 
+  -- Send M-t, Transpose (swap) current and previous word
+  { key = 't', mods = 'LEADER|ALT', action = act.SendKey { key = 't', mods = 'ALT' } },
+
   {
     key = 'p',
     mods = 'LEADER|CTRL',
