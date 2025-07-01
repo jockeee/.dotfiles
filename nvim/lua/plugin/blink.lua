@@ -8,6 +8,7 @@ return {
   version = '1.*',
   dependencies = {
     'folke/lazydev.nvim',
+    'rafamadriz/friendly-snippets',
   },
   --- @module 'blink.cmp'
   --- @type blink.cmp.Config
@@ -45,14 +46,14 @@ return {
 
     keymap = {
       preset = 'super-tab',
-      -- -- this makes copilot chat accept markdown behave weird
+      -- this makes copilot chat accept markdown behave weird
       -- ['<C-y>'] = { 'select_and_accept', 'fallback' },
     },
 
     sources = {
       -- add lazydev to your completion providers
       -- default = { 'lazydev', 'lsp', 'path', 'snippets' },
-      default = { 'lazydev', 'lsp', 'path', 'buffer' },
+      default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer' },
       providers = {
         lazydev = {
           name = 'LazyDev',
