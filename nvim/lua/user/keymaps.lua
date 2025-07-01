@@ -263,14 +263,14 @@ vim.keymap.set('v', '<leader>zx', ':lua<CR>', { desc = 'Lua: execute selection' 
 
 -- Leader t: Toggle
 
--- vim.keymap.set('n', '<leader>tl', function()
+-- vim.keymap.set('n', '<leader>tL', function()
 --   vim.o.colorcolumn = vim.o.colorcolumn == '' and '100' or ''
 --   -- vim.opt.colorcolumn = vim.inspect(vim.opt.colorcolumn:get()) == '{}' and { 100 } or {}
--- end, { desc = 'Column limits' })
-vim.keymap.set('n', '<leader>tc', function()
+-- end, { desc = 'UI color columns' })
+vim.keymap.set('n', '<leader>tL', function()
   vim.o.colorcolumn = vim.o.colorcolumn == '' and '81,101' or ''
   -- vim.opt.colorcolumn = vim.inspect(vim.opt.colorcolumn:get()) == '{}' and { 80, 100 } or {}
-end, { desc = 'Color Column Limits' })
+end, { desc = 'UI color columns' })
 
 local function get_color_cols()
   local ok_colors, colors = pcall(require, 'nordic.colors')
@@ -303,10 +303,14 @@ local function UserLineColorColumns()
     colorcol_enabled = true
   end
 end
-UserLineColorColumns()
-vim.keymap.set('n', '<leader>tl', UserLineColorColumns)
+vim.keymap.set('n', '<leader>tl', UserLineColorColumns, { desc = 'Line color columns' })
+vim.api.nvim_create_autocmd('UIEnter', {
+  group = vim.api.nvim_create_augroup('u-line-color-columns', { clear = true }),
+  callback = UserLineColorColumns,
+  desc = 'Set line color columns on startup',
+})
 
--- vim.keymap.set('n', '<leader>tc', '<cmd>set cursorline!<cr>', { desc = 'Cursor line' }) -- lua vim.opt.cursorline = not vim.opt.cursorline:get()
+vim.keymap.set('n', '<leader>tc', '<cmd>set cursorline!<cr>', { desc = 'Cursor line' }) -- lua vim.opt.cursorline = not vim.opt.cursorline:get()
 vim.keymap.set('n', '<leader>tr', '<cmd>set relativenumber!<cr>', { desc = 'Relative numbers' }) -- set rnu! or lua vim.opt.relativenumber = not vim.opt.relativenumber:get()
 vim.keymap.set('n', '<leader>ts', '<cmd>windo set scrollbind!<cr>', { desc = 'Scrollbind, in open windows' })
 vim.keymap.set('n', '<leader>tt', function()

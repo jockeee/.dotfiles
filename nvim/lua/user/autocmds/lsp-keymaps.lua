@@ -1,10 +1,8 @@
 --
 -- lsp keymaps
 
-local u_lsp_keymaps = vim.api.nvim_create_augroup('u-lsp-keymaps', { clear = true })
-
 vim.api.nvim_create_autocmd('LspAttach', {
-  group = u_lsp_keymaps,
+  group = vim.api.nvim_create_augroup('u-lsp-keymaps', { clear = true }),
   callback = function(event)
     local map = function(keys, func, desc, mode)
       mode = mode or 'n'
