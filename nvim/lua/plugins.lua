@@ -47,4 +47,5 @@ return {
   -- copilot
   require 'plugin.copilot',
   require 'plugin.copilotchat',
+  -- require 'plugin.codecompanion',
 }

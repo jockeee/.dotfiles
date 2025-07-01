@@ -12,7 +12,7 @@
 --      '<leader>s',
 --    },
 
--- Alternative(s):
+-- Alternatives:
 --  mini.nvim
 --    https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-splitjoin.md
 

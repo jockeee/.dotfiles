@@ -116,8 +116,8 @@ return {
       highlight_headers = false, -- Highlight headers in chat, disable if using markdown renderers (like render-markdown.nvim)
       mappings = {
         reset = {
-          normal = '', -- default: <C-l>, empty = disabled
-          insert = '', -- default: <C-l>, empty = disabled
+          normal = '', -- d: <C-l>, empty = disabled
+          insert = '', -- d: <C-l>, empty = disabled
         },
       },
     },
