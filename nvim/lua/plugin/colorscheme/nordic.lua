@@ -9,7 +9,7 @@ return {
     priority = 1000,
     init = function()
       local nordic = require 'nordic'
-      local utils = require 'nordic.utils'
+      local util = require 'nordic.utils'
 
       local bg = '#1f1f1f'
       local fg = '#b1b1b1'
@@ -26,26 +26,24 @@ return {
         -- see: https://github.com/AlexvZyl/nordic.nvim/blob/main/lua/nordic/colors/init.lua
         after_palette = function(palette)
           palette.bg_fold = bg
-          palette.bg_visual = utils.blend(palette.orange.base, palette.bg, 0.15)
-          palette.comment = utils.blend(palette.gray0, palette.fg, 0.5)
+          palette.bg_visual = util.blend(palette.orange.base, palette.bg, 0.15) -- visual selection background
+          palette.comment = util.blend(palette.gray0, palette.fg, 0.5) -- comment color
         end,
 
         italic_comments = true,
         bright_border = true,
-        telescope = {
-          style = 'classic', -- classic, flat
-        },
+        -- telescope = {
+        --   style = 'classic', -- classic, flat
+        -- },
       }
 
-      -- vim.cmd.colorscheme 'nordic'
       nordic.load()
       vim.g.colorscheme = 'nordic'
 
       local palette = require 'nordic.colors'
 
-      -- UI
       vim.api.nvim_set_hl(0, 'NormalFloat', { bg = bg })
-      vim.api.nvim_set_hl(0, 'CursorLine', { bg = utils.blend('#000000', palette.bg, 0.15) })
+      vim.api.nvim_set_hl(0, 'CursorLine', { bg = util.blend('#000000', palette.bg, 0.15) })
       vim.api.nvim_set_hl(0, 'MsgArea', { fg = fg, bg = bg })
       -- vim.api.nvim_set_hl(0, 'Search', { underline = false })
       vim.api.nvim_set_hl(0, 'TabLine', { fg = '#7c7d83', bg = bg }) -- tab not selected
@@ -57,6 +55,8 @@ return {
       -- vim.api.nvim_set_hl(0, "ColorColumn", { bg = "#1b1b29" })
       -- vim.api.nvim_set_hl(0, "StatusLine", { bg = "#2c2c2c" })
       -- vim.api.nvim_set_hl(0, "StatusLineNC", { bg = "#2c2c2c" })
+
+      -- taraget lsb.buf.hover
 
       -- Only keep fields valid for nvim_set_hl
       local function filtered_highlight(hl)
@@ -81,9 +81,7 @@ return {
         }
         local filtered = {}
         for k, v in pairs(hl) do
-          if valid_keys[k] then
-            filtered[k] = v
-          end
+          if valid_keys[k] then filtered[k] = v end
         end
         return filtered
       end
@@ -100,19 +98,19 @@ return {
       vim.api.nvim_set_hl(0, 'LspReferenceText', {
         -- bg = orangedark,
         -- bg = utils.blend(palette.orange.dim, palette.bg, 0.08),
-        bg = utils.blend(palette.green.base, palette.bg, 0.12),
+        bg = util.blend(palette.green.base, palette.bg, 0.12),
       })
 
       vim.api.nvim_set_hl(0, 'LspReferenceRead', {
         -- bg = orangedark,
         -- bg = utils.blend(palette.orange.dim, palette.bg, 0.08),
-        bg = utils.blend(palette.blue1, palette.bg, 0.12),
+        bg = util.blend(palette.blue1, palette.bg, 0.12),
       })
 
       vim.api.nvim_set_hl(0, 'LspReferenceWrite', {
         -- bg = orangedark,
         -- bg = utils.blend(palette.orange.dim, palette.bg, 0.08),
-        bg = utils.blend(palette.red.base, palette.bg, 0.12),
+        bg = util.blend(palette.red.base, palette.bg, 0.12),
       })
 
       -- Treesitter HTML

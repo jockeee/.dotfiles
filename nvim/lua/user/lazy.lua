@@ -27,7 +27,7 @@ local opts = {
   },
   install = {
     -- try to load one of these colorschemes when starting an installation during startup
-    colorscheme = { vim.g.colorscheme, 'habamax' },
+    colorscheme = { 'nordic', 'habamax' },
   },
   checker = {
     enabled = false, -- automatically check for plugin updates -- default: false

@@ -12,7 +12,6 @@ return { -- Completion
   --- @module 'blink.cmp'
   --- @type blink.cmp.Config
   opts = {
-
     cmdline = {
       keymap = {
         preset = 'super-tab',
@@ -31,6 +30,10 @@ return { -- Completion
       documentation = {
         auto_show = true,
         auto_show_delay_ms = 300,
+        window = {
+          border = 'single',
+          winhighlight = 'Normal:Pmenu,FloatBorder:Pmenu,NormalFloat:Pmenu',
+        },
       },
       list = {
         selection = {
@@ -42,13 +45,13 @@ return { -- Completion
 
     keymap = {
       preset = 'super-tab',
-      ['<C-y>'] = { 'accept', 'fallback' },
+      ['<C-y>'] = { 'select_and_accept', 'fallback' },
     },
 
     sources = {
       -- add lazydev to your completion providers
       -- default = { 'lazydev', 'lsp', 'path', 'snippets' },
-      default = { 'lazydev', 'lsp', 'path' },
+      default = { 'lazydev', 'lsp', 'path', 'buffer' },
       providers = {
         lazydev = {
           name = 'LazyDev',

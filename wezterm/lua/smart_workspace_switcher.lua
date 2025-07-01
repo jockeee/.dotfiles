@@ -215,7 +215,7 @@ function pub.apply_to_config(config)
   table.insert(config.keys, {
     key = 'S',
     mods = 'LEADER',
-    action = pub.switch_workspace(),
+    action = pub.switch_to_prev_workspace(),
   })
 end
 

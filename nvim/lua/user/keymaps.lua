@@ -1,6 +1,8 @@
 --
 -- keymaps.lua
 
+local map = vim.keymap.set
+
 -- Leader key, space, do nothing when space is pressed in normal or visual mode
 vim.keymap.set({ 'n', 'v' }, '<space>', '<nop>')
 
@@ -260,13 +262,51 @@ vim.keymap.set('n', '<leader>zx', ':.lua<CR>', { desc = 'Lua: execute line' })
 vim.keymap.set('v', '<leader>zx', ':lua<CR>', { desc = 'Lua: execute selection' })
 
 -- Leader t: Toggle
-vim.keymap.set('n', '<leader>tl', function()
-  vim.opt.colorcolumn = vim.inspect(vim.opt.colorcolumn:get()) == '{}' and { 96 } or {}
-end, { desc = 'Column limits' })
+
 -- vim.keymap.set('n', '<leader>tl', function()
---   vim.opt.colorcolumn = vim.inspect(vim.opt.colorcolumn:get()) == '{}' and { 80, 96 } or {}
--- end, { desc = 'Color Column Limits' })
-vim.keymap.set('n', '<leader>tc', '<cmd>set cursorline!<cr>', { desc = 'Cursor line' }) -- lua vim.opt.cursorline = not vim.opt.cursorline:get()
+--   vim.o.colorcolumn = vim.o.colorcolumn == '' and '100' or ''
+--   -- vim.opt.colorcolumn = vim.inspect(vim.opt.colorcolumn:get()) == '{}' and { 100 } or {}
+-- end, { desc = 'Column limits' })
+vim.keymap.set('n', '<leader>tc', function()
+  vim.o.colorcolumn = vim.o.colorcolumn == '' and '81,101' or ''
+  -- vim.opt.colorcolumn = vim.inspect(vim.opt.colorcolumn:get()) == '{}' and { 80, 100 } or {}
+end, { desc = 'Color Column Limits' })
+
+local function get_color_cols()
+  local ok_colors, colors = pcall(require, 'nordic.colors')
+  local ok_util, util = pcall(require, 'nordic.utils')
+
+  local base = (ok_colors and colors and colors.gray0) or '#1f1f1f'
+
+  if ok_util and util and util.blend then
+    local col80 = util.blend('#ffffff', base, 0.05)
+    local col100 = util.blend('#ffffff', base, 0.11)
+    return col80, col100
+  else
+    return '#2e2e2e', '#3e3e3e'
+  end
+end
+
+local colorcol_enabled = false
+local function UserLineColorColumns()
+  local col80, col100 = get_color_cols()
+
+  vim.api.nvim_set_hl(0, 'ColorCol80', { bg = col80 })
+  vim.api.nvim_set_hl(0, 'ColorCol100', { bg = col100 })
+
+  if colorcol_enabled then
+    vim.fn.clearmatches()
+    colorcol_enabled = false
+  else
+    vim.fn.matchadd('ColorCol80', '\\%81v.')
+    vim.fn.matchadd('ColorCol100', '\\%101v.')
+    colorcol_enabled = true
+  end
+end
+UserLineColorColumns()
+vim.keymap.set('n', '<leader>tl', UserLineColorColumns)
+
+-- vim.keymap.set('n', '<leader>tc', '<cmd>set cursorline!<cr>', { desc = 'Cursor line' }) -- lua vim.opt.cursorline = not vim.opt.cursorline:get()
 vim.keymap.set('n', '<leader>tr', '<cmd>set relativenumber!<cr>', { desc = 'Relative numbers' }) -- set rnu! or lua vim.opt.relativenumber = not vim.opt.relativenumber:get()
 vim.keymap.set('n', '<leader>ts', '<cmd>windo set scrollbind!<cr>', { desc = 'Scrollbind, in open windows' })
 vim.keymap.set('n', '<leader>tt', function()

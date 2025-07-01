@@ -342,17 +342,7 @@ end
 -- local workspace_switcher = wezterm.plugin.require 'https://github.com/MLFlexer/smart_workspace_switcher.wezterm'
 local workspace_switcher = require 'lua.smart_workspace_switcher'
 -- config.default_workspace = '~'
--- workspace_switcher.apply_to_config(config)
-table.insert(config.keys, {
-  key = 's',
-  mods = 'LEADER',
-  action = workspace_switcher.switch_workspace(),
-})
-table.insert(config.keys, {
-  key = 'S',
-  mods = 'LEADER',
-  action = workspace_switcher.switch_to_prev_workspace(),
-})
+workspace_switcher.apply_to_config(config)
 
 local smart_splits = wezterm.plugin.require 'https://github.com/mrjones2014/smart-splits.nvim'
 smart_splits.apply_to_config(config, {
