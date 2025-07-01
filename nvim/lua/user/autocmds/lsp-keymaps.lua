@@ -1,10 +1,10 @@
 --
 -- lsp keymaps
 
-local g_lsp_keymaps = vim.api.nvim_create_augroup('g-lsp-keymaps', { clear = true })
+local u_lsp_keymaps = vim.api.nvim_create_augroup('u-lsp-keymaps', { clear = true })
 
 vim.api.nvim_create_autocmd('LspAttach', {
-  group = g_lsp_keymaps,
+  group = u_lsp_keymaps,
   callback = function(event)
     local map = function(keys, func, desc, mode)
       mode = mode or 'n'
@@ -27,7 +27,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     map('grD', require('snacks.picker').lsp_declarations, 'declaration') -- in c, takes you to the header file
     map('grt', require('snacks.picker').lsp_type_definitions, 'type definition') --  when you're not sure what type a variable is and you want to see the definition of its *type*, not where it was *defined*.
     map('gO', require('snacks.picker').lsp_symbols, 'symbols') -- document symbols are things like variables, functions, types
-    -- map('gra', vim.lsp.buf.code_action, 'code actions', { 'n', 'x' }) -- default in v0.11
+    -- map('gra', vim.lsp.buf.code_action, 'code actions', { 'n', 'x' }) - default in v0.11
     map('gW', require('snacks.picker').lsp_workspace_symbols, 'workspace symbols') --  searches over your entire project
 
     local client = vim.lsp.get_client_by_id(event.data.client_id)

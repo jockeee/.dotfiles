@@ -70,6 +70,10 @@ return {
         width = 0,
       },
     },
+    ---@type snacks.win.Config
+    win = {
+      backdrop = false,
+    },
   },
   config = function(_, opts)
     local snacks = require 'snacks'

@@ -2,9 +2,9 @@
 -- saghen/blink.cmp
 
 ---@type LazySpec
-return { -- Completion
+return {
   'saghen/blink.cmp',
-  lazy = false, -- event = 'VimEnter',
+  lazy = false,
   version = '1.*',
   dependencies = {
     'folke/lazydev.nvim',
@@ -32,7 +32,7 @@ return { -- Completion
         auto_show_delay_ms = 300,
         window = {
           border = 'single',
-          winhighlight = 'Normal:Pmenu,FloatBorder:Pmenu,NormalFloat:Pmenu',
+          -- winhighlight = 'Normal:Pmenu,FloatBorder:Pmenu,NormalFloat:Pmenu',
         },
       },
       list = {

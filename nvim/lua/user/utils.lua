@@ -28,11 +28,11 @@ end
 
 -- https://github.com/kwkarlwang/bufjump.nvim/blob/master/lua/bufjump.lua
 local jumpbackward = function(num)
-  vim.cmd(('normal! %d<c-o>'):format(num))
+  vim.cmd([[execute "normal! ]] .. tostring(num) .. [[\<c-o>"]])
 end
 
 local jumpforward = function(num)
-  vim.cmd(('normal! %d<c-i>'):format(num))
+  vim.cmd([[execute "normal! ]] .. tostring(num) .. [[\<c-i>"]])
 end
 
 M.jl_buf_backward = function()

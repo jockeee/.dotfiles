@@ -25,6 +25,7 @@ return {
         -- setting colors after the palette has been applied
         -- see: https://github.com/AlexvZyl/nordic.nvim/blob/main/lua/nordic/colors/init.lua
         after_palette = function(palette)
+          palette.bg = bg
           palette.bg_fold = bg
           palette.bg_visual = util.blend(palette.orange.base, palette.bg, 0.15) -- visual selection background
           palette.comment = util.blend(palette.gray0, palette.fg, 0.5) -- comment color
@@ -42,10 +43,15 @@ return {
 
       local palette = require 'nordic.colors'
 
-      vim.api.nvim_set_hl(0, 'NormalFloat', { bg = bg })
+      vim.api.nvim_set_hl(0, 'Pmenu', { bg = palette.bg }) -- completion menu
+      vim.api.nvim_set_hl(0, 'BlinkCmpDocBorder', { link = 'FloatBorder' })
+
+      vim.api.nvim_set_hl(0, 'NormalFloat', { bg = palette.bg }) -- floating window background
+      vim.api.nvim_set_hl(0, 'FloatBorder', { bg = palette.bg, fg = palette.gray3 }) -- floating window border
+      -- vim.api.nvim_set_hl(0, 'NormalFloat', { bg = util.blend('#000000', palette.bg, 0.15) })
+
       vim.api.nvim_set_hl(0, 'CursorLine', { bg = util.blend('#000000', palette.bg, 0.15) })
       vim.api.nvim_set_hl(0, 'MsgArea', { fg = fg, bg = bg })
-      -- vim.api.nvim_set_hl(0, 'Search', { underline = false })
       vim.api.nvim_set_hl(0, 'TabLine', { fg = '#7c7d83', bg = bg }) -- tab not selected
       vim.api.nvim_set_hl(0, 'TabLineSel', { bg = bg }) -- tab selected
       vim.api.nvim_set_hl(0, 'TabLineFill', { bg = bg }) -- tabline row
@@ -55,8 +61,6 @@ return {
       -- vim.api.nvim_set_hl(0, "ColorColumn", { bg = "#1b1b29" })
       -- vim.api.nvim_set_hl(0, "StatusLine", { bg = "#2c2c2c" })
       -- vim.api.nvim_set_hl(0, "StatusLineNC", { bg = "#2c2c2c" })
-
-      -- taraget lsb.buf.hover
 
       -- Only keep fields valid for nvim_set_hl
       local function filtered_highlight(hl)
