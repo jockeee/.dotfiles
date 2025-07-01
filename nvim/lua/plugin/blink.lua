@@ -45,7 +45,8 @@ return {
 
     keymap = {
       preset = 'super-tab',
-      ['<C-y>'] = { 'select_and_accept', 'fallback' },
+      -- -- this makes copilot chat accept markdown behave weird
+      -- ['<C-y>'] = { 'select_and_accept', 'fallback' },
     },
 
     sources = {
