@@ -114,10 +114,10 @@ config = {
   hide_tab_bar_if_only_one_tab = false,
   window_decorations = 'NONE',
   window_padding = {
-    left = 0, -- default: 8
-    right = 0, -- default: 8
-    top = 64, -- default: 8
-    bottom = 0, -- default: 8
+    left = 0, -- d: 8
+    right = 0, -- d: 8
+    top = 8, -- d: 8
+    bottom = 0, -- d: 8
   },
 
   --
