@@ -29,10 +29,22 @@ return {
   build = ':TSUpdate',
   main = 'nvim-treesitter.configs', -- NOTE: Lazy will do `require('nvim-treesitter.configs').setup(opts)`
   opts = {
-    -- ensure_installed
-    --  "base"  kickstart.nvim
-    --  regex   Snacks.picker
-    ensure_installed = { 'bash', 'c', 'css', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'regex', 'vim', 'vimdoc' },
+    ensure_installed = {
+      'bash',
+      'c',
+      'css',
+      'diff',
+      'html',
+      'javascript',
+      'lua',
+      'luadoc',
+      'markdown',
+      'markdown_inline',
+      'query',
+      'regex',
+      'vim',
+      'vimdoc',
+    },
     auto_install = true, -- autoinstall languages that are not installed
     highlight = {
       enable = true,

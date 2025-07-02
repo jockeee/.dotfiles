@@ -9,6 +9,9 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.opt_local.shiftwidth = 2
     vim.opt_local.softtabstop = 2
     vim.opt_local.tabstop = 2
+
+    -- /usr/share/nvim/runtime/ftplugin/css.vim sets iskeyword to include '-'
+    vim.opt_local.iskeyword:remove '-'
   end,
 })
 

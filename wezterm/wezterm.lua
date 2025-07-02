@@ -123,7 +123,7 @@ config = {
   --
   -- Font
   warn_about_missing_glyphs = false,
-  font_size = 14,
+  font_size = 12,
   line_height = 1.05,
   -- harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' }, -- disable ligatures
 
@@ -363,6 +363,7 @@ smart_splits.apply_to_config(config, {
 })
 
 -- Local config
+_G.config = config
 local local_config = wezterm.home_dir .. '/.local/wezterm.lua'
 if io.open(local_config, 'r') then
   local ok, err = pcall(dofile, local_config)

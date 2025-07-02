@@ -37,23 +37,21 @@ return {
         auto_enable = false, -- d: false
         lsp = true,
       },
-      inputs = {
-        ccc.input.rgb, -- default
-        ccc.input.hsl, -- default
-        ccc.input.cmyk, -- default
-        ccc.input.oklch,
-      },
-      outputs = {
-        ccc.output.hex, -- default
-        ccc.output.hex_short, -- default
-        ccc.output.css_rgb, -- default
-        ccc.output.css_hsl, -- default
-        ccc.output.css_oklch,
-      },
+      -- inputs = {
+      --   ccc.input.rgb, -- default
+      --   ccc.input.hsl, -- default
+      --   ccc.input.cmyk, -- default
+      -- },
+      -- outputs = {
+      --   ccc.output.hex, -- default
+      --   ccc.output.hex_short, -- default
+      --   ccc.output.css_rgb, -- default
+      --   ccc.output.css_hsl, -- default
+      -- },
     }
 
     vim.keymap.set('n', '<leader>cp', '<cmd>CccPick<cr>', { desc = 'Ccc: picker' })
     vim.keymap.set('n', '<leader>cc', '<cmd>CccConvert<cr>', { desc = 'Ccc: convert' })
-    vim.keymap.set('n', '<leader>ch', '<cmd>CccHighlighterToggle<cr>', { desc = 'Ccc: highlight' })
+    vim.keymap.set('n', '<leader>cs', '<cmd>CccHighlighterToggle<cr>', { desc = 'Ccc: show' })
   end,
 }
