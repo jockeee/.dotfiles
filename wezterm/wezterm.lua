@@ -363,7 +363,7 @@ smart_splits.apply_to_config(config, {
 })
 
 -- Local config
-_G.config = config
+_G.config = config -- for ~/.local/wezterm.lua access to config
 local local_config = wezterm.home_dir .. '/.local/wezterm.lua'
 if io.open(local_config, 'r') then
   local ok, err = pcall(dofile, local_config)
