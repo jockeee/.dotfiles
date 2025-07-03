@@ -7,8 +7,8 @@
 ---@type LazySpec
 return {
   'zbirenbaum/copilot.lua',
-  -- event = 'VimEnter',
-  event = { 'BufReadPre', 'BufNewFile' },
+  -- event = { 'BufReadPre', 'BufNewFile' },
+  event = { 'InsertEnter' },
   cmd = 'Copilot',
   opts = {
     filetypes = {
@@ -20,7 +20,7 @@ return {
       end,
       text = false, -- disable copilot for text files
       yaml = true,
-      -- ['yaml.ansible'] = true,
+      ['yaml.ansible'] = true,
     },
     server_opts_overrides = {
       settings = {

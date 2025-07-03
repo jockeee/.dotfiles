@@ -20,9 +20,7 @@ vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
 
     local function path_starts_with_any(p, prefixes)
       for _, prefix in ipairs(prefixes) do
-        if p:sub(1, #prefix) == prefix then
-          return true
-        end
+        if p:sub(1, #prefix) == prefix then return true end
       end
       return false
     end
@@ -41,9 +39,6 @@ vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
       vim.opt_local.undofile = false
 
       vim.b.copilot_enabled = false -- github/copilot.vim
-      if package.loaded['copilot'] then
-        require('copilot').toggle_filetype(false) -- zbirenbaum/copilot.lua
-      end
 
       vim.schedule(function()
         vim.notify('Disabled swap, backup, undo, copilot', vim.log.levels.WARN)
