@@ -38,7 +38,7 @@ vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
       vim.opt_local.writebackup = false
       vim.opt_local.undofile = false
 
-      vim.b.copilot_enabled = false -- github/copilot.vim
+      vim.b.copilot_enabled = false -- zbirenbaum/copilot.lua
 
       vim.schedule(function()
         vim.notify('Disabled swap, backup, undo, copilot', vim.log.levels.WARN)
