@@ -30,7 +30,7 @@ return {
   event = 'VimEnter',
   dependencies = {
     -- { 'nvim-tree/nvim-web-devicons', event = 'VimEnter' }, -- for pretty icons, requires a nerd font
-    { 'AndreM222/copilot-lualine', event = 'VimEnter' },
+    { 'AndreM222/copilot-lualine' },
   },
   opts = {
     options = {

@@ -79,7 +79,7 @@ return {
     local snacks = require 'snacks'
     snacks.setup(opts)
 
-    vim.keymap.set('n', '<leader>ci', snacks.image.hover, { desc = 'Snacks: image' })
+    vim.keymap.set('n', '<leader>di', snacks.image.hover, { desc = 'Snacks: image' })
 
     vim.keymap.set('n', '<leader>g', snacks.lazygit.open, { desc = 'Lazygit' })
 

@@ -87,72 +87,70 @@
 
 ---@type LazySpec
 return {
-  {
-    'CopilotC-Nvim/CopilotChat.nvim',
-    -- event = 'VimEnter',
-    -- event = { 'BufReadPre', 'BufNewFile' },
-    keys = {
-      { '<leader>qq', '<cmd>CopilotChat<CR>', desc = 'Chat', mode = { 'n', 'v' } },
-      { '<leader>qa', '<cmd>CopilotChatAgents<CR>', desc = 'Agents', mode = { 'n', 'v' } },
-      { '<leader>qm', '<cmd>CopilotChatModels<CR>', desc = 'Models', mode = { 'n', 'v' } },
-      { '<leader>ql', '<cmd>CopilotChatReset<CR>', desc = 'Reset chat', mode = { 'n', 'v' } }, -- default: C-l
-      { '<leader>qs', '<cmd>CopilotChatStop<CR>', desc = 'Stop output', mode = { 'n', 'v' } },
-      { '<leader>qc', '<cmd>CopilotChatCommit<CR>', desc = 'Prompt: Commit Message', mode = { 'n', 'v' } },
-      { '<leader>qd', '<cmd>CopilotChatDocs<CR>', desc = 'Prompt: Add Docs', mode = { 'n', 'v' } },
-      { '<leader>qe', '<cmd>CopilotChatExplain<CR>', desc = 'Prompt: Explain', mode = { 'n', 'v' } },
-      { '<leader>qf', '<cmd>CopilotChatFix<CR>', desc = 'Prompt: Fix', mode = { 'n', 'v' } },
-      { '<leader>qo', '<cmd>CopilotChatOptimize<CR>', desc = 'Prompt: Optimize', mode = { 'n', 'v' } },
-      { '<leader>qr', '<cmd>CopilotChatReview<CR>', desc = 'Prompt: Review', mode = { 'n', 'v' } },
-      { '<leader>qt', '<cmd>CopilotChatTests<CR>', desc = 'Prompt: Generate Tests', mode = { 'n', 'v' } },
-    },
-    dependencies = {
-      require 'plugin.render-markdown',
-      'zbirenbaum/copilot.lua', -- github/copilot.vim or zbirenbaum/copilot.lua
-      'nvim-lua/plenary.nvim', -- for curl, log and async functions
-    },
-    build = 'make tiktoken', -- Only on MacOS or Linux
-    opts = {
-      -- model = 'claude-3.5-sonnet', -- default: gpt-4o
-      highlight_headers = false, -- Highlight headers in chat, disable if using markdown renderers (like render-markdown.nvim)
-      mappings = {
-        reset = {
-          normal = '', -- d: <C-l>, empty = disabled
-          insert = '', -- d: <C-l>, empty = disabled
-        },
+  'CopilotC-Nvim/CopilotChat.nvim',
+  -- event = 'VimEnter',
+  -- event = { 'BufReadPre', 'BufNewFile' },
+  keys = {
+    { '<leader>qq', '<cmd>CopilotChat<CR>', desc = 'Chat', mode = { 'n', 'v' } },
+    { '<leader>qa', '<cmd>CopilotChatAgents<CR>', desc = 'Agents', mode = { 'n', 'v' } },
+    { '<leader>qm', '<cmd>CopilotChatModels<CR>', desc = 'Models', mode = { 'n', 'v' } },
+    { '<leader>ql', '<cmd>CopilotChatReset<CR>', desc = 'Reset chat', mode = { 'n', 'v' } }, -- default: C-l
+    { '<leader>qs', '<cmd>CopilotChatStop<CR>', desc = 'Stop output', mode = { 'n', 'v' } },
+    { '<leader>qc', '<cmd>CopilotChatCommit<CR>', desc = 'Prompt: Commit Message', mode = { 'n', 'v' } },
+    { '<leader>qd', '<cmd>CopilotChatDocs<CR>', desc = 'Prompt: Add Docs', mode = { 'n', 'v' } },
+    { '<leader>qe', '<cmd>CopilotChatExplain<CR>', desc = 'Prompt: Explain', mode = { 'n', 'v' } },
+    { '<leader>qf', '<cmd>CopilotChatFix<CR>', desc = 'Prompt: Fix', mode = { 'n', 'v' } },
+    { '<leader>qo', '<cmd>CopilotChatOptimize<CR>', desc = 'Prompt: Optimize', mode = { 'n', 'v' } },
+    { '<leader>qr', '<cmd>CopilotChatReview<CR>', desc = 'Prompt: Review', mode = { 'n', 'v' } },
+    { '<leader>qt', '<cmd>CopilotChatTests<CR>', desc = 'Prompt: Generate Tests', mode = { 'n', 'v' } },
+  },
+  dependencies = {
+    require 'plugin.render-markdown',
+    'zbirenbaum/copilot.lua', -- github/copilot.vim or zbirenbaum/copilot.lua
+    'nvim-lua/plenary.nvim', -- for curl, log and async functions
+  },
+  build = 'make tiktoken', -- Only on MacOS or Linux
+  opts = {
+    -- model = 'claude-3.5-sonnet', -- default: gpt-4o
+    highlight_headers = false, -- Highlight headers in chat, disable if using markdown renderers (like render-markdown.nvim)
+    mappings = {
+      reset = {
+        normal = '', -- d: <C-l>, empty = disabled
+        insert = '', -- d: <C-l>, empty = disabled
       },
     },
-    config = function(_, opts)
-      local cc = require 'CopilotChat'
-      cc.setup(opts)
-
-      -- Commands
-      --    :CopilotChat [input]      Open chat window with optional input
-      --    :CopilotChatOpen          Open chat window
-      --    :CopilotChatClose         Close chat window
-      --    :CopilotChatToggle        Toggle chat window
-      --    :CopilotChatStop          Stop current copilot output
-      --    :CopilotChatReset         Reset chat window
-      --    :CopilotChatSave [name]   Save chat history to file
-      --    :CopilotChatLoad [name]   Load chat history from file
-      --    :CopilotChatDebugInfo     Show debug information
-      --    :CopilotChatModels        View and select available models. This is reset when a new instance is made. Please set your model in init.lua for persistence.
-      --    :CopilotChatAgents        View and select available agents. This is reset when a new instance is made. Please set your agent in init.lua for persistence.
-      -- vim.keymap.set({ 'n', 'v' }, '<leader>qq', '<cmd>CopilotChat<CR>', { desc = 'Chat' })
-      -- vim.keymap.set({ 'n', 'v' }, '<leader>qa', '<cmd>CopilotChatAgents<CR>', { desc = 'Agents' })
-      -- vim.keymap.set({ 'n', 'v' }, '<leader>qm', '<cmd>CopilotChatModels<CR>', { desc = 'Models' })
-      -- vim.keymap.set({ 'n', 'v' }, '<leader>ql', '<cmd>CopilotChatReset<CR>', { desc = 'Reset chat' }) -- default: C-l
-      -- vim.keymap.set({ 'n', 'v' }, '<leader>qs', '<cmd>CopilotChatStop<CR>', { desc = 'Stop output' })
-
-      -- Prompts
-      --    :CopilotChat<PromptName>  Ask a question with a specific prompt.
-      --                              For example, :CopilotChatExplain will ask a question with the Explain prompt. See Prompts for more information.
-      -- vim.keymap.set({ 'n', 'v' }, '<leader>qc', '<cmd>CopilotChatCommit<CR>', { desc = 'Prompt: Commit Message' })
-      -- vim.keymap.set({ 'n', 'v' }, '<leader>qd', '<cmd>CopilotChatDocs<CR>', { desc = 'Prompt: Add Docs' })
-      -- vim.keymap.set({ 'n', 'v' }, '<leader>qe', '<cmd>CopilotChatExplain<CR>', { desc = 'Prompt: Explain' })
-      -- vim.keymap.set({ 'n', 'v' }, '<leader>qf', '<cmd>CopilotChatFix<CR>', { desc = 'Prompt: Fix' })
-      -- vim.keymap.set({ 'n', 'v' }, '<leader>qo', '<cmd>CopilotChatOptimize<CR>', { desc = 'Prompt: Optimize' })
-      -- vim.keymap.set({ 'n', 'v' }, '<leader>qr', '<cmd>CopilotChatReview<CR>', { desc = 'Prompt: Review' })
-      -- vim.keymap.set({ 'n', 'v' }, '<leader>qt', '<cmd>CopilotChatTests<CR>', { desc = 'Prompt: Generate Tests' })
-    end,
   },
+  config = function(_, opts)
+    local cc = require 'CopilotChat'
+    cc.setup(opts)
+
+    -- Commands
+    --    :CopilotChat [input]      Open chat window with optional input
+    --    :CopilotChatOpen          Open chat window
+    --    :CopilotChatClose         Close chat window
+    --    :CopilotChatToggle        Toggle chat window
+    --    :CopilotChatStop          Stop current copilot output
+    --    :CopilotChatReset         Reset chat window
+    --    :CopilotChatSave [name]   Save chat history to file
+    --    :CopilotChatLoad [name]   Load chat history from file
+    --    :CopilotChatDebugInfo     Show debug information
+    --    :CopilotChatModels        View and select available models. This is reset when a new instance is made. Please set your model in init.lua for persistence.
+    --    :CopilotChatAgents        View and select available agents. This is reset when a new instance is made. Please set your agent in init.lua for persistence.
+    -- vim.keymap.set({ 'n', 'v' }, '<leader>qq', '<cmd>CopilotChat<CR>', { desc = 'Chat' })
+    -- vim.keymap.set({ 'n', 'v' }, '<leader>qa', '<cmd>CopilotChatAgents<CR>', { desc = 'Agents' })
+    -- vim.keymap.set({ 'n', 'v' }, '<leader>qm', '<cmd>CopilotChatModels<CR>', { desc = 'Models' })
+    -- vim.keymap.set({ 'n', 'v' }, '<leader>ql', '<cmd>CopilotChatReset<CR>', { desc = 'Reset chat' }) -- default: C-l
+    -- vim.keymap.set({ 'n', 'v' }, '<leader>qs', '<cmd>CopilotChatStop<CR>', { desc = 'Stop output' })
+
+    -- Prompts
+    --    :CopilotChat<PromptName>  Ask a question with a specific prompt.
+    --                              For example, :CopilotChatExplain will ask a question with the Explain prompt. See Prompts for more information.
+    -- vim.keymap.set({ 'n', 'v' }, '<leader>qc', '<cmd>CopilotChatCommit<CR>', { desc = 'Prompt: Commit Message' })
+    -- vim.keymap.set({ 'n', 'v' }, '<leader>qd', '<cmd>CopilotChatDocs<CR>', { desc = 'Prompt: Add Docs' })
+    -- vim.keymap.set({ 'n', 'v' }, '<leader>qe', '<cmd>CopilotChatExplain<CR>', { desc = 'Prompt: Explain' })
+    -- vim.keymap.set({ 'n', 'v' }, '<leader>qf', '<cmd>CopilotChatFix<CR>', { desc = 'Prompt: Fix' })
+    -- vim.keymap.set({ 'n', 'v' }, '<leader>qo', '<cmd>CopilotChatOptimize<CR>', { desc = 'Prompt: Optimize' })
+    -- vim.keymap.set({ 'n', 'v' }, '<leader>qr', '<cmd>CopilotChatReview<CR>', { desc = 'Prompt: Review' })
+    -- vim.keymap.set({ 'n', 'v' }, '<leader>qt', '<cmd>CopilotChatTests<CR>', { desc = 'Prompt: Generate Tests' })
+  end,
 }

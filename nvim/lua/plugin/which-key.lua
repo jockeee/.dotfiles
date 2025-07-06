@@ -11,7 +11,7 @@
 return {
   'folke/which-key.nvim',
   event = 'UIEnter',
-  ---@class wk.Opts
+  ---@type wk.Opts
   opts = {
     -- delay between pressing a key and opening which-key (milliseconds)
     -- this setting is independent of vim.opt.timeoutlen
@@ -29,7 +29,7 @@ return {
       { '<leader>h', group = 'Git Hunk', mode = { 'n', 'v' } }, -- gitsigns
       { '<leader>m', group = 'Multicursor' },
       { '<leader>q', group = 'Copilot Chat' },
-      { '<leader>s', group = 'Toggle' },
+      { '<leader>s', group = 'Show (toggle)' },
       { '<leader>v', group = 'Hurl' },
       { '<leader>x', group = 'Trouble' },
       { '<leader>z', group = 'nvim' },

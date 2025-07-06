@@ -97,13 +97,17 @@ vim.keymap.set({ 'i', 'n', 'v', 't' }, '<M-v>', '<cmd>tabprevious<cr>', { desc =
 vim.keymap.set({ 'i', 'n', 'v', 't' }, '<M-b>', '<cmd>tabnext<cr>', { desc = 'Tab: next' })
 vim.keymap.set({ 'i', 'n', 'v', 't' }, '<S-M-v>', function()
   local current_tab = vim.fn.tabpagenr()
-  if current_tab > 1 then vim.cmd '-tabmove' end
+  if current_tab > 1 then
+    vim.cmd '-tabmove'
+  end
 end, { desc = 'Tab: move left' })
 
 vim.keymap.set({ 'i', 'n', 'v', 't' }, '<S-M-b>', function()
   local current_tab = vim.fn.tabpagenr()
   local total_tabs = vim.fn.tabpagenr '$'
-  if current_tab < total_tabs then vim.cmd '+tabmove' end
+  if current_tab < total_tabs then
+    vim.cmd '+tabmove'
+  end
 end, { desc = 'Tab: move right' })
 
 for idx, char in ipairs { 'z', 'x', 'c' } do
@@ -238,7 +242,9 @@ end, { desc = 'Bash: execute line, to clipboard' })
 -- open tests/curl.sh in a split to the right
 vim.keymap.set('n', '<leader>dc', function()
   local git_root = vim.fn.systemlist('git rev-parse --show-toplevel')[1]
-  if not git_root or git_root == '' then print 'Not in a git repository' end
+  if not git_root or git_root == '' then
+    print 'Not in a git repository'
+  end
   local tests_curl = git_root .. '/tests/curl.sh'
 
   if vim.fn.filereadable(tests_curl) == 1 then
@@ -312,7 +318,8 @@ vim.api.nvim_create_autocmd('UIEnter', {
 
 vim.keymap.set('n', '<leader>sc', '<cmd>set cursorline!<cr>', { desc = 'Cursor line' }) -- lua vim.opt.cursorline = not vim.opt.cursorline:get()
 vim.keymap.set('n', '<leader>sr', '<cmd>set relativenumber!<cr>', { desc = 'Relative numbers' }) -- set rnu! or lua vim.opt.relativenumber = not vim.opt.relativenumber:get()
-vim.keymap.set('n', '<leader>ss', '<cmd>windo set scrollbind!<cr>', { desc = 'Scrollbind, in open windows' })
+vim.keymap.set('n', '<leader>ss', vim.snippet.stop, { desc = 'Snippet: stop' })
+vim.keymap.set('n', '<leader>sS', '<cmd>windo set scrollbind!<cr>', { desc = 'Scrollbind: open windows' })
 vim.keymap.set('n', '<leader>st', function()
   ---@diagnostic disable-next-line: undefined-field
   vim.opt.showtabline = (vim.opt.showtabline:get() == 0) and 1 or 0
