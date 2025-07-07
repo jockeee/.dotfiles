@@ -24,6 +24,9 @@ vim.o.scrolloff = 10 -- lines of context, minimal number of screen lines to keep
 vim.o.pumheight = 10 -- popupmenu, maximum number of items to show in the popup menu
 vim.o.inccommand = 'split' -- d: nosplit, preview substitutions live as you type
 
+-- Avante wants 3
+vim.o.laststatus = 3 -- d: 2, global statusline, 0=disabled, 1=always, 2=only if there are at least two windows, 3=always
+
 -- Cursor blinking, too beautiful, hypnotic
 -- d: guicursor = 'n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20,t:block-blinkon500-blinkoff500-TermCursor'
 vim.o.guicursor = 'n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20,t:block-TermCursor'
@@ -92,4 +95,4 @@ vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 -- Sessions
 -- auto-session plugin suggests these sessionoptions
 -- https://github.com/rmagatti/auto-session#recommended-sessionoptions-config
-vim.o.sessionoptions = 'buffers,curdir,folds,localoptions,tabpages,winsize,winpos' -- removed blank, help, terminal
+vim.o.sessionoptions = 'buffers,curdir,folds,localoptions,tabpages,winsize' -- removed blank, help, terminal

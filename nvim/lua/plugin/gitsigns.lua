@@ -57,8 +57,8 @@ return {
         gitsigns.diffthis '@'
       end, { desc = 'diff against last commit' })
       -- Toggles
-      map('n', '<leader>sb', gitsigns.toggle_current_line_blame, { desc = 'git show blame line' })
-      map('n', '<leader>sd', gitsigns.preview_hunk_inline, { desc = 'git show deleted' })
+      map('n', '<leader>hb', gitsigns.toggle_current_line_blame, { desc = 'blame line' })
+      map('n', '<leader>hx', gitsigns.preview_hunk_inline, { desc = 'deleted lines' })
     end,
   },
 }

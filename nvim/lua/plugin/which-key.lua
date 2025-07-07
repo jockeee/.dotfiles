@@ -23,13 +23,15 @@ return {
 
     -- Document existing key chains
     wk.add {
+      { '<leader>a', group = 'AI' },
       { '<leader>c', group = 'Code' },
       { '<leader>d', group = 'Buffer' },
       { '<leader>f', group = 'Find' },
       { '<leader>h', group = 'Git Hunk', mode = { 'n', 'v' } }, -- gitsigns
       { '<leader>m', group = 'Multicursor' },
-      { '<leader>q', group = 'Copilot Chat' },
       { '<leader>s', group = 'Show (toggle)' },
+      { '<leader>sd', group = 'Diag: virtual text' },
+      { '<leader>sD', group = 'Diag: virtual lines' },
       { '<leader>v', group = 'Hurl' },
       { '<leader>x', group = 'Trouble' },
       { '<leader>z', group = 'nvim' },

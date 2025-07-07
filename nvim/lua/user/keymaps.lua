@@ -66,8 +66,13 @@ end
 vim.keymap.set({ 'n', 'v' }, 'j', mux_with_g 'j', { expr = true })
 vim.keymap.set({ 'n', 'v' }, 'k', mux_with_g 'k', { expr = true })
 
--- Resize windows using <alt> + arrow keys
--- using smart-splits instead
+-- Using smart-splits instead
+-- Window, focus
+-- vim.keymap.set('n', '<C-h>', '<C-w>h', { desc = 'Window: left' })
+-- vim.keymap.set('n', '<C-j>', '<C-w>j', { desc = 'Window: down' })
+-- vim.keymap.set('n', '<C-k>', '<C-w>k', { desc = 'Window: up' })
+-- vim.keymap.set('n', '<C-l>', '<C-w>l', { desc = 'Window: right' })
+-- Window, resize
 -- vim.keymap.set('n', '<M-up>', '<cmd>resize +2<cr>', { desc = 'Window Height, +' })
 -- vim.keymap.set('n', '<M-down>', '<cmd>resize -2<cr>', { desc = 'Window Height, -' })
 -- vim.keymap.set('n', '<M-left>', '<cmd>vertical resize -2<cr>', { desc = 'Window Width, +' })

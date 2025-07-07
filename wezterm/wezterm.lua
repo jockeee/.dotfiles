@@ -293,12 +293,6 @@ config.keys = {
     },
   },
 
-  -- Using smart-splits plugin instead
-  -- { key = 'j', mods = 'CTRL', action = act.ActivatePaneDirection 'Down' },
-  -- { key = 'k', mods = 'CTRL', action = act.ActivatePaneDirection 'Up' },
-  -- { key = 'h', mods = 'CTRL', action = act.ActivatePaneDirection 'Left' },
-  -- { key = 'l', mods = 'CTRL', action = act.ActivatePaneDirection 'Right' },
-
   -- Copy mode
   { key = 'PageUp', mods = 'NONE', action = act.ActivateCopyMode },
   { key = 'k', mods = 'LEADER', action = act.ActivateCopyMode },
@@ -311,7 +305,41 @@ config.keys = {
     mods = 'LEADER',
     action = act.Search { Regex = '[a-f0-9]{6,}' }, -- TODO: more...
   },
+
+  -- Using smart-splits instead
+  -- Panes, focus
+  -- { key = 'DownArrow', mods = 'LEADER|CTRL', action = act.ActivatePaneDirection 'Down' },
+  -- { key = 'UpArrow', mods = 'LEADER|CTRL', action = act.ActivatePaneDirection 'Up' },
+  -- { key = 'LeftArrow', mods = 'LEADER|CTRL', action = act.ActivatePaneDirection 'Left' },
+  -- { key = 'RightArrow', mods = 'LEADER|CTRL', action = act.ActivatePaneDirection 'Right' },
+  -- -- Panes, resize
+  -- { key = 'DownArrow', mods = 'LEADER|META', action = act.AdjustPaneSize { 'Down', 1 } },
+  -- { key = 'UpArrow', mods = 'LEADER|META', action = act.AdjustPaneSize { 'Up', 1 } },
+  -- { key = 'LeftArrow', mods = 'LEADER|META', action = act.AdjustPaneSize { 'Left', 1 } },
+  -- { key = 'RightArrow', mods = 'LEADER|META', action = act.AdjustPaneSize { 'Right', 1 } },
+
+  -- Activate pane navigation mode with LEADER + p
+  -- {
+  --   key = 'p',
+  --   mods = 'LEADER',
+  --   action = act.ActivateKeyTable {
+  --     name = 'pane_nav',
+  --     one_shot = false, -- Stay in the mode until Escape
+  --     timeout_milliseconds = 1000, -- Optional: auto-exit after 1s idle
+  --   },
+  -- },
 }
+
+-- config.key_tables = {
+--   -- Pane navigation mode
+--   pane_nav = {
+--     { key = 'h', action = act.ActivatePaneDirection 'Left' },
+--     { key = 'j', action = act.ActivatePaneDirection 'Down' },
+--     { key = 'k', action = act.ActivatePaneDirection 'Up' },
+--     { key = 'l', action = act.ActivatePaneDirection 'Right' },
+--     { key = 'Escape', action = 'PopKeyTable' }, -- Exit pane_nav mode
+--   },
+-- }
 
 for key, ws in pairs(wezterm.GLOBAL.default_workspaces) do
   table.insert(config.keys, {

@@ -47,8 +47,8 @@ return {
   require 'plugin.gitsigns',
 
   -- copilot
-  require 'plugin.avante',
   require 'plugin.copilot',
+  require 'plugin.avante',
   -- require 'plugin.copilotchat',
   -- require 'plugin.codecompanion',
 }

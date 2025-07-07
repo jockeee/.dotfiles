@@ -9,7 +9,7 @@
 
 return {
   'MeanderingProgrammer/render-markdown.nvim',
-  ft = { 'markdown', 'codecompanion' },
+  ft = { 'markdown', 'Avante', 'codecompanion' },
   dependencies = {
     'nvim-treesitter/nvim-treesitter',
     'echasnovski/mini.nvim', -- if you use the mini.nvim suite
@@ -27,5 +27,6 @@ return {
       -- highlight_fallback = 'RenderMarkdownCodeFallback', -- Highlight for language, used if icon provider does not have a value.
       -- highlight_inline = 'RenderMarkdownCodeInline', -- Highlight for inline code.
     },
+    file_types = { 'markdown', 'Avante', 'codecompanion' },
   },
 }

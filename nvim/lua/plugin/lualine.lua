@@ -67,7 +67,7 @@ return {
         --   file_status = false,
         --   path = 1, -- 0 = filename, 1 = relative path, 2 = absolute path, 3 = relative to home
         -- },
-        -- 'aerial',
+        'aerial',
         'diagnostics',
         'diff',
         -- 'aerial',
@@ -98,7 +98,7 @@ return {
         --   file_status = false,
         --   path = 1, -- 0 = filename, 1 = relative path, 2 = absolute path, 3 = relative to home
         -- },
-        -- 'aerial',
+        'aerial',
         'diagnostics',
       },
       lualine_x = {
@@ -110,28 +110,28 @@ return {
       lualine_y = { '' }, -- default: 'progress'
       lualine_z = { 'location' }, -- default: 'location'
     },
-    winbar = {
-      lualine_a = {},
-      lualine_b = {
-        'filename',
-        'aerial',
-      },
-      lualine_c = {},
-      lualine_x = {},
-      lualine_y = {},
-      lualine_z = {},
-    },
-    inactive_winbar = {
-      lualine_a = {},
-      lualine_b = {
-        'filename',
-        'aerial',
-      },
-      lualine_c = {},
-      lualine_x = {},
-      lualine_y = {},
-      lualine_z = {},
-    },
+    -- winbar = {
+    --   lualine_a = {},
+    --   lualine_b = {
+    --     'filename',
+    --     'aerial',
+    --   },
+    --   lualine_c = {},
+    --   lualine_x = {},
+    --   lualine_y = {},
+    --   lualine_z = {},
+    -- },
+    -- inactive_winbar = {
+    --   lualine_a = {},
+    --   lualine_b = {
+    --     'filename',
+    --     'aerial',
+    --   },
+    --   lualine_c = {},
+    --   lualine_x = {},
+    --   lualine_y = {},
+    --   lualine_z = {},
+    -- },
     -- extensions = { 'nvim-tree' },
   },
 }

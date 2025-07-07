@@ -394,6 +394,8 @@ function git-tidy -d 'Git History Cleanup'
         return 1
     end
 
+    # BUG: if in a subdirectory, git clone will not work
+    # TODO: get_root_dir
     git clone --mirror . $backup_dir
     if test $status -ne 0
         echo "Error: Couldn't create backup"
