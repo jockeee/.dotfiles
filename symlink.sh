@@ -22,9 +22,10 @@ else
     cat >>~/.bashrc <<EOF
 
 # default distro ~/.bashrc above
+
 export XDG_CONFIG_HOME="\${XDG_CONFIG_HOME:-\$HOME/.config}"
+
 if [ -f "\$XDG_CONFIG_HOME/bash/bashrc" ]; then
-    # shellcheck disable=SC1091
     source "\$XDG_CONFIG_HOME/bash/bashrc"
 fi
 EOF
@@ -139,7 +140,9 @@ else
     cat >>~/.zshrc <<EOF
 
 # default distro ~/.zshrc above
+
 export XDG_CONFIG_HOME="\${XDG_CONFIG_HOME:-\$HOME/.config}"
+
 if [ -f "\$XDG_CONFIG_HOME/zsh/zshrc" ]; then
     source "\$XDG_CONFIG_HOME/zsh/zshrc"
 fi
