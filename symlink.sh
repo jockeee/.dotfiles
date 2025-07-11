@@ -13,13 +13,20 @@ else
 fi
 
 # bash
+if [ -d ~/.config/bash ]; then
+    echo "[info]: ~/.config/bash already exists, skipping symlink creation."
+else
+    mkdir -p ~/.config/bash
+    ln -s ~/.dotfiles/bash/.bashrc ~/.config/bash/.
+    ln -s ~/.dotfiles/bash/.bash_aliases ~/.config/bash/.
+fi
 if grep -q "# default distro ~/.bashrc above" ~/.bashrc; then
     echo "[info]: ~/.bashrc already configured, skipping addition."
 else
     cat >>~/.bashrc <<EOF
 # default distro ~/.bashrc above
-if [ -f \"\$HOME/.dotfiles/bash/.bashrc\" ]; then
-    source \"\$HOME/.dotfiles/bash/.bashrc\"
+if [ -f \"\$XDG_CONFIG_DIR/bash/.bashrc\" ]; then
+    source \"\$XDG_CONFIG_DIR/.dotfiles/bash/.bashrc\"
 fi
 EOF
 fi
