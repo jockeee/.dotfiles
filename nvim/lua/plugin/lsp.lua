@@ -19,9 +19,7 @@ return {
         ansiblels = {},
 
         -- bash
-        bashls = {
-          filetypes = { 'sh', 'bash', 'zsh' },
-        },
+        bashls = {},
 
         -- fish
         fish_lsp = {}, -- ndonfris/fish-lsp

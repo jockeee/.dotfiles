@@ -643,4 +643,4 @@ install_go() {
     echo
 }
 
-# vim: ft=sh
+# vim: ft=bash

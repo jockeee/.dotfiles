@@ -10,8 +10,8 @@ if [ -d ~/.config/bash ]; then
     echo "[info]: ~/.config/bash already exists, skipping symlink creation."
 else
     mkdir -p ~/.config/bash
-    ln -s ~/.dotfiles/bash/.bashrc ~/.config/bash/.
-    ln -s ~/.dotfiles/bash/.bash_aliases ~/.config/bash/.
+    ln -s ~/.dotfiles/bash/bashrc ~/.config/bash/.
+    ln -s ~/.dotfiles/bash/bash_aliases ~/.config/bash/.
 fi
 if grep -q "# default distro ~/.bashrc above" ~/.bashrc; then
     echo "[info]: ~/.bashrc already configured, skipping addition."
@@ -19,9 +19,9 @@ else
     cat >>~/.bashrc <<EOF
 
 # default distro ~/.bashrc above
-if [ -f "\$XDG_CONFIG_DIR/bash/.bashrc" ]; then
+if [ -f "\$XDG_CONFIG_DIR/bash/bashrc" ]; then
     # shellcheck disable=SC1091
-    source "\$XDG_CONFIG_DIR/.dotfiles/bash/.bashrc"
+    source "\$XDG_CONFIG_DIR/bash/bashrc"
 fi
 EOF
 fi
@@ -100,10 +100,28 @@ else
 fi
 
 # zsh
+if [ -d ~/.config/zsh ]; then
+    echo "[info]: ~/.config/zsh already exists, skipping symlink creation."
+else
+    mkdir -p ~/.config/zsh
+    ln -s ~/.dotfiles/zsh/zsh ~/.config/zsh/.
+fi
+if grep -q "# default distro ~/.zshrc above" ~/.zshrc; then
+    echo "[info]: ~/.zshrc already configured, skipping addition."
+else
+    cat >>~/.zshrc <<EOF
+
+# default distro ~/.zshrc above
+if [ -f "\$XDG_CONFIG_DIR/zsh/zshrc" ]; then
+    source "\$XDG_CONFIG_DIR/zsh/zshrc"
+fi
+EOF
+fi
+
 if [ -f ~/.zshrc ]; then
     echo "[info]: ~/.zshrc already exists, skipping symlink creation."
 else
-    ln -s ~/.dotfiles/zsh/.zshrc ~/.zshrc
+    ln -s ~/.dotfiles/zsh/zshrc ~/.zshrc
 fi
 
 # #!/usr/bin/env bash

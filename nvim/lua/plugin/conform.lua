@@ -23,6 +23,7 @@ return {
       lsp_format = 'fallback',
     },
     formatters_by_ft = {
+      bash = { 'shfmt' },
       css = { 'prettierd' },
       fish = { 'fish_indent' },
       html = { 'prettierd' },
