@@ -16,7 +16,7 @@ alias ladz='ls -ladZ'
 alias lazd='ls -ladZ'
 alias man='man --nj'
 
-if type -P ~/.local/bin/nvim &>/dev/null; then
+if command -v ~/.local/bin/nvim &>/dev/null; then
     alias vim='~/.local/bin/nvim'
 fi
 
@@ -24,11 +24,11 @@ alias fd='fd --hidden --no-ignore --no-ignore-parent'
 alias rg='rg --no-line-number --hidden --no-ignore --no-ignore-parent'
 
 alias b='top'
-if type -P btop &>/dev/null; then
+if command -v btop &>/dev/null; then
     alias top='btop'
 fi
 
-if type -P eza &>/dev/null; then
+if command -v eza &>/dev/null; then
     # Filtering options
     #   Pass the -a, --all option twice to also show the . and .. directories.
     # Long view options
@@ -42,7 +42,7 @@ if type -P eza &>/dev/null; then
     alias tree='eza -aT --git-ignore'
 fi
 
-if type -P pass &>/dev/null; then
+if command -v pass &>/dev/null; then
     alias p='pass show -c'
     alias pe='pass edit'
     alias pf='pass find'
@@ -81,18 +81,18 @@ alias gr='git remote -v'
 alias grs='git reset'
 alias grs!='git reset --hard'
 alias gs='git status'
-if type -P lazygit &>/dev/null; then
+if command -v lazygit &>/dev/null; then
     alias lg='lazygit'
 fi
 
-if type -P bat &>/dev/null; then
+if command -v bat &>/dev/null; then
     bat_cmd='bat'
     alias bat='bat -pp'
     alias c='bat -pp'
     alias d='batdiff'
 fi
 
-if type -P batcat &>/dev/null; then
+if command -v batcat &>/dev/null; then
     bat_cmd='batcat'
     alias bat='batcat -pp'
     alias c='batcat -pp'
@@ -159,7 +159,7 @@ gg() {
     use_ai=0
 
     if [ $# -eq 0 ]; then
-        if type -P aicommits &>/dev/null; then
+        if command -v aicommits &>/dev/null; then
             use_ai=1
         else
             echo "Usage: gg [commit message]"
@@ -192,7 +192,7 @@ ww() {
         return 1
     fi
 
-    if ! type -P curl &>/dev/null; then
+    if ! command -v curl &>/dev/null; then
         echo "Error: Unable to locate 'curl'"
         return 1
     fi
@@ -221,7 +221,7 @@ ww() {
 # wwd (Outputs whatthecommit.com commit messages)
 # usage: wwd
 wwd() {
-    if ! type -P curl &>/dev/null; then
+    if ! command -v curl &>/dev/null; then
         echo "Error: Unable to locate 'curl'"
         return 1
     fi
@@ -317,33 +317,12 @@ git-tidy() {
     echo
 }
 
-# upd (fedora/ubuntu)
-if [ ! -f /etc/os-release ]; then
-    echo "Warning: /etc/os-release not found"
-    exit 0
-else
-    source /etc/os-release
-    case $ID in
-    'fedora')
-        export -f upd_fedora
-        alias upd='upd_fedora'
-        ;;
-    'ubuntu')
-        export -f upd_ubuntu
-        alias upd='upd_ubuntu'
-        ;;
-    *)
-        echo "Warning: Distro not supported"
-        ;;
-    esac
-fi
-
 upd_fedora() {
     echo -e '\e[1mUpdating system\e[0m'
     echo -e '\e[3msudo dnf upgrade\e[0m\n'
     sudo /usr/bin/dnf upgrade -y
     echo
-    if type -P /usr/bin/flatpak &>/dev/null; then
+    if command -v /usr/bin/flatpak &>/dev/null; then
         echo -e '\e[1mUpdating flatpak apps\e[0m'
         echo -e '\e[3mflatpak update\e[0m\n'
         /usr/bin/flatpak update -y
@@ -362,7 +341,7 @@ upd_ubuntu() {
     sudo /usr/bin/apt full-upgrade -y
     sudo /usr/bin/apt autoremove -y
     echo
-    if type -P /usr/bin/snap &>/dev/null; then
+    if command -v /usr/bin/snap &>/dev/null; then
         echo -e '\e[1mUpdating snap apps\e[0m'
         echo -e '\e[3msudo snap refresh\e[0m\n'
         sudo /usr/bin/snap refresh # requires sudo unless authenticated to a Ubuntu One/SSO account
@@ -374,8 +353,29 @@ upd_ubuntu() {
     upd_npm_packages
 }
 
+# upd (fedora/ubuntu)
+if [ ! -f /etc/os-release ]; then
+    echo "Warning: /etc/os-release not found"
+    exit 0
+else
+    source /etc/os-release
+    case $ID in
+    'fedora')
+        [[ -n $BASH_VERSION ]] && export -f upd_fedora
+        alias upd='upd_fedora'
+        ;;
+    'ubuntu')
+        [[ -n $BASH_VERSION ]] && export -f upd_ubuntu
+        alias upd='upd_ubuntu'
+        ;;
+    *)
+        echo "Warning: Distro not supported"
+        ;;
+    esac
+fi
+
 upd_gh_extensions() {
-    if type -P gh &>/dev/null; then
+    if command -v gh &>/dev/null; then
         echo -e '\e[1mUpdating Github CLI extensions\e[0m'
         echo -e '\e[3mgh extension upgrade --all\e[0m\n'
         gh extension upgrade --all
@@ -384,7 +384,7 @@ upd_gh_extensions() {
 }
 
 upd_npm() {
-    if type -P /usr/local/bin/npm &>/dev/null; then
+    if command -v /usr/local/bin/npm &>/dev/null; then
         echo -e '\e[1mUpdating npm\e[0m'
         echo -e '\e[3msudo npm install -g npm@latest\e[0m'
         sudo /usr/local/bin/npm install -g npm@latest
@@ -395,7 +395,7 @@ upd_npm() {
 }
 
 upd_npm_packages() {
-    if type -P /usr/local/bin/npm &>/dev/null; then
+    if command -v /usr/local/bin/npm &>/dev/null; then
         echo -e '\e[1mUpdating npm packages\e[0m'
         echo -e '\e[3msudo npm packages\e[0m'
         sudo /usr/local/bin/npm update
@@ -405,13 +405,13 @@ upd_npm_packages() {
 
 upd_go() {
     # example download url: https://go.dev/dl/go1.22.3.linux-amd64.tar.gz
-    if type -P /usr/local/go/bin/go &>/dev/null; then
+    if command -v /usr/local/go/bin/go &>/dev/null; then
         echo -e '\e[1mUpdating Go\e[0m'
         echo -e '\e[3mhttps://go.dev/dl\e[0m'
         echo
 
         for cmd in curl jq sha256sum mktemp tar; do
-            if ! type -P $cmd &>/dev/null; then
+            if ! command -v $cmd &>/dev/null; then
                 echo "Error: '$cmd' not found"
                 return 1
             fi
@@ -544,7 +544,7 @@ install_go() {
     echo
 
     for cmd in curl jq sha256sum tar; do
-        if ! type -P $cmd &>/dev/null; then
+        if ! command -v $cmd &>/dev/null; then
             echo "Error: '$cmd' not found"
             return 1
         fi
