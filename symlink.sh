@@ -15,7 +15,7 @@ else
     ln -s ~/.dotfiles/bash/bash_aliases ~/.config/bash/.
     echo "OK"
 fi
-if grep -q "# default distro ~/.bashrc above" ~/.bashrc; then
+if [ -f ~/.bashrc ] && grep -q "# default distro ~/.bashrc above" ~/.bashrc; then
     echo "[skip]: ~/.bashrc"
 else
     echo -n "[info]: ~/.bashrc... "
@@ -131,7 +131,8 @@ else
     ln -s ~/.dotfiles/zsh/zsh ~/.config/zsh/.
     echo "OK"
 fi
-if grep -q "# default distro ~/.zshrc above" ~/.zshrc; then
+
+if [ -f ~/.zshrc ] && grep -q "# default distro ~/.zshrc above" ~/.zshrc; then
     echo "[skip]: ~/.zshrc"
 else
     echo -n "[info]: ~/.zshrc... "
