@@ -86,15 +86,11 @@ _xdg_wget() {
     export WGETRC="${WGETRC:-$XDG_CONFIG_HOME/wget/wgetrc}"
 }
 
-_homedir_cleanup() {
-    _xdg_less
-    _xdg_python
-    _xdg_wget
-}
+_xdg_less
+_xdg_python
+_xdg_wget
 
 if [[ $- == *i* ]]; then
-    _homedir_cleanup
-
     # $EDITOR
     export EDITOR='/usr/bin/vim -n'
 
@@ -206,7 +202,7 @@ if [[ $- == *i* ]]; then
         #HISTFILE=~/.zsh_history
         HISTSIZE=10000
 
-        # shellcheck disable=SC2034 # zsh built-in variable, shellcheck only knows bash
+        # shellcheck disable=SC2034 # zsh built-in variable
         SAVEHIST=10000
 
         # Extended globbing, advanced pattern matching
