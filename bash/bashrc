@@ -70,6 +70,7 @@ _xdg_python() {
     mkdir -p "$XDG_STATE_HOME/python"
 
     # ~/.python_history
+    [[ -f ~/.python_history ]] && mv ~/.python_history "$XDG_STATE_HOME/python/python_history"
     export PYTHON_HISTORY="$XDG_STATE_HOME/python/python_history"
 }
 
