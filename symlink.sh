@@ -18,8 +18,8 @@ if grep -q "# default distro ~/.bashrc above" ~/.bashrc; then
 else
     cat >>~/.bashrc <<EOF
 # default distro ~/.bashrc above
-if [ -f \"$HOME/.dotfiles/bash/.bashrc\" ]; then
-    source \"$HOME/.dotfiles/bash/.bashrc\"
+if [ -f \"\$HOME/.dotfiles/bash/.bashrc\" ]; then
+    source \"\$HOME/.dotfiles/bash/.bashrc\"
 fi
 EOF
 fi
