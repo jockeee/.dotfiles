@@ -17,9 +17,11 @@ if grep -q "# default distro ~/.bashrc above" ~/.bashrc; then
     echo "[info]: ~/.bashrc already configured, skipping addition."
 else
     cat >>~/.bashrc <<EOF
+
 # default distro ~/.bashrc above
-if [ -f \"$XDG_CONFIG_DIR/bash/.bashrc\" ]; then
-    source \"$XDG_CONFIG_DIR/.dotfiles/bash/.bashrc\"
+if [ -f "\$XDG_CONFIG_DIR/bash/.bashrc" ]; then
+    # shellcheck disable=SC1091
+    source "\$XDG_CONFIG_DIR/.dotfiles/bash/.bashrc"
 fi
 EOF
 fi
