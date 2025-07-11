@@ -4,10 +4,10 @@
 # shellcheck disable=all
 
 # XDG Base Directory, User Directories
-export XDG_CONFIG_HOME="$HOME/.config"     # User-specific configurations, analogous to /etc
-export XDG_CACHE_HOME="$HOME/.cache"       # User-specific non-essential (cached) data, analogous to /var/cache
-export XDG_DATA_HOME="$HOME/.local/share"  # User-specific data files, analogous to /usr/share
-export XDG_STATE_HOME="$HOME/.local/state" # User-specific state files, analogous to /var/lib
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"    # User-specific configurations, analogous to /etc
+export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"       # User-specific non-essential (cached) data, analogous to /var/cache
+export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"   # User-specific data files, analogous to /usr/share
+export XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}" # User-specific state information, analogous to /var/lib
 
 # Prompt
 prompt_git_info() {
