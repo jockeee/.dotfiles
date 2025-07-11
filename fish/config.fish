@@ -1,19 +1,19 @@
-# .
-# VERSION 35
+#
+# config.fish
 
 # Set fish_greeting to empty = not showing
 set -g fish_greeting
+
+# XDG Base Directory, User Directories
+set -gx XDG_CONFIG_HOME "$HOME/.config" # User-specific configurations, analogous to /etc
+set -gx XDG_CACHE_HOME "$HOME/.cache" # User-specific non-essential (cached) data, analogous to /var/cache
+set -gx XDG_DATA_HOME "$HOME/.local/share" # User-specific data files, analogous to /usr/share
+set -gx XDG_STATE_HOME "$HOME/.local/state" # User-specific state files, analogous to /var/lib
 
 if status is-interactive
     # Remove underlines
     set fish_color_valid_path # default: '--underline'
     set fish_pager_color_prefix normal --bold # default: 'normal'  '--bold'  '--underline'
-
-    # XDG Base Directory, User Directories
-    set -gx XDG_CONFIG_HOME "$HOME/.config" # User-specific configurations, analogous to /etc
-    set -gx XDG_CACHE_HOME "$HOME/.cache" # User-specific non-essential (cached) data, analogous to /var/cache
-    set -gx XDG_DATA_HOME "$HOME/.local/share" # User-specific data files, analogous to /usr/share
-    set -gx XDG_STATE_HOME "$HOME/.local/state" # User-specific state files, analogous to /var/lib
 
     # $EDITOR
     set -gx EDITOR '/usr/bin/vim -n'
@@ -47,16 +47,6 @@ if status is-interactive
         end
     end
 
-    # Local environment
-    if test -f $HOME/.local/local.fish
-        source $HOME/.local/local.fish
-    end
-
-    # Alias
-    if test -f $HOME/.config/fish/alias.fish
-        source $HOME/.config/fish/alias.fish
-    end
-
     # zoxide, smarter cd
     if command -q zoxide
         zoxide init --cmd cd fish | source
@@ -67,12 +57,14 @@ if status is-interactive
     #     nvm use latest 1>/dev/null
     # end
 
-    # Title
-    # Default shows truncated directories like ~/.d/f/config.fish
-    # Default function: `functions fish_title`
-    # Modified `prompt_pwd -d 1 -D 1` to `prompt_pwd -d 0 -D 0`
-    # https://fishshell.com/docs/current/cmds/fish_title.html
-    # https://fishshell.com/docs/current/cmds/prompt_pwd.html
+    # fish_title
+    #   Default shows truncated directories like ~/.d/f/config.fish
+    #
+    #   Modified:
+    #       `prompt_pwd -d 1 -D 1` to `prompt_pwd -d 0 -D 0`
+    #
+    #   https://fishshell.com/docs/current/cmds/fish_title.html
+    #   https://fishshell.com/docs/current/cmds/prompt_pwd.html
     #
     # Defined in /usr/share/fish/functions/fish_title.fish @ line 1
     function fish_title
@@ -113,4 +105,14 @@ if status is-interactive
     #     #     bind \et 'tmux-sessionizer.sh pass; commandline -f repaint'
     #     # end
     # end
+
+    # Alias
+    if test -f $HOME/.config/fish/alias.fish
+        source $HOME/.config/fish/alias.fish
+    end
+
+    # Local environment
+    if test -f $HOME/.local/local.fish
+        source $HOME/.local/local.fish
+    end
 end

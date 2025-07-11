@@ -1,23 +1,9 @@
-# .
-# VERSION 35
+#
+# alias.fish
 
 # @fish-lsp-disable 2002 4004
 #   2002    alias used, prefer using functions instead [2002]
 #   4004    Unused local function [4004]
-
-##
-## Environment
-##
-
-# .
-# .
-# .
-# .
-# .
-
-# if test -z "$TMUX_DEFAULT_SESSION_NAME"
-#     set TMUX_DEFAULT_SESSION_NAME home
-# end
 
 ##
 ## Alias and Abbreviations
@@ -394,7 +380,7 @@ function git-tidy -d 'Git History Cleanup'
         return 1
     end
 
-    # BUG: if in a subdirectory, git clone will not work
+    # BUG: if in a subdirectory, look up git root
     # TODO: get_root_dir
     git clone --mirror . $backup_dir
     if test $status -ne 0

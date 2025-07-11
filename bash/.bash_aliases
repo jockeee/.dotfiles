@@ -1,24 +1,5 @@
-## VERSION 28
-
-##
-## Environment
-##
-
-# XDG Base Directory, User Directories
-export XDG_CONFIG_HOME="$HOME/.config"     # User-specific configurations, analogous to /etc
-export XDG_CACHE_HOME="$HOME/.cache"       # User-specific non-essential (cached) data, analogous to /var/cache
-export XDG_DATA_HOME="$HOME/.local/share"  # User-specific data files, analogous to /usr/share
-export XDG_STATE_HOME="$HOME/.local/state" # User-specific state files, analogous to /var/lib
-
-if [ -z "$TMUX_DEFAULT_SESSION_NAME" ]; then
-    TMUX_DEFAULT_SESSION_NAME=$(uname -n)
-fi
-
-# Local environment
-if [ -f "$HOME/.local/local.bash" ]; then
-    # shellcheck disable=SC1091
-    source "$HOME/.local/local.bash"
-fi
+#
+# .bash_aliases
 
 ##
 ## Alias
@@ -336,6 +317,27 @@ git-tidy() {
     echo
 }
 
+# upd (fedora/ubuntu)
+if [ ! -f /etc/os-release ]; then
+    echo "Warning: /etc/os-release not found"
+    exit 0
+else
+    source /etc/os-release
+    case $ID in
+    'fedora')
+        export -f upd_fedora
+        alias upd='upd_fedora'
+        ;;
+    'ubuntu')
+        export -f upd_ubuntu
+        alias upd='upd_ubuntu'
+        ;;
+    *)
+        echo "Warning: Distro not supported"
+        ;;
+    esac
+fi
+
 upd_fedora() {
     echo -e '\e[1mUpdating system\e[0m'
     echo -e '\e[3msudo dnf upgrade\e[0m\n'
@@ -641,67 +643,4 @@ install_go() {
     echo
 }
 
-# $PATH: /usr/local/go/bin
-if [ -d /usr/local/go/bin ]; then
-    export PATH=/usr/local/go/bin:$PATH
-fi
-
-# $PATH: ~/go/bin
-if [ -d "$HOME/go/bin" ]; then
-    export PATH="$HOME/go/bin":$PATH
-fi
-
-# $PATH: ~/.cargo/bin
-if [ -d "$HOME/.cargo/bin" ]; then
-    export PATH="$HOME/.cargo/bin":$PATH
-fi
-
-# wezterm
-if type -P wezterm &>/dev/null; then
-    eval "$(wezterm shell-completion --shell bash)"
-fi
-
-# zoxide, smarter cd
-if type -P zoxide &>/dev/null; then
-    eval "$(zoxide init --cmd cd bash)"
-fi
-
-# fzf
-if type -P fzf &>/dev/null; then
-    # Set up fzf key bindings and fuzzy completion
-    eval "$(fzf --bash)"
-fi
-
-# gitleaks
-if type -P gitleaks &>/dev/null; then
-    eval "$(gitleaks completion bash)"
-fi
-
-# autocd
-shopt -s autocd
-
-# upd (fedora/ubuntu)
-
-if [ ! -f /etc/os-release ]; then
-    echo "Warning: /etc/os-release not found"
-    exit 0
-fi
-
-source /etc/os-release
-
-case $ID in
-'fedora')
-    if type -P /usr/bin/dnf5 &>/dev/null; then
-        alias dnf='dnf5'
-    fi
-    export -f upd_fedora
-    alias upd='upd_fedora'
-    ;;
-'ubuntu')
-    export -f upd_ubuntu
-    alias upd='upd_ubuntu'
-    ;;
-*)
-    echo "Warning: Distro not supported"
-    ;;
-esac
+# vim: ft=sh

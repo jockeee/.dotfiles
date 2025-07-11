@@ -28,6 +28,7 @@ return {
       html = { 'prettierd' },
       lua = { 'stylua' },
       sh = { 'shfmt' },
+      zsh = { 'shfmt' },
       -- Conform can also run multiple formatters sequentially
       -- python = { "isort", "black" },
       --

@@ -13,14 +13,22 @@ else
 fi
 
 # bash
-if ! grep -q "# default distro ~/.bashrc above" ~/.bashrc; then
+if grep -q "# default distro ~/.bashrc above" ~/.bashrc; then
+    echo "[info]: ~/.bashrc already configured, skipping addition."
+else
     cat >>~/.bashrc <<EOF
-
 # default distro ~/.bashrc above
-if [ -f "$HOME/.dotfiles/.bashrc" ]; then
-    . "$HOME/.dotfiles/.bashrc"
+if [ -f \"$HOME/.dotfiles/bash/.bashrc\" ]; then
+    source \"$HOME/.dotfiles/bash/.bashrc\"
 fi
 EOF
+fi
+
+# zsh
+if [ -f ~/.zshrc ]; then
+    echo "[info]: ~/.zshrc already exists, skipping symlink creation."
+else
+    ln -s ~/.dotfiles/zsh/.zshrc ~/.zshrc
 fi
 
 # bat
@@ -84,7 +92,7 @@ fi
 
 # tmux-sessionizer
 if [ -f ~/.local/bin/tmux-sessionizer.sh ]; then
-    echo "[info]: ~/.local/bin/tmux-sessionizer.sh already exists, skipping symlink creation."
+    echo "[info]: ~/.local/bin/tmux-sessionizer.sh already exists, skipping."
 else
     ln -s ~/.dotfiles/bin/tmux-sessionizer.sh ~/.local/bin/.
 fi

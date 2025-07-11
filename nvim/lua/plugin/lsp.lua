@@ -16,13 +16,12 @@ return {
       -- override config settings provided by `nvim-lspconfig` or files in lsp/
       local servers = {
         -- ansible
-        -- ansiblels = {
-        --   root_dir = require('lspconfig.util').root_pattern('ansible.cfg', '.ansible-lint', '.git'),
-        -- },
         ansiblels = {},
 
         -- bash
-        bashls = {},
+        bashls = {
+          filetypes = { 'sh', 'bash', 'zsh' },
+        },
 
         -- fish
         fish_lsp = {}, -- ndonfris/fish-lsp

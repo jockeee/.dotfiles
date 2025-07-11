@@ -75,7 +75,7 @@ return {
     -- `agentic` uses tools to automatically generate code,
     -- `legacy` uses the old planning method to generate code.
     mode = 'agentic', -- d: agentic
-    hints = { enabled = true }, -- d: true
+    hints = { enabled = false }, -- d: true
   },
   config = function(_, opts)
     local avante = require 'avante'
