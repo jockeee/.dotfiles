@@ -7,121 +7,143 @@ fi
 
 # bash
 if [ -d ~/.config/bash ]; then
-    echo "[info]: ~/.config/bash already exists, skipping symlink creation."
+    echo "[skip]: ~/.config/bash"
 else
+    echo -n "[info]: ~/.config/bash... "
     mkdir -p ~/.config/bash
     ln -s ~/.dotfiles/bash/bashrc ~/.config/bash/.
     ln -s ~/.dotfiles/bash/bash_aliases ~/.config/bash/.
+    echo "OK"
 fi
 if grep -q "# default distro ~/.bashrc above" ~/.bashrc; then
-    echo "[info]: ~/.bashrc already configured, skipping addition."
+    echo "[skip]: ~/.bashrc"
 else
+    echo -n "[info]: ~/.bashrc... "
     cat >>~/.bashrc <<EOF
 
 # default distro ~/.bashrc above
-if [ -f "\$XDG_CONFIG_DIR/bash/bashrc" ]; then
+export XDG_CONFIG_HOME="\${XDG_CONFIG_HOME:-\$HOME/.config}"
+if [ -f "\$XDG_CONFIG_HOME/bash/bashrc" ]; then
     # shellcheck disable=SC1091
-    source "\$XDG_CONFIG_DIR/bash/bashrc"
+    source "\$XDG_CONFIG_HOME/bash/bashrc"
 fi
 EOF
+    echo "OK"
 fi
 
 # bat
 if [ -d ~/.config/bat ]; then
-    echo "[info]: ~/.config/bat already exists, skipping symlink creation."
+    echo "[skip]: ~/.config/bat"
 else
+    echo -n "[info]: ~/.config/bat... "
     ln -s ~/.dotfiles/bat ~/.config/.
     if command -v bat &>/dev/null; then
         /usr/bin/bat cache --build
     fi
+    echo "OK"
 fi
 
 # eza
 if [ -d ~/.config/eza ]; then
-    echo "[info]: ~/.config/eza already exists, skipping symlink creation."
+    echo "[skip]: ~/.config/eza"
 else
+    echo -n "[info]: ~/.config/eza... "
     ln -s ~/.dotfiles/eza ~/.config/.
+    echo "OK"
 fi
 
 # fish
 if [ -d ~/.config/fish ]; then
-    echo "[info]: ~/.config/fish already exists, skipping symlink creation."
+    echo "[skip]: ~/.config/fish"
 else
+    echo -n "[info]: ~/.config/fish... "
     mkdir -p ~/.config/fish
     ln -s ~/.dotfiles/fish/alias.fish ~/.config/fish/.
     ln -s ~/.dotfiles/fish/config.fish ~/.config/fish/.
+    echo "OK"
 fi
 
 # hidden
 if [ -f ~/.hidden ]; then
-    echo "[info]: ~/.config/hidden already exists, skipping symlink creation."
+    echo "[skip]: ~/.hidden"
 else
+    echo -n "[info]: ~/.hidden... "
     ln -s ~/.dotfiles/.hidden ~/.
+    echo "OK"
 fi
 
 # lazygit
 if [ -d ~/.config/lazygit ]; then
-    echo "[info]: ~/.config/lazygit already exists, skipping symlink creation."
+    echo "[skip]: ~/.config/lazygit"
 else
+    echo -n "[info]: ~/.config/lazygit... "
     ln -s ~/.dotfiles/lazygit ~/.config/.
+    echo "OK"
 fi
 
 # nvim
 if [ -d ~/.config/nvim ]; then
-    echo "[info]: ~/.config/nvim already exists, skipping symlink creation."
+    echo "[skip]: ~/.config/nvim"
 else
-    ln -s ~/.dotfiles/nvim-lazy-telescope ~/.config/.
+    echo -n "[info]: ~/.config/nvim... "
+    ln -s ~/.dotfiles/nvim ~/.config/.
+    echo "OK"
 fi
 
 # tmux
-if [ -d ~/.config/tmux ]; then
-    echo "[info]: ~/.config/tmux already exists, skipping symlink creation."
-else
-    mkdir -p ~/.config/tmux
-    ln -s ~/.dotfiles/tmux/tmux.conf ~/.config/tmux/.
-
-    if command -v git &>/dev/null; then
-        git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
-    fi
-fi
+# if [ -d ~/.config/tmux ]; then
+#     echo "[skip]: ~/.config/tmux"
+# else
+#     echo -n "[info]: ~/.config/tmux... "
+#     mkdir -p ~/.config/tmux
+#     ln -s ~/.dotfiles/tmux/tmux.conf ~/.config/tmux/.
+#
+#     if command -v git &>/dev/null; then
+#         git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
+#     fi
+#     echo "OK"
+# fi
 
 # tmux-sessionizer
-if [ -f ~/.local/bin/tmux-sessionizer.sh ]; then
-    echo "[info]: ~/.local/bin/tmux-sessionizer.sh already exists, skipping."
-else
-    ln -s ~/.dotfiles/bin/tmux-sessionizer.sh ~/.local/bin/.
-fi
+# if [ -f ~/.local/bin/tmux-sessionizer.sh ]; then
+#     echo "[skip]: ~/.local/bin/tmux-sessionizer.sh"
+# else
+#     echo -n "[info]: ~/.local/bin/tmux-sessionizer.sh... "
+#     ln -s ~/.dotfiles/bin/tmux-sessionizer.sh ~/.local/bin/.
+#     echo "OK"
+# fi
 
 # wezterm
 if [ -d ~/.config/wezterm ]; then
-    echo "[info]: ~/.config/wezterm already exists, skipping symlink creation."
+    echo "[skip]: ~/.config/wezterm"
 else
+    echo -n "[info]: ~/.config/wezterm... "
     ln -s ~/.dotfiles/wezterm ~/.config/.
+    echo "OK"
 fi
 
 # zsh
 if [ -d ~/.config/zsh ]; then
-    echo "[info]: ~/.config/zsh already exists, skipping symlink creation."
+    echo "[skip]: ~/.config/zsh"
 else
+    echo -n "[info]: ~/.config/zsh... "
     mkdir -p ~/.config/zsh
     ln -s ~/.dotfiles/zsh/zsh ~/.config/zsh/.
+    echo "OK"
 fi
 if grep -q "# default distro ~/.zshrc above" ~/.zshrc; then
-    echo "[info]: ~/.zshrc already configured, skipping addition."
+    echo "[skip]: ~/.zshrc"
 else
+    echo -n "[info]: ~/.zshrc... "
     cat >>~/.zshrc <<EOF
 
 # default distro ~/.zshrc above
-if [ -f "\$XDG_CONFIG_DIR/zsh/zshrc" ]; then
-    source "\$XDG_CONFIG_DIR/zsh/zshrc"
+export XDG_CONFIG_HOME="\${XDG_CONFIG_HOME:-\$HOME/.config}"
+if [ -f "\$XDG_CONFIG_HOME/zsh/zshrc" ]; then
+    source "\$XDG_CONFIG_HOME/zsh/zshrc"
 fi
 EOF
-fi
-
-if [ -f ~/.zshrc ]; then
-    echo "[info]: ~/.zshrc already exists, skipping symlink creation."
-else
-    ln -s ~/.dotfiles/zsh/zshrc ~/.zshrc
+    echo "OK"
 fi
 
 # #!/usr/bin/env bash
