@@ -5,13 +5,6 @@ if ! [ -d ~/.local/bin ]; then
     mkdir -p ~/.local/bin
 fi
 
-# wezterm
-if [ -d ~/.config/wezterm ]; then
-    echo "[info]: ~/.config/wezterm already exists, skipping symlink creation."
-else
-    ln -s ~/.dotfiles/wezterm ~/.config/.
-fi
-
 # bash
 if [ -d ~/.config/bash ]; then
     echo "[info]: ~/.config/bash already exists, skipping symlink creation."
@@ -29,13 +22,6 @@ if [ -f \"\$XDG_CONFIG_DIR/bash/.bashrc\" ]; then
     source \"\$XDG_CONFIG_DIR/.dotfiles/bash/.bashrc\"
 fi
 EOF
-fi
-
-# zsh
-if [ -f ~/.zshrc ]; then
-    echo "[info]: ~/.zshrc already exists, skipping symlink creation."
-else
-    ln -s ~/.dotfiles/zsh/.zshrc ~/.zshrc
 fi
 
 # bat
@@ -102,6 +88,20 @@ if [ -f ~/.local/bin/tmux-sessionizer.sh ]; then
     echo "[info]: ~/.local/bin/tmux-sessionizer.sh already exists, skipping."
 else
     ln -s ~/.dotfiles/bin/tmux-sessionizer.sh ~/.local/bin/.
+fi
+
+# wezterm
+if [ -d ~/.config/wezterm ]; then
+    echo "[info]: ~/.config/wezterm already exists, skipping symlink creation."
+else
+    ln -s ~/.dotfiles/wezterm ~/.config/.
+fi
+
+# zsh
+if [ -f ~/.zshrc ]; then
+    echo "[info]: ~/.zshrc already exists, skipping symlink creation."
+else
+    ln -s ~/.dotfiles/zsh/.zshrc ~/.zshrc
 fi
 
 # #!/usr/bin/env bash
