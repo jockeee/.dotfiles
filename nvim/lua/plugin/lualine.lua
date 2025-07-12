@@ -73,6 +73,7 @@ return {
         -- 'aerial',
       },
       lualine_x = {
+        require 'plugin.codecompanion.lualine-spinner',
         { 'copilot', show_colors = false },
         'encoding',
         'fileformat',
@@ -102,6 +103,7 @@ return {
         'diagnostics',
       },
       lualine_x = {
+        require 'plugin.codecompanion.lualine-spinner',
         { 'copilot', show_colors = false },
         'encoding',
         'fileformat',

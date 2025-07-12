@@ -62,7 +62,7 @@ return {
     'nvim-treesitter/nvim-treesitter',
     'ravitemer/mcphub.nvim', -- mcp extension
     -- 'j-hui/fidget.nvim', -- fidget status, https://github.com/olimorris/codecompanion.nvim/discussions/813
-    'franco-ruggeri/codecompanion-spinner.nvim', -- virtual line status, https://github.com/olimorris/codecompanion.nvim/discussions/640
+    -- 'franco-ruggeri/codecompanion-spinner.nvim', -- virtual line status, https://github.com/olimorris/codecompanion.nvim/discussions/640
   },
   opts = {
     display = {
@@ -78,14 +78,15 @@ return {
     strategies = {
       chat = {
         adapter = 'copilot', -- d: copilot
-        -- model = 'claude-sonnet-4',
+        model = 'claude-sonnet-4',
       },
       inline = {
         adapter = 'copilot', -- d: copilot
+        -- model = 'claude-sonnet-4',
       },
       cmd = {
         adapter = 'copilot', -- d: copilot
-        model = 'claude-sonnet-4',
+        -- model = 'claude-sonnet-4',
       },
     },
 
@@ -98,7 +99,7 @@ return {
           show_result_in_chat = true,
         },
       },
-      spinner = {},
+      -- spinner = {},
     },
   },
   -- config = function(_, opts)
