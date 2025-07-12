@@ -22,6 +22,7 @@ else
     cat >>~/.bashrc <<EOF
 
 # default distro ~/.bashrc above
+
 export XDG_CONFIG_HOME="\${XDG_CONFIG_HOME:-\$HOME/.config}"
 
 if [ -f "\$XDG_CONFIG_HOME/bash/bashrc" ]; then
@@ -45,7 +46,6 @@ if [ -d "\$XDG_CONFIG_HOME/bash/bashrc.d" ]; then
     done
     unset rc
 fi
-    
 EOF
 fi
 
@@ -150,6 +150,7 @@ else
 # default distro ~/.zshrc above
 
 export XDG_CONFIG_HOME="\${XDG_CONFIG_HOME:-\$HOME/.config}"
+
 if [ -f "\$XDG_CONFIG_HOME/zsh/zshrc" ]; then
     source "\$XDG_CONFIG_HOME/zsh/zshrc"
 fi

@@ -60,7 +60,7 @@ prompt_git_info() {
 }
 
 _xdg_less() {
-    mkdir -p "$XDG_STATE_HOME/less"
+    [[ -d "$XDG_STATE_HOME/less" ]] || mkdir -p "$XDG_STATE_HOME/less"
 
     # ~/.lesshst
     [[ -f ~/.lesshst ]] && mv ~/.lesshst "$XDG_STATE_HOME/less/lesshst"
@@ -68,7 +68,7 @@ _xdg_less() {
 }
 
 _xdg_python() {
-    mkdir -p "$XDG_STATE_HOME/python"
+    [[ -d "$XDG_STATE_HOME/python" ]] || mkdir -p "$XDG_STATE_HOME/python"
 
     # ~/.python_history
     [[ -f ~/.python_history ]] && mv ~/.python_history "$XDG_STATE_HOME/python/python_history"
@@ -76,8 +76,9 @@ _xdg_python() {
 }
 
 _xdg_wget() {
-    mkdir -p "$XDG_CONFIG_HOME/wget"
-    mkdir -p "$XDG_STATE_HOME/wget"
+    [[ -d "$XDG_CONFIG_HOME/wget" ]] || mkdir -p "$XDG_CONFIG_HOME/wget"
+    [[ -d "$XDG_STATE_HOME/wget" ]] || mkdir -p "$XDG_STATE_HOME/wget"
+
     if [ ! -f "$XDG_CONFIG_HOME/wget/wgetrc" ]; then
         echo "hsts-file = $XDG_STATE_HOME/wget/wget-hsts" >"$XDG_CONFIG_HOME/wget/wgetrc"
 

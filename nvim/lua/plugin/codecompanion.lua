@@ -4,7 +4,7 @@
 return {
   'olimorris/codecompanion.nvim',
   keys = {
-    { '<leader>qq', '<cmd>CodeCompanionChat<cr>', desc = 'AI: chat' },
+    { '<leader>qq', mode = { 'n', 'x' }, '<cmd>CodeCompanionChat<cr>', desc = 'AI: chat' },
   },
   dependencies = {
     require 'plugin.render-markdown',

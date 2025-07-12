@@ -12,7 +12,7 @@ return {
   event = { 'BufReadPre', 'BufNewFile' },
   keys = {
     {
-      '<leader>q',
+      '<leader>a',
       function()
         require('aerial').toggle { focus = true } -- https://github.com/stevearc/aerial.nvim/blob/master/doc/api.md#toggleopts
       end,

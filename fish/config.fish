@@ -10,6 +10,39 @@ set -gx XDG_CACHE_HOME "$HOME/.cache" # User-specific non-essential (cached) dat
 set -gx XDG_DATA_HOME "$HOME/.local/share" # User-specific data files, analogous to /usr/share
 set -gx XDG_STATE_HOME "$HOME/.local/state" # User-specific state files, analogous to /var/lib
 
+function _xdg_less
+    test -d "$XDG_STATE_HOME/less"; or mkdir -p "$XDG_STATE_HOME/less"
+
+    # ~/.lesshst
+    test -f ~/.lesshst; and mv -f ~/.lesshst "$XDG_STATE_HOME/less/lesshst"
+    set -gx LESSHISTFILE "$XDG_STATE_HOME/less/lesshst"
+end
+
+function _xdg_python
+    test -d "$XDG_STATE_HOME/python"; or mkdir -p "$XDG_STATE_HOME/python"
+
+    # ~/.python_history
+    test -f ~/.python_history; and mv -f ~/.python_history "$XDG_STATE_HOME/python/python_history"
+    set -gx PYTHON_HISTORY "$XDG_STATE_HOME/python/python_history"
+end
+
+function _xdg_wget
+    test -d "$XDG_CONFIG_HOME/wget"; or mkdir -p "$XDG_CONFIG_HOME/wget"
+    test -d "$XDG_STATE_HOME/wget"; or mkdir -p "$XDG_STATE_HOME/wget"
+
+    if not test -f "$XDG_CONFIG_HOME/wget/wgetrc"
+        echo "hsts-file = $XDG_STATE_HOME/wget/wget-hsts" >"$XDG_CONFIG_HOME/wget/wgetrc"
+
+        # ~/.wget-hsts
+        test -f ~/.wget-hsts; and mv -f ~/.wget-hsts "$XDG_STATE_HOME/wget/wget-hsts"
+    end
+    set -gx WGETRC "$XDG_CONFIG_HOME/wget/wgetrc"
+end
+
+_xdg_less
+_xdg_python
+_xdg_wget
+
 if status is-interactive
     # Remove underlines
     set fish_color_valid_path # default: '--underline'
