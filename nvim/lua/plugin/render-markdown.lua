@@ -9,7 +9,7 @@
 
 return {
   'MeanderingProgrammer/render-markdown.nvim',
-  ft = { 'markdown', 'Avante', 'codecompanion' },
+  ft = { 'markdown', 'codecompanion' },
   dependencies = {
     'nvim-treesitter/nvim-treesitter',
     'echasnovski/mini.nvim', -- if you use the mini.nvim suite
@@ -18,15 +18,30 @@ return {
   ---@type render.md.UserConfig
   opts = {
     completions = { lsp = { enabled = true } },
+    file_types = { 'markdown', 'codecompanion' },
+
+    heading = {
+      width = 'block',
+      min_width = 30,
+    },
+
     code = {
-      border = 'thin', -- d: hide, none | thick | thin | hide
+      -- position = 'right', -- language position
+      language_pad = 0,
+      language_border = ' ',
+
+      width = 'block',
+      min_width = 45,
+      left_pad = 2,
+      right_pad = 4,
+
+      border = 'none', -- d: hide, none | thick | thin | hide
       -- highlight = 'RenderMarkdownCode', -- Highlight for code blocks.
       -- highlight_info = 'RenderMarkdownCodeInfo', -- Highlight for code info section, after the language.
       -- highlight_language = nil, Highlight for language, overrides icon provider value.
-      highlight_border = false, -- d: RenderMarkdownCodeBorder, border, use false to add no highlight.
+      -- highlight_border = false, -- d: RenderMarkdownCodeBorder, border, use false to add no highlight.
       -- highlight_fallback = 'RenderMarkdownCodeFallback', -- Highlight for language, used if icon provider does not have a value.
       -- highlight_inline = 'RenderMarkdownCodeInline', -- Highlight for inline code.
     },
-    file_types = { 'markdown', 'Avante', 'codecompanion' },
   },
 }

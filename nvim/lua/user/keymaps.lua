@@ -1,20 +1,18 @@
 --
 -- keymaps.lua
 
-local map = vim.keymap.set
-
 -- Leader key, space, do nothing when space is pressed in normal or visual mode
 vim.keymap.set({ 'n', 'v' }, '<space>', '<nop>')
 
 -- Clean up search results and extmarks with <esc>
-vim.keymap.set('n', '<esc>', function()
+vim.keymap.set('n', '<Esc>', function()
   vim.cmd 'nohlsearch'
   require('user.utils').search_index_clear()
   require('multicursor-nvim').clearCursors()
 end)
 
 -- Exit terminal mode in the builtin terminal with <esc> (default: <C-\><C-n>).
-vim.keymap.set('t', '<esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
+vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 vim.keymap.set({ 'n', 'v', 't' }, '`', '<cmd>Floaterminal<cr>', { desc = 'Floaterminal' })
 
 -- Mouse, right click

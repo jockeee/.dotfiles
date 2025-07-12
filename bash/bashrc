@@ -79,7 +79,7 @@ _xdg_wget() {
     [[ -d "$XDG_CONFIG_HOME/wget" ]] || mkdir -p "$XDG_CONFIG_HOME/wget"
     [[ -d "$XDG_STATE_HOME/wget" ]] || mkdir -p "$XDG_STATE_HOME/wget"
 
-    if [ ! -f "$XDG_CONFIG_HOME/wget/wgetrc" ]; then
+    if [[ ! -f "$XDG_CONFIG_HOME/wget/wgetrc" ]]; then
         echo "hsts-file = $XDG_STATE_HOME/wget/wget-hsts" >"$XDG_CONFIG_HOME/wget/wgetrc"
 
         # ~/.wget-hsts
@@ -102,28 +102,28 @@ if [[ $- == *i* ]]; then
     fi
 
     # $PATH: /usr/local/go/bin
-    if [ -d /usr/local/go/bin ]; then
+    if [[ -d /usr/local/go/bin ]]; then
         if ! [[ "$PATH" =~ "/usr/local/go/bin" ]]; then
             PATH=/usr/local/go/bin:$PATH
         fi
     fi
 
     # $PATH: ~/go/bin
-    if [ -d "$HOME/go/bin" ]; then
+    if [[ -d "$HOME/go/bin" ]]; then
         if ! [[ "$PATH" =~ "$HOME/go/bin" ]]; then
             PATH="$HOME/go/bin":$PATH
         fi
     fi
 
     # $PATH: ~/.cargo/bin
-    if [ -d "$HOME/.cargo/bin" ]; then
+    if [[ -d "$HOME/.cargo/bin" ]]; then
         if ! [[ "$PATH" =~ "$HOME/.cargo/bin" ]]; then
             PATH="$HOME/.cargo/bin":$PATH
         fi
     fi
 
     # $PATH: ~/.local/share/pnpm
-    if [ -d "$HOME/.local/share/pnpm" ]; then
+    if [[ -d "$HOME/.local/share/pnpm" ]]; then
         export PNPM_HOME="$HOME/.local/share/pnpm"
         if ! [[ "$PATH" =~ "$PNPM_HOME" ]]; then
             PATH="$PNPM_HOME":$PATH
@@ -216,7 +216,7 @@ if [[ $- == *i* ]]; then
 
     # fnm
     FNM_PATH="$XDG_DATA_HOME/fnm"
-    if [ -d "$FNM_PATH" ]; then
+    if [[ -d "$FNM_PATH" ]]; then
         if ! [[ "$PATH" =~ "$FNM_PATH" ]]; then
             export PATH="$FNM_PATH:$PATH"
         fi

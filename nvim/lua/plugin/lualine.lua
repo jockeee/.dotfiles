@@ -110,28 +110,28 @@ return {
       lualine_y = { '' }, -- default: 'progress'
       lualine_z = { 'location' }, -- default: 'location'
     },
-    -- winbar = {
-    --   lualine_a = {},
-    --   lualine_b = {
-    --     'filename',
-    --     'aerial',
-    --   },
-    --   lualine_c = {},
-    --   lualine_x = {},
-    --   lualine_y = {},
-    --   lualine_z = {},
-    -- },
-    -- inactive_winbar = {
-    --   lualine_a = {},
-    --   lualine_b = {
-    --     'filename',
-    --     'aerial',
-    --   },
-    --   lualine_c = {},
-    --   lualine_x = {},
-    --   lualine_y = {},
-    --   lualine_z = {},
-    -- },
+    winbar = {
+      lualine_a = {},
+      lualine_b = {
+        'filename',
+        'aerial',
+      },
+      lualine_c = {},
+      lualine_x = {},
+      lualine_y = {},
+      lualine_z = {},
+    },
+    inactive_winbar = {
+      lualine_a = {},
+      lualine_b = {
+        'filename',
+        'aerial',
+      },
+      lualine_c = {},
+      lualine_x = {},
+      lualine_y = {},
+      lualine_z = {},
+    },
     -- extensions = { 'nvim-tree' },
   },
 }

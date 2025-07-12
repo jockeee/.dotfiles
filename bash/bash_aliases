@@ -161,14 +161,14 @@ cdg() {
     fi
 
     git_dir=$(git rev-parse --show-toplevel)
-    if [ -n "$git_dir" ]; then
+    if [[ -n "$git_dir" ]]; then
         cd "$git_dir" || return 1
     fi
 }
 
 # https://github.com/oh-my-fish/oh-my-fish/blob/master/lib/git/git_is_repo.fish
 is_git_repo() {
-    if [ -d .git ]; then
+    if [[ -d .git ]]; then
         return 0
     fi
 
@@ -176,7 +176,7 @@ is_git_repo() {
     if info=$(git rev-parse --git-dir --is-bare-repository 2>/dev/null); then
         IFS=' ' read -r git_dir is_bare <<<"$info"
 
-        if [ "$is_bare" = "false" ]; then
+        if [[ "$is_bare" = "false" ]]; then
             return 0
         fi
     fi
@@ -194,7 +194,7 @@ gg() {
 
     use_ai=0
 
-    if [ $# -eq 0 ]; then
+    if [[ $# -eq 0 ]]; then
         if command -v aicommit &>/dev/null; then
             use_ai=1
         else
@@ -204,7 +204,7 @@ gg() {
         fi
     fi
 
-    if [ $use_ai -eq 1 ]; then
+    if [[ $use_ai -eq 1 ]]; then
         # using aicomments
         # echo statements has bold text
         echo -e "\e[1mgit add -A\e[0m" && git add -A &&
@@ -236,7 +236,7 @@ aicommit() {
     fi
 
     local continue='n'
-    while [ "$continue" != "y" ] && [ "$continue" != "Y" ]; do
+    while [[ "$continue" != "y" ]] && [[ "$continue" != "Y" ]]; do
         local message
         message=$(openai api chat.completions.create \
             -m gpt-4 \
@@ -244,7 +244,7 @@ aicommit() {
             -g user "$(git diff --cached)")
 
         # shellcheck disable=SC2181 # Check exit code directly with e.g. 'if ! mycmd;', not indirectly with $?
-        if [ $? -ne 0 ]; then
+        if [[ $? -ne 0 ]]; then
             echo "Error: Couldn't retrieve a commit message from 'openai'"
             return 1
         fi
@@ -252,7 +252,7 @@ aicommit() {
         echo
         echo "$message"
         read -r -p "Use this commit message? [y/N/q]: " continue
-        if [ "$continue" = "q" ]; then
+        if [[ "$continue" = "q" ]]; then
             return 0
         fi
     done
@@ -270,7 +270,7 @@ aicommit() {
 #
 #     use_ai=0
 #
-#     if [ $# -eq 0 ]; then
+#     if [[ $# -eq 0 ]]; then
 #         if command -v aicommits &>/dev/null; then
 #             use_ai=1
 #         else
@@ -280,7 +280,7 @@ aicommit() {
 #         fi
 #     fi
 #
-#     if [ $use_ai -eq 1 ]; then
+#     if [[ $use_ai -eq 1 ]]; then
 #         # using aicomments
 #         # echo statements has bold text
 #         echo -e "\e[1mgit add -A\e[0m" && git add -A &&
@@ -310,7 +310,7 @@ ww() {
     fi
 
     continue='n'
-    while [ "$continue" != "y" ] && [ "$continue" != "Y" ]; do
+    while [[ "$continue" != "y" ]] && [[ "$continue" != "Y" ]]; do
         local message
         if ! message=$(curl -s https://whatthecommit.com/index.txt); then
             echo "Error: Couldn't retrieve a commit message from 'whatthecommit.com'"
@@ -319,7 +319,7 @@ ww() {
 
         echo "Commit message: $message"
         read -r -p "Do you want to use this commit message? [y/N/q]: " continue
-        if [ "$continue" = "q" ]; then
+        if [[ "$continue" = "q" ]]; then
             return 0
         fi
     done
@@ -339,7 +339,7 @@ wwd() {
     fi
 
     continue='n'
-    while [ "$continue" != "y" ] && [ "$continue" != "Y" ]; do
+    while [[ "$continue" != "y" ]] && [[ "$continue" != "Y" ]]; do
         local message
         if ! message=$(curl -s https://whatthecommit.com/index.txt); then
             echo "Error: Couldn't retrieve a commit message from 'whatthecommit.com'"
@@ -348,7 +348,7 @@ wwd() {
 
         echo "Commit message: $message"
         read -r -p "Do you want to use this commit message? [y/N/q]: " continue
-        if [ "$continue" = "q" ]; then
+        if [[ "$continue" = "q" ]]; then
             return 0
         fi
     done
@@ -392,7 +392,7 @@ git-tidy() {
 
     # Commit message
     commit_message="…"
-    if [ $# -gt 0 ]; then
+    if [[ $# -gt 0 ]]; then
         commit_message=$*
     fi
 
@@ -474,7 +474,7 @@ upd_ubuntu() {
 }
 
 # upd (fedora/ubuntu)
-if [ ! -f /etc/os-release ]; then
+if [[ ! -f /etc/os-release ]]; then
     echo "Warning: /etc/os-release not found"
     exit 0
 else
@@ -581,7 +581,7 @@ upd_go() {
 
         os=$(uname -s | tr '[:upper:]' '[:lower:]')
         arch=$(uname -m)
-        if [ "$arch" == 'x86_64' ]; then
+        if [[ "$arch" == 'x86_64' ]]; then
             arch='amd64'
         fi
         kind='archive'
@@ -608,13 +608,13 @@ upd_go() {
         latest_patch=$(echo "$latest_go_version" | sed 's/go//' | cut -d. -f3)
 
         need_update=false
-        if [ "$current_major" -lt "$latest_major" ]; then
+        if [[ "$current_major" -lt "$latest_major" ]]; then
             need_update=true
-        elif [ "$current_major" -eq "$latest_major" ]; then
-            if [ "$current_minor" -lt "$latest_minor" ]; then
+        elif [[ "$current_major" -eq "$latest_major" ]]; then
+            if [[ "$current_minor" -lt "$latest_minor" ]]; then
                 need_update=true
-            elif [ "$current_minor" -eq "$latest_minor" ]; then
-                if [ "$current_patch" -lt "$latest_patch" ]; then
+            elif [[ "$current_minor" -eq "$latest_minor" ]]; then
+                if [[ "$current_patch" -lt "$latest_patch" ]]; then
                     need_update=true
                 fi
             fi
@@ -622,7 +622,7 @@ upd_go() {
 
         selected_json=$(echo "$go_dev_json" | jq -r --arg os "$os" --arg arch "$arch" --arg kind "$kind" --arg version "$latest_go_version" '.[0].files[] | select(.os == $os and .arch == $arch and .kind == $kind and .version == $version)')
 
-        if [ -n "$selected_json" ]; then
+        if [[ -n "$selected_json" ]]; then
             download_filename=$(echo "$selected_json" | jq -r '.filename')
             download_checksum=$(echo "$selected_json" | jq -r '.sha256')
         else
@@ -630,7 +630,7 @@ upd_go() {
             return 1
         fi
 
-        if [ $need_update == true ]; then
+        if [[ $need_update == true ]]; then
             echo "Update available: $current_go_version -> $latest_go_version"
             echo
 
@@ -660,20 +660,20 @@ upd_go() {
             # wget -q --show-progress -O "$temp_file $download_url_base$download_filename"
             if ! curl -L -o "$temp_file" "$download_url_base$download_filename"; then
                 echo "Error: Download failed."
-                if [ -e $temp_file ]; then
+                if [[ -e $temp_file ]]; then
                     rm $temp_file
                 fi
                 return 1
             fi
 
-            if [ ! -e $temp_file ]; then
+            if [[ ! -e $temp_file ]]; then
                 echo "Error: Couldn't find the downloaded file."
                 return 1
             fi
 
             # verify checksum
             checksum=$(sha256sum $temp_file | cut -d' ' -f1)
-            if [ "$checksum" != "$download_checksum" ]; then
+            if [[ "$checksum" != "$download_checksum" ]]; then
                 echo "Error: Checksum verification failed"
                 rm $temp_file
                 return 1
@@ -796,7 +796,7 @@ install_go() {
 
     os=$(uname -s | tr '[:upper:]' '[:lower:]')
     arch=$(uname -m)
-    if [ "$arch" == 'x86_64' ]; then
+    if [[ "$arch" == 'x86_64' ]]; then
         arch='amd64'
     fi
     kind='archive'
@@ -814,7 +814,7 @@ install_go() {
     latest_go_version=$(echo "$go_dev_json" | jq -r '.[0].version')
     selected_json=$(echo "$go_dev_json" | jq -r --arg os "$os" --arg arch "$arch" --arg kind "$kind" --arg version "$latest_go_version" '.[0].files[] | select(.os == $os and .arch == $arch and .kind == $kind and .version == $version)')
 
-    if [ -n "$selected_json" ]; then
+    if [[ -n "$selected_json" ]]; then
         download_filename=$(echo "$selected_json" | jq -r '.filename')
         download_checksum=$(echo "$selected_json" | jq -r '.sha256')
     else
@@ -852,20 +852,20 @@ install_go() {
     # wget -q --show-progress -O "$temp_file $download_url_base$download_filename"
     if ! curl -L -o "$temp_file" "$download_url_base$download_filename"; then
         echo "Error: Download failed."
-        if [ -e $temp_file ]; then
+        if [[ -e $temp_file ]]; then
             rm -f $temp_file
         fi
         return 1
     fi
 
-    if [ ! -e $temp_file ]; then
+    if [[ ! -e $temp_file ]]; then
         echo "Error: Couldn't find the downloaded archive"
         return 1
     fi
 
     # verify checksum
     checksum=$(sha256sum $temp_file | cut -d' ' -f1)
-    if [ "$checksum" != "$download_checksum" ]; then
+    if [[ "$checksum" != "$download_checksum" ]]; then
         echo "Error: Checksum verification failed"
         rm $temp_file
         return 1

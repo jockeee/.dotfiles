@@ -4,7 +4,9 @@
 return {
   'olimorris/codecompanion.nvim',
   keys = {
-    { '<leader>qq', mode = { 'n', 'x' }, '<cmd>CodeCompanionChat<cr>', desc = 'AI: chat' },
+    { '<leader>qq', mode = { 'n', 'x' }, '<cmd>CodeCompanionChat Toggle<cr>', desc = 'chat: toggle' },
+    { '<leader>qn', mode = { 'n', 'x' }, '<cmd>CodeCompanionChat<cr>', desc = 'chat: new' },
+    { '<leader>qa', mode = { 'n', 'x' }, '<cmd>CodeCompanionActions<cr>', desc = 'chat: new' },
   },
   dependencies = {
     require 'plugin.render-markdown',
@@ -13,6 +15,18 @@ return {
     'ravitemer/mcphub.nvim', -- mcp extension
   },
   opts = {
+    display = {
+      chat = {
+        show_settings = true,
+
+        window = {
+          opts = {
+            signcolumn = 'yes',
+          },
+        },
+      },
+    },
+
     extensions = {
       mcphub = {
         callback = 'mcphub.extensions.codecompanion',
