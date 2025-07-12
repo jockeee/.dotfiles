@@ -16,7 +16,8 @@
 
 # ls options
 #   -A, --almost-all: do not list implied . and ..
-alias l 'ls -l'
+alias l ls
+alias ll 'ls -l'
 alias la 'ls -lA'
 alias lad 'ls -ld'
 alias laa 'ls -la'
@@ -92,6 +93,7 @@ abbr --add gls 'git log --show-signature'
 abbr --add gp 'git push'
 abbr --add gpl 'git pull'
 abbr --add gr 'git remote -v'
+abbr --add grl 'git reflog'
 abbr --add grs 'git reset'
 abbr --add grs! 'git reset --hard'
 abbr --add gs 'git status'
@@ -101,6 +103,7 @@ end
 if command -q lazygit
     abbr --add lg lazygit
 end
+
 if command -q bat
     set bat_cmd bat
     # alias cat 'bat -pp' # no paging
@@ -125,14 +128,9 @@ end
 abbr --add n npm
 abbr --add nx npx
 
-# npm via nvm, and plugin jorgebucaran/nvm.fish
-# if functions -q nvm
-#     nvm use latest 1>/dev/null
-# end
-
 if command -q pnpm
-    alias npx pnpx
     alias npm pnpm
+    alias npx pnpx
     abbr --add n pnpm
     abbr --add nx pnpx
     abbr --add npm pnpm
@@ -201,11 +199,9 @@ function gg -d 'git add, git commit, git push'
     if test (count $argv) -eq 0
         if functions -q aicommit
             set use_ai 1
-        end
-
-        if test $use_ai -eq 0
+        else
             echo "Usage: gg [commit message]"
-            echo "Info: Didn't find any installed ai cli tool"
+            echo "Info: Didn't find aicommit."
             return 1
         end
     end
@@ -232,7 +228,7 @@ function aicommit -d 'Generate commit message using AI'
     end
 
     if not command -q openai
-        echo "Error: 'openai' command not found. Please install the OpenAI CLI."
+        echo "Error: 'openai' not found."
         return 1
     end
 
@@ -373,17 +369,21 @@ function git-tidy -d 'Git History Cleanup'
 
     # Create Backup
     echo -e '\n\n\e[1mCreate Backup\e[0m\n'
-
-    set backup_dir (mktemp -d)
+    set -l backup_dir (mktemp -d)
     if test $status -ne 0
         echo "Error: Couldn't create backup directory"
         return 1
     end
 
-    # BUG: if in a subdirectory, look up git root
-    # TODO: get_root_dir
-    git clone --mirror . $backup_dir
+    set -l git_dir (git rev-parse --show-toplevel)
     if test $status -ne 0
+        echo "Error: Unable to locate Git root directory"
+        rm -rf $backup_dir
+        return 1
+    end
+    echo "Info: Git root directory: $git_dir"
+
+    if not git clone --mirror $git_dir $backup_dir
         echo "Error: Couldn't create backup"
         rm -rf $backup_dir
         return 1
@@ -487,7 +487,6 @@ function upd_fisher -d 'fisher update'
         echo -e '\e[1mUpdating fisher plugins\e[0m'
         echo -e '\e[3mfisher update\e[0m\n'
         fisher update 1>/dev/null
-        # echo # above will not output anything unless there is an error
     end
 end
 
@@ -501,39 +500,39 @@ function upd_gh_extensions -d 'Github CLI extensions update'
 end
 
 function upd_npm -d 'npm update'
-    if functions -q nvm
+    if command -q fnm
         if command -q pnpm
             echo -e '\e[1mUpdating npm -- user\e[0m'
-            echo -e '\e[3mnvm, pnpm self-update, pnpm install -g npm@latest\e[0m\n'
-            nvm use lts 1>/dev/null
+            echo -e '\e[3mfnm, pnpm self-update, pnpm install -g npm@latest\e[0m\n'
+            fnm use lts 1>/dev/null
             pnpm self-update 1>/dev/null
             pnpm install -g npm@latest 1>/dev/null
-            echo "Node: $(nvm current) (lts)"
+            echo "Node: $(fnm current) (lts)"
             echo "PNPM: $(pnpm --version)"
             echo
-            nvm use latest 1>/dev/null
+            fnm use latest 1>/dev/null
             pnpm self-update 1>/dev/null
             pnpm install -g npm@latest 1>/dev/null
-            echo "Node: $(nvm current) (latest)"
-            echo "PNPM: $(pnpm --version)"
+            echo "node: $(fnm current) (latest)"
+            echo "pnpm: $(pnpm --version)"
             echo
         else
             echo -e '\e[1mUpdating npm -- user\e[0m'
-            echo -e '\e[3mnvm, npm install -g npm@latest\e[0m\n'
-            nvm use lts 1>/dev/null
+            echo -e '\e[3mfnm, npm install -g npm@latest\e[0m\n'
+            fnm use lts 1>/dev/null
             npm install -g npm@latest 1>/dev/null
-            echo "Node: $(nvm current) (lts)"
-            echo "NPM: $(npm --version)"
+            echo "node: $(fnm current) (lts)"
+            echo "npm: $(npm --version)"
             echo
-            nvm use latest 1>/dev/null
+            fnm use latest 1>/dev/null
             npm install -g npm@latest 1>/dev/null
-            echo "Node: $(nvm current) (latest)"
-            echo "NPM: $(npm --version)"
+            echo "node: $(fnm current) (latest)"
+            echo "npm: $(npm --version)"
             echo
         end
     end
 
-    if not functions -q nvm; and command -q /usr/local/bin/npm
+    if not command -q fnm; and command -q /usr/local/bin/npm
         echo -e '\e[1mUpdating npm\e[0m'
         echo -e '\e[3msudo npm install -g npm@latest\e[0m'
         sudo /usr/local/bin/npm install -g npm@latest
@@ -543,42 +542,6 @@ function upd_npm -d 'npm update'
         echo
     end
 end
-
-# function upd_npm -d 'npm update'
-#     if command -q /usr/local/bin/npm
-#         echo -e '\e[1mUpdating npm\e[0m'
-#         echo -e '\e[3msudo npm install -g npm@latest\e[0m'
-#         sudo /usr/local/bin/npm install -g npm@latest
-#         echo
-#         echo "NPM version: $(/usr/local/bin/npm --version)"
-#         echo
-#     end
-#     if functions -q nvm
-#         echo -e '\e[1mFor user, updating npm (lts)\e[0m'
-#         echo -e '\e[3mnvm use lts, npm install -g npm@latest\e[0m\n'
-#         nvm use lts
-#         npm install -g npm@latest
-#         echo
-#         echo "NPM version: $(npm --version)"
-#         echo
-#         echo -e '\e[1mFor user, updating npm (latest)\e[0m'
-#         echo -e '\e[3mnvm use latest, npm install -g npm@latest\e[0m\n'
-#         nvm use latest
-#         npm install -g npm@latest
-#         echo
-#         echo "NPM version: $(npm --version)"
-#         echo
-#     end
-# end
-
-# function upd_npm_packages -d 'npm update global packages'
-#     if command -q /usr/local/bin/npm
-#         echo -e '\e[1mUpdating npm packages\e[0m'
-#         echo -e '\e[3msudo npm update\e[0m'
-#         sudo /usr/local/bin/npm update
-#         echo
-#     end
-# end
 
 function upd_nvim_release -d 'nvim (release)'
     if command -q ~/.build/nvim/bin/nvim
@@ -879,30 +842,29 @@ function upd_go -d 'golang update'
     end
 end
 
-function install_shell_completion -d 'create shell completion files in ~/.config/fish/completions'
-    # wezterm
-    if command -q wezterm
-        # wezterm shell-completion --shell fish | source
-        wezterm shell-completion --shell fish >~/.config/fish/completions/wezterm.fish
-    end
-
-    # fzf
-    if command -q fzf
-        # https://github.com/junegunn/fzf#key-bindings-for-command-line
-        # fzf --fish | source
-        fzf --fish >~/.config/fish/completions/fzf.fish
-    end
+function init_shell_completion -d 'create shell completion files in ~/.config/fish/completions'
+    mkdir -p $XDG_CONFIG_HOME/fish/completions
 
     # bat
     if command -q bat
-        # bat --completion fish | source
-        bat --completion fish >~/.config/fish/completions/bat.fish
+        bat --completion fish >"$XDG_CONFIG_HOME/fish/completions/bat.fish"
     end
 
     # batcat
     if command -q batcat
-        # batcat --completion fish | source
-        batcat --completion fish >~/.config/fish/completions/batcat.fish
+        batcat --completion fish >"$XDG_CONFIG_HOME/fish/completions/batcat.fish"
+    end
+
+    # fnm
+    if command -q fnm
+        fnm completions --shell fish >"$XDG_CONFIG_HOME/fish/completions/fnm.fish"
+    end
+
+    # fzf
+    if command -q fzf
+        # https://github.com/junegunn/fzf#setting-up-shell-integration
+        # https://github.com/junegunn/fzf#key-bindings-for-command-line
+        fzf --fish >~/.config/fish/completions/fzf.fish
     end
 
     # github cli
@@ -915,6 +877,12 @@ function install_shell_completion -d 'create shell completion files in ~/.config
     if command -q gitleaks
         # gitleaks completion fish | source
         gitleaks completion fish >~/.config/fish/completions/gitleaks.fish
+    end
+
+    # wezterm
+    if command -q wezterm
+        # wezterm shell-completion --shell fish | source
+        wezterm shell-completion --shell fish >~/.config/fish/completions/wezterm.fish
     end
 end
 

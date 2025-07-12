@@ -23,9 +23,29 @@ else
 
 # default distro ~/.bashrc above
 export XDG_CONFIG_HOME="\${XDG_CONFIG_HOME:-\$HOME/.config}"
+
 if [ -f "\$XDG_CONFIG_HOME/bash/bashrc" ]; then
     source "\$XDG_CONFIG_HOME/bash/bashrc"
 fi
+
+if [ -d "\$XDG_CONFIG_HOME/bash/completions" ]; then
+    for rc in \$XDG_CONFIG_HOME/bash/completions/*; do
+        if [ -f "\$rc" ]; then
+            source "\$rc"
+        fi
+    done
+    unset rc
+fi
+
+if [ -d "\$XDG_CONFIG_HOME/bash/bashrc.d" ]; then
+    for rc in \$XDG_CONFIG_HOME/bash/bashrc.d/*; do
+        if [ -f "\$rc" ]; then
+            source "\$rc"
+        fi
+    done
+    unset rc
+fi
+    
 EOF
 fi
 
@@ -128,9 +148,28 @@ else
     cat >>~/.zshrc <<EOF
 
 # default distro ~/.zshrc above
+
 export XDG_CONFIG_HOME="\${XDG_CONFIG_HOME:-\$HOME/.config}"
 if [ -f "\$XDG_CONFIG_HOME/zsh/zshrc" ]; then
     source "\$XDG_CONFIG_HOME/zsh/zshrc"
+fi
+
+if [ -d "\$XDG_CONFIG_HOME/zsh/completions" ]; then
+    for rc in \$XDG_CONFIG_HOME/zsh/completions/*; do
+        if [ -f "\$rc" ]; then
+            source "\$rc"
+        fi
+    done
+    unset rc
+fi
+
+if [ -d "\$XDG_CONFIG_HOME/zsh/zshrc.d" ]; then
+    for rc in \$XDG_CONFIG_HOME/zsh/zshrc.d/*; do
+        if [ -f "\$rc" ]; then
+            source "\$rc"
+        fi
+    done
+    unset rc
 fi
 EOF
 fi

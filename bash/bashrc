@@ -2,6 +2,7 @@
 # bashrc / zshrc
 
 # shellcheck disable=SC1091 # Not following `filename`, does not exist (No such file or directory)
+# shellcheck disable=SC2076 # Remove quotes from right-hand side of =~ to match as a regex rather than literally
 
 # XDG Base Directory, User Directories
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"    # User-specific configurations, analogous to /etc
@@ -95,52 +96,40 @@ if [[ $- == *i* ]]; then
     export EDITOR='/usr/bin/vim -n'
 
     # $PATH: ~/.local/bin
-    if ! [[ "$PATH" =~ $HOME/.local/bin ]]; then
+    if ! [[ "$PATH" =~ "$HOME/.local/bin" ]]; then
         PATH="$HOME/.local/bin:$PATH"
     fi
 
     # $PATH: /usr/local/go/bin
     if [ -d /usr/local/go/bin ]; then
-        if ! [[ "$PATH" =~ /usr/local/go/bin ]]; then
+        if ! [[ "$PATH" =~ "/usr/local/go/bin" ]]; then
             PATH=/usr/local/go/bin:$PATH
         fi
     fi
 
     # $PATH: ~/go/bin
     if [ -d "$HOME/go/bin" ]; then
-        if ! [[ "$PATH" =~ $HOME/go/bin ]]; then
+        if ! [[ "$PATH" =~ "$HOME/go/bin" ]]; then
             PATH="$HOME/go/bin":$PATH
         fi
     fi
 
     # $PATH: ~/.cargo/bin
     if [ -d "$HOME/.cargo/bin" ]; then
-        if ! [[ "$PATH" =~ $HOME/.cargo/bin ]]; then
+        if ! [[ "$PATH" =~ "$HOME/.cargo/bin" ]]; then
             PATH="$HOME/.cargo/bin":$PATH
         fi
     fi
 
     # $PATH: ~/.local/share/pnpm
-    if command -v pnpm &>/dev/null; then
+    if [ -d "$HOME/.local/share/pnpm" ]; then
         export PNPM_HOME="$HOME/.local/share/pnpm"
-        if ! [[ "$PATH" =~ $PNPM_HOME ]]; then
+        if ! [[ "$PATH" =~ "$PNPM_HOME" ]]; then
             PATH="$PNPM_HOME":$PATH
         fi
     fi
 
     export PATH
-
-    # wezterm
-    # if command -v wezterm &>/dev/null; then
-    #     # eval "$(wezterm shell-completion --shell zsh)"
-    #     eval "$(wezterm shell-completion --shell bash)"
-    # fi
-
-    # gitleaks
-    # if command -v gitleaks &>/dev/null; then
-    #     # eval "$(gitleaks completion zsh)"
-    #     eval "$(gitleaks completion bash)"
-    # fi
 
     ##
     ## Aliases and environment variables
@@ -224,11 +213,13 @@ if [[ $- == *i* ]]; then
     ##
     ## shell inits
 
-    # fzf
-    if command -v fzf &>/dev/null; then
-        # shellcheck disable=SC1090 # ShellCheck can't follow non-constant source. Use a directive to specify location.
-        [[ -n $ZSH_VERSION ]] && source <(fzf --zsh)
-        [[ -n $BASH_VERSION ]] && eval "$(fzf --bash)"
+    # fnm
+    FNM_PATH="$XDG_DATA_HOME/fnm"
+    if [ -d "$FNM_PATH" ]; then
+        if ! [[ "$PATH" =~ "$FNM_PATH" ]]; then
+            export PATH="$FNM_PATH:$PATH"
+        fi
+        eval "$(fnm env)"
     fi
 
     # zoxide, smarter cd
@@ -236,6 +227,7 @@ if [[ $- == *i* ]]; then
         [[ -n $ZSH_VERSION ]] && eval "$(zoxide init --cmd cd zsh)"
         [[ -n $BASH_VERSION ]] && eval "$(zoxide init --cmd cd bash)"
     fi
+
 fi
 
 # vim: ft=bash

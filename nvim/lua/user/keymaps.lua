@@ -34,15 +34,13 @@ vim.keymap.set('n', 'yl', '^vg_y', { desc = 'Yank: line content' })
 
 -- Keep clipboard content
 vim.keymap.set('n', 'd', '"ad') -- visual ('x') `d` goes to default register
-vim.keymap.set({ 'n', 'x' }, 'c', '"ac')
-vim.keymap.set({ 'n', 'x' }, 'C', '"aC')
-vim.keymap.set({ 'n', 'x' }, 'D', '"aD')
-vim.keymap.set({ 'n', 'x' }, 's', '"as')
-vim.keymap.set({ 'n', 'x' }, 'S', '"aS')
-vim.keymap.set({ 'n', 'x' }, 'x', '"ax')
-vim.keymap.set({ 'n', 'x' }, 'X', '"aX')
-vim.keymap.set('x', 'p', '"adP')
-vim.keymap.set('x', 'P', '"adP')
+vim.keymap.set({ 'n', 'x' }, 'c', '"_c')
+vim.keymap.set({ 'n', 'x' }, 'C', '"_C')
+vim.keymap.set({ 'n', 'x' }, 'D', '"_D')
+vim.keymap.set({ 'n', 'x' }, 's', '"_s')
+vim.keymap.set({ 'n', 'x' }, 'S', '"_S')
+vim.keymap.set({ 'n', 'x' }, 'x', '"_x')
+vim.keymap.set({ 'n', 'x' }, 'X', '"_X')
 
 -- Save file
 vim.keymap.set({ 'n', 'v' }, '<C-w><C-w>', '<cmd>w<cr>', { desc = 'Save file' })
