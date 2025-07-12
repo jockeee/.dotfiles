@@ -61,7 +61,8 @@ return {
     'nvim-lua/plenary.nvim',
     'nvim-treesitter/nvim-treesitter',
     'ravitemer/mcphub.nvim', -- mcp extension
-    'j-hui/fidget.nvim', -- https://github.com/olimorris/codecompanion.nvim/discussions/813
+    -- 'j-hui/fidget.nvim', -- fidget status, https://github.com/olimorris/codecompanion.nvim/discussions/813
+    'franco-ruggeri/codecompanion-spinner.nvim', -- virtual line status, https://github.com/olimorris/codecompanion.nvim/discussions/640
   },
   opts = {
     display = {
@@ -97,12 +98,13 @@ return {
           show_result_in_chat = true,
         },
       },
+      spinner = {},
     },
   },
-  config = function(_, opts)
-    local cc = require 'codecompanion'
-    cc.setup(opts)
-
-    require('plugin.codecompanion.fidget-spinner'):init()
-  end,
+  -- config = function(_, opts)
+  --   local cc = require 'codecompanion'
+  --   cc.setup(opts)
+  --
+  --   require('plugin.codecompanion.fidget-spinner'):init()
+  -- end,
 }
