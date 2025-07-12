@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
 # ~/.local/bin
-if ! [ -d ~/.local/bin ]; then
+if [[ ! -d ~/.local/bin ]]; then
     mkdir -p ~/.local/bin
 fi
 
 # bash
-if [ -d ~/.config/bash ]; then
+if [[ -d ~/.config/bash ]]; then
     echo -e "\e[33m[skip]: ~/.config/bash\e[0m"
 else
     echo -e "\e[32m[info]: ~/.config/bash"
@@ -15,7 +15,7 @@ else
     ln -s ~/.dotfiles/bash/bash_aliases ~/.config/bash/.
 fi
 # ~/.bashrc
-if [ -f ~/.bashrc ] && grep -q "# default distro ~/.bashrc above" ~/.bashrc; then
+if [[ -f ~/.bashrc ]] && grep -q "# default distro ~/.bashrc above" ~/.bashrc; then
     echo -e "\e[33m[skip]: ~/.bashrc\e[0m"
 else
     echo -e "\e[32m[info]: ~/.bashrc \e[0m"
@@ -25,22 +25,22 @@ else
 
 export XDG_CONFIG_HOME="\${XDG_CONFIG_HOME:-\$HOME/.config}"
 
-if [ -f "\$XDG_CONFIG_HOME/bash/bashrc" ]; then
+if [[ -f "\$XDG_CONFIG_HOME/bash/bashrc" ]]; then
     source "\$XDG_CONFIG_HOME/bash/bashrc"
 fi
 
-if [ -d "\$XDG_CONFIG_HOME/bash/completions" ]; then
+if [[ -d "\$XDG_CONFIG_HOME/bash/completions" ]]; then
     for rc in \$XDG_CONFIG_HOME/bash/completions/*; do
-        if [ -f "\$rc" ]; then
+        if [[ -f "\$rc" ]]; then
             source "\$rc"
         fi
     done
     unset rc
 fi
 
-if [ -d "\$XDG_CONFIG_HOME/bash/bashrc.d" ]; then
+if [[ -d "\$XDG_CONFIG_HOME/bash/bashrc.d" ]]; then
     for rc in \$XDG_CONFIG_HOME/bash/bashrc.d/*; do
-        if [ -f "\$rc" ]; then
+        if [[ -f "\$rc" ]]; then
             source "\$rc"
         fi
     done
@@ -50,7 +50,7 @@ EOF
 fi
 
 # bat
-if [ -d ~/.config/bat ]; then
+if [[ -e ~/.config/bat ]]; then
     echo -e "\e[33m[skip]: ~/.config/bat\e[0m"
 else
     echo -e "\e[32m[info]: ~/.config/bat\e[0m"
@@ -61,7 +61,7 @@ else
 fi
 
 # eza
-if [ -d ~/.config/eza ]; then
+if [[ -e ~/.config/eza ]]; then
     echo -e "\e[33m[skip]: ~/.config/eza\e[0m"
 else
     echo -e "\e[32m[info]: ~/.config/eza\e[0m"
@@ -69,7 +69,7 @@ else
 fi
 
 # fish
-if [ -d ~/.config/fish ]; then
+if [[ -e ~/.config/fish ]]; then
     echo -e "\e[33m[skip]: ~/.config/fish\e[0m"
 else
     echo -e "\e[32m[info]: ~/.config/fish\e[0m"
@@ -79,7 +79,7 @@ else
 fi
 
 # hidden
-if [ -f ~/.hidden ]; then
+if [[ -e ~/.hidden ]]; then
     echo -e "\e[33m[skip]: ~/.hidden\e[0m"
 else
     echo -e "\e[32m[info]: ~/.hidden\e[0m"
@@ -87,7 +87,7 @@ else
 fi
 
 # lazygit
-if [ -d ~/.config/lazygit ]; then
+if [[ -e ~/.config/lazygit ]]; then
     echo -e "\e[33m[skip]: ~/.config/lazygit\e[0m"
 else
     echo -e "\e[32m[info]: ~/.config/lazygit\e[0m"
@@ -95,7 +95,7 @@ else
 fi
 
 # nvim
-if [ -d ~/.config/nvim ]; then
+if [[ -e ~/.config/nvim ]]; then
     echo -e "\e[33m[skip]: ~/.config/nvim\e[0m"
 else
     echo -e "\e[32m[info]: ~/.config/nvim\e[0m"
@@ -103,7 +103,7 @@ else
 fi
 
 # tmux
-# if [ -d ~/.config/tmux ]; then
+# if [[ -e ~/.config/tmux ]]; then
 #     echo -e "\e[33m[skip]: ~/.config/tmux\e[0m"
 # else
 #     echo -e "\e[32m[info]: ~/.config/tmux\e[0m"
@@ -116,7 +116,7 @@ fi
 # fi
 
 # tmux-sessionizer
-# if [ -f ~/.local/bin/tmux-sessionizer.sh ]; then
+# if [[ -e ~/.local/bin/tmux-sessionizer.sh ]]; then
 #     echo -e "\e[33m[skip]: ~/.local/bin/tmux-sessionizer.sh\e[0m"
 # else
 #     echo -e "\e[32m[info]: ~/.local/bin/tmux-sessionizer.sh\e[0m"
@@ -124,7 +124,7 @@ fi
 # fi
 
 # wezterm
-if [ -d ~/.config/wezterm ]; then
+if [[ -e ~/.config/wezterm ]]; then
     echo -e "\e[33m[skip]: ~/.config/wezterm\e[0m"
 else
     echo -e "\e[32m[info]: ~/.config/wezterm\e[0m"
@@ -132,7 +132,7 @@ else
 fi
 
 # ~/.config/zsh
-if [ -d ~/.config/zsh ]; then
+if [[ -e ~/.config/zsh ]]; then
     echo -e "\e[33m[skip]: ~/.config/zsh\e[0m"
 else
     echo -e "\e[32m[info]: ~/.config/zsh\e[0m"
@@ -141,7 +141,7 @@ else
 fi
 
 # ~/.zshrc
-if [ -f ~/.zshrc ] && grep -q "# default distro ~/.zshrc above" ~/.zshrc; then
+if [[ -e ~/.zshrc ]] && grep -q "# default distro ~/.zshrc above" ~/.zshrc; then
     echo -e "\e[33m[skip]: ~/.zshrc\e[0m"
 else
     echo -e "\e[32m[info]: ~/.zshrc\e[0m"
@@ -151,22 +151,22 @@ else
 
 export XDG_CONFIG_HOME="\${XDG_CONFIG_HOME:-\$HOME/.config}"
 
-if [ -f "\$XDG_CONFIG_HOME/zsh/zshrc" ]; then
+if [[ -f "\$XDG_CONFIG_HOME/zsh/zshrc" ]]; then
     source "\$XDG_CONFIG_HOME/zsh/zshrc"
 fi
 
-if [ -d "\$XDG_CONFIG_HOME/zsh/completions" ]; then
+if [[ -d "\$XDG_CONFIG_HOME/zsh/completions" ]]; then
     for rc in \$XDG_CONFIG_HOME/zsh/completions/*; do
-        if [ -f "\$rc" ]; then
+        if [[ -f "\$rc" ]]; then
             source "\$rc"
         fi
     done
     unset rc
 fi
 
-if [ -d "\$XDG_CONFIG_HOME/zsh/zshrc.d" ]; then
+if [[ -d "\$XDG_CONFIG_HOME/zsh/zshrc.d" ]]; then
     for rc in \$XDG_CONFIG_HOME/zsh/zshrc.d/*; do
-        if [ -f "\$rc" ]; then
+        if [[ -f "\$rc" ]]; then
             source "\$rc"
         fi
     done
@@ -174,63 +174,3 @@ if [ -d "\$XDG_CONFIG_HOME/zsh/zshrc.d" ]; then
 fi
 EOF
 fi
-
-# #!/usr/bin/env bash
-#
-# # ~/.local/bin
-# if ! [ -d ~/.local/bin ]; then
-#     mkdir -p ~/.local/bin
-# fi
-#
-# # wezterm
-# mkdir -p ~/.config/wezterm
-# ln -s ~/.dotfiles/wezterm/wezterm.lua ~/.config/wezterm/.
-# ln -s ~/.dotfiles/wezterm/wezterm-notmux.lua ~/.config/wezterm/.
-# ln -s ~/.dotfiles/wezterm/utils.lua ~/.config/wezterm/.
-# ln -s ~/.dotfiles/wezterm/.style.lua ~/.config/wezterm/.
-#
-# # bash
-# if ! grep -q "# default .bashrc above" ~/.bashrc; then
-#     cat >>~/.bashrc <<EOF
-#
-# # default .bashrc above
-# if [ -f "$HOME/.dotfiles/.bashrc" ]; then
-#     . "$HOME/.dotfiles/.bashrc"
-# fi
-# EOF
-# fi
-#
-# # fish
-# mkdir -p ~/.config/fish
-# ln -s ~/.dotfiles/fish/config.fish ~/.config/fish/.
-# ln -s ~/.dotfiles/fish/alias.fish ~/.config/fish/.
-#
-# # tmux
-# if [ -d ~/.config/tmux ]; then
-#     echo "[info]: ~/.config/tmux already exists, skipping symlink creation."
-# else
-#     mkdir -p ~/.config/tmux
-#     ln -s ~/.dotfiles/tmux/tmux.conf ~/.config/tmux/.
-#
-#     if command -v git &>/dev/null; then
-#         git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
-#     fi
-# fi
-#
-# # tmux-sessionizer
-# ln -s ~/.dotfiles/bin/tmux-sessionizer.sh ~/.local/bin/.
-#
-# # nvim
-# ln -s ~/.dotfiles/nvim ~/.config/.
-#
-# # bat
-# ln -s ~/.dotfiles/bat ~/.config/.
-# if command -v bat &>/dev/null; then
-#     /usr/bin/bat cache --build
-# fi
-#
-# # eza
-# ln -s ~/.dotfiles/eza ~/.config/.
-#
-# # hidden
-# ln -s ~/.dotfiles/.hidden ~/.
