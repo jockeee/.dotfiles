@@ -11,18 +11,39 @@
 -- https://github.com/nvim-lualine/lualine.nvim#extensions
 --    extensions = { 'nvim-tree' }
 
-local function short_cwd()
-  local path = vim.fn.getcwd()
+local function cwd_limit()
+  local limit = 24
+  local cwd = vim.fn.getcwd()
   local home = os.getenv 'HOME'
-  local max_len = 24
-  if path:sub(1, #home) == home then
-    path = '~' .. path:sub(#home + 1)
+
+  if cwd:sub(1, #home) == home then
+    cwd = '~' .. cwd:sub(#home + 1)
   end
-  if #path > max_len then
-    path = '…' .. path:sub(-(max_len - 1))
+
+  if #cwd > limit then
+    cwd = '…' .. cwd:sub(-(limit - 1))
   end
-  return path
+
+  return cwd
 end
+
+-- local function relative_fname_limit()
+--   local limit = 40
+--   local fname = vim.fn.expand '%:p'
+--
+--   if fname == '' then
+--     return ''
+--   end
+--
+--   local cwd = vim.fn.getcwd()
+--   local path = fname:sub(#cwd + 2)
+--
+--   if #path > limit then
+--     path = '…' .. path:sub(-(limit - 1))
+--   end
+--
+--   return path
+-- end
 
 ---@type LazySpec
 return {
@@ -42,80 +63,73 @@ return {
     },
     sections = {
       -- lualine_a = {}, -- default: 'mode'
-      lualine_a = {
-        { 'branch', icon = '' },
-        short_cwd,
-      },
+      lualine_a = {},
       lualine_b = {
+        { 'branch', icon = '' },
+        cwd_limit,
+        -- {
+        --   relative_fname_limit,
+        --   color = { gui = 'bold' },
+        -- },
         {
           'filename',
           color = { gui = 'bold' },
           path = 1, -- 0 = filename, 1 = relative path, 2 = absolute path, 3 = relative to home
+          file_status = true,
         },
-        -- {
-        --   'filename',
-        --   color = { gui = 'bold', bg = '#1f1f1f' },
-        -- },
       },
       lualine_c = {
-        -- {
-        --   'branch',
-        --   icon = '',
-        -- },
-        -- {
-        --   'filename',
-        --   file_status = false,
-        --   path = 1, -- 0 = filename, 1 = relative path, 2 = absolute path, 3 = relative to home
-        -- },
-        'aerial',
+        -- 'aerial',
         'diagnostics',
         'diff',
-        -- 'aerial',
       },
       lualine_x = {
-        require 'plugin.codecompanion.lualine-spinner',
         { 'copilot', show_colors = false },
         'encoding',
         'fileformat',
         'filetype',
       },
-      lualine_y = { '' }, -- default: 'progress'
+      lualine_y = {}, -- default: 'progress'
       lualine_z = { 'location' }, -- default: 'location'
     },
     inactive_sections = {
-      lualine_a = {
-        short_cwd,
-      },
+      lualine_a = {},
       lualine_b = {
+        cwd_limit,
+        -- {
+        --   relative_fname_limit,
+        --   color = { gui = 'bold' },
+        -- },
         {
           'filename',
           color = { gui = 'bold' },
           path = 1, -- 0 = filename, 1 = relative path, 2 = absolute path, 3 = relative to home
+          file_status = true,
         },
       },
       lualine_c = {
-        -- {
-        --   'filename',
-        --   file_status = false,
-        --   path = 1, -- 0 = filename, 1 = relative path, 2 = absolute path, 3 = relative to home
-        -- },
-        'aerial',
+        -- 'aerial',
         'diagnostics',
       },
       lualine_x = {
-        require 'plugin.codecompanion.lualine-spinner',
         { 'copilot', show_colors = false },
         'encoding',
         'fileformat',
         'filetype',
       },
-      lualine_y = { '' }, -- default: 'progress'
+      lualine_y = {}, -- default: 'progress'
       lualine_z = { 'location' }, -- default: 'location'
     },
     winbar = {
       lualine_a = {},
       lualine_b = {
-        'filename',
+        -- 'filename',
+        {
+          'filename',
+          -- color = { gui = 'bold' },
+          path = 0, -- 0 = filename, 1 = relative path, 2 = absolute path, 3 = relative to home
+          file_status = true,
+        },
         'aerial',
       },
       lualine_c = {},
@@ -126,7 +140,13 @@ return {
     inactive_winbar = {
       lualine_a = {},
       lualine_b = {
-        'filename',
+        -- 'filename',
+        {
+          'filename',
+          -- color = { gui = 'bold' },
+          path = 0, -- 0 = filename, 1 = relative path, 2 = absolute path, 3 = relative to home
+          file_status = true,
+        },
         'aerial',
       },
       lualine_c = {},
@@ -136,4 +156,13 @@ return {
     },
     -- extensions = { 'nvim-tree' },
   },
+  config = function(_, opts)
+    local lualine = require 'lualine'
+
+    local codedompanion_spinner = require 'plugin.codecompanion.lualine-spinner'
+    table.insert(opts.sections.lualine_x, 1, { codedompanion_spinner })
+    table.insert(opts.inactive_sections.lualine_x, 1, { codedompanion_spinner })
+
+    lualine.setup(opts)
+  end,
 }
