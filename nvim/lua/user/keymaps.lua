@@ -7,8 +7,21 @@ vim.keymap.set({ 'n', 'v' }, '<space>', '<nop>')
 -- Clean up search results and extmarks with <esc>
 vim.keymap.set('n', '<Esc>', function()
   vim.cmd 'nohlsearch'
-  require('user.utils').search_index_clear()
-  require('multicursor-nvim').clearCursors()
+
+  local ok, err = pcall(function()
+    require('user.utils').search_index_clear()
+  end)
+  if not ok then
+    vim.notify('Error clearing search index: ' .. err, vim.log.levels.ERROR)
+  end
+  local ok, err = pcall(function()
+    require('multicursor-nvim').clearCursors()
+  end)
+  if not ok then
+    vim.notify('Error clearing multicursor: ' .. err, vim.log.levels.ERROR)
+  end
+  -- local ok, err = pcall(function()
+  --   require('codecompanion')
 end)
 
 -- Exit terminal mode in the builtin terminal with <esc> (default: <C-\><C-n>).
@@ -29,6 +42,8 @@ end)
 
 -- Yank
 vim.keymap.set('n', 'yl', '^vg_y', { desc = 'Yank: line content' })
+
+vim.keymap.set('i', '<C-Del>', '<C-o>dw', { desc = 'Delete word' })
 
 -- Keep clipboard content
 vim.keymap.set('n', 'd', '"ad') -- visual ('x') `d` goes to default register
@@ -139,6 +154,7 @@ vim.keymap.set('n', '<leader>da', '<cmd>%bdelete!<cr>', { desc = 'Close all buff
 --     end
 --   end
 -- end, { desc = 'Close All Buffers, Except Terminals' })
+vim.keymap.set('n', '<leader>ds', vim.snippet.stop, { desc = 'Snippet: stop' })
 vim.keymap.set('n', '<leader>dx', '<cmd>bd!<cr>', { desc = 'Kill buffer (ignore unsaved changes)' })
 
 -- Convert unicode escapes to utf-8 characters

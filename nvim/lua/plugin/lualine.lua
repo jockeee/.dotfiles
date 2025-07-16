@@ -156,13 +156,13 @@ return {
     },
     -- extensions = { 'nvim-tree' },
   },
-  config = function(_, opts)
-    local lualine = require 'lualine'
-
-    local codedompanion_spinner = require 'plugin.codecompanion.lualine-spinner'
-    table.insert(opts.sections.lualine_x, 1, { codedompanion_spinner })
-    table.insert(opts.inactive_sections.lualine_x, 1, { codedompanion_spinner })
-
-    lualine.setup(opts)
-  end,
+  -- config = function(_, opts)
+  --   local lualine = require 'lualine'
+  --
+  --   local codedompanion_spinner = require 'plugin.codecompanion.lualine-spinner'
+  --   table.insert(opts.sections.lualine_x, 1, { codedompanion_spinner })
+  --   table.insert(opts.inactive_sections.lualine_x, 1, { codedompanion_spinner })
+  --
+  --   lualine.setup(opts)
+  -- end,
 }

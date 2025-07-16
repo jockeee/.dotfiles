@@ -1,15 +1,24 @@
 --
 -- olimorris/codecompanion.nvim
 
--- The default adapter in CodeCompanion is GitHub Copilot.
--- If you have copilot.vim or copilot.lua installed then expect CodeCompanion to work out of the box.
+-- Default adapter:
+--  GitHub Copilot
+--  If you have copilot.vim or copilot.lua installed then expect CodeCompanion to work out of the box.
+--  Copilot (copilot) - Requires a token which is created via :Copilot setup in Copilot.vim
 
--- Copilot (copilot) - Requires a token which is created via :Copilot setup in Copilot.vim
+-- Chat keymaps:
+--  https://codecompanion.olimorris.dev/usage/chat-buffer/#keymaps
+--  https://github.com/olimorris/codecompanion.nvim/blob/main/lua/codecompanion/config.lua#L288
+--
+--    ga    Change adapter
+--    gta   Toggle automatic tool mode
+--    gy    Yank code
+--    gs    Toggle system prompt
+--    gx    Clear chat buffer
+--    gw    Watch buffer
 
 -- Chat
 --    :CodeCompanionChat Toggle
---
---    ga   Change adapter
 --
 --    :CodeCompanionChat [prompt]
 --      Open the chat buffer and send a prompt/question at the same time
@@ -62,7 +71,7 @@ return {
     'nvim-treesitter/nvim-treesitter',
     'ravitemer/mcphub.nvim', -- mcp extension
     -- 'j-hui/fidget.nvim', -- fidget status, https://github.com/olimorris/codecompanion.nvim/discussions/813
-    -- 'franco-ruggeri/codecompanion-spinner.nvim', -- virtual line status, https://github.com/olimorris/codecompanion.nvim/discussions/640
+    'franco-ruggeri/codecompanion-spinner.nvim', -- virtual line status, https://github.com/olimorris/codecompanion.nvim/discussions/640
   },
   opts = {
     display = {
@@ -79,6 +88,16 @@ return {
       chat = {
         adapter = 'copilot', -- d: copilot
         model = 'claude-sonnet-4',
+        keymaps = {
+          stop = {
+            modes = {
+              n = '<leader>qs',
+            },
+            index = 5,
+            callback = 'keymaps.stop',
+            description = 'chat: stop request',
+          },
+        },
       },
       inline = {
         adapter = 'copilot', -- d: copilot
@@ -99,13 +118,22 @@ return {
           show_result_in_chat = true,
         },
       },
-      -- spinner = {},
+      spinner = {},
     },
   },
-  -- config = function(_, opts)
-  --   local cc = require 'codecompanion'
-  --   cc.setup(opts)
-  --
-  --   require('plugin.codecompanion.fidget-spinner'):init()
-  -- end,
+  config = function(_, opts)
+    local cc = require 'codecompanion'
+    cc.setup(opts)
+
+    vim.api.nvim_create_autocmd('FileType', {
+      pattern = 'codecompanion',
+      callback = function()
+        vim.keymap.set('n', 'q', function()
+          cc.toggle()
+        end, { buffer = true, desc = 'chat: toggle' })
+      end,
+    })
+
+    -- require('plugin.codecompanion.fidget-spinner'):init()
+  end,
 }

@@ -17,6 +17,7 @@ return {
   ---@module 'render-markdown'
   ---@type render.md.UserConfig
   opts = {
+    render_modes = { 'n', 'i', 'c', 't' }, -- d: n, c, t
     completions = { lsp = { enabled = true } },
     file_types = { 'markdown', 'codecompanion' },
 
@@ -32,7 +33,7 @@ return {
 
       width = 'block',
       min_width = 45,
-      left_pad = 2,
+      -- left_pad = 2,
       right_pad = 4,
 
       border = 'none', -- d: hide, none | thick | thin | hide
