@@ -60,12 +60,14 @@ wezterm.on('update-status', function(window, _)
   local text = ' ' .. mux.get_active_workspace() .. ' '
 
   if window:leader_is_active() then
+    -- wezterm.format() returns a string, not a table
     formatted = wezterm.format {
       { Foreground = { Color = color_fg_active } },
       { Background = { Color = color_bg } },
       { Text = text },
     }
   else
+    -- wezterm.format() returns a string, not a table
     formatted = wezterm.format {
       { Foreground = { Color = color_fg_inactive } },
       { Background = { Color = color_bg } },
@@ -174,7 +176,7 @@ config = {
 -- Keymaps
 --
 
--- disable_default_key_bindings = true, -- d: false
+-- disable_default_key_bindings = true,
 
 -- leader
 config.leader = {
@@ -208,6 +210,47 @@ config.keys = {
     action = wezterm.action.ClearSelection,
   },
 
+  -- Workspaces (sessions)
+  -- {
+  --   key = 's',
+  --   mods = 'LEADER',
+  --   action = act.ShowLauncherArgs { flags = 'FUZZY|WORKSPACES', fuzzy_help_text = ': ' },
+  -- },
+  -- { key = 'L', mods = 'LEADER', action = wezterm.action_callback(function() utils.switch_to_previous_workspace() end) },
+
+  -- Switch to workspace
+  -- {
+  --   key = 'q',
+  --   mods = 'META',
+  --   action = wezterm.action_callback(function()
+  --     local workspace = 'home'
+  --     local workspaces = mux.get_workspace_names()
+  --
+  --     if workspace == mux.get_active_workspace() then
+  --       return
+  --     end
+  --
+  --     for _, w in ipairs(workspaces) do
+  --       if w == workspace then
+  --         mux.set_active_workspace(workspace)
+  --         return
+  --       end
+  --     end
+  --
+  --     local home = os.getenv 'HOME'
+  --     mux.spawn_window {
+  --       workspace = workspace,
+  --       cwd = home,
+  --     }
+  --     mux.set_active_workspace(workspace)
+  --   end),
+  -- },
+  -- { key = 'q', mods = 'META', action = act.SwitchToWorkspace { name = 'home' } },
+  -- { key = 'w', mods = 'META', action = act.SwitchToWorkspace { name = '.dot' } },
+  -- { key = 'e', mods = 'META', action = act.SwitchToWorkspace { name = 'nvim' } },
+  -- { key = 'r', mods = 'META', action = act.SwitchToWorkspace { name = 'code' } },
+  -- { key = 't', mods = 'META', action = act.SwitchToWorkspace { name = 'pass' } },
+
   -- Tabs (windows)
   { key = 'c', mods = 'LEADER', action = act.SpawnTab 'CurrentPaneDomain' },
   { key = 'l', mods = 'LEADER', action = act.ActivateLastTab },
@@ -219,7 +262,11 @@ config.keys = {
   { key = '"', mods = 'LEADER|SHIFT', action = act.SplitVertical { domain = 'CurrentPaneDomain' } }, -- top to bottom, split along vertical line
   { key = 'z', mods = 'LEADER', action = act.TogglePaneZoomState },
 
-  -- Pane, kill fg process
+  -- close pane
+  -- https://wezterm.org/config/lua/config/skip_close_confirmation_for_processes_named.html
+  { key = 'X', mods = 'LEADER', action = act.CloseCurrentPane { confirm = true } },
+
+  -- kill process
   {
     key = 'K',
     mods = 'LEADER',
@@ -233,11 +280,7 @@ config.keys = {
     end),
   },
 
-  -- Pane, close
-  --  https://wezterm.org/config/lua/config/skip_close_confirmation_for_processes_named.html
-  { key = 'X', mods = 'LEADER', action = act.CloseCurrentPane { confirm = true } },
-
-  -- Pane, "dev" split, create
+  -- build split, create
   {
     key = '@',
     mods = 'LEADER|SHIFT',
@@ -246,8 +289,7 @@ config.keys = {
       size = { Percent = 10 },
     },
   },
-
-  -- Pane, "dev" split, hide
+  -- build split, hide
   {
     key = 'h',
     mods = 'LEADER',
@@ -264,15 +306,47 @@ config.keys = {
 
   -- Quick select
   { key = 'f', mods = 'LEADER', action = act.QuickSelect },
-
-  -- Search
-  --  https://wezterm.org/config/lua/keyassignment/Search.html
   {
     key = '/',
     mods = 'LEADER',
-    action = act.Search { CaseInSensitiveString = '' },
+    action = act.Search { Regex = '' },
+    -- action = act.Search { Regex = '[a-f0-9]{6,}' },
   },
+
+  -- Using smart-splits instead
+  -- Panes, focus
+  -- { key = 'DownArrow', mods = 'LEADER|CTRL', action = act.ActivatePaneDirection 'Down' },
+  -- { key = 'UpArrow', mods = 'LEADER|CTRL', action = act.ActivatePaneDirection 'Up' },
+  -- { key = 'LeftArrow', mods = 'LEADER|CTRL', action = act.ActivatePaneDirection 'Left' },
+  -- { key = 'RightArrow', mods = 'LEADER|CTRL', action = act.ActivatePaneDirection 'Right' },
+  -- -- Panes, resize
+  -- { key = 'DownArrow', mods = 'LEADER|META', action = act.AdjustPaneSize { 'Down', 1 } },
+  -- { key = 'UpArrow', mods = 'LEADER|META', action = act.AdjustPaneSize { 'Up', 1 } },
+  -- { key = 'LeftArrow', mods = 'LEADER|META', action = act.AdjustPaneSize { 'Left', 1 } },
+  -- { key = 'RightArrow', mods = 'LEADER|META', action = act.AdjustPaneSize { 'Right', 1 } },
+
+  -- Activate pane navigation mode with LEADER + p
+  -- {
+  --   key = 'p',
+  --   mods = 'LEADER',
+  --   action = act.ActivateKeyTable {
+  --     name = 'pane_nav',
+  --     one_shot = false, -- Stay in the mode until Escape
+  --     timeout_milliseconds = 1000, -- Optional: auto-exit after 1s idle
+  --   },
+  -- },
 }
+
+-- config.key_tables = {
+--   -- Pane navigation mode
+--   pane_nav = {
+--     { key = 'h', action = act.ActivatePaneDirection 'Left' },
+--     { key = 'j', action = act.ActivatePaneDirection 'Down' },
+--     { key = 'k', action = act.ActivatePaneDirection 'Up' },
+--     { key = 'l', action = act.ActivatePaneDirection 'Right' },
+--     { key = 'Escape', action = 'PopKeyTable' }, -- Exit pane_nav mode
+--   },
+-- }
 
 for key, ws in pairs(wezterm.GLOBAL.default_workspaces) do
   table.insert(config.keys, {
@@ -288,9 +362,8 @@ end
 -- Quick select patterns
 --
 
--- Extends wezterm's quick select functionality
 config.quick_select_patterns = {
-  -- Match lines that begin with whitespace and have non-whitespace characters after it.
+  -- Match lines that begin with whitespace and have content after
   '^\\s+(\\S.*)$',
 }
 
@@ -300,10 +373,9 @@ config.quick_select_patterns = {
 
 -- config.hyperlink_rules = {} -- disable hyperlinks
 -- config.hyperlink_rules = wezterm.default_hyperlink_rules()
---
--- Make `username/project` paths clickable, this implies paths like the following are for github:
---   "nvim-treesitter/nvim-treesitter", wezterm/wezterm, "wezterm/wezterm.git"
--- As long as a full url hyperlink regex exists above this it should not match a full url to
+-- make username/project paths clickable. this implies paths like the following are for github.
+-- ( "nvim-treesitter/nvim-treesitter" | wbthomason/packer.nvim | wezterm/wezterm | "wezterm/wezterm.git" )
+-- as long as a full url hyperlink regex exists above this it should not match a full url to
 -- github or gitlab / bitbucket (i.e. https://gitlab.com/user/project.git is still a whole clickable url)
 -- table.insert(config.hyperlink_rules, {
 --   regex = [[["]?([\w\d]{1}[-\w\d]+)(/){1}([-\w\d\.]+)["]?]],
@@ -334,12 +406,11 @@ smart_splits.apply_to_config(config, {
   log_level = 'info', -- info, warn, error
 })
 
--- Local environment
+-- Local config
+_G.config = config -- for ~/.local/wezterm.lua access to config
 local local_config = wezterm.home_dir .. '/.local/wezterm.lua'
-local f = loadfile(local_config)
-if f then
-  _G.config = config or {} -- for ~/.local/wezterm.lua access to config
-  local ok, err = pcall(f)
+if io.open(local_config, 'r') then
+  local ok, err = pcall(dofile, local_config)
   if not ok then
     wezterm.log_error(err)
   end
