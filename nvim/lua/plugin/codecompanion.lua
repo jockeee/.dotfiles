@@ -30,7 +30,6 @@
 --        #buffer     shares the current buffer's code
 --        #lsp        shares lsp information and code for the current buffer
 --        #viewport   shares the buffers and lines that you see in the Neovim viewport
---      Prompt: What does the code in #{buffer} do?
 --
 --      Slash commands `/` run commands to insert additional context into the chat buffer
 --        /buffer     Insert open buffers
@@ -43,18 +42,23 @@
 --        /terminal   Insert terminal output
 --
 --      Agents, Tools `@` allow the LLM to function as an agent and carry out actions
---        cmd_runner              The LLM will run shell commands (subject to approval)
---        create_file             The LLM will create a file in the current working directory (subject to approval)
---        file_search             The LLM can search for a file in the CWD
---        get_changed_files       The LLM can get git diffs for any changed files in the CWD
---        grep_search             The LLM can search within files in the CWD
---        insert_edit_into_file   The LLM will edit code in a Neovim buffer or on the file system (subject to approval)
---        next_edit_suggestion    The LLM can show the user where the next edit is
---        read_file               The LLM can read a specific file
---        web_search              The LLM can search the internet for information
---      Tools can also be grouped together, also accessible via @ in the chat buffer
---        `files` contains the create_file, file_search, get_changed_files, grep_search, insert_edit_into_file and read_file tools
---      Prompt: Can you use the @{grep_search} tool to find occurrences of "add_message"
+--        @cmd_runner              The LLM will run shell commands (subject to approval)
+--        @create_file             The LLM will create a file in the current working directory (subject to approval)
+--        @file_search             The LLM can search for a file in the CWD
+--        @get_changed_files       The LLM can get git diffs for any changed files in the CWD
+--        @grep_search             The LLM can search within files in the CWD
+--        @insert_edit_into_file   The LLM will edit code in a Neovim buffer or on the file system (subject to approval)
+--        @next_edit_suggestion    The LLM can show the user where the next edit is
+--        @read_file               The LLM can read a specific file
+--        @web_search              The LLM can search the internet for information
+--
+--      Tool groups, also accessible via @ in the chat buffer
+--        @full_stack_dev         alias for all tools
+--        @files                  create_file, file_search, get_changed_files, grep_search, insert_edit_into_file and read_file tools
+--
+--      Prompt examples:
+--        What does the code in #{buffer} do?
+--        Can you use the @{grep_search} tool to find occurrences of "add_message"
 
 ---@type LazySpec
 return {
