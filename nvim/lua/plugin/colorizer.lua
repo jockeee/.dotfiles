@@ -13,7 +13,7 @@ return {
     { '<leader>sc', '<cmd>ColorizerToggle<cr>', desc = 'Colorizer' },
   },
   opts = {
-    filetypes = { 'html', 'css', 'javascript' }, -- d: '*'
+    filetypes = { 'css', 'html', 'javascript' }, -- d: '*'
     user_default_options = {
       names = false, -- d: true
       css = true, -- d: false

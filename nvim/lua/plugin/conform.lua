@@ -28,6 +28,7 @@ return {
       fish = { 'fish_indent' },
       html = { 'prettierd' },
       lua = { 'stylua' },
+      javascript = { 'prettierd' },
       sh = { 'shfmt' },
       zsh = { 'shfmt' },
       -- Conform can also run multiple formatters sequentially
