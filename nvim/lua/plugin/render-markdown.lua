@@ -44,5 +44,15 @@ return {
       -- highlight_fallback = 'RenderMarkdownCodeFallback', -- Highlight for language, used if icon provider does not have a value.
       -- highlight_inline = 'RenderMarkdownCodeInline', -- Highlight for inline code.
     },
+
+    html = {
+      tag = {
+        -- codecompanion, context group
+        group = {
+          icon = '󰌨 ',
+          highlight = 'Comment',
+        },
+      },
+    },
   },
 }
