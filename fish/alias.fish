@@ -124,6 +124,7 @@ end
 
 if command -q difft
     abbr --add d difftastic
+    abbr --add ds 'difftastic --staged'
 end
 
 abbr --add n npm
@@ -161,7 +162,7 @@ if command -q difft
             return 1
         end
 
-        git -c diff.external=difft diff
+        git -c diff.external=difft diff $argv
     end
 end
 
