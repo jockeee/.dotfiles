@@ -13,7 +13,6 @@ return {
   opts = {
     filetypes = {
       [''] = false, -- disable for buffers with no filetype
-      markdown = true,
       sh = function()
         -- disable copilot for .env files
         if string.match(vim.fs.basename(vim.api.nvim_buf_get_name(0)), '^%.env.*') then
