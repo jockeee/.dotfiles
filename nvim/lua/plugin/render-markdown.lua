@@ -21,6 +21,11 @@ return {
     completions = { lsp = { enabled = true } },
     file_types = { 'markdown', 'codecompanion' },
 
+    -- anti_conceal = {
+    --   enabled = true, -- d: true
+    --   -- disabled_modes = { 'n' },
+    -- },
+
     heading = {
       width = 'block',
       min_width = 30,
@@ -36,7 +41,7 @@ return {
       -- left_pad = 2,
       right_pad = 4,
 
-      border = 'none', -- d: hide, none | thick | thin | hide
+      border = 'thin', -- d: hide, none | thick | thin | hide
       -- highlight = 'RenderMarkdownCode', -- Highlight for code blocks.
       -- highlight_info = 'RenderMarkdownCodeInfo', -- Highlight for code info section, after the language.
       -- highlight_language = nil, Highlight for language, overrides icon provider value.
