@@ -14,14 +14,13 @@ vim.keymap.set('n', '<Esc>', function()
   if not ok then
     vim.notify('Error clearing search index: ' .. err, vim.log.levels.ERROR)
   end
+  ---@diagnostic disable-next-line: redefined-local
   local ok, err = pcall(function()
     require('multicursor-nvim').clearCursors()
   end)
   if not ok then
     vim.notify('Error clearing multicursor: ' .. err, vim.log.levels.ERROR)
   end
-  -- local ok, err = pcall(function()
-  --   require('codecompanion')
 end)
 
 -- Exit terminal mode in the builtin terminal with <esc> (default: <C-\><C-n>).
@@ -44,6 +43,21 @@ end)
 vim.keymap.set('n', 'yl', '^vg_y', { desc = 'Yank: line content' })
 
 vim.keymap.set('i', '<C-Del>', '<C-o>dw', { desc = 'Delete word' })
+
+-- gx, with try open as github repo
+vim.keymap.set('n', 'gx', function()
+  local target = vim.fn.expand '<cfile>'
+  local is_url = target:match '^http[s]?://' or target:match '^www%.'
+  local user, repo = target:match '^(%w[%w%-_%.]*)/(%w[%w%-_%.]*)$'
+
+  if not is_url and (user and repo) then
+    local url = string.format('https://github.com/%s/%s', user, repo)
+    vim.fn.jobstart({ 'xdg-open', url }, { detach = true })
+    return
+  end
+
+  vim.fn.jobstart({ 'xdg-open', target }, { detach = true })
+end, { desc = 'open, try as github repo' })
 
 -- Keep clipboard content
 vim.keymap.set('n', 'd', '"ad') -- visual ('x') `d` goes to default register

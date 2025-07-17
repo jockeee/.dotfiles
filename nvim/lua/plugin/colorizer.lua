@@ -1,5 +1,5 @@
 --
--- catgoose/nvim-colorizer.luu
+-- catgoose/nvim-colorizer.lua
 
 ---@type LazySpec
 return {
