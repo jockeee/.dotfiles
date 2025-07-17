@@ -70,6 +70,7 @@ abbr --add t tree
 abbr --add v vim
 abbr --add vo 'NVIM_APPNAME=nvim-prev vim' # old
 abbr --add vn 'NVIM_APPNAME=nvim-test vim' # new
+abbr --add sha sha256sum
 abbr --add sshk "ssh -F /dev/null -o IdentitiesOnly=yes -i ~/.ssh/"
 
 # tmux

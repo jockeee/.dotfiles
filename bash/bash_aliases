@@ -61,6 +61,7 @@ alias t='tree'
 alias v='vim'
 alias vo='NVIM_APPNAME=nvim-prev vim' # old
 alias vn='NVIM_APPNAME=nvim-test vim' # new
+alias sha='sha256sum'
 alias sshk="ssh -F /dev/null -o IdentitiesOnly=yes -i ~/.ssh/"
 
 # tmux
