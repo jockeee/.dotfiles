@@ -347,7 +347,8 @@ vim.api.nvim_create_autocmd('UIEnter', {
   desc = 'Set line color columns on startup',
 })
 
-vim.keymap.set('n', '<leader>sc', '<cmd>set cursorline!<cr>', { desc = 'Cursor line' }) -- lua vim.opt.cursorline = not vim.opt.cursorline:get()
+-- sc = colorizer
+-- vim.keymap.set('n', '<leader>sc', '<cmd>set cursorline!<cr>', { desc = 'Cursor line' }) -- lua vim.opt.cursorline = not vim.opt.cursorline:get()
 vim.keymap.set('n', '<leader>sr', '<cmd>set relativenumber!<cr>', { desc = 'Relative numbers' }) -- set rnu! or lua vim.opt.relativenumber = not vim.opt.relativenumber:get()
 vim.keymap.set('n', '<leader>ss', vim.snippet.stop, { desc = 'Snippet: stop' })
 vim.keymap.set('n', '<leader>sS', '<cmd>windo set scrollbind!<cr>', { desc = 'Scrollbind: open windows' })

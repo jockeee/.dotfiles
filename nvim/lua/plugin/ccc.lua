@@ -29,7 +29,7 @@
 ---@type LazySpec
 return {
   'uga-rosa/ccc.nvim',
-  event = 'BufReadPre',
+  event = { 'BufReadPre', 'BufNewFile' },
   config = function()
     local ccc = require 'ccc'
     ccc.setup {
