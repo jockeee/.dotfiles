@@ -36,5 +36,9 @@
 return {
   'numToStr/Comment.nvim',
   event = { 'BufReadPre', 'BufNewFile' },
-  opts = {},
+  opts = {
+    toggler = {
+      block = 'gb', -- d: gbc
+    },
+  },
 }
