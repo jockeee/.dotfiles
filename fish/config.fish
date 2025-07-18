@@ -20,6 +20,9 @@ function _xdg_bash
 
     # ~/.bash_history
     test -f ~/.bash_history; and mv ~/.bash_history "$XDG_STATE_HOME/bash/bash_history"
+
+    # ~/.bash_logout
+    test -f ~/.bash_logout; and mv ~/.bash_logout "$XDG_STATE_HOME/bash/bash_logout.from_home_dir"
 end
 
 function _xdg_less

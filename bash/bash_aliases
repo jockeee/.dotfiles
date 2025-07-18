@@ -749,14 +749,14 @@ init_shell_completion_zsh() {
     mkdir -p "$XDG_CONFIG_HOME/zsh/completions"
 
     # bat
-    if command -v bat &>/dev/null; then
-        bat --completion zsh >"$XDG_CONFIG_HOME/zsh/completions/bat.zsh"
-    fi
+    # if command -v bat &>/dev/null; then
+    #     bat --completion zsh >"$XDG_CONFIG_HOME/zsh/completions/bat.zsh"
+    # fi
 
     # batcat
-    if command -v batcat &>/dev/null; then
-        batcat --completion zsh >"$XDG_CONFIG_HOME/zsh/completions/batcat.zsh"
-    fi
+    # if command -v batcat &>/dev/null; then
+    #     batcat --completion zsh >"$XDG_CONFIG_HOME/zsh/completions/batcat.zsh"
+    # fi
 
     # fnm
     if command -v fnm &>/dev/null; then

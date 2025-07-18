@@ -66,10 +66,13 @@ _xdg_bash() {
     [[ -d "$XDG_STATE_HOME/bash" ]] || mkdir -p "$XDG_STATE_HOME/bash"
 
     # ~/.bash_aliases
-    [[ -f ~/.bash_aliases ]] && rm ~/.bash_aliases
+    [[ -f ~/.bash_aliases ]] && mv ~/.bash_aliases "$XDG_CONFIG_HOME/bash/bash_aliases.from_home_dir"
 
     # ~/.bash_history
     [[ -f ~/.bash_history ]] && mv ~/.bash_history "$XDG_STATE_HOME/bash/bash_history"
+
+    # ~/.bash_logout
+    [[ -f ~/.bash_logout ]] && mv ~/.bash_logout "$XDG_CONFIG_HOME/bash/bash_logout.from_home_dir"
 }
 
 _xdg_less() {
@@ -110,6 +113,7 @@ _xdg_zsh() {
     [[ -f ~/.zsh_history ]] && mv ~/.zsh_history "$XDG_STATE_HOME/zsh/zsh_history"
 
     # ~/.zcompdump
+    [[ -n $ZSH_VERSION ]] && setopt nullglob
     for fname in ~/.zcompdump*; do
         [[ -f $fname ]] && mv -f "$fname" "$XDG_STATE_HOME/zsh/"
     done
