@@ -502,39 +502,42 @@ function upd_gh_extensions -d 'Github CLI extensions update'
 end
 
 function upd_npm -d 'npm update'
-    if command -q fnm
+    if command -q nvm
         if command -q pnpm
             echo -e '\e[1mUpdating npm -- user\e[0m'
-            echo -e '\e[3mfnm, pnpm self-update, pnpm install -g npm@latest\e[0m\n'
-            fnm use lts-latest 1>/dev/null
+            echo -e '\e[3mnvm install.., nvm use.., pnpm self-update\e[0m\n'
             pnpm self-update 1>/dev/null
-            pnpm install -g npm@latest 1>/dev/null
-            echo "Node: $(fnm current) (lts)"
+            nvm install lts 1>/dev/null
+            nvm use lts 1>/dev/null
+            # pnpm install -g npm@latest 1>/dev/null
+            echo "Node: $(nvm current) (lts)"
             echo "PNPM: $(pnpm --version)"
             echo
-            fnm use latest 1>/dev/null
-            pnpm self-update 1>/dev/null
-            pnpm install -g npm@latest 1>/dev/null
-            echo "node: $(fnm current) (latest)"
+            nvm install latest 1>/dev/null
+            nvm use latest 1>/dev/null
+            # pnpm install -g npm@latest 1>/dev/null
+            echo "node: $(nvm current) (latest)"
             echo "pnpm: $(pnpm --version)"
             echo
         else
             echo -e '\e[1mUpdating npm -- user\e[0m'
-            echo -e '\e[3mfnm, npm install -g npm@latest\e[0m\n'
-            fnm use lts-latest 1>/dev/null
-            npm install -g npm@latest 1>/dev/null
-            echo "node: $(fnm current) (lts)"
+            echo -e '\e[3mnvm install.., nvm use..\e[0m\n'
+            nvm install lts 1>/dev/null
+            nvm use lts 1>/dev/null
+            # npm install -g npm@latest 1>/dev/null
+            echo "node: $(nvm current) (lts)"
             echo "npm: $(npm --version)"
             echo
-            fnm use latest 1>/dev/null
-            npm install -g npm@latest 1>/dev/null
-            echo "node: $(fnm current) (latest)"
+            nvm install latest 1>/dev/null
+            nvm use latest 1>/dev/null
+            # npm install -g npm@latest 1>/dev/null
+            echo "node: $(nvm current) (latest)"
             echo "npm: $(npm --version)"
             echo
         end
     end
 
-    if not command -q fnm; and command -q /usr/local/bin/npm
+    if not command -q nvm; and command -q /usr/local/bin/npm
         echo -e '\e[1mUpdating npm\e[0m'
         echo -e '\e[3msudo npm install -g npm@latest\e[0m'
         sudo /usr/local/bin/npm install -g npm@latest
@@ -858,9 +861,9 @@ function init_shell_completion -d 'create shell completion files in ~/.config/fi
     end
 
     # fnm
-    if command -q fnm
-        fnm completions --shell fish >"$XDG_CONFIG_HOME/fish/completions/fnm.fish"
-    end
+    # if command -q fnm
+    #     fnm completions --shell fish >"$XDG_CONFIG_HOME/fish/completions/fnm.fish"
+    # end
 
     # fzf
     if command -q fzf

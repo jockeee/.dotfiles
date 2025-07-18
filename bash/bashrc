@@ -280,10 +280,6 @@ if [[ $- == *i* ]]; then
     ##
     ## shell inits
 
-    # fnm eval, see
-    #   ~/.config/bash/bashrc.d/fnm.bash
-    #   ~/.config/zsh/zshrc.d/fnm.zsh
-
     # zoxide, smarter cd
     if command -v zoxide &>/dev/null; then
         [[ -n $ZSH_VERSION ]] && eval "$(zoxide init --cmd cd zsh)"
