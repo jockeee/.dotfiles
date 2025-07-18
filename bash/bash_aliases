@@ -506,29 +506,33 @@ upd_npm() {
     if command -v fnm &>/dev/null; then
         if command -v pnpm &>/dev/null; then
             echo -e '\e[1mUpdating npm -- user\e[0m'
-            echo -e '\e[3mfnm, pnpm self-update, pnpm install -g npm@latest\e[0m'
-            fnm use lts 1>/dev/null
+            echo -e '\e[3mfnm install.., fnm use.., pnpm self-update\e[0m'
+            fnm install --lts 1>/dev/null
+            fnm use lts-latest 1>/dev/null
             pnpm self-update 1>/dev/null
-            pnpm install -g npm@latest 1>/dev/null
+            # pnpm install -g npm@latest 1>/dev/null
             echo "node: $(fnm current) (lts)"
             echo "pnpm: $(pnpm --version)"
             echo
+            fnm install --latest 1>/dev/null
             fnm use latest 1>/dev/null
             pnpm self-update 1>/dev/null
-            pnpm install -g npm@latest 1>/dev/null
+            # pnpm install -g npm@latest 1>/dev/null
             echo "node: $(fnm current) (latest)"
             echo "pnpm: $(pnpm --version)"
             echo
         else
             echo -e '\e[1mUpdating npm -- user\e[0m'
-            echo -e '\e[3mfnm, npm install -g npm@latest\e[0m\n'
-            fnm use lts 1>/dev/null
-            npm install -g npm@latest 1>/dev/null
+            echo -e '\e[3mfnm install.., fnm use..\e[0m\n'
+            fnm install --lts 1>/dev/null
+            fnm use lts-latest 1>/dev/null
+            # npm install -g npm@latest 1>/dev/null
             echo "node: $(fnm current) (lts)"
             echo "npm: $(npm --version)"
             echo
+            fnm install --latest 1>/dev/null
             fnm use latest 1>/dev/null
-            npm install -g npm@latest 1>/dev/null
+            # npm install -g npm@latest 1>/dev/null
             echo "node: $(fnm current) (latest)"
             echo "npm: $(npm --version)"
             echo

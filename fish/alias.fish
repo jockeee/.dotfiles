@@ -506,7 +506,7 @@ function upd_npm -d 'npm update'
         if command -q pnpm
             echo -e '\e[1mUpdating npm -- user\e[0m'
             echo -e '\e[3mfnm, pnpm self-update, pnpm install -g npm@latest\e[0m\n'
-            fnm use lts 1>/dev/null
+            fnm use lts-latest 1>/dev/null
             pnpm self-update 1>/dev/null
             pnpm install -g npm@latest 1>/dev/null
             echo "Node: $(fnm current) (lts)"
@@ -521,7 +521,7 @@ function upd_npm -d 'npm update'
         else
             echo -e '\e[1mUpdating npm -- user\e[0m'
             echo -e '\e[3mfnm, npm install -g npm@latest\e[0m\n'
-            fnm use lts 1>/dev/null
+            fnm use lts-latest 1>/dev/null
             npm install -g npm@latest 1>/dev/null
             echo "node: $(fnm current) (lts)"
             echo "npm: $(npm --version)"

@@ -80,6 +80,8 @@ if status is-interactive
         end
     end
 
+    # fnm eval, see ~/.config/fish/conf.d/fnm.fish
+
     # zoxide, smarter cd
     if command -q zoxide
         zoxide init --cmd cd fish | source

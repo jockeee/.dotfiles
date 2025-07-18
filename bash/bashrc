@@ -1,6 +1,7 @@
 #
-# bashrc / zshrc
+# bashrc, zshrc
 
+# shellcheck disable=SC1090 # ShellCheck can't follow non-constant source. Use a directive to specify location.
 # shellcheck disable=SC1091 # Not following `filename`, does not exist (No such file or directory)
 # shellcheck disable=SC2076 # Remove quotes from right-hand side of =~ to match as a regex rather than literally
 
@@ -173,12 +174,31 @@ if [[ $- == *i* ]]; then
         # PS1='\n$fg_cyan$fg_bold\w$fg_reset$(prompt_git_info)\n$fg_green❯$fg_reset '
         # PS1='\n\e[36m\e[1m\w\e[0m$(prompt_git_info)\n\e[32m❯\e[0m '
         PS1='\n\[\e[36m\e[1m\]\w\[\e[0m\]$(prompt_git_info)\n\[\e[32m\]❯\[\e[0m\] '
+
+        # ~/.config/bash/completions/
+        if [[ -d "$XDG_CONFIG_HOME/bash/completions" ]]; then
+            for rc in "$XDG_CONFIG_HOME"/bash/completions/*; do
+                if [[ -f "$rc" ]]; then
+                    source "$rc"
+                fi
+            done
+            unset rc
+        fi
+
+        # ~/.config/bash/bashrc.d/
+        if [[ -d "$XDG_CONFIG_HOME/bash/bashrc.d" ]]; then
+            for rc in "$XDG_CONFIG_HOME"/bash/bashrc.d/*; do
+                if [[ -f "$rc" ]]; then
+                    source "$rc"
+                fi
+            done
+            unset rc
+        fi
     fi
 
     ##
     ## zsh specific
 
-    # shellsheck disable=SC2034
     if [[ -n $ZSH_VERSION ]]; then
         # autocd
         # setopt autocd
@@ -209,19 +229,34 @@ if [[ $- == *i* ]]; then
         PS1='
 %F{6}%B%~%b%f$(prompt_git_info)
 %F{2}%B❯%b%f '
+
+        # ~/.config/zsh/completions/
+        if [[ -d "$XDG_CONFIG_HOME/zsh/completions" ]]; then
+            for rc in "$XDG_CONFIG_HOME"/zsh/completions/*; do
+                if [[ -f "$rc" ]]; then
+                    source "$rc"
+                fi
+            done
+            unset rc
+        fi
+
+        # ~/.config/zsh/zshrc.d/
+        if [[ -d "$XDG_CONFIG_HOME/zsh/zshrc.d" ]]; then
+            for rc in "$XDG_CONFIG_HOME"/zsh/zshrc.d/*; do
+                if [[ -f "$rc" ]]; then
+                    source "$rc"
+                fi
+            done
+            unset rc
+        fi
     fi
 
     ##
     ## shell inits
 
-    # fnm
-    FNM_PATH="$XDG_DATA_HOME/fnm"
-    if [[ -d "$FNM_PATH" ]]; then
-        if ! [[ "$PATH" =~ "$FNM_PATH" ]]; then
-            export PATH="$FNM_PATH:$PATH"
-        fi
-        eval "$(fnm env)"
-    fi
+    # fnm eval, see
+    #   ~/.config/bash/bashrc.d/fnm.bash
+    #   ~/.config/zsh/zshrc.d/fnm.zsh
 
     # zoxide, smarter cd
     if command -v zoxide &>/dev/null; then
