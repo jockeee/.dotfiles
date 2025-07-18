@@ -7,7 +7,7 @@
 
 # XDG Base Directory, User Directories
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"    # User-specific configurations, analogous to /etc
-export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"       # User-specific non-essential (cached) data, analogous to /var/cache
+export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"       # Userspecific non-essential (cached) data, analogous to /var/cache
 export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"   # User-specific data files, analogous to /usr/share
 export XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}" # User-specific state information, analogous to /var/lib
 
@@ -60,6 +60,18 @@ prompt_git_info() {
     fi
 }
 
+_xdg_bash() {
+    [[ -d "$XDG_CACHE_HOME/bash" ]] || mkdir -p "$XDG_CACHE_HOME/bash"
+    [[ -d "$XDG_CONFIG_HOME/bash" ]] || mkdir -p "$XDG_CONFIG_HOME/bash"
+    [[ -d "$XDG_STATE_HOME/bash" ]] || mkdir -p "$XDG_STATE_HOME/bash"
+
+    # ~/.bash_aliases
+    [[ -f ~/.bash_aliases ]] && rm ~/.bash_aliases
+
+    # ~/.bash_history
+    [[ -f ~/.bash_history ]] && mv ~/.bash_history "$XDG_STATE_HOME/bash/bash_history"
+}
+
 _xdg_less() {
     [[ -d "$XDG_STATE_HOME/less" ]] || mkdir -p "$XDG_STATE_HOME/less"
 
@@ -89,9 +101,25 @@ _xdg_wget() {
     export WGETRC="${WGETRC:-$XDG_CONFIG_HOME/wget/wgetrc}"
 }
 
+_xdg_zsh() {
+    [[ -d "$XDG_CACHE_HOME/zsh" ]] || mkdir -p "$XDG_CACHE_HOME/zsh"
+    [[ -d "$XDG_CONFIG_HOME/zsh" ]] || mkdir -p "$XDG_CONFIG_HOME/zsh"
+    [[ -d "$XDG_STATE_HOME/zsh" ]] || mkdir -p "$XDG_STATE_HOME/zsh"
+
+    # ~/.zsh_history
+    [[ -f ~/.zsh_history ]] && mv ~/.zsh_history "$XDG_STATE_HOME/zsh/zsh_history"
+
+    # ~/.zcompdump
+    for fname in ~/.zcompdump*; do
+        [[ -f $fname ]] && mv -f "$fname" "$XDG_STATE_HOME/zsh/"
+    done
+}
+
+_xdg_bash
 _xdg_less
 _xdg_python
 _xdg_wget
+_xdg_zsh
 
 if [[ $- == *i* ]]; then
     # $EDITOR
@@ -151,28 +179,20 @@ if [[ $- == *i* ]]; then
     ## bash specific
 
     if [[ -n $BASH_VERSION ]]; then
+        # History
+        HISTFILE=${HISTFILE:-"$XDG_STATE_HOME/bash/bash_history"}
+        HISTSIZE=10000
+        HISTFILESIZE=10000
+
         # autocd
         # shopt -s autocd
 
         # Completion
         bind 'set completion-ignore-case on'
 
-        # History
-        #HISTFILE=~/.bash_history
-        HISTSIZE=10000
-        HISTFILESIZE=10000
-
         # Extended globbing, advanced pattern matching
         # shopt -s extglob
 
-        # fg_green=$'\e[32m'
-        # fg_yellow=$'\e[33m'
-        # fg_blue=$'\e[34m'
-        # fg_cyan=$'\e[36m'
-        # fg_bold=$'\e[1m'
-        # fg_reset=$'\e[0m'
-        # PS1='\n$fg_cyan$fg_bold\w$fg_reset$(prompt_git_info)\n$fg_green❯$fg_reset '
-        # PS1='\n\e[36m\e[1m\w\e[0m$(prompt_git_info)\n\e[32m❯\e[0m '
         PS1='\n\[\e[36m\e[1m\]\w\[\e[0m\]$(prompt_git_info)\n\[\e[32m\]❯\[\e[0m\] '
 
         # ~/.config/bash/completions/
@@ -200,6 +220,15 @@ if [[ $- == *i* ]]; then
     ## zsh specific
 
     if [[ -n $ZSH_VERSION ]]; then
+        ZDOTDIR="${ZDOTDIR:-$XDG_CONFIG_HOME/zsh}"
+        ZSH_COMPDUMP="${ZSH_COMPDUMP:-$XDG_STATE_HOME/zsh/zcompdump}"
+
+        # History
+        HISTFILE="${HISTFILE:-$XDG_STATE_HOME/zsh/zsh_history}"
+        HISTSIZE=10000
+        # shellcheck disable=SC2034 # zsh built-in variable
+        SAVEHIST=10000
+
         # autocd
         # setopt autocd
 
@@ -207,13 +236,6 @@ if [[ $- == *i* ]]; then
         autoload -Uz compinit && compinit
         zstyle ":completion:*" menu select
         zstyle ":completion:*" matcher-list "m:{a-z}={A-Za-z}" # case insensitive matching
-
-        # History
-        #HISTFILE=~/.zsh_history
-        HISTSIZE=10000
-
-        # shellcheck disable=SC2034 # zsh built-in variable
-        SAVEHIST=10000
 
         # Extended globbing, advanced pattern matching
         # setopt EXTENDED_GLOB

@@ -10,6 +10,18 @@ set -gx XDG_CACHE_HOME "$HOME/.cache" # User-specific non-essential (cached) dat
 set -gx XDG_DATA_HOME "$HOME/.local/share" # User-specific data files, analogous to /usr/share
 set -gx XDG_STATE_HOME "$HOME/.local/state" # User-specific state files, analogous to /var/lib
 
+function _xdg_bash
+    test -d "$XDG_CACHE_HOME/bash"; or mkdir -p "$XDG_CACHE_HOME/bash"
+    test -d "$XDG_CONFIG_HOME/bash"; or mkdir -p "$XDG_CONFIG_HOME/bash"
+    test -d "$XDG_STATE_HOME/bash"; or mkdir -p "$XDG_STATE_HOME/bash"
+
+    # ~/.bash_aliases
+    test -f ~/.bash_aliases; and rm ~/.bash_aliases
+
+    # ~/.bash_history
+    test -f ~/.bash_history; and mv ~/.bash_history "$XDG_STATE_HOME/bash/bash_history"
+end
+
 function _xdg_less
     test -d "$XDG_STATE_HOME/less"; or mkdir -p "$XDG_STATE_HOME/less"
 
@@ -39,9 +51,24 @@ function _xdg_wget
     set -gx WGETRC "$XDG_CONFIG_HOME/wget/wgetrc"
 end
 
+function _xdg_zsh
+    test -d "$XDG_CONFIG_HOME/zsh"; or mkdir -p "$XDG_CONFIG_HOME/zsh"
+    test -d "$XDG_STATE_HOME/zsh"; or mkdir -p "$XDG_STATE_HOME/zsh"
+
+    # ~/.zsh_history
+    test -f ~/.zsh_history; and mv -f ~/.zsh_history "$XDG_STATE_HOME/zsh/zsh_history"
+
+    # ~/.zcompdump
+    for fname in ~/.zcompdump*
+        test -f $fname; and mv -f $fname "$XDG_STATE_HOME/zsh/"
+    end
+end
+
+_xdg_bash
 _xdg_less
 _xdg_python
 _xdg_wget
+_xdg_zsh
 
 if status is-interactive
     # Remove underlines

@@ -23,14 +23,16 @@ return {
       lsp_format = 'fallback',
     },
     formatters_by_ft = {
-      bash = { 'shfmt' },
       css = { 'prettierd' },
-      fish = { 'fish_indent' },
       html = { 'prettierd' },
       lua = { 'stylua' },
       javascript = { 'prettierd' },
-      sh = { 'shfmt' },
       zsh = { 'shfmt' },
+
+      -- bash = { 'shfmt' }, -- lsp runs formatter
+      -- fish = { 'fish_indent' }, -- lsp runs formatter
+      -- sh = { 'shfmt' }, -- lsp runs formatter
+
       -- Conform can also run multiple formatters sequentially
       -- python = { "isort", "black" },
       --
