@@ -85,6 +85,16 @@ return {
 
     vim.keymap.set('n', '\\', snacks.explorer.open, { desc = 'Explorer' }) -- nvim-tree style
     vim.keymap.set('n', '<leader>/', snacks.picker.lines, { desc = 'Find: buffer' })
+    -- vim.keymap.set('n', '<leader>/', function()
+    --   snacks.picker.lines {
+    --     layout = {
+    --       preview = {
+    --         width = 0.5,
+    --         location = 'right',
+    --       },
+    --     },
+    --   }
+    -- end, { desc = 'Find: buffer' })
 
     vim.keymap.set('n', '<leader><space>', snacks.picker.files, { desc = 'Find: files' })
     vim.keymap.set('n', '<leader>fa', snacks.picker.resume, { desc = 'resume' })
