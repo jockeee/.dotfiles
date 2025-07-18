@@ -12,7 +12,7 @@
 --    extensions = { 'nvim-tree' }
 
 local function cwd_limit()
-  local limit = 24
+  local limit = 26
   local cwd = vim.fn.getcwd()
   local home = os.getenv 'HOME'
 

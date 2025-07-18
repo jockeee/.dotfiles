@@ -113,6 +113,7 @@ return {
   },
   config = function(_, opts)
     require('nvim-treesitter.configs').setup(opts)
+    require('nvim-ts-autotag').setup()
 
     -- vim.treesitter.language.register('html', 'tmpl')
 

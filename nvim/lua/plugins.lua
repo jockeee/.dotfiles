@@ -19,6 +19,7 @@ return {
   require 'plugin.which-key',
 
   -- Editing
+  require 'plugin.comment',
   require 'plugin.guess-indent', -- detect tabstop and shiftwidth
   require 'plugin.multicursor',
   require 'plugin.sideways', -- move delimited-by-something items left and right
