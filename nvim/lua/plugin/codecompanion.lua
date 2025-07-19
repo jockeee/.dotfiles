@@ -91,7 +91,7 @@ return {
     strategies = {
       chat = {
         adapter = 'copilot', -- d: copilot
-        model = 'claude-sonnet-4',
+        -- model = 'claude-sonnet-4',
         keymaps = {
           stop = {
             modes = {

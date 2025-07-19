@@ -60,7 +60,7 @@ vim.keymap.set('n', 'gx', function()
 end, { desc = 'open, try as github repo' })
 
 -- Keep clipboard content
-vim.keymap.set('n', 'd', '"ad') -- visual ('x') `d` goes to default register
+-- vim.keymap.set('n', 'd', '"ad') -- visual ('x') `d` goes to default register
 vim.keymap.set({ 'n', 'x' }, 'c', '"_c')
 vim.keymap.set({ 'n', 'x' }, 'C', '"_C')
 vim.keymap.set({ 'n', 'x' }, 'D', '"_D')

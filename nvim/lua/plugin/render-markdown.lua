@@ -41,11 +41,11 @@ return {
       -- left_pad = 2,
       right_pad = 4,
 
-      border = 'thin', -- d: hide, none | thick | thin | hide
+      border = 'none', -- d: hide, none | thick | thin | hide
       -- highlight = 'RenderMarkdownCode', -- Highlight for code blocks.
       -- highlight_info = 'RenderMarkdownCodeInfo', -- Highlight for code info section, after the language.
       -- highlight_language = nil, Highlight for language, overrides icon provider value.
-      -- highlight_border = false, -- d: RenderMarkdownCodeBorder, border, use false to add no highlight.
+      highlight_border = false, -- d: RenderMarkdownCodeBorder, border, use false to add no highlight.
       -- highlight_fallback = 'RenderMarkdownCodeFallback', -- Highlight for language, used if icon provider does not have a value.
       -- highlight_inline = 'RenderMarkdownCodeInline', -- Highlight for inline code.
     },

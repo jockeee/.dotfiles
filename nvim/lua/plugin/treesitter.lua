@@ -19,7 +19,7 @@
 ---@type LazySpec
 return {
   'nvim-treesitter/nvim-treesitter',
-  lazy = false, -- NOTE: This plugin does not support lazy-loading
+  lazy = false, -- This plugin does not support lazy-loading
   dependencies = {
     'nvim-treesitter/nvim-treesitter-context',
     'nvim-treesitter/nvim-treesitter-textobjects',
@@ -27,7 +27,7 @@ return {
   },
 
   build = ':TSUpdate',
-  main = 'nvim-treesitter.configs', -- NOTE: Lazy will do `require('nvim-treesitter.configs').setup(opts)`
+  main = 'nvim-treesitter.configs', -- Lazy will do `require('nvim-treesitter.configs').setup(opts)`
   opts = {
     -- ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' }, -- kickstart.nvim
     ensure_installed = {
@@ -42,6 +42,7 @@ return {
       'luadoc',
       'markdown',
       'markdown_inline',
+      'python',
       'query',
       'regex',
       'vim',
