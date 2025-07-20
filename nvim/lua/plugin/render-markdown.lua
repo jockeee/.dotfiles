@@ -27,6 +27,7 @@ return {
     -- },
 
     heading = {
+      icons = { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' },
       width = 'block',
       min_width = 30,
     },
