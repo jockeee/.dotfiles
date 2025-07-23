@@ -290,8 +290,11 @@ end
 
 -- Extends wezterm's quick select functionality
 config.quick_select_patterns = {
+  '(\\S+)$', -- Match non-whitespace characters at the end of a line
   '^\\s+(\\S.*)$', -- Match lines that begin with whitespace and have non-whitespace characters after it.
-  '^❯\\s{1}(.*)$', -- match lines that start with "❯ "
+  '^❯\\s{1}(.*)$', -- match lines that start with `❯ `
+  [["([^"]+)"]], -- Match strings inside double quotes
+  [['([^']+)']], -- Match strings inside single quotes
 }
 
 --
