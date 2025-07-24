@@ -17,7 +17,7 @@ return {
   ---@module 'render-markdown'
   ---@type render.md.UserConfig
   opts = {
-    render_modes = { 'n', 'i', 'c', 't' }, -- d: n, c, t
+    render_modes = { 'n', 'c', 't', 'i', 'v', 'V', '\22' }, -- d: n, c, t
     completions = { lsp = { enabled = true } },
     file_types = { 'markdown', 'codecompanion' },
 
@@ -38,7 +38,7 @@ return {
       language_border = ' ',
 
       width = 'block',
-      min_width = 45,
+      min_width = 76,
       -- left_pad = 2,
       right_pad = 4,
 
@@ -46,7 +46,7 @@ return {
       -- highlight = 'RenderMarkdownCode', -- Highlight for code blocks.
       -- highlight_info = 'RenderMarkdownCodeInfo', -- Highlight for code info section, after the language.
       -- highlight_language = nil, Highlight for language, overrides icon provider value.
-      highlight_border = false, -- d: RenderMarkdownCodeBorder, border, use false to add no highlight.
+      -- highlight_border = false, -- d: RenderMarkdownCodeBorder, border, use false to add no highlight.
       -- highlight_fallback = 'RenderMarkdownCodeFallback', -- Highlight for language, used if icon provider does not have a value.
       -- highlight_inline = 'RenderMarkdownCodeInline', -- Highlight for inline code.
     },

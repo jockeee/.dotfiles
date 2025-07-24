@@ -13,7 +13,7 @@ return {
       require('mason-lspconfig').setup()
 
       -- define servers to use
-      -- override config settings provided by `nvim-lspconfig` or files in lsp/
+      -- override config settings provided by `nvim-lspconfig` and files in lsp/
       local servers = {
         -- ansible
         ansiblels = {},
@@ -73,7 +73,22 @@ return {
         },
 
         -- js
+        --
+        -- biome only
+        biome = {},
+        --
         ts_ls = {},
+        --
+        -- eslint-lsp
+        --  https://github.com/Microsoft/vscode-eslint
+        --  The server uses the ESLint library installed in the opened workspace folder.
+        --  If the folder doesn't provide one the extension looks for a global install version.
+        -- eslint = {},
+        -- biome
+        --  nvim-lspconfig default config for biome respects eslint/prettier projects.
+        --  = requires `biome.json` or `biome.jsonc` in project root or biome won't attach.
+        --  `cmd` use projects biome verion, fallback global install.
+        -- biome = {},
 
         -- emmet
         -- aca/emmet-ls

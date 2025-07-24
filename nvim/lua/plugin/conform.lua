@@ -25,14 +25,15 @@ return {
     formatters_by_ft = {
       css = { 'prettierd' },
       html = { 'prettierd' },
-      javascript = { 'prettierd' },
+      -- javascript = { 'prettierd' }, -- testing biome
+      json = { 'jq' },
       lua = { 'stylua' },
       zsh = { 'shfmt' },
 
       -- bash = { 'shfmt' }, -- lsp runs formatter
       -- fish = { 'fish_indent' }, -- lsp runs formatter
       -- sh = { 'shfmt' }, -- lsp runs formatter
-      -- python = { 'ruff' }, -- lsp runs ruff(?) by default
+      -- python = { 'ruff' }, -- lsp runs ruff by default?
 
       -- Conform can also run multiple formatters sequentially
       -- python = { "isort", "black" },

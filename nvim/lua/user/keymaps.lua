@@ -182,11 +182,19 @@ vim.keymap.set('n', '<leader>du', function()
   vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
 end, { desc = 'Convert unicode escapes to utf-8 characters' })
 
--- Normal mode: <C-b>, markdown bold (**word**) or insert/remove ****
--- Blink binds <C-b> in modes 'i' (insert) and 'c' (command)
-vim.keymap.set('n', '<C-b>', function()
+-- Markdown, bold
+vim.keymap.set({ 'n', 'i' }, '<C-b>', function()
+  local mode = vim.api.nvim_get_mode().mode
   local row, col = unpack(vim.api.nvim_win_get_cursor(0))
   local line = vim.api.nvim_get_current_line()
+
+  -- Adjust col for insert mode, col is after the cursor
+  if mode == 'i' then
+    col = col - 1
+    if col < 0 then
+      col = 0
+    end
+  end
 
   -- Remove bold (**...**) if cursor is inside or on asterisks
   local search_start = 1
@@ -198,10 +206,12 @@ vim.keymap.set('n', '<C-b>', function()
     if col + 1 >= s and col + 1 <= e then
       local word_start, word_end = s + 2, e - 2
       local new_line = line:sub(1, s - 1) .. line:sub(word_start, word_end) .. line:sub(e + 1)
-      -- If cursor is on an asterisk or after the word, jump to start of unbolded word
       local new_col = (col + 1 <= word_start or col + 1 > word_end) and (s - 1) or (col - 2)
       vim.api.nvim_set_current_line(new_line)
       vim.api.nvim_win_set_cursor(0, { row, new_col })
+      if mode == 'i' then
+        vim.cmd 'startinsert'
+      end
       return
     end
     search_start = e + 1
@@ -213,6 +223,9 @@ vim.keymap.set('n', '<C-b>', function()
     if col + 1 >= s and col + 1 <= e + 1 then
       vim.api.nvim_set_current_line(line:sub(1, s - 1) .. line:sub(e + 1))
       vim.api.nvim_win_set_cursor(0, { row, math.max(s - 3, 0) })
+      if mode == 'i' then
+        vim.cmd 'startinsert'
+      end
       return
     end
     s, e = line:find('%*%*%*%*', e + 1)
@@ -228,6 +241,9 @@ vim.keymap.set('n', '<C-b>', function()
     if ws then
       vim.api.nvim_set_current_line(line:sub(1, ws - 1) .. '**' .. cword .. '**' .. line:sub(we + 1))
       vim.api.nvim_win_set_cursor(0, { row, col + 2 })
+      if mode == 'i' then
+        vim.cmd 'startinsert'
+      end
       return
     end
   end
@@ -235,6 +251,9 @@ vim.keymap.set('n', '<C-b>', function()
   -- Otherwise, insert **** at cursor and move between
   vim.api.nvim_set_current_line(line:sub(1, col) .. '****' .. line:sub(col + 1))
   vim.api.nvim_win_set_cursor(0, { row, col + 2 })
+  if mode == 'i' then
+    vim.cmd 'startinsert'
+  end
 end, { desc = 'Text, bold, **word** or insert/remove ****' })
 
 -- Execute line, bash
@@ -318,6 +337,7 @@ vim.keymap.set('n', '<leader>de', function()
     print(cmd .. result)
   end
 end, { desc = 'Bash: execute line' })
+
 vim.keymap.set('n', '<leader>dE', function()
   local line = vim.fn.getline '.'
   local output = vim.fn.system('bash -c ' .. vim.fn.shellescape(line))

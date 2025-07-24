@@ -85,7 +85,9 @@ return {
         }
         local filtered = {}
         for k, v in pairs(hl) do
-          if valid_keys[k] then filtered[k] = v end
+          if valid_keys[k] then
+            filtered[k] = v
+          end
         end
         return filtered
       end
@@ -96,21 +98,31 @@ return {
       hl_search.underline = nil
       vim.api.nvim_set_hl(0, 'Search', hl_search)
 
-      -- LSP reference highlights
-      -- local orangedark = utils.blend(palette.orange.dim, palette.bg, 0.08)
+      -- Markdown
+      vim.api.nvim_set_hl(0, 'RenderMarkdownCode', {
+        bg = util.blend(palette.fg, palette.bg, 0.06),
+      })
+      vim.api.nvim_set_hl(0, 'RenderMarkdownCodeInline', {
+        -- bold = true,
+        fg = util.blend(palette.bg, palette.fg, 0.12),
+        bg = util.blend(palette.fg, palette.bg, 0.06),
+      })
+      -- vim.api.nvim_set_hl(0, '@markup.raw.block.markdown', {
+      --   fg = util.blend(palette.bg, palette.fg, 0.12),
+      -- })
 
+      -- LSP reference
+      -- local orangedark = utils.blend(palette.orange.dim, palette.bg, 0.08)
       vim.api.nvim_set_hl(0, 'LspReferenceText', {
         -- bg = orangedark,
         -- bg = utils.blend(palette.orange.dim, palette.bg, 0.08),
         bg = util.blend(palette.green.base, palette.bg, 0.12),
       })
-
       vim.api.nvim_set_hl(0, 'LspReferenceRead', {
         -- bg = orangedark,
         -- bg = utils.blend(palette.orange.dim, palette.bg, 0.08),
         bg = util.blend(palette.blue1, palette.bg, 0.12),
       })
-
       vim.api.nvim_set_hl(0, 'LspReferenceWrite', {
         -- bg = orangedark,
         -- bg = utils.blend(palette.orange.dim, palette.bg, 0.08),
