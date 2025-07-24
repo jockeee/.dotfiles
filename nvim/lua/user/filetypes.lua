@@ -1,31 +1,6 @@
 --
 -- lua/user/filetypes.lua
 
--- css
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = 'css',
-  callback = function()
-    vim.opt_local.expandtab = true
-    vim.opt_local.shiftwidth = 2
-    vim.opt_local.softtabstop = 2
-    vim.opt_local.tabstop = 2
-
-    -- /usr/share/nvim/runtime/ftplugin/css.vim sets iskeyword to include '-'
-    vim.opt_local.iskeyword:remove '-'
-  end,
-})
-
--- html
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = 'html',
-  callback = function()
-    vim.opt_local.expandtab = true
-    vim.opt_local.shiftwidth = 2
-    vim.opt_local.softtabstop = 2
-    vim.opt_local.tabstop = 2
-  end,
-})
-
 -- lua
 vim.api.nvim_create_autocmd('FileType', {
   pattern = 'lua',
@@ -110,5 +85,19 @@ vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
     end
 
     -- No Ansible markers found: leave filetype as plain "yaml"
+  end,
+})
+
+-- web
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { 'css', 'html', 'javascript', 'typescript' },
+  callback = function()
+    vim.opt_local.expandtab = true
+    vim.opt_local.shiftwidth = 2
+    vim.opt_local.softtabstop = 2
+    vim.opt_local.tabstop = 2
+
+    -- /usr/share/nvim/runtime/ftplugin/css.vim sets iskeyword to include '-'
+    vim.opt_local.iskeyword:remove '-'
   end,
 })

@@ -74,10 +74,14 @@ return {
 
         -- js
         --
-        -- biome only
-        biome = {},
+        -- biome
+        biome = {
+          -- root_dir = nil,
+          -- root_markers = { '.git', 'package.json', 'biome.json', 'biome.jsonc' },
+          workspace_required = false,
+        },
         --
-        ts_ls = {},
+        -- ts_ls = {},
         --
         -- eslint-lsp
         --  https://github.com/Microsoft/vscode-eslint
@@ -91,21 +95,21 @@ return {
         -- biome = {},
 
         -- emmet
-        -- aca/emmet-ls
-        emmet_ls = {
-          filetypes = { 'html', 'css', 'javascript' },
-          init_options = {
-            html = {
-              options = {
-                -- For possible options, see: https://github.com/emmetio/emmet/blob/master/src/config.ts#L79-L267
-                ['bem.enabled'] = true,
-              },
-            },
-          },
-        },
+        --  aca/emmet-ls
+        -- emmet_ls = {
+        --   filetypes = { 'html', 'css', 'javascript' },
+        --   init_options = {
+        --     html = {
+        --       options = {
+        --         -- For possible options, see: https://github.com/emmetio/emmet/blob/master/src/config.ts#L79-L267
+        --         ['bem.enabled'] = true,
+        --       },
+        --     },
+        --   },
+        -- },
 
         -- php
-        intelephense = {},
+        -- intelephense = {},
 
         -- python
         pylsp = { -- python-lsp/python-lsp-server
@@ -148,22 +152,22 @@ return {
 
         -- python
         'ruff', -- formatter and linter
-        'mypy', -- linter, mypy is a static type checker for Python
+        -- 'mypy', -- linter, mypy is a static type checker for Python
 
         -- sql
         'sqlfluff', -- formatter and linter
 
         -- web
+        --  css
+        'stylelint', -- linter
         --  html
         'prettierd', -- formatter, javascript, typescript, html, css
         'htmlhint', -- linter
-        --  css
-        'stylelint', -- linter
         --  json
         'jq',
 
         -- xml
-        'xmlformatter',
+        -- 'xmlformatter',
       }
 
       local ensure_installed = vim.tbl_keys(servers or {})

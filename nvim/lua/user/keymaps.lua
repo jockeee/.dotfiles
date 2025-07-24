@@ -168,7 +168,7 @@ vim.keymap.set('n', '<leader>da', '<cmd>%bdelete!<cr>', { desc = 'Close all buff
 --     end
 --   end
 -- end, { desc = 'Close All Buffers, Except Terminals' })
-vim.keymap.set('n', '<leader>dx', '<cmd>bd!<cr>', { desc = 'Kill buffer (ignore unsaved changes)' })
+vim.keymap.set('n', '<leader>dx', '<cmd>bp|bd!#<cr>', { desc = 'Kill buffer (ignore unsaved changes)' })
 
 -- Convert unicode escapes to utf-8 characters
 vim.keymap.set('n', '<leader>du', function()

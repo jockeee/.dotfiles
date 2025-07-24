@@ -23,12 +23,12 @@ return {
       lsp_format = 'fallback',
     },
     formatters_by_ft = {
-      css = { 'prettierd' },
-      html = { 'prettierd' },
-      -- javascript = { 'prettierd' }, -- testing biome
+      css = { 'prettierd', 'prettier', stop_after_first = true },
+      html = { 'prettierd', 'prettier', stop_after_first = true },
+      javascript = { 'prettierd', 'prettier', stop_after_first = true },
       json = { 'jq' },
       lua = { 'stylua' },
-      zsh = { 'shfmt' },
+      typescript = { 'prettierd', 'prettier', stop_after_first = true },
 
       -- bash = { 'shfmt' }, -- lsp runs formatter
       -- fish = { 'fish_indent' }, -- lsp runs formatter
