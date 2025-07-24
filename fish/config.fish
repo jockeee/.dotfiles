@@ -178,7 +178,7 @@ if status is-interactive
         # https://fishshell.com/docs/current/cmds/bind.html#special-input-functions
 
         bind --erase alt-v # d: edit current command in $EDITOR
-        bind ctrl-w backward-kill-word # d: bind --preset ctrl-w backward-kill-path-component
+        # M-BS = backward-kill-word, bind ctrl-w backward-kill-word # d: bind --preset ctrl-w backward-kill-path-component
 
         # wezterm without tmux, keybinds are defined directly in wezterm
         # for key in q w e r f t
