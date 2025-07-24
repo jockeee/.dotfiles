@@ -134,11 +134,11 @@ abbr --add x npx
 
 if command -q pnpm
     alias npm pnpm
-    alias npx pnpx
+    alias npx 'pnpm exec'
     abbr --add n pnpm
-    abbr --add x pnpx
+    abbr --add x 'pnpm exec'
     abbr --add npm pnpm
-    abbr --add npx pnpx
+    abbr --add npx 'pnpm exec'
 end
 
 ##

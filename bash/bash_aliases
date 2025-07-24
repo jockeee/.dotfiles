@@ -124,9 +124,9 @@ alias x='npx'
 
 if command -v pnpm &>/dev/null; then
     alias npm='pnpm'
-    alias npx='pnpx'
+    alias npx='pnpm exec'
     alias n='pnpm'
-    alias x='pnpx'
+    alias x='pnpm exec'
 fi
 
 ##
