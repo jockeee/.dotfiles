@@ -130,13 +130,13 @@ if command -q difft
 end
 
 abbr --add n npm
-abbr --add nx npx
+abbr --add x npx
 
 if command -q pnpm
     alias npm pnpm
     alias npx pnpx
     abbr --add n pnpm
-    abbr --add nx pnpx
+    abbr --add x pnpx
     abbr --add npm pnpm
     abbr --add npx pnpx
 end

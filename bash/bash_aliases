@@ -120,13 +120,13 @@ if command -v difft &>/dev/null; then
 fi
 
 alias n='npm'
-alias nx='npx'
+alias x='npx'
 
 if command -v pnpm &>/dev/null; then
     alias npm='pnpm'
     alias npx='pnpx'
     alias n='pnpm'
-    alias nx='pnpx'
+    alias x='pnpx'
 fi
 
 ##
