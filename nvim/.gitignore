@@ -1,0 +1,4 @@
+*.env*
+lazy-lock.json
+spell/
+tags
