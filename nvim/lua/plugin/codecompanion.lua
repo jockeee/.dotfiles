@@ -110,7 +110,8 @@ return {
       },
       chat = {
         -- intro_message = '', -- d: Welcome to CodeCompanion ✨! Press ? for options
-        show_settings = false, -- d: false, Adapters can't be changed with `ga` when set to true
+        -- show_settings = false, -- d: false, Adapters can't be changed with `ga` when set to true
+        -- start_in_insert_mode = false, -- d: false
       },
     },
 
