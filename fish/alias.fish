@@ -88,6 +88,7 @@ abbr --add sshk "ssh -F /dev/null -o IdentitiesOnly=yes -i ~/.ssh/"
 # https://github.com/lewisacidic/fish-git-abbr
 abbr --add d 'git diff'
 abbr --add ga 'git add'
+abbr --add gb 'git branch'
 abbr --add gc 'git commit -m'
 abbr --add gcl 'git clone'
 abbr --add gco 'git checkout'

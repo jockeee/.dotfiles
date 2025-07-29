@@ -79,6 +79,7 @@ alias sshk="ssh -F /dev/null -o IdentitiesOnly=yes -i ~/.ssh/"
 # https://github.com/lewisacidic/fish-git-abbr
 alias d='git diff'
 alias ga='git add'
+alias gb='git branch'
 alias gc='git commit -m'
 alias gcl='git clone'
 alias gco='git checkout'
