@@ -59,9 +59,8 @@ alias c='cat'
 alias f='fd'
 alias r='rg'
 alias g='rg'
-alias t='tree'
-alias td='tree -D'
-alias tl='tree -L 2'
+alias t='tree -L 3'
+alias td='tree -D -L 3'
 alias v='vim'
 alias vo='NVIM_APPNAME=nvim-prev vim' # old
 alias vn='NVIM_APPNAME=nvim-test vim' # new

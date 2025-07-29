@@ -68,9 +68,8 @@ abbr --add c cat
 abbr --add f fd
 abbr --add r rg
 abbr --add g rg
-abbr --add t tree
-abbr --add td 'tree -D'
-abbr --add tl 'tree -L 2'
+abbr --add t 'tree -L 3'
+abbr --add td 'tree -D -L 3'
 abbr --add v vim
 abbr --add vo 'NVIM_APPNAME=nvim-prev vim' # old
 abbr --add vn 'NVIM_APPNAME=nvim-test vim' # new
