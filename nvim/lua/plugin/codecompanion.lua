@@ -78,16 +78,6 @@ return {
     'franco-ruggeri/codecompanion-spinner.nvim', -- virtual line status, https://github.com/olimorris/codecompanion.nvim/discussions/640
   },
   opts = {
-    display = {
-      action_palette = {
-        provider = 'snacks', -- use snacks for CodeCompanionActions
-        inline_prompt = { enabled = true }, -- For inline prompts
-      },
-      chat = {
-        show_settings = false, -- d: false, Adapters can't be changed with `ga` when set to true
-      },
-    },
-
     strategies = {
       chat = {
         adapter = 'copilot', -- d: copilot
@@ -110,6 +100,17 @@ return {
       cmd = {
         adapter = 'copilot', -- d: copilot
         -- model = 'claude-sonnet-4',
+      },
+    },
+
+    display = {
+      action_palette = {
+        provider = 'snacks', -- use snacks for CodeCompanionActions
+        inline_prompt = { enabled = true }, -- For inline prompts
+      },
+      chat = {
+        -- intro_message = '', -- d: Welcome to CodeCompanion ✨! Press ? for options
+        show_settings = false, -- d: false, Adapters can't be changed with `ga` when set to true
       },
     },
 
