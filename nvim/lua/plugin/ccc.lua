@@ -50,8 +50,8 @@ return {
       -- },
     }
 
-    vim.keymap.set('n', '<leader>cp', '<cmd>CccPick<cr>', { desc = 'Ccc: picker' })
-    vim.keymap.set('n', '<leader>cc', '<cmd>CccConvert<cr>', { desc = 'Ccc: convert' })
-    vim.keymap.set('n', '<leader>cs', '<cmd>CccHighlighterToggle<cr>', { desc = 'Ccc: show' })
+    vim.keymap.set('n', '<leader>sp', '<cmd>CccPick<cr>', { desc = 'Ccc: picker' })
+    vim.keymap.set('n', '<leader>sC', '<cmd>CccConvert<cr>', { desc = 'Ccc: convert' })
+    -- vim.keymap.set('n', '<leader>cs', '<cmd>CccHighlighterToggle<cr>', { desc = 'Ccc: show' })
   end,
 }

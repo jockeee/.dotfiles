@@ -269,7 +269,7 @@ function gg -d 'git add, git commit, git push'
     end
 end
 
-function aicommit -d 'AI commit message'
+function aicommit -d 'Generate commit message using AI'
     if not is_git_repo
         echo 'Error: Unable to locate a Git repository.'
         return 1
@@ -285,93 +285,28 @@ function aicommit -d 'AI commit message'
         return 1
     end
 
-    while true
-        echo -n "Generating commit messages... "
-
-        # Get 5 suggestions from OpenAI API
-        set -l raw (openai api chat.completions.create \
-            -m gpt-4 \
-            -n 5 \
-            -g user "Write a very short commit message for the following git diff:" \
-            -g user "$(git diff --cached)" \
-            --response-format json)
-
+    set continue n
+    # -g user "Write a concise commit message for the following git diff:" \
+    while test "$continue" != y; and test "$continue" != Y
+        set message (openai api chat.completions.create \
+        -m gpt-4 \
+        -g user "Write a very short commit message for the following git diff:" \
+        -g user "$(git diff --cached)")
         if test $status -ne 0
-            echo
-            echo "Error: Couldn't retrieve commit messages from 'openai'"
+            echo "Error: Couldn't retrieve a commit message from 'openai'"
             return 1
         end
 
-        echo done
-
-        set -l suggestions
-        for idx in (seq 5)
-            set -l msg (echo $raw | jq -r ".choices[$idx - 1].message.content")
-            set suggestions $suggestions $msg
-        end
-
         echo
-        for idx in (seq (count $suggestions))
-            echo "($idx) $suggestions[$idx]"
-        end
-
-        echo
-        read -P "Use which commit message? [1-5/q]: " choice
-
-        if test -z "$choice"
-            continue
-        end
-
-        if string match -rq '^[1-5]$' -- $choice
-            set -l num (math "$choice")
-            git commit -m "$suggestions[$num]"
-            return
-        else if test "$choice" = q
+        echo "$message"
+        read -P "Use this commit message? [y/N/q]: " continue
+        if test "$continue" = q
             return 1
-        else
-            echo "Invalid input."
         end
     end
-end
 
-# function aicommit -d 'Generate commit message using AI'
-#     if not is_git_repo
-#         echo 'Error: Unable to locate a Git repository.'
-#         return 1
-#     end
-#
-#     if not command -q openai
-#         echo "Error: 'openai' not found."
-#         return 1
-#     end
-#
-#     if git diff --cached --quiet
-#         echo "No staged changes found."
-#         return 1
-#     end
-#
-#     set continue n
-#     # -g user "Write a concise commit message for the following git diff:" \
-#     while test "$continue" != y; and test "$continue" != Y
-#         set message (openai api chat.completions.create \
-#         -m gpt-4 \
-#         -g user "Write a very short commit message for the following git diff:" \
-#         -g user "$(git diff --cached)")
-#         if test $status -ne 0
-#             echo "Error: Couldn't retrieve a commit message from 'openai'"
-#             return 1
-#         end
-#
-#         echo
-#         echo "$message"
-#         read -P "Use this commit message? [y/N/q]: " continue
-#         if test "$continue" = q
-#             return 1
-#         end
-#     end
-#
-#     git commit -m "$message"
-# end
+    git commit -m "$message"
+end
 
 # gg (git add, git commit, git push)
 # usage: gg [commit message]

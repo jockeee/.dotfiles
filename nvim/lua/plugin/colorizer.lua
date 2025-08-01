@@ -20,7 +20,7 @@ return {
       tailwind = false, -- d: false, true = normal, normal | lsp | both
 
       mode = 'virtualtext', -- d: background, background | foreground | virtualtext
-      virtualtext_inline = true, -- d: false, true = after, before | after
+      virtualtext_inline = true, -- d: false, false | true | 'before' | 'after'
     },
   },
 }
