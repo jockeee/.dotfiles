@@ -63,6 +63,7 @@
 ---@type LazySpec
 return {
   'olimorris/codecompanion.nvim',
+  event = { 'BufReadPre', 'BufNewFile' },
   keys = {
     { '<leader>qq', mode = { 'n', 'x' }, '<cmd>CodeCompanionChat Toggle<cr>', desc = 'chat: toggle' },
     { '<leader>qn', mode = { 'n', 'x' }, '<cmd>CodeCompanionChat<cr>', desc = 'chat: new' },
@@ -109,9 +110,13 @@ return {
         inline_prompt = { enabled = true }, -- For inline prompts
       },
       chat = {
+        -- window = {
+        --   layout = 'horizontal', -- d: vertical, float|vertical|horizontal|buffer
+        --   height = 0.4, -- d: 0.8
+        -- },
         -- intro_message = '', -- d: Welcome to CodeCompanion ✨! Press ? for options
-        -- show_settings = false, -- d: false, Adapters can't be changed with `ga` when set to true
-        -- start_in_insert_mode = false, -- d: false
+        -- show_settings = true, -- d: false, adapter can't be changed, with `ga`, when true
+        -- start_in_insert_mode = true, -- d: false
       },
     },
 

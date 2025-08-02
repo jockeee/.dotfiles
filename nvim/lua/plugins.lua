@@ -12,7 +12,7 @@ return {
 
   -- Visual
   require 'plugin.aerial', -- code outline
-  -- require 'plugin.ccc', -- colorize color codes
+  require 'plugin.ccc', -- convert color codes
   require 'plugin.colorizer', -- colorize color codes
   require 'plugin.lualine',
   require 'plugin.todo-comments', -- highlight todo, notes, etc in comments

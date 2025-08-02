@@ -107,9 +107,12 @@ return {
     vim.keymap.set('n', '<leader>fp', snacks.picker.git_files, { desc = 'git files' }) -- project files
     vim.keymap.set({ 'n', 'x' }, '<leader>fw', snacks.picker.grep_word, { desc = 'word' }) -- string under cursor or selection
 
-    -- Open a project from zoxide
-    -- :lua Snacks.picker.zoxide(opts?)
-    -- https://github.com/folke/snacks.nvim/blob/main/docs/picker.md#zoxide
-    -- vim.keymap.set('n', '<leader>fz', snacks.picker.zoxide, { desc = 'zoxide' })
+    -- lazy plugins
+    vim.keymap.set('n', '<leader>fl', function()
+      snacks.picker.files {
+        cwd = vim.fs.joinpath(vim.fn.stdpath 'data', 'lazy'),
+        prompt_title = 'Lazy plugins',
+      }
+    end, { desc = 'lazy plugins' })
   end,
 }
