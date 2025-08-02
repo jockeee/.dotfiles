@@ -10,7 +10,7 @@ return {
   'catgoose/nvim-colorizer.lua',
   event = { 'BufReadPre', 'BufNewFile' },
   keys = {
-    { '<leader>sc', '<cmd>ColorizerToggle<cr>', desc = 'Colorizer' },
+    { '<leader>cs', '<cmd>ColorizerToggle<cr>', desc = 'Colorizer' },
   },
   opts = {
     filetypes = { 'css', 'html', 'javascript' }, -- d: '*'

@@ -48,10 +48,14 @@ return {
       --   ccc.output.css_rgb, -- default
       --   ccc.output.css_hsl, -- default
       -- },
+      convert = {
+        { ccc.picker.hex, ccc.output.css_rgb },
+        { ccc.picker.css_rgb, ccc.output.hex },
+      },
     }
 
-    vim.keymap.set('n', '<leader>sp', '<cmd>CccPick<cr>', { desc = 'Ccc: picker' })
-    vim.keymap.set('n', '<leader>sC', '<cmd>CccConvert<cr>', { desc = 'Ccc: convert' })
+    vim.keymap.set('n', '<leader>cp', '<cmd>CccPick<cr>', { desc = 'Ccc: picker' })
+    vim.keymap.set('n', '<leader>cc', '<cmd>CccConvert<cr>', { desc = 'Ccc: convert' })
     -- vim.keymap.set('n', '<leader>cs', '<cmd>CccHighlighterToggle<cr>', { desc = 'Ccc: show' })
   end,
 }
