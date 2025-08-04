@@ -3,6 +3,9 @@
 
 -- Move function arguments (and other delimited-by-something items) left and right.
 
+-- Alternatives:
+--  With Treesitter, you can select and move parameters using custom text objects and motions.
+
 ---@type LazySpec
 return {
   'AndrewRadev/sideways.vim',

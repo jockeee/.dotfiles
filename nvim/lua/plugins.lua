@@ -22,7 +22,6 @@ return {
   require 'plugin.comment',
   require 'plugin.guess-indent', -- detect tabstop and shiftwidth
   require 'plugin.multicursor',
-  require 'plugin.sideways', -- move delimited-by-something items left and right
   require 'plugin.surround',
   require 'plugin.trouble',
   require 'plugin.treesitter',

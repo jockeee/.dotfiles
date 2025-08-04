@@ -375,7 +375,7 @@ function ww -d 'git add, git commit, git push - whatthecommit.com'
         end
 
         echo "$message"
-        read -P "Use commit message? ($src) [f/y/N/q]: " continue
+        read -P "Use commit message? ($src) [y/N/f/q]: " continue
         if test "$continue" = q
             return 0
         else if test "$continue" = f
@@ -416,7 +416,7 @@ function wwd -d 'Commit messages from whatthecommit.com'
         end
 
         echo "$message"
-        read -P "Copy? [f/y/N/q]: " continue
+        read -P "Copy message? [y/N/f/q]: " continue
         if test "$continue" = q
             return 0
         else if test "$continue" = f
@@ -482,7 +482,7 @@ end
 #         end
 #
 #         echo "$message"
-#         read -P "Copy? $src [f/y/N/q]: " continue
+#         read -P "Copy? $src [y/N/f/q]: " continue
 #         if test "$continue" = q
 #             return 0
 #         else if test "$continue" = f

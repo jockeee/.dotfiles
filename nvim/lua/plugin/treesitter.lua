@@ -110,6 +110,15 @@ return {
         -- and should return true or false
         include_surrounding_whitespace = true,
       },
+      swap = {
+        enable = true,
+        swap_next = {
+          ['<leader><right>'] = '@parameter.inner', -- swap with next parameter
+        },
+        swap_previous = {
+          ['<leader><left>'] = '@parameter.inner', -- swap with previous parameter
+        },
+      },
     },
   },
   config = function(_, opts)
