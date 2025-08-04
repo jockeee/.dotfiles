@@ -11,3 +11,6 @@ require 'user.filetypes'
 require 'user.options'
 require 'user.keymaps'
 require 'user.lazy'
+
+-- test
+-- /home/user/.config/nvim/lua/user/init.lua
