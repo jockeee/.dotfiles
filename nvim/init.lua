@@ -12,4 +12,4 @@ require 'user.options'
 require 'user.keymaps'
 require 'user.lazy'
 
-local test = '/home/username/.config/nvim/lua/user/init.lua'
+-- /home/username/.config/nvim/lua/user/init.lua
