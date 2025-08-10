@@ -1,0 +1,1044 @@
+#
+# .bash_aliases
+
+##
+## Alias
+##
+
+# ls options
+#   -A, --almost-all: do not list implied . and ..
+alias l='ls'
+alias ll='ls -l'
+alias la='ls -lA'
+alias lad='ls -ld'
+alias laa='ls -la'
+alias lag='ls -lA --group-directories-first'
+alias laz='ls -laZ'
+alias ladz='ls -ladZ'
+alias lazd='ls -ladZ'
+alias man='man --nj'
+
+if command -v ~/.local/bin/nvim &>/dev/null; then
+    alias vim='~/.local/bin/nvim'
+fi
+
+alias fd='fd --hidden --no-ignore --no-ignore-parent'
+alias rg='rg --no-line-number --hidden --no-ignore --no-ignore-parent'
+
+alias b='top'
+if command -v btop &>/dev/null; then
+    alias top='btop'
+fi
+
+if command -v eza &>/dev/null; then
+    # Filtering options
+    #   Pass the -a, --all option twice to also show the . and .. directories.
+    # Long view options
+    #   -a, --all: show hidden and 'dot' files
+    #   -g, --group: list each file’s group
+    #   --git: list each file’s Git status, if tracked or ignored
+    # alias eza='eza --icons'
+    alias ls='eza -g --git'
+    alias la='eza -gla --git'
+    alias ld='eza -gld --git'
+    alias laa='eza -glaa --git'
+    alias tree='eza -aT --git-ignore'
+fi
+
+if command -v pass &>/dev/null; then
+    alias p='pass show -c'
+    alias pe='pass edit'
+    alias pf='pass find'
+    alias pg='pass generate -c -i'
+    alias pi='pass insert -m'
+    alias po='pass otp -c'
+fi
+
+# abbr in fish
+alias c='cat'
+alias f='fd'
+alias r='rg'
+alias g='rg'
+alias t='tree -L 3'
+alias td='tree -D -L 3'
+alias v='vim'
+alias vo='NVIM_APPNAME=nvim-prev vim' # old
+alias vn='NVIM_APPNAME=nvim-test vim' # new
+alias sha='sha256sum'
+alias sshk="ssh -F /dev/null -o IdentitiesOnly=yes -i ~/.ssh/"
+
+# tmux
+# https://github.com/lewisacidic/fish-tmux-abbr
+# alias s='tmux attach || tmux new-session -s $TMUX_DEFAULT_SESSION_NAME'
+# alias ss='tmux new-session -A -s'
+# alias sx='tmux kill-session -t'
+# alias sl='tmux list-sessions'
+
+# git
+# https://github.com/lewisacidic/fish-git-abbr
+alias d='git diff'
+alias ga='git add'
+alias gb='git branch'
+alias gc='git commit -m'
+alias gcl='git clone'
+alias gco='git checkout'
+alias gd='git diff'
+alias gf='git fetch'
+alias gl='git log'
+alias gls='git log --show-signature'
+alias gp='git push'
+alias gpl='git pull'
+alias gr='git remote -v'
+alias grl='git reflog'
+alias grs='git reset'
+alias grs!='git reset --hard' # grs!
+alias gs='git status'
+if command -v gitleaks &>/dev/null; then
+    alias glp='gitleaks git --verbose --pre-commit --staged'
+fi
+if command -v lazygit &>/dev/null; then
+    alias lg='lazygit'
+fi
+
+if command -v bat &>/dev/null; then
+    bat_cmd='bat'
+    # alias cat='bat -pp' # no paging
+    alias cat='bat -p'
+    alias d='batdiff'
+    alias bd='batdiff'
+fi
+
+if command -v batcat &>/dev/null; then
+    bat_cmd='batcat'
+    alias bat='batcat'
+    # alias cat='batcat -pp' # no paging
+    alias cat='batcat -p'
+    alias d='batdiff'
+    alias bd='batdiff'
+fi
+
+if command -v difft &>/dev/null; then
+    alias d='difftastic'
+    alias ds='difftastic --staged'
+fi
+
+alias n='npm'
+alias x='npx'
+
+if command -v pnpm &>/dev/null; then
+    alias npm='pnpm'
+    alias npx='pnpm exec'
+    alias n='pnpm'
+    alias x='pnpm exec'
+fi
+
+##
+## Functions
+##
+
+# batdiff
+if [[ $bat_cmd ]]; then
+    batdiff() {
+        if ! is_git_repo; then
+            echo 'Error: Unable to locate a Git repository.'
+            return 1
+        fi
+
+        git diff --name-only --relative --diff-filter=d "$@" | xargs "$bat_cmd" --diff
+    }
+fi
+
+# cdg (cd to git root directory)
+cdg() {
+    if ! is_git_repo; then
+        echo 'Error: Unable to locate a Git repository.'
+        return 1
+    fi
+
+    git_dir=$(git rev-parse --show-toplevel)
+    if [[ -n "$git_dir" ]]; then
+        cd "$git_dir" || return 1
+    fi
+}
+
+# ci (cat image)
+if [[ -n "$WEZTERM_EXECUTABLE" ]] && command -v rsvg-convert &>/dev/null; then
+    ci() {
+        if [[ $# -ne 1 ]]; then
+            echo "Usage: ci <image-file>" >&2
+            return 1
+        fi
+
+        local image_file="$1"
+
+        if [[ ! -f "$image_file" ]]; then
+            echo "Error: File '$image_file' not found" >&2
+            return 1
+        fi
+
+        if [[ "${image_file##*.}" == "svg" ]]; then
+            rsvg-convert "$image_file" | wezterm imgcat
+        else
+            wezterm imgcat "$image_file"
+        fi
+    }
+elif [[ -n "$WEZTERM_EXECUTABLE" ]]; then
+    alias ci="wezterm imgcat"
+fi
+
+# difft
+if commnd -v difft &>/dev/null; then
+    difftastic() {
+        if ! is_git_repo; then
+            echo 'Error: Unable to locate a Git repository.'
+            return 1
+        fi
+
+        git -c diff.external=difft diff
+    }
+fi
+
+# https://github.com/oh-my-fish/oh-my-fish/blob/master/lib/git/git_is_repo.fish
+is_git_repo() {
+    if [[ -d .git ]]; then
+        return 0
+    fi
+
+    local info
+    if info=$(git rev-parse --git-dir --is-bare-repository 2>/dev/null); then
+        IFS=' ' read -r git_dir is_bare <<<"$info"
+
+        if [[ "$is_bare" = "false" ]]; then
+            return 0
+        fi
+    fi
+
+    return 1
+}
+
+# gg (git add, git commit, git push)
+# usage: gg [commit message]
+gg() {
+    if ! is_git_repo; then
+        echo 'Error: Unable to locate a Git repository.'
+        return 1
+    fi
+
+    use_ai=0
+
+    if [[ $# -eq 0 ]]; then
+        if command -v aicommit &>/dev/null; then
+            use_ai=1
+        else
+            echo "Usage: gg [commit message]"
+            echo "Info: Didn't find aicommit"
+            return 1
+        fi
+    fi
+
+    if [[ $use_ai -eq 1 ]]; then
+        # using aicomments
+        # echo statements has bold text
+        echo -e "\e[1mgit add -A\e[0m" && git add -A &&
+            echo -e "\e[1maicommit\e[0m" && aicommit &&
+            echo -e "\e[1mgit push\e[0m" && git push
+    else
+        # using user supplied commit message
+        # echo statements has bold text
+        echo -e "\e[1mgit add -A\e[0m" && git add -A &&
+            echo -e "\e[1mgit commit -m \"$1\"\e[0m" && git commit -m "$1" &&
+            echo -e "\e[1mgit push\e[0m" && git push
+    fi
+}
+
+# aicommit (AI commit message)
+# NOT UPDATED, see alias.fish for latest version
+aicommit() {
+    if ! is_git_repo; then
+        echo 'Error: Unable to locate a Git repository.'
+        return 1
+    fi
+
+    if ! command -v openai &>/dev/null; then
+        echo "Error: 'openai' not found."
+        return 1
+    fi
+
+    if git diff --cached --quiet; then
+        echo "No staged changes found."
+        return 1
+    fi
+
+    local continue='n'
+    while [[ "$continue" != "y" ]] && [[ "$continue" != "Y" ]]; do
+        local message
+        # -g user "Write a concise commit message for the following git diff:" \
+        message=$(openai api chat.completions.create \
+            -m gpt-4 \
+            -g user "Write a very short generalized commit message for the following git diff:" \
+            -g user "$(git diff --cached)")
+
+        # shellcheck disable=SC2181 # Check exit code directly with e.g. 'if ! mycmd;', not indirectly with $?
+        if [[ $? -ne 0 ]]; then
+            echo "Error: Couldn't retrieve a commit message from 'openai'"
+            return 1
+        fi
+
+        echo
+        echo "$message"
+        read -r -p "Use this commit message? [y/N/q]: " continue
+        if [[ "$continue" = "q" ]]; then
+            return 0
+        fi
+    done
+
+    git commit -m "$message"
+}
+
+# gg (git add, git commit, git push)
+# usage: gg [commit message]
+# gg() {
+#     if ! is_git_repo; then
+#         echo 'Error: Unable to locate a Git repository.'
+#         return 1
+#     fi
+#
+#     use_ai=0
+#
+#     if [[ $# -eq 0 ]]; then
+#         if command -v aicommits &>/dev/null; then
+#             use_ai=1
+#         else
+#             echo "Usage: gg [commit message]"
+#             echo "Info: aicommits not present"
+#             return 1
+#         fi
+#     fi
+#
+#     if [[ $use_ai -eq 1 ]]; then
+#         # using aicomments
+#         # echo statements has bold text
+#         echo -e "\e[1mgit add -A\e[0m" && git add -A &&
+#             echo -e "\e[1maicommits\e[0m" && aicommits &&
+#             echo -e "\e[1mgit push\e[0m" && git push
+#     else
+#         # using user supplied commit message
+#         # echo statements has bold text
+#         echo -e "\e[1mgit add -A\e[0m" && git add -A &&
+#             echo -e "\e[1mgit commit -m \"$1\"\e[0m" && git commit -m "$1" &&
+#             echo -e "\e[1mgit push\e[0m" && git push
+#     fi
+# }
+
+# ww (git add, git commit, git push - whatthecommit.com)
+# usage: ww
+# like gg but random commit message from whatthecommit.com
+ww() {
+    if ! is_git_repo; then
+        echo 'Error: Unable to locate a Git repository.'
+        return 1
+    fi
+
+    if ! command -v wwd.py &>/dev/null; then
+        cmd='wwd.py'
+        src='l'
+    elif ! command -v curl &>/dev/null; then
+        cmd='curl -s https://whatthecommit.com/index.txt'
+        src='r'
+    else
+        echo "Error: Unable to locate 'wwd.py' or 'curl'"
+        return 1
+    fi
+
+    local favorites="$XDG_DATA_HOME/ww/favorites"
+
+    continue='n'
+    while [[ "$continue" != "y" ]] && [[ "$continue" != "Y" ]]; do
+        local message
+        if ! message=$($cmd); then
+            echo "$cmd"
+            echo "Error: Couldn't retrieve a commit message"
+            return 1
+        fi
+
+        echo "$message"
+        read -r -p "Use commit message? ($src) [f/y/N/q]: " continue
+        if [[ "$continue" = "q" ]]; then
+            return 0
+        elif [[ "$continue" = "f" ]]; then
+            mkdir -p "$XDG_DATA_HOME/ww"
+            echo "$message" >>"$favorites"
+
+            echo
+            echo -e "\e[1mSaved as favorite\e[0m"
+            echo "Use 'wwf' to see the favorites."
+            break
+        fi
+        echo
+    done
+
+    # echo statements has bold text
+    echo -e "\e[1mgit add -A\e[0m" && git add -A &&
+        echo -e "\e[1mgit commit -m \"$message\"\e[0m" && git commit -m "$message" &&
+        echo -e "\e[1mgit push\e[0m" && git push
+}
+
+# wwd (commit messages from whatthecommit.com)
+# usage: wwd
+wwd() {
+    if ! command -v wwd.py &>/dev/null; then
+        echo "Error: Unable to locate 'wwd.py'"
+        return 1
+    fi
+
+    local cmd='wwd.py'
+    local favorites="$XDG_DATA_HOME/ww/favorites"
+
+    continue='n'
+    while [[ "$continue" != "y" ]] && [[ "$continue" != "Y" ]]; do
+        local message
+        if ! message=$($cmd); then
+            echo "Error: Couldn't retrieve a commit message"
+            return 1
+        fi
+
+        echo "$message"
+        read -r -p "Copy? [f/y/N/q]: " continue
+        if [[ "$continue" = "q" ]]; then
+            return 0
+        elif [[ "$continue" = "f" ]]; then
+            mkdir -p "$XDG_DATA_HOME/ww"
+            echo "$message" >>"$favorites"
+
+            echo
+            echo -e "\e[1mSaved as favorite\e[0m"
+            echo "Use 'wwf' to see the favorites."
+            break
+        fi
+        echo
+    done
+
+    echo "$message"
+    echo -n "$message" | wl-copy
+}
+
+# wwf (favorite commit messages from whatthecommit.com)
+# usage: wwf
+wwf() {
+    local favorites="$XDG_DATA_HOME/ww/favorites"
+
+    if [[ ! -f $favorites ]]; then
+        echo "Error: No favorites found. Use 'wwd' to add favorites."
+        return 1
+    fi
+
+    local message
+    message=$(shuf "$favorites" | head -n 1)
+    if [[ -z "$message" ]]; then
+        echo "Error: No favorites found."
+        return 1
+    fi
+
+    echo "$message"
+    echo -n "$message" | wl-copy
+}
+
+# Old, for reference
+# wwd (commit messages from whatthecommit.com)
+# usage: wwd
+# wwd() {
+#     if ! command -v wwd.py &>/dev/null; then
+#         cmd='wwd.py'
+#         src='l'
+#     elif ! command -v curl &>/dev/null; then
+#         cmd='curl -s https://whatthecommit.com/index.txt'
+#         src='r'
+#     else
+#         echo "Error: Unable to locate 'wwd.py' or 'curl'"
+#         return 1
+#     fi
+#
+#     local favorites="$XDG_DATA_HOME/ww/favorites"
+#
+#     continue='n'
+#     while [[ "$continue" != "y" ]] && [[ "$continue" != "Y" ]]; do
+#         local message
+#         if ! message=$($cmd); then
+#             echo "$cmd"
+#             echo "Error: Couldn't retrieve a commit message from 'whatthecommit.com'"
+#             return 1
+#         fi
+#
+#         echo "$message"
+#         read -r -p "Copy? $src [f/y/N/q]: " continue
+#         if [[ "$continue" = "q" ]]; then
+#             return 0
+#         elif [[ "$continue" = "f" ]]; then
+#             mkdir -p "$XDG_DATA_HOME/ww"
+#             echo "$message" >>"$favorites"
+#
+#             echo
+#             echo -e "\e[1mSaved as favorite\e[0m"
+#             echo "Use 'wwf' to see the favorites."
+#             break
+#         fi
+#         echo
+#     done
+#
+#     echo -e "\e[1mCopied to clipboard\e[0m"
+#     echo "$message"
+#     echo -n "$message" | wl-copy
+# }
+
+# git-tidy (Git History Cleanup)
+# Usage: git-tidy [commit message]
+alias gt='git-tidy'
+git-tidy() {
+    if ! is_git_repo; then
+        echo 'Error: Unable to locate a Git repository.'
+        return 1
+    fi
+
+    read -r -p "Remove all Git history in this repo? [y/N]: "
+    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+        return 0
+    fi
+
+    # Create Backup
+    echo -e '\n\n\e[1mCreate Backup\e[0m\n'
+    local backup_dir
+    if ! backup_dir=$(mktemp -d); then
+        echo "Error: Couldn't create backup directory"
+        return 1
+    fi
+
+    local git_dir
+    if ! git_dir=$(git rev-parse --show-toplevel); then
+        echo "Error: Unable to locate Git root directory"
+        rm -rf "$backup_dir"
+        return 1
+    fi
+    echo "Info: Git root directory: $git_dir"
+    echo "Info: Backup directory: $git_dir"
+
+    if ! cp -a "$git_dir" "$backup_dir"; then
+        echo "Error: Couldn't create backup"
+        rm -rf "$backup_dir"
+        return 1
+    fi
+
+    # Commit message
+    commit_message="…"
+    if [[ $# -gt 0 ]]; then
+        commit_message=$*
+    fi
+
+    # Git History Cleanup
+    echo -e '\n\n\e[1mGit History Cleanup\e[0m\n'
+    git checkout --orphan latest_commit &&
+        git add -A &&
+        git commit -m "$commit_message" | grep -v " create mode " &&
+        git branch -D main &&
+        git branch -m main
+
+    # shellcheck disable=SC2181  # running multiple commands in a row with '&&'
+    if [[ $? -ne 0 ]]; then
+        echo "Error: Couldn't clean up Git history"
+        echo "Info: Backup available at $backup_dir"
+        git checkout main
+        git branch -D latest_commit
+        return 1
+    fi
+    echo "Info: Branch 'latest_commit' renamed to 'main'"
+
+    # Push to Remote
+    echo -e '\n\n\e[1mPush to Remote\e[0m\n'
+    read -r -p "Push to Remote? [Y/n]: "
+    if [[ $REPLY =~ ^[Yy]$ || -z $REPLY ]]; then
+        git push -f --set-upstream origin main
+    fi
+
+    # Remove Backup
+    echo -e '\n\n\e[1mRemove Backup\e[0m\n'
+    read -r -p "Remove Backup? [Y/n]: "
+    if [[ $REPLY =~ ^[Yy]$ || -z $REPLY ]]; then
+        echo "Info: Removing $backup_dir"
+        rm -rf "$backup_dir"
+    else
+        echo "Info: Backup available at $backup_dir"
+    fi
+
+    # Git Log
+    echo -e '\n\n\e[1mNew Git Log\e[0m\n'
+    git log
+    echo
+
+    # Git Reflog Cleanup
+    echo -e '\n\n\e[1mGit Reflog Cleanup\e[0m\n'
+    read -r -p "Clean reflog? [y/N]: "
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        git reflog expire --expire=all --expire-unreachable=all --all &&
+            git gc --prune=now
+    else
+        echo "Commands to clean reflog:"
+        echo "    git reflog expire --expire=all --expire-unreachable=all --all"
+        echo "    git gc --prune=now"
+    fi
+}
+
+upd_fedora() {
+    echo -e '\e[1mUpdating system\e[0m'
+    echo -e '\e[3msudo dnf upgrade\e[0m\n'
+    sudo /usr/bin/dnf upgrade -y
+    echo
+    if command -v /usr/bin/flatpak &>/dev/null; then
+        echo -e '\e[1mUpdating flatpak apps\e[0m'
+        echo -e '\e[3mflatpak update\e[0m\n'
+        /usr/bin/flatpak update -y
+        echo
+    fi
+    upd_gh_extensions
+    upd_go
+    upd_npm
+    upd_npm_packages
+}
+
+upd_ubuntu() {
+    echo -e '\e[1mUpdating system\e[0m'
+    echo -e '\e[3msudo apt update, sudo apt full-upgrade, sudo apt autoremove\e[0m\n'
+    sudo /usr/bin/apt update
+    sudo /usr/bin/apt full-upgrade -y
+    sudo /usr/bin/apt autoremove -y
+    echo
+    if command -v /usr/bin/snap &>/dev/null; then
+        echo -e '\e[1mUpdating snap apps\e[0m'
+        echo -e '\e[3msudo snap refresh\e[0m\n'
+        sudo /usr/bin/snap refresh # requires sudo unless authenticated to a Ubuntu One/SSO account
+        echo
+    fi
+    upd_gh_extensions
+    upd_go
+    upd_npm
+    upd_npm_packages
+}
+
+# upd (fedora/ubuntu)
+if [[ ! -f /etc/os-release ]]; then
+    echo "Warning: /etc/os-release not found"
+    exit 0
+else
+    source /etc/os-release
+    case $ID in
+    'fedora')
+        alias upd='upd_fedora'
+        ;;
+    'ubuntu')
+        alias upd='upd_ubuntu'
+        ;;
+    *)
+        echo "Warning: Distro not supported"
+        ;;
+    esac
+fi
+
+upd_gh_extensions() {
+    if command -v gh &>/dev/null; then
+        echo -e '\e[1mUpdating Github CLI extensions\e[0m'
+        echo -e '\e[3mgh extension upgrade --all\e[0m\n'
+        gh extension upgrade --all
+        echo
+    fi
+}
+
+upd_npm() {
+    if command -v nvm &>/dev/null; then
+        if command -v pnpm &>/dev/null; then
+            echo -e '\e[1mUpdating npm -- user\e[0m'
+            echo -e '\e[3mnvm install.., nvm use.., pnpm self-update\e[0m'
+            pnpm self-update 1>/dev/null
+            nvm install lts 1>/dev/null
+            nvm use lts 1>/dev/null
+            # pnpm install -g npm@latest 1>/dev/null
+            echo "node: $(nvm current) (lts)"
+            echo "pnpm: $(pnpm --version)"
+            echo
+            nvm install latest 1>/dev/null
+            nvm use latest 1>/dev/null
+            # pnpm install -g npm@latest 1>/dev/null
+            echo "node: $(nvm current) (latest)"
+            echo "pnpm: $(pnpm --version)"
+            echo
+        else
+            echo -e '\e[1mUpdating npm -- user\e[0m'
+            echo -e '\e[3mnvm install.., nvm use..\e[0m\n'
+            nvm install lts 1>/dev/null
+            nvm use lts 1>/dev/null
+            # npm install -g npm@latest 1>/dev/null
+            echo "node: $(nvm current) (lts)"
+            echo "npm: $(npm --version)"
+            echo
+            nvm install --latest 1>/dev/null
+            nvm use latest 1>/dev/null
+            # npm install -g npm@latest 1>/dev/null
+            echo "node: $(nvm current) (latest)"
+            echo "npm: $(npm --version)"
+            echo
+        fi
+    fi
+
+    if ! command -v nvm &>/dev/null && command -v /usr/local/bin/npm &>/dev/null; then
+        echo -e '\e[1mUpdating npm\e[0m'
+        echo -e '\e[3msudo npm install -g npm@latest\e[0m'
+        sudo /usr/local/bin/npm install -g npm@latest
+        echo
+        echo "node: $(node --version)"
+        echo "npm: $(/usr/local/bin/npm --version)"
+        echo
+    fi
+}
+
+# upd_npm() {
+#     if command -v /usr/local/bin/npm &>/dev/null; then
+#         echo -e '\e[1mUpdating npm\e[0m'
+#         echo -e '\e[3msudo npm install -g npm@latest\e[0m'
+#         sudo /usr/local/bin/npm install -g npm@latest
+#         echo
+#         echo "NPM version: $(/usr/local/bin/npm --version)"
+#         echo
+#     fi
+# }
+#
+# upd_npm_packages() {
+#     if command -v /usr/local/bin/npm &>/dev/null; then
+#         echo -e '\e[1mUpdating npm packages\e[0m'
+#         echo -e '\e[3msudo npm packages\e[0m'
+#         sudo /usr/local/bin/npm update
+#         echo
+#     fi
+# }
+
+upd_go() {
+    # example download url: https://go.dev/dl/go1.22.3.linux-amd64.tar.gz
+    if command -v /usr/local/go/bin/go &>/dev/null; then
+        echo -e '\e[1mUpdating Go\e[0m'
+        echo -e '\e[3mhttps://go.dev/dl\e[0m'
+        echo
+
+        for cmd in curl jq sha256sum mktemp tar; do
+            if ! command -v $cmd &>/dev/null; then
+                echo "Error: '$cmd' not found"
+                return 1
+            fi
+        done
+
+        os=$(uname -s | tr '[:upper:]' '[:lower:]')
+        arch=$(uname -m)
+        if [[ "$arch" == 'x86_64' ]]; then
+            arch='amd64'
+        fi
+        kind='archive'
+        download_url_base='https://golang.org/dl/'
+
+        # download json
+        # go_dev_json=$(curl -s https://go.dev/dl/?mode=json)
+        # go_dev_json=$(wget -qO- https://go.dev/dl/?mode=json)
+        local go_dev_json
+        if ! go_dev_json=$(curl -s https://go.dev/dl/?mode=json); then
+            echo "Error: Couldn't retrieve JSON response from 'https://go.dev/dl/?mode=json'"
+            return 1
+        fi
+
+        current_go_version=$(/usr/local/go/bin/go version | awk '{print $3}')
+        latest_go_version=$(echo "$go_dev_json" | jq -r '.[0].version')
+
+        current_major=$(echo "$current_go_version" | sed 's/go//' | cut -d. -f1)
+        current_minor=$(echo "$current_go_version" | sed 's/go//' | cut -d. -f2)
+        current_patch=$(echo "$current_go_version" | sed 's/go//' | cut -d. -f3)
+
+        latest_major=$(echo "$latest_go_version" | sed 's/go//' | cut -d. -f1)
+        latest_minor=$(echo "$latest_go_version" | sed 's/go//' | cut -d. -f2)
+        latest_patch=$(echo "$latest_go_version" | sed 's/go//' | cut -d. -f3)
+
+        need_update=false
+        if [[ "$current_major" -lt "$latest_major" ]]; then
+            need_update=true
+        elif [[ "$current_major" -eq "$latest_major" ]]; then
+            if [[ "$current_minor" -lt "$latest_minor" ]]; then
+                need_update=true
+            elif [[ "$current_minor" -eq "$latest_minor" ]]; then
+                if [[ "$current_patch" -lt "$latest_patch" ]]; then
+                    need_update=true
+                fi
+            fi
+        fi
+
+        selected_json=$(echo "$go_dev_json" | jq -r --arg os "$os" --arg arch "$arch" --arg kind "$kind" --arg version "$latest_go_version" '.[0].files[] | select(.os == $os and .arch == $arch and .kind == $kind and .version == $version)')
+
+        if [[ -n "$selected_json" ]]; then
+            download_filename=$(echo "$selected_json" | jq -r '.filename')
+            download_checksum=$(echo "$selected_json" | jq -r '.sha256')
+        else
+            echo "Error: Couldn't find the latest version for $os-$arch in the JSON response."
+            return 1
+        fi
+
+        if [[ $need_update == true ]]; then
+            echo "Update available: $current_go_version -> $latest_go_version"
+            echo
+
+            # read -r -p "Do you want to update? [y/N] "
+            # if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+            #   return 0
+            # fi
+            # echo
+
+            # check archive type based on filename
+            # example: go1.24.2.linux-amd64.tar.gz
+            case $download_filename in
+            *.tar*) ;;
+            *)
+                echo "Error: Unknown archive type, expected a tar archive"
+                echo "Filename: $download_filename"
+                return 1
+                ;;
+            esac
+
+            # Using sudo with no password to install to /usr/local/go, need consistent path
+            # temp_file=$(mktemp)
+            temp_file=/tmp/tmp.golang_install
+
+            # download go
+            # curl -L -o "$temp_file $download_url_base$download_filename"
+            # wget -q --show-progress -O "$temp_file $download_url_base$download_filename"
+            if ! curl -L -o "$temp_file" "$download_url_base$download_filename"; then
+                echo "Error: Download failed."
+                if [[ -e $temp_file ]]; then
+                    rm $temp_file
+                fi
+                return 1
+            fi
+
+            if [[ ! -e $temp_file ]]; then
+                echo "Error: Couldn't find the downloaded file."
+                return 1
+            fi
+
+            # verify checksum
+            checksum=$(sha256sum $temp_file | cut -d' ' -f1)
+            if [[ "$checksum" != "$download_checksum" ]]; then
+                echo "Error: Checksum verification failed"
+                rm $temp_file
+                return 1
+            fi
+
+            # update
+            sudo rm -rf /usr/local/go
+            if ! sudo tar -C /usr/local -xzf $temp_file; then
+                echo "Error: Archive extraction failed"
+                sudo rm -rf /usr/local/go
+                rm $temp_file
+                return 1
+            fi
+
+            rm $temp_file
+        else
+            echo "No update available"
+        fi
+
+        echo
+        echo "Go version: $(/usr/local/go/bin/go version | awk '{print $3}')"
+        echo
+    fi
+}
+
+init_shell_completion_bash() {
+    mkdir -p "$XDG_CONFIG_HOME/bash/completions"
+
+    # bat
+    if command -v bat &>/dev/null; then
+        bat --completion bash >"$XDG_CONFIG_HOME/bash/completions/bat.bash"
+    fi
+
+    # batcat
+    if command -v batcat &>/dev/null; then
+        batcat --completion bash >"$XDG_CONFIG_HOME/bash/completions/batcat.bash"
+    fi
+
+    # fnm
+    # if command -v fnm &>/dev/null; then
+    #     fnm completions --shell bash >"$XDG_CONFIG_HOME/bash/completions/fnm.bash"
+    # fi
+
+    # fzf
+    if command -v fzf &>/dev/null; then
+        # https://github.com/junegunn/fzf#setting-up-shell-integration
+        # https://github.com/junegunn/fzf#key-bindings-for-command-line
+        fzf --bash >"$XDG_CONFIG_HOME/bash/completions/fzf.bash"
+    fi
+
+    # github cli
+    if command -v gh &>/dev/null; then
+        gh completion -s bash >"$XDG_CONFIG_HOME/bash/completions/gh.bash"
+    fi
+
+    # gitleaks
+    if command -v gitleaks &>/dev/null; then
+        gitleaks completion bash >"$XDG_CONFIG_HOME/bash/completions/gitleaks.bash"
+    fi
+
+    # wezterm
+    if command -v wezterm &>/dev/null; then
+        wezterm shell-completion --shell bash >"$XDG_CONFIG_HOME/bash/completions/wezterm.bash"
+    fi
+}
+
+init_shell_completion_zsh() {
+    mkdir -p "$XDG_CONFIG_HOME/zsh/completions"
+
+    # bat
+    # do eval in zsh specific section instead
+    # if command -v bat &>/dev/null; then
+    #     bat --completion zsh >"$XDG_CONFIG_HOME/zsh/completions/bat.zsh"
+    # fi
+
+    # batcat
+    # do eval in zsh specific section instead
+    # if command -v batcat &>/dev/null; then
+    #     batcat --completion zsh >"$XDG_CONFIG_HOME/zsh/completions/batcat.zsh"
+    # fi
+
+    # fnm
+    # if command -v fnm &>/dev/null; then
+    #     fnm completions --shell zsh >"$XDG_CONFIG_HOME/zsh/completions/fnm.zsh"
+    # fi
+
+    # fzf
+    if command -v fzf &>/dev/null; then
+        # https://github.com/junegunn/fzf#setting-up-shell-integration
+        # https://github.com/junegunn/fzf#key-bindings-for-command-line
+        fzf --zsh >"$XDG_CONFIG_HOME/zsh/completions/fzf.zsh"
+    fi
+
+    # github cli
+    if command -v gh &>/dev/null; then
+        gh completion -s zsh >"$XDG_CONFIG_HOME/zsh/completions/gh.zsh"
+    fi
+
+    # gitleaks
+    if command -v gitleaks &>/dev/null; then
+        gitleaks completion zsh >"$XDG_CONFIG_HOME/zsh/completions/gitleaks.zsh"
+    fi
+
+    # wezterm
+    if command -v wezterm &>/dev/null; then
+        wezterm shell-completion --shell zsh >"$XDG_CONFIG_HOME/zsh/completions/wezterm.zsh"
+    fi
+}
+
+install_go() {
+    # example download url: https://go.dev/dl/go1.22.3.linux-amd64.tar.gz
+    echo -e '\e[1mInstalling golang\e[0m'
+    echo -e '\e[3mhttps://go.dev/dl\e[0m'
+    echo
+
+    for cmd in curl jq sha256sum tar; do
+        if ! command -v $cmd &>/dev/null; then
+            echo "Error: '$cmd' not found"
+            return 1
+        fi
+    done
+
+    os=$(uname -s | tr '[:upper:]' '[:lower:]')
+    arch=$(uname -m)
+    if [[ "$arch" == 'x86_64' ]]; then
+        arch='amd64'
+    fi
+    kind='archive'
+    download_url_base='https://golang.org/dl/'
+
+    # download json
+    # go_dev_json=$(curl -s https://go.dev/dl/?mode=json)
+    # go_dev_json=$(wget -qO- https://go.dev/dl/?mode=json)
+    local go_dev_json
+    if ! go_dev_json=$(curl -s https://go.dev/dl/?mode=json); then
+        echo "Error: Couldn't retrieve JSON response from 'https://go.dev/dl/?mode=json'"
+        return 1
+    fi
+
+    latest_go_version=$(echo "$go_dev_json" | jq -r '.[0].version')
+    selected_json=$(echo "$go_dev_json" | jq -r --arg os "$os" --arg arch "$arch" --arg kind "$kind" --arg version "$latest_go_version" '.[0].files[] | select(.os == $os and .arch == $arch and .kind == $kind and .version == $version)')
+
+    if [[ -n "$selected_json" ]]; then
+        download_filename=$(echo "$selected_json" | jq -r '.filename')
+        download_checksum=$(echo "$selected_json" | jq -r '.sha256')
+    else
+        echo "Error: Couldn't find the latest version for $os-$arch in the JSON response."
+        return 1
+    fi
+
+    echo "Version available: $latest_go_version"
+    echo
+
+    read -r -p "Do you want to install Go? [y/N] "
+    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+        return 0
+    fi
+    echo
+
+    # check archive type based on filename
+    # example: go1.24.2.linux-amd64.tar.gz
+    case $download_filename in
+    *.tar*) ;;
+    *)
+        echo "Error: Unknown archive type, expected a tar archive"
+        echo "Filename: $download_filename"
+        return 1
+        ;;
+    esac
+
+    # temp file
+    # Using sudo with no password to install to /usr/local/go, need consistent path
+    # temp_file=$(mktemp)
+    temp_file=/tmp/tmp.golang_install
+
+    # download go
+    # curl -L -o "$temp_file $download_url_base$download_filename"
+    # wget -q --show-progress -O "$temp_file $download_url_base$download_filename"
+    if ! curl -L -o "$temp_file" "$download_url_base$download_filename"; then
+        echo "Error: Download failed."
+        if [[ -e $temp_file ]]; then
+            rm -f $temp_file
+        fi
+        return 1
+    fi
+
+    if [[ ! -e $temp_file ]]; then
+        echo "Error: Couldn't find the downloaded archive"
+        return 1
+    fi
+
+    # verify checksum
+    checksum=$(sha256sum $temp_file | cut -d' ' -f1)
+    if [[ "$checksum" != "$download_checksum" ]]; then
+        echo "Error: Checksum verification failed"
+        rm $temp_file
+        return 1
+    fi
+
+    # install
+    sudo rm -rf /usr/local/go
+    if ! sudo tar -C /usr/local -xzf $temp_file; then
+        echo "Error: Archive extraction failed"
+        sudo rm -rf /usr/local/go
+        rm $temp_file
+        return 1
+    fi
+
+    rm $temp_file
+
+    echo
+    echo "Go version: $(/usr/local/go/bin/go version | awk '{print $3}')"
+    echo
+}
+
+# vim: ft=bash

@@ -1,0 +1,35 @@
+{
+  "runtime": {
+    "version": "LuaJIT",
+    "path": [
+      "?.lua",
+      "?/init.lua",
+      "lua/?.lua",
+      "lua/?/init.lua"
+    ]
+  },
+  "workspace": {
+    "library": [
+      "/usr/share/nvim/runtime/lua", // Neovim runtime lua files
+      "/usr/share/nvim/runtime/lua/vim",
+      "/usr/share/nvim/runtime/lua/vim/lsp",
+      "${3rd}/luv/library", // 3rd party libs (luv, busted)
+      "${3rd}/busted/library",
+      "${workspace}/lua", // Your project lua code
+      "${env:HOME}/.local/share/nvim/lazy" // lazy.nvim plugin installs
+      // "${env:HOME}/.local/share/nvim/mason/packages" // Mason packages
+    ],
+    "checkThirdParty": false
+  },
+  "diagnostics": {
+    "globals": [
+      "vim" // Neovim API global
+    ]
+  },
+  "telemetry": {
+    "enable": false
+  },
+  "format": {
+    "enable": true
+  }
+}

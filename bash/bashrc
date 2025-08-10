@@ -1,0 +1,321 @@
+#
+# bashrc, zshrc
+
+# shellcheck disable=SC1090 # ShellCheck can't follow non-constant source. Use a directive to specify location.
+# shellcheck disable=SC1091 # Not following `filename`, does not exist (No such file or directory)
+# shellcheck disable=SC2076 # Remove quotes from right-hand side of =~ to match as a regex rather than literally
+
+# XDG Base Directory, User Directories
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
+export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
+export XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
+
+# XDG_CONFIG_HOME
+#   Purpose:        User-specific configuration files.
+#   Default:        ~/.config
+#   Examples:
+#       ~/.config/fish/config.fish
+#       ~/.config/nvim/init.lua
+#
+# XDG_DATA_HOME
+#   Purpose:        User-specific data files (non-configuration).
+#   Default:        ~/.local/share
+#   Used for:       Data that an application generates or downloads, like session files, databases, plugin downloads.
+#   Examples:
+#       ~/.local/share/nvim/shada/main.shada
+#       ~/.local/share/icons
+#
+# XDG_CACHE_HOME
+#   Purpose:        Non-essential cached data, apps can recreate it if needed.
+#   Default:        ~/.cache
+#   Examples:
+#       $XDG_CACHE_HOME/nvim/
+#       $XDG_CACHE_HOME/pip/
+#
+# XDG_STATE_HOME
+#   Purpose:        Store state that shouldn't be lost on reboot but isn't config or data.
+#   Default:        ~/.local/state
+#
+# XDG_RUNTIME_DIR
+#   Purpose:        Temporary files and sockets, usually cleared at logout.
+#   Examples:       Pipewire or systemd user services place sockets here.
+
+# Prompt
+prompt_git_info() {
+    local branch git_status staged_count modified_count untracked_count
+
+    branch=$(git symbolic-ref --quiet --short HEAD 2>/dev/null) || return 0
+
+    git_status=$(git status --porcelain 2>/dev/null)
+    staged_count=$(echo "$git_status" | grep -c '^[AMRD]')
+    modified_count=$(echo "$git_status" | grep -c '^ [AMRD]')
+    untracked_count=$(echo "$git_status" | grep -c '^??')
+
+    [[ -n $BASH_VERSION ]] && echo -en " \e[32m$branch\e[0m"
+    [[ -n $ZSH_VERSION ]] && echo -en " %F{2}$branch%f"
+
+    local remote_branch
+    remote_branch=$(git rev-parse --abbrev-ref --symbolic-full-name '@{upstream}' 2>/dev/null)
+    if [[ -n "$remote_branch" ]]; then
+        local remote_status
+        remote_status=$(git status -uno 2>/dev/null)
+
+        if [[ $remote_status =~ Your\ branch\ is\ (ahead|behind)\ .*by\ ([0-9]+)\ commit ]]; then
+            local captures
+            local status_arrow
+
+            [[ -n $BASH_VERSION ]] && captures=("${BASH_REMATCH[@]}")
+            [[ -n $ZSH_VERSION ]] && captures=("${match[@]}")
+            [[ ${#captures[@]} -eq 0 ]] && return 0
+
+            [[ ${captures[1]} == "ahead" ]] && status_arrow="⇡"
+            [[ ${captures[1]} == "behind" ]] && status_arrow="⇣"
+
+            [[ -n $BASH_VERSION ]] && echo -en " \e[32m$status_arrow${captures[2]}\e[0m"
+            [[ -n $ZSH_VERSION ]] && echo -en " %F{2}$status_arrow${captures[2]}%f"
+
+        fi
+    fi
+
+    if [[ -n $BASH_VERSION ]]; then
+        [[ $staged_count -gt 0 ]] && echo -en " \e[33m+$staged_count\e[0m"
+        [[ $modified_count -gt 0 ]] && echo -en " \e[33m!$modified_count\e[0m"
+        [[ $untracked_count -gt 0 ]] && echo -en " \e[34m?$untracked_count\e[0m"
+    fi
+    if [[ -n $ZSH_VERSION ]]; then
+        [[ $staged_count -gt 0 ]] && echo -en " %F{3}+$staged_count%f"
+        [[ $modified_count -gt 0 ]] && echo -en " %F{3}!$modified_count%f"
+        [[ $untracked_count -gt 0 ]] && echo -en " %F{4}?$untracked_count%f"
+    fi
+}
+
+_xdg_bash() {
+    [[ -d "$XDG_CACHE_HOME/bash" ]] || mkdir -p "$XDG_CACHE_HOME/bash"
+    [[ -d "$XDG_CONFIG_HOME/bash" ]] || mkdir -p "$XDG_CONFIG_HOME/bash"
+    [[ -d "$XDG_STATE_HOME/bash" ]] || mkdir -p "$XDG_STATE_HOME/bash"
+
+    # ~/.bash_aliases
+    [[ -f ~/.bash_aliases ]] && mv ~/.bash_aliases "$XDG_CONFIG_HOME/bash/bash_aliases.from_home_dir"
+
+    # ~/.bash_history
+    [[ -f ~/.bash_history ]] && mv ~/.bash_history "$XDG_STATE_HOME/bash/bash_history"
+
+    # ~/.bash_logout
+    [[ -f ~/.bash_logout ]] && mv ~/.bash_logout "$XDG_CONFIG_HOME/bash/bash_logout.from_home_dir"
+}
+
+_xdg_less() {
+    [[ -d "$XDG_STATE_HOME/less" ]] || mkdir -p "$XDG_STATE_HOME/less"
+
+    # ~/.lesshst
+    [[ -f ~/.lesshst ]] && mv ~/.lesshst "$XDG_STATE_HOME/less/lesshst"
+    export LESSHISTFILE="${LESSHISTFILE:-$XDG_STATE_HOME/less/lesshst}"
+}
+
+_xdg_python() {
+    [[ -d "$XDG_STATE_HOME/python" ]] || mkdir -p "$XDG_STATE_HOME/python"
+
+    # ~/.python_history
+    [[ -f ~/.python_history ]] && mv ~/.python_history "$XDG_STATE_HOME/python/python_history"
+    export PYTHON_HISTORY="${PYTHON_HISTORY:-$XDG_STATE_HOME/python/python_history}"
+}
+
+_xdg_wget() {
+    [[ -d "$XDG_CONFIG_HOME/wget" ]] || mkdir -p "$XDG_CONFIG_HOME/wget"
+    [[ -d "$XDG_STATE_HOME/wget" ]] || mkdir -p "$XDG_STATE_HOME/wget"
+
+    if [[ ! -f "$XDG_CONFIG_HOME/wget/wgetrc" ]]; then
+        echo "hsts-file = $XDG_STATE_HOME/wget/wget-hsts" >"$XDG_CONFIG_HOME/wget/wgetrc"
+
+        # ~/.wget-hsts
+        [ -f ~/.wget-hsts ] && mv ~/.wget-hsts "$XDG_STATE_HOME/wget/wget-hsts"
+    fi
+    export WGETRC="${WGETRC:-$XDG_CONFIG_HOME/wget/wgetrc}"
+}
+
+_xdg_zsh() {
+    [[ -d "$XDG_CACHE_HOME/zsh" ]] || mkdir -p "$XDG_CACHE_HOME/zsh"
+    [[ -d "$XDG_CONFIG_HOME/zsh" ]] || mkdir -p "$XDG_CONFIG_HOME/zsh"
+    [[ -d "$XDG_STATE_HOME/zsh" ]] || mkdir -p "$XDG_STATE_HOME/zsh"
+
+    # ~/.zsh_history
+    [[ -f ~/.zsh_history ]] && mv ~/.zsh_history "$XDG_STATE_HOME/zsh/zsh_history"
+
+    # ~/.zcompdump
+    [[ -n $ZSH_VERSION ]] && setopt nullglob
+    for fname in ~/.zcompdump*; do
+        [[ -f $fname ]] && mv -f "$fname" "$XDG_STATE_HOME/zsh/"
+    done
+}
+
+_xdg_bash
+_xdg_less
+_xdg_python
+_xdg_wget
+_xdg_zsh
+
+if [[ $- == *i* ]]; then
+    # $EDITOR
+    export EDITOR='/usr/bin/vim -n'
+
+    # $PATH: ~/.local/bin
+    if ! [[ "$PATH" =~ "$HOME/.local/bin" ]]; then
+        PATH="$HOME/.local/bin:$PATH"
+    fi
+
+    # $PATH: /usr/local/go/bin
+    if [[ -d /usr/local/go/bin ]]; then
+        if ! [[ "$PATH" =~ "/usr/local/go/bin" ]]; then
+            PATH=/usr/local/go/bin:$PATH
+        fi
+    fi
+
+    # $PATH: ~/go/bin
+    if [[ -d "$HOME/go/bin" ]]; then
+        if ! [[ "$PATH" =~ "$HOME/go/bin" ]]; then
+            PATH="$HOME/go/bin":$PATH
+        fi
+    fi
+
+    # $PATH: ~/.cargo/bin
+    if [[ -d "$HOME/.cargo/bin" ]]; then
+        if ! [[ "$PATH" =~ "$HOME/.cargo/bin" ]]; then
+            PATH="$HOME/.cargo/bin":$PATH
+        fi
+    fi
+
+    # $PATH: ~/.local/share/pnpm
+    if [[ -d "$HOME/.local/share/pnpm" ]]; then
+        export PNPM_HOME="$HOME/.local/share/pnpm"
+        if ! [[ "$PATH" =~ "$PNPM_HOME" ]]; then
+            PATH="$PNPM_HOME":$PATH
+        fi
+    fi
+
+    export PATH
+
+    ##
+    ## Aliases and environment variables
+
+    # less pager
+    export LESS="-R" # raw output of (some) control characters
+    # export LESS="-r" # more raw, if you want to display nerd font icons when git diffing
+
+    # Alias
+    [[ -f "$HOME/.bash_aliases" ]] && source "$HOME/.bash_aliases"
+    [[ -f "$XDG_CONFIG_HOME/bash/bash_aliases" ]] && source "$XDG_CONFIG_HOME/bash/bash_aliases"
+
+    # Local environment
+    [[ -f "$HOME/.local/local.sh" ]] && source "$HOME/.local/local.sh"
+
+    ##
+    ## bash specific
+
+    if [[ -n $BASH_VERSION ]]; then
+        # History
+        HISTFILE=${HISTFILE:-"$XDG_STATE_HOME/bash/bash_history"}
+        HISTSIZE=10000
+        HISTFILESIZE=10000
+
+        # autocd
+        # shopt -s autocd
+
+        # Completion
+        bind 'set completion-ignore-case on'
+
+        # Extended globbing, advanced pattern matching
+        # shopt -s extglob
+
+        PS1='\n\[\e[36m\e[1m\]\w\[\e[0m\]$(prompt_git_info)\n\[\e[32m\]❯\[\e[0m\] '
+
+        # ~/.config/bash/completions
+        if [[ -d "$XDG_CONFIG_HOME/bash/completions" ]]; then
+            for rc in "$XDG_CONFIG_HOME"/bash/completions/*; do
+                if [[ -f "$rc" ]]; then
+                    source "$rc"
+                fi
+            done
+            unset rc
+        fi
+
+        # ~/.config/bash/bashrc.d
+        if [[ -d "$XDG_CONFIG_HOME/bash/bashrc.d" ]]; then
+            for rc in "$XDG_CONFIG_HOME"/bash/bashrc.d/*; do
+                if [[ -f "$rc" ]]; then
+                    source "$rc"
+                fi
+            done
+            unset rc
+        fi
+    fi
+
+    ##
+    ## zsh specific
+
+    if [[ -n $ZSH_VERSION ]]; then
+        ZDOTDIR="${ZDOTDIR:-$XDG_CONFIG_HOME/zsh}"
+        ZSH_COMPDUMP="${ZSH_COMPDUMP:-$XDG_STATE_HOME/zsh/zcompdump}"
+
+        # History
+        HISTFILE="${HISTFILE:-$XDG_STATE_HOME/zsh/zsh_history}"
+        HISTSIZE=10000
+        # shellcheck disable=SC2034 # zsh built-in variable
+        SAVEHIST=10000
+
+        # autocd
+        # setopt autocd
+
+        # Completion
+        autoload -Uz compinit && compinit
+        zstyle ":completion:*" menu select
+        zstyle ":completion:*" matcher-list "m:{a-z}={A-Za-z}" # case insensitive matching
+
+        # Extended globbing, advanced pattern matching
+        # setopt EXTENDED_GLOB
+
+        # Keybinds
+        bindkey -e # Emacs keybindings
+        ##
+        # bindkey "^R" history-incremental-search-backward # C-r history search
+
+        # Enable substitution in the prompt
+        setopt prompt_subst
+
+        PS1='
+%F{6}%B%~%b%f$(prompt_git_info)
+%F{2}%B❯%b%f '
+
+        # ~/.config/zsh/completions
+        if [[ -d "$XDG_CONFIG_HOME/zsh/completions" ]]; then
+            for rc in "$XDG_CONFIG_HOME"/zsh/completions/*; do
+                if [[ -f "$rc" ]]; then
+                    source "$rc"
+                fi
+            done
+            unset rc
+        fi
+
+        # ~/.config/zsh/zshrc.d
+        if [[ -d "$XDG_CONFIG_HOME/zsh/zshrc.d" ]]; then
+            for rc in "$XDG_CONFIG_HOME"/zsh/zshrc.d/*; do
+                if [[ -f "$rc" ]]; then
+                    source "$rc"
+                fi
+            done
+            unset rc
+        fi
+    fi
+
+    ##
+    ## shell inits
+
+    # zoxide, smarter cd
+    if command -v zoxide &>/dev/null; then
+        [[ -n $ZSH_VERSION ]] && eval "$(zoxide init --cmd cd zsh)"
+        [[ -n $BASH_VERSION ]] && eval "$(zoxide init --cmd cd bash)"
+    fi
+
+fi
+
+# vim: ft=bash

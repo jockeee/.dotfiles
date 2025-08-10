@@ -1,0 +1,9 @@
+.luarc.json
+lazy-lock.json
+tags
+spell/
+
+# Ignore .env files
+*.env
+*.env.*
+.env
