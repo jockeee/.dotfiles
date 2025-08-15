@@ -61,6 +61,23 @@ if command -q pass
     abbr --add pg 'pass generate -c -i'
     abbr --add pi 'pass insert -m'
     abbr --add po 'pass otp -c'
+
+    function pu -d 'pass username'
+        if test (count $argv) -ne 1
+            echo "Usage: pu <entry>" >&2
+            return 1
+        end
+
+        set entry $argv[1]
+        set username (pass show "$entry" | grep -E '^\s*username:\s*' | sed 's/^\s*username:\s*//')
+        if test -n "$username"
+            echo -n "$username" | wl-copy
+            echo "Username copied to clipboard."
+        else
+            echo "Error: Username not found for '$entry'."
+            return 1
+        end
+    end
 end
 
 # c<space> expands to cat, c<enter> behaves like an alias
@@ -129,23 +146,6 @@ end
 if command -q difft
     abbr --add d difftastic
     abbr --add ds 'difftastic --staged'
-end
-
-if set -q WEZTERM_EXECUTABLE
-    if command -q rsvg-convert
-        function ci -d 'wezterm imgcat, with rsvg-convert'
-
-            if string match -q '*.svg' $fname
-                set tmp (mktemp --suffix .png)
-                rsvg-convert $argv -o $tmp
-                wezterm imgcat $tmp
-                rm -f $tmp
-                return 0
-            end
-
-            wezterm imgcat $fname
-        end
-    end
 end
 
 if set -q WEZTERM_EXECUTABLE; and command -v rsvg-convert >/dev/null 2>&1
