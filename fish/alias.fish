@@ -69,10 +69,22 @@ if command -q pass
         end
 
         set entry $argv[1]
-        set username (pass show "$entry" | grep -E '^\s*username:\s*' | sed 's/^\s*username:\s*//')
+
+        set username (pass show "$entry" | awk -F': *' '/^\s*username:/ {print $2}' | xargs)
         if test -n "$username"
+            set -q PASSWORD_STORE_CLIP_TIME; or set PASSWORD_STORE_CLIP_TIME 45
+            set old_clip (wl-paste)
+
             echo -n "$username" | wl-copy
-            echo "Username copied to clipboard."
+
+            fish -c "
+                sleep $PASSWORD_STORE_CLIP_TIME
+                set current_clip (wl-paste)
+                if test \"\$current_clip\" = \"$username\"
+                    echo -n \"$old_clip\" | wl-copy
+                end
+            " &
+            echo "Username copied to clipboard. Will clear in $PASSWORD_STORE_CLIP_TIME seconds."
         else
             echo "Error: Username not found for '$entry'."
             return 1
