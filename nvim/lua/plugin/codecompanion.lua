@@ -52,6 +52,8 @@
 --        @read_file               The LLM can read a specific file
 --        @web_search              The LLM can search the internet for information
 --
+--        @files
+--
 --      Tool groups, also accessible via @ in the chat buffer
 --        @full_stack_dev         alias for all tools
 --        @files                  create_file, file_search, get_changed_files, grep_search, insert_edit_into_file and read_file tools

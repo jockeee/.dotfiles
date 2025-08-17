@@ -86,7 +86,6 @@ fi
 # abbr in fish
 alias c='cat'
 alias f='fd'
-alias r='rg'
 alias g='rg'
 alias t='tree -L 3'
 alias td='tree -D -L 3'
@@ -177,19 +176,6 @@ if [[ $bat_cmd ]]; then
     }
 fi
 
-# cdg (cd to git root directory)
-cdg() {
-    if ! is_git_repo; then
-        echo 'Error: Unable to locate a Git repository.'
-        return 1
-    fi
-
-    git_dir=$(git rev-parse --show-toplevel)
-    if [[ -n "$git_dir" ]]; then
-        cd "$git_dir" || return 1
-    fi
-}
-
 # ci (cat image)
 if [[ -n "$WEZTERM_EXECUTABLE" ]] && command -v rsvg-convert &>/dev/null; then
     ci() {
@@ -227,22 +213,25 @@ if commnd -v difft &>/dev/null; then
     }
 fi
 
-# https://github.com/oh-my-fish/oh-my-fish/blob/master/lib/git/git_is_repo.fish
 is_git_repo() {
     if [[ -d .git ]]; then
         return 0
     fi
 
-    local info
-    if info=$(git rev-parse --git-dir --is-bare-repository 2>/dev/null); then
-        IFS=' ' read -r git_dir is_bare <<<"$info"
+    git rev-parse --is-inside-work-tree &>/dev/null
+}
 
-        if [[ "$is_bare" = "false" ]]; then
-            return 0
-        fi
+# cdg (cd to git root directory)
+cdg() {
+    if ! is_git_repo; then
+        echo 'Error: Unable to locate a Git repository.'
+        return 1
     fi
 
-    return 1
+    git_dir=$(git rev-parse --show-toplevel)
+    if [[ -n "$git_dir" ]]; then
+        cd "$git_dir" || return 1
+    fi
 }
 
 # gg (git add, git commit, git push)

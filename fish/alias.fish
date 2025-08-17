@@ -95,7 +95,6 @@ end
 # c<space> expands to cat, c<enter> behaves like an alias
 abbr --add c cat
 abbr --add f fd
-abbr --add r rg
 abbr --add g rg
 abbr --add t 'tree -L 3'
 abbr --add td 'tree -D -L 3'
@@ -224,6 +223,14 @@ if command -q difft
     end
 end
 
+function is_git_repo
+    if test -d .git
+        return 0
+    end
+
+    git rev-parse --is-inside-work-tree ^/dev/null
+end
+
 # cdg (cd to git root directory)
 function cdg -d 'cd to git root directory'
     if not is_git_repo
@@ -234,15 +241,6 @@ function cdg -d 'cd to git root directory'
     set -l git_dir (git rev-parse --show-toplevel)
     if test -n "$git_dir"
         cd $git_dir
-    end
-end
-
-# https://github.com/oh-my-fish/oh-my-fish/blob/master/lib/git/git_is_repo.fish
-function is_git_repo -d 'Check if directory is a repository'
-    test -d .git
-    or begin
-        set -l info (command git rev-parse --git-dir --is-bare-repository 2>/dev/null)
-        and test $info[2] = false
     end
 end
 
