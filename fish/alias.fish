@@ -224,10 +224,6 @@ if command -q difft
 end
 
 function is_git_repo
-    if test -d .git
-        return 0
-    end
-
     git rev-parse --is-inside-work-tree ^/dev/null
 end
 
