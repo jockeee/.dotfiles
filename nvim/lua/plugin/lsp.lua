@@ -137,7 +137,7 @@ return {
         jsonls = {},
 
         -- php
-        -- intelephense = {},
+        intelephense = {},
       }
 
       local tools = {
