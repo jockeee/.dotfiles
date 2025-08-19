@@ -224,7 +224,7 @@ if command -q difft
 end
 
 function is_git_repo
-    git rev-parse --is-inside-work-tree ^/dev/null
+    git rev-parse --is-inside-work-tree 2>/dev/null
 end
 
 # cdg (cd to git root directory)
