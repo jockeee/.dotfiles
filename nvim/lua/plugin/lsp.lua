@@ -135,6 +135,17 @@ return {
 
         -- json
         jsonls = {},
+
+        -- php
+        -- phpactor = {},
+        intelephense = {
+          settings = {
+            intelephense = {
+              telemetry = { enabled = false },
+              diagnostics = { enable = false },
+            },
+          },
+        },
       }
 
       local tools = {
