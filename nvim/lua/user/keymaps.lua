@@ -33,6 +33,9 @@ vim.keymap.set('x', '<RightMouse>', 'y', { desc = 'Yank' })
 -- normal mode, toggle fold
 vim.keymap.set('n', '<RightMouse>', function()
   local mouse = vim.fn.getmousepos()
+  if mouse.winid ~= vim.api.nvim_get_current_win() then
+    vim.api.nvim_set_current_win(mouse.winid)
+  end
   vim.api.nvim_win_set_cursor(0, { mouse.line, mouse.column })
   pcall(function()
     vim.cmd 'normal! za'
