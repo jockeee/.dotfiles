@@ -21,6 +21,7 @@ return {
   -- Editing
   require 'plugin.comment',
   require 'plugin.guess-indent', -- detect tabstop and shiftwidth
+  require 'plugin.vim-matchup', -- enhanced % matching
   require 'plugin.multicursor',
   require 'plugin.surround',
   require 'plugin.trouble',

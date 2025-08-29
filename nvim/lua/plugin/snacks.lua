@@ -50,6 +50,9 @@ return {
           hidden = true, -- include dotfiles
         },
       },
+      grep = {
+        sort_by = 'filename', -- filename | index | score | none
+      },
       matcher = {
         frecency = true, -- frecency bonus, like zoxide for pickers
       },

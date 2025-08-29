@@ -23,7 +23,14 @@ return {
   dependencies = {
     'nvim-treesitter/nvim-treesitter-context',
     'nvim-treesitter/nvim-treesitter-textobjects',
-    { 'windwp/nvim-ts-autotag', opts = {} }, -- Use treesitter to auto close and auto rename html tag
+    {
+      'windwp/nvim-ts-autotag', -- Use treesitter to auto close and auto rename html tag
+      opts = {
+        enable_close = false, -- d: true, Auto close tags
+        -- enable_rename = true, -- d: true, Auto rename pairs of tags
+        -- enable_close_on_slash = false, -- d: false, Auto close on trailing </
+      },
+    },
   },
 
   build = ':TSUpdate',
@@ -42,6 +49,7 @@ return {
       'luadoc',
       'markdown',
       'markdown_inline',
+      'php',
       'python',
       'query',
       'regex',
@@ -54,9 +62,11 @@ return {
       -- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
       --  If you are experiencing weird indenting issues, add the language to
       --  the list of additional_vim_regex_highlighting and disabled languages for indent.
-      additional_vim_regex_highlighting = { 'ruby' },
+      -- additional_vim_regex_highlighting = { 'ruby' },
+      additional_vim_regex_highlighting = false,
     },
-    indent = { enable = true, disable = { 'ruby' } },
+    -- indent = { enable = true, disable = { 'ruby' } },
+    indent = { enable = true },
     incremental_selection = {
       enable = true,
       keymaps = { -- set to `false` to disable one of the mappings
@@ -71,6 +81,31 @@ return {
     },
     -- https://github.com/nvim-treesitter/nvim-treesitter-textobjects
     textobjects = {
+      move = {
+        enable = true,
+        set_jumps = true,
+
+        goto_next_start = {
+          [']f'] = '@function.outer',
+          [']c'] = '@class.outer',
+          [']t'] = '@tag.outer',
+        },
+        goto_next_end = {
+          [']F'] = '@function.outer',
+          [']C'] = '@class.outer',
+          [']T'] = '@tag.outer',
+        },
+        goto_previous_start = {
+          ['[f'] = '@function.outer',
+          ['[c'] = '@class.outer',
+          ['[t'] = '@tag.outer',
+        },
+        goto_previous_end = {
+          ['[F'] = '@function.outer',
+          ['[C'] = '@class.outer',
+          ['[T'] = '@tag.outer',
+        },
+      },
       select = {
         enable = true,
 

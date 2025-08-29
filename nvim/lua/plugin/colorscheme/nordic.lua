@@ -129,10 +129,12 @@ return {
         bg = util.blend(palette.red.base, palette.bg, 0.12),
       })
 
-      -- Treesitter HTML
+      -- HTML
       vim.api.nvim_set_hl(0, '@tag.delimiter.html', { fg = '#7c7d83' }) -- html tag delimiter
       vim.api.nvim_set_hl(0, '@none.html', { fg = '#868686' }) -- html special none
       vim.api.nvim_set_hl(0, '@string.special.url', { bold = false, underline = false })
+
+      vim.api.nvim_set_hl(0, 'MatchParen', { underline = false })
     end,
   },
 }

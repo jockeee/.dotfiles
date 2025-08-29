@@ -79,7 +79,7 @@ return {
         },
       },
       lualine_c = {
-        -- 'aerial',
+        'aerial',
         'diagnostics',
         'diff',
       },
@@ -108,7 +108,7 @@ return {
         },
       },
       lualine_c = {
-        -- 'aerial',
+        'aerial',
         'diagnostics',
       },
       lualine_x = {
