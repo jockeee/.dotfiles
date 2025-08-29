@@ -4,6 +4,7 @@
 ---@type LazySpec
 return {
   'andymass/vim-matchup',
+  lazy = false,
   ---@type matchup.Config
   opts = {
     treesitter = {
