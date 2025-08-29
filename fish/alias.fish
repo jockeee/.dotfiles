@@ -70,7 +70,8 @@ if command -q pass
 
         set entry $argv[1]
 
-        set username (pass show "$entry" | awk -F': *' '/^\s*username:/ {print $2}' | xargs)
+        # set username (pass show "$entry" | awk -F': *' 'BEGIN{IGNORECASE=1} /^\s*username:/ {print $2}' | xargs)
+        set username (pass show "$entry" | grep -i '^\s*username:' | cut -d':' -f2 | xargs)
         if test -n "$username"
             set -q PASSWORD_STORE_CLIP_TIME; or set PASSWORD_STORE_CLIP_TIME 45
             set old_clip (wl-paste)
