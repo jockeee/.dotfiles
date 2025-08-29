@@ -295,7 +295,7 @@ function aicommit -d 'Generate commit message using AI'
     # -g user "Write a concise commit message for the following git diff:" \
     while test "$continue" != y; and test "$continue" != Y
         set message (openai api chat.completions.create \
-        -m gpt-5 \
+        -m gpt-5-mini \
         -g user "Write a very short commit message for the following git diff:" \
         -g user "$(git diff --cached)")
         if test $status -ne 0
