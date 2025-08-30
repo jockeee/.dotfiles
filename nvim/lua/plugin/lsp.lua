@@ -61,25 +61,7 @@ return {
         },
 
         -- python
-        pylsp = { -- python-lsp/python-lsp-server
-          settings = {
-            pylsp = {
-              plugins = {
-                -- ruff = {
-                --   enabled = true,
-                --   extendSelect = { 'I' },
-                -- },
-                pycodestyle = {
-                  enabled = true,
-                  -- E501 line too long (83 > 79 characters)
-                  -- ignore = { 'E501', 'W503' },
-                  ignore = { 'E501' },
-                },
-                mypy = { enabled = true },
-              },
-            },
-          },
-        },
+        ruff = {},
 
         -- web
 

@@ -33,7 +33,7 @@ return {
       -- fish = { 'fish_indent' }, -- lsp runs formatter
       -- sh = { 'shfmt' }, -- lsp runs formatter
       -- json = { 'jq' }, -- lsp runs formatter
-      -- python = { 'ruff' }, -- lsp runs ruff by default?
+      -- python = { 'ruff' }, -- lsp runs formatter
     },
   },
 }
