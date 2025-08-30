@@ -156,8 +156,8 @@ if command -q batcat
 end
 
 if command -q difft
-    abbr --add d difftastic
-    abbr --add ds 'difftastic --staged'
+    abbr --add d 'git -c diff.external=difft diff'
+    abbr --add ds 'git -c diff.external=difft diff --staged'
 end
 
 if set -q WEZTERM_EXECUTABLE; and command -v rsvg-convert >/dev/null 2>&1
@@ -213,16 +213,16 @@ if test -n "$bat_cmd"
     end
 end
 
-if command -q difft
-    function difftastic
-        if not is_git_repo
-            echo 'Error: Unable to locate a Git repository.'
-            return 1
-        end
-
-        git -c diff.external=difft diff $argv
-    end
-end
+# if command -q difft
+#     function difftastic
+#         if not is_git_repo
+#             echo 'Error: Unable to locate a Git repository.'
+#             return 1
+#         end
+#
+#         git -c diff.external=difft diff $argv
+#     end
+# end
 
 function is_git_repo
     git rev-parse --is-inside-work-tree &>/dev/null
