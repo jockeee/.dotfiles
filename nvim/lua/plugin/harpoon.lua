@@ -24,8 +24,9 @@ return {
       harpoon:list():add()
     end)
 
-    -- <alt>a-g for file 1-5
-    for idx, char in ipairs { 'a', 's', 'd', 'f', 'g' } do
+    -- M-[a-d,z-c] for file 1-6
+    -- M-f used by wezterm
+    for idx, char in ipairs { 'a', 's', 'd', 'z', 'x', 'c' } do
       vim.keymap.set('n', string.format('<M-%s>', char), function()
         harpoon:list():select(idx)
       end)

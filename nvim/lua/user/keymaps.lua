@@ -143,9 +143,10 @@ vim.keymap.set({ 'n', 'x', 'i', 't' }, '<S-M-b>', function()
   end
 end, { desc = 'Tab: move right' })
 
-for idx, char in ipairs { 'z', 'x', 'c' } do
-  vim.keymap.set({ 'n', 'x' }, string.format('<M-%s>', char), string.format('%sgt', idx), { desc = 'Tab: switch to tab ' .. idx })
-end
+-- M-[z-c] used by harpoon
+-- for idx, char in ipairs { 'z', 'x', 'c' } do
+--   vim.keymap.set({ 'n', 'x' }, string.format('<M-%s>', char), string.format('%sgt', idx), { desc = 'Tab: switch to tab ' .. idx })
+-- end
 
 -- Indenting
 vim.keymap.set('x', '<', '<gv')
