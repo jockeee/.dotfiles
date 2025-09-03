@@ -121,6 +121,9 @@ abbr --add gc 'git commit -m'
 abbr --add gcl 'git clone'
 abbr --add gco 'git checkout'
 abbr --add gd 'git diff'
+abbr --add gdc 'git diff origin/main -- path/to/file' # Compare committed history (your branch vs origin/main)
+abbr --add gds 'git diff --cached origin/main -- path/to/file' # Compare staged changes only (index vs origin/main)
+abbr --add gdw 'git diff origin/main -- path/to/file' # Compare working tree (everything, committed + staged + unstaged) vs origin/main
 abbr --add gf 'git fetch'
 abbr --add gl 'git log --pretty=oneline --graph --decorate --abbrev-commit'
 abbr --add gls 'git log --show-signature'
