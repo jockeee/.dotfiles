@@ -111,6 +111,9 @@ alias gc='git commit -m'
 alias gcl='git clone'
 alias gco='git checkout'
 alias gd='git diff'
+alias gdc='git diff origin/main...HEAD -- fname'   # Compare committed history, shows what your branch has changed since it diverged from origin/main
+alias gds='git diff --cached origin/main -- fname' # Compare staged changes only (index vs origin/main)
+alias gdw='git diff origin/main -- fname'          # Compare working tree (everything, committed + staged + unstaged) vs origin/main
 alias gf='git fetch'
 alias gl='git log --pretty=oneline --graph --decorate --abbrev-commit'
 alias gls='git log --show-signature'
