@@ -131,7 +131,8 @@ return {
 
       -- HTML
       vim.api.nvim_set_hl(0, '@tag.delimiter.html', { fg = '#7c7d83' }) -- html tag delimiter
-      vim.api.nvim_set_hl(0, '@none.html', { fg = '#868686' }) -- html special none
+      vim.api.nvim_set_hl(0, '@none.html', { link = 'NONE' })
+      -- vim.api.nvim_set_hl(0, '@none.html', { fg = '#868686' })
       vim.api.nvim_set_hl(0, '@string.special.url', { bold = false, underline = false })
 
       vim.api.nvim_set_hl(0, 'MatchParen', { underline = false })
