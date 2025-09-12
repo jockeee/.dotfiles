@@ -15,6 +15,7 @@ return {
   require 'plugin.ccc', -- convert color codes
   require 'plugin.colorizer', -- colorize color codes
   require 'plugin.lualine',
+  require 'plugin.oil', -- file explorer
   require 'plugin.todo-comments', -- highlight todo, notes, etc in comments
   require 'plugin.which-key',
 

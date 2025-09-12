@@ -104,7 +104,7 @@ return {
         -- emmet
         --  aca/emmet-ls
         emmet_ls = {
-          filetypes = { 'html', 'css', 'javascript' },
+          filetypes = { 'html', 'css', 'javascript', 'php' },
           init_options = {
             html = {
               options = {
