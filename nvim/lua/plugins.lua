@@ -53,4 +53,10 @@ return {
   require 'plugin.codecompanion',
   -- require 'plugin.avante',
   -- require 'plugin.copilotchat',
+
+  -- sql
+  require 'plugin.vim-dadbod', -- vim-dadbod, vim-dadbod-ui, vim-dadbod-completion
+
+  -- http
+  -- require 'plugin.hurl',
 }
