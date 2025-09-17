@@ -162,6 +162,8 @@ return {
         'htmlhint', -- linter
         --  json
         -- 'jq',
+        -- sql
+        'sqlfluff', -- formatter/linter: SQLFluff is a dialect-flexible and configurable SQL linter.
 
         -- xml
         'xmlformatter',

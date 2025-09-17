@@ -1,6 +1,9 @@
 --
 -- lua/user/filetypes.lua
 
+-- filetypes based on file extension
+vim.filetype.add { extension = { sqlfluff = 'cfg' } }
+
 -- lua
 vim.api.nvim_create_autocmd('FileType', {
   pattern = 'lua',
@@ -101,6 +104,7 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.opt_local.iskeyword:remove '-'
   end,
 })
+
 vim.api.nvim_create_autocmd('FileType', {
   pattern = 'php',
   callback = function()

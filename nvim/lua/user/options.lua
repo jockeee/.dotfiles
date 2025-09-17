@@ -13,6 +13,7 @@ vim.schedule(function()
   vim.o.clipboard = 'unnamedplus'
 end)
 
+vim.o.modeline = false
 vim.o.termguicolors = true -- true color support (24-bit)
 vim.o.background = 'dark' -- colorschemes that can be light or dark will be made dark
 vim.o.cursorline = false -- highlight line which your cursor is on
@@ -23,9 +24,6 @@ vim.o.showcmd = false -- show command in bottom bar -- d: on
 vim.o.scrolloff = 0 -- d: 0, lines of context, minimal number of screen lines to keep above and below the cursor.
 vim.o.pumheight = 10 -- popupmenu, maximum number of items to show in the popup menu
 vim.o.inccommand = 'split' -- d: nosplit, preview substitutions live as you type
-
--- Avante wants 3
--- vim.o.laststatus = 3 -- d: 2, global statusline, 0=disabled, 1=always, 2=only if there are at least two windows, 3=always
 
 -- Cursor blinking, too beautiful, hypnotic
 -- d: guicursor = 'n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20,t:block-blinkon500-blinkoff500-TermCursor'
