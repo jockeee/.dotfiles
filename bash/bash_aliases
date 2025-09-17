@@ -22,8 +22,10 @@ if command -v ~/.local/bin/nvim &>/dev/null; then
     alias vim='~/.local/bin/nvim'
 fi
 
-alias fd='fd --hidden --no-ignore --no-ignore-parent'
-alias rg='rg --no-line-number --hidden --no-ignore --no-ignore-parent'
+# alias fd='fd --hidden --no-ignore --no-ignore-parent'
+# alias rg='rg --hidden --no-ignore --no-ignore-parent'
+alias fd='fd --hidden'
+alias rg='rg --hidden'
 
 alias b='top'
 if command -v btop &>/dev/null; then
@@ -86,6 +88,7 @@ fi
 # abbr in fish
 alias c='cat'
 alias f='fd'
+# alias g='rg --no-line-number'
 alias g='rg'
 alias t='tree -L 3'
 alias td='tree -D -L 3'

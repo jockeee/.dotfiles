@@ -31,8 +31,10 @@ if command -q ~/.local/bin/nvim
     alias vim '~/.local/bin/nvim'
 end
 
-alias fd 'fd --hidden --no-ignore --no-ignore-parent'
-alias rg 'rg --no-line-number --hidden --no-ignore --no-ignore-parent'
+# alias fd 'fd --hidden --no-ignore --no-ignore-parent'
+# alias rg 'rg --hidden --no-ignore --no-ignore-parent'
+alias fd 'fd --hidden'
+alias rg 'rg --hidden'
 
 abbr --add b btop
 if command -q btop
@@ -96,6 +98,7 @@ end
 # c<space> expands to cat, c<enter> behaves like an alias
 abbr --add c cat
 abbr --add f fd
+# abbr --add g 'rg --no-line-number'
 abbr --add g rg
 abbr --add t 'tree -L 3'
 abbr --add td 'tree -D -L 3'
