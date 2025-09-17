@@ -12,7 +12,7 @@ return {
   'kristijanhusak/vim-dadbod-ui',
   dependencies = {
     { 'tpope/vim-dadbod' },
-    { 'kristijanhusak/vim-dadbod-completion', ft = { 'sql', 'mysql', 'plsql' } },
+    { 'kristijanhusak/vim-dadbod-completion', ft = { 'sql', 'mysql' } },
   },
   keys = {
     { '<leader>b', '<cmd>DBUIToggle<cr>', desc = 'SQL: DBUI' },
