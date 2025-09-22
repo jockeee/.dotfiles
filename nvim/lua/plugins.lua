@@ -42,7 +42,7 @@ return {
   require 'plugin.conform', -- formatting
   require 'plugin.fidget', -- lsp status updates
   require 'plugin.lazydev',
-  require 'plugin.lint',
+  -- require 'plugin.lint', -- testing conform linting instead
   require 'plugin.lsp',
 
   -- git

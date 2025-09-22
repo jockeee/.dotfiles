@@ -119,7 +119,39 @@ return {
         jsonls = {},
 
         -- php
-        -- phpactor = {},
+        -- phpactor = {
+        --   init_options = {
+        --     language_server_phpstan = {
+        --       enabled = true,
+        --       -- path = "/usr/local/bin/phpstan", -- custom path if needed
+        --       -- level = 5, -- phpstan level (0-8)
+        --       -- configuration = "/path/to/phpstan.neon", -- custom config file
+        --     },
+        --     language_server_psalm = {
+        --       enabled = false,
+        --     },
+        --     -- Enable completion for global symbols
+        --     completion = {
+        --       global_symbols = true,
+        --     },
+        --     -- Enable file rename refactoring
+        --     file_rename = {
+        --       enabled = true,
+        --     },
+        --     -- Enable code lens features
+        --     code_lens = {
+        --       enabled = true,
+        --     },
+        --     -- Enable diagnostics
+        --     diagnostics = {
+        --       enabled = true,
+        --     },
+        --     -- Enable formatting
+        --     formatting = {
+        --       enabled = true,
+        --     },
+        --   },
+        -- },
         intelephense = {
           settings = {
             intelephense = {
@@ -164,6 +196,11 @@ return {
         -- 'jq',
         -- sql
         'sqlfluff', -- formatter/linter: SQLFluff is a dialect-flexible and configurable SQL linter.
+
+        -- php
+        -- 'phpstan', -- linter
+        -- 'php-cs-fixer', -- formatter
+        'phpcs', -- linter: PHP CodeSniffer
 
         -- xml
         'xmlformatter',

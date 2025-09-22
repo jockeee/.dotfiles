@@ -40,5 +40,9 @@ return {
       -- json = { 'jq' }, -- lsp runs formatter
       -- python = { 'ruff' }, -- lsp runs formatter
     },
+    linters_by_ft = {
+      html = { 'htmlhint' },
+      php = { 'phpcs' },
+    },
   },
 }

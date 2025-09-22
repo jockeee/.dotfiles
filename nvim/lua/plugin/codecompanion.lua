@@ -76,7 +76,10 @@ return {
     require 'plugin.render-markdown',
     'nvim-lua/plenary.nvim',
     'nvim-treesitter/nvim-treesitter',
-    'ravitemer/mcphub.nvim', -- mcp extension
+
+    'ravitemer/mcphub.nvim',
+    'ravitemer/codecompanion-history.nvim',
+
     -- 'j-hui/fidget.nvim', -- fidget status, https://github.com/olimorris/codecompanion.nvim/discussions/813
     'franco-ruggeri/codecompanion-spinner.nvim', -- virtual line status, https://github.com/olimorris/codecompanion.nvim/discussions/640
   },
@@ -123,6 +126,10 @@ return {
     },
 
     extensions = {
+      history = {
+        enabled = true,
+      },
+
       mcphub = {
         callback = 'mcphub.extensions.codecompanion',
         opts = {
@@ -131,6 +138,7 @@ return {
           show_result_in_chat = true,
         },
       },
+
       spinner = {},
     },
   },
