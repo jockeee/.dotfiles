@@ -22,7 +22,7 @@ vim.diagnostic.config {
   -- virtual_text = true,
 }
 
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Diagnostics: show message' })
+vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Diagnostics: show message' }) -- d: <C-w-d>
 
 vim.keymap.set('n', '<leader>sd', function()
   local config = vim.diagnostic.config()
