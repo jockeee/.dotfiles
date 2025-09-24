@@ -264,6 +264,7 @@ config.keys = {
 
   -- Quick select
   { key = 'f', mods = 'LEADER', action = act.QuickSelect },
+  { key = 'w', mods = 'LEADER', action = act.QuickSelectArgs { patterns = { '^\\s+(\\S+)' } } }, -- Match: indented words
 
   -- Search
   --  https://wezterm.org/config/lua/keyassignment/Search.html
@@ -290,11 +291,11 @@ end
 
 -- Extends wezterm's quick select functionality
 config.quick_select_patterns = {
-  '(\\S+)$', -- Match non-whitespace characters at the end of a line
-  '^\\s+(\\S.*)$', -- Match lines that begin with whitespace and have non-whitespace characters after it.
-  '^❯\\s+(\\S.*)$', -- match lines that start with `❯ `
-  [["([^"]+)"]], -- Match strings inside double quotes
-  [['([^']+)']], -- Match strings inside single quotes
+  '(\\S+)$', -- Match: non-whitespace characters at the end of a line
+  '^\\s+(\\S.*)$', -- Match: lines that begin with indent and have non-whitespace characters after it.
+  '^❯\\s+(\\S.*)$', -- Match: lines that start with `❯ `
+  [["([^"]+)"]], -- Match: strings inside double quotes
+  [['([^']+)']], -- Match: strings inside single quotes
 }
 
 --
