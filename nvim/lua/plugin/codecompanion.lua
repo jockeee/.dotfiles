@@ -141,6 +141,21 @@ return {
         },
       },
 
+      vectorcode = {
+        ---@type VectorCode.CodeCompanion.ExtensionOpts
+        opts = {
+          tool_group = {
+            -- this will register a tool group called `@vectorcode_toolbox` that contains all 3 tools
+            enabled = true,
+            -- a list of extra tools that you want to include in `@vectorcode_toolbox`.
+            -- if you use @vectorcode_vectorise, it'll be very handy to include
+            -- `file_search` here.
+            extras = {},
+            collapse = false, -- whether the individual tools should be shown in the chat
+          },
+        },
+      },
+
       mcphub = {
         callback = 'mcphub.extensions.codecompanion',
         opts = {
