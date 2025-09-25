@@ -78,7 +78,15 @@ return {
     'nvim-treesitter/nvim-treesitter',
 
     'ravitemer/mcphub.nvim',
-    'ravitemer/codecompanion-history.nvim',
+    {
+      'ravitemer/codecompanion-history.nvim',
+      dependencies = {
+        'Davidyz/VectorCode',
+        version = '*',
+        build = 'uv tool upgrade vectorcode', -- This helps keeping the CLI up-to-date
+        dependencies = { 'nvim-lua/plenary.nvim' },
+      },
+    },
 
     -- 'j-hui/fidget.nvim', -- fidget status, https://github.com/olimorris/codecompanion.nvim/discussions/813
     'franco-ruggeri/codecompanion-spinner.nvim', -- virtual line status, https://github.com/olimorris/codecompanion.nvim/discussions/640
@@ -128,6 +136,9 @@ return {
     extensions = {
       history = {
         enabled = true,
+        opts = {
+          picker = 'snacks', -- d: telescope
+        },
       },
 
       mcphub = {
