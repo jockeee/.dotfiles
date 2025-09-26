@@ -47,6 +47,10 @@ vim.keymap.set('n', 'yl', '^vg_y', { desc = 'Yank: line content' })
 
 vim.keymap.set('i', '<C-Del>', '<C-o>dw', { desc = 'Delete word' })
 
+-- Use :checktime to check if file changed outside nvim and reload it
+--  :h 'autoread'
+vim.keymap.set('n', '<leader>r', '<cmd>checktime<cr>', { desc = 'Reload file' })
+
 -- gx, with try open as github repo
 vim.keymap.set('n', 'gx', function()
   local target = vim.fn.expand '<cfile>'

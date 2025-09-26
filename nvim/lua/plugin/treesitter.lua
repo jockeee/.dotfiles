@@ -119,6 +119,9 @@ return {
           ['if'] = { query = '@function.inner', desc = 'Select inner part of a function region' },
           ['ac'] = { query = '@class.outer', desc = 'Select outer part of a class region' },
           ['ic'] = { query = '@class.inner', desc = 'Select inner part of a class region' },
+          -- markdown
+          ['ib'] = { query = '@codeblock.inner', desc = 'Select inner part of Markdown code block' },
+          ['ab'] = { query = '@codeblock.outer', desc = 'Select entire Markdown code block' },
           -- You can also use captures from other query groups like `locals.scm`
           ['as'] = { query = '@local.scope', query_group = 'locals', desc = 'Select language scope' },
         },
@@ -133,6 +136,7 @@ return {
           ['@parameter.outer'] = 'v', -- charwise
           ['@function.outer'] = 'V', -- linewise
           ['@class.outer'] = '<C-v>', -- blockwise
+          ['@codeblock.inner'] = 'V', -- linewise selection for code block content
         },
         -- If you set this to `true` (default is `false`) then any textobject is
         -- extended to include preceding or succeeding whitespace. Succeeding
@@ -143,7 +147,7 @@ return {
         -- * query_string: eg '@function.inner'
         -- * selection_mode: eg 'v'
         -- and should return true or false
-        include_surrounding_whitespace = true,
+        include_surrounding_whitespace = false, -- d: false
       },
       swap = {
         enable = true,
