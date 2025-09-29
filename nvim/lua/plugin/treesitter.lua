@@ -86,21 +86,25 @@ return {
         set_jumps = true,
 
         goto_next_start = {
+          [']b'] = '@codeblock.inner', -- markdown code block
           [']f'] = '@function.outer',
           [']c'] = '@class.outer',
           [']t'] = '@tag.outer',
         },
         goto_next_end = {
+          [']B'] = '@codeblock.inner', -- markdown code block
           [']F'] = '@function.outer',
           [']C'] = '@class.outer',
           [']T'] = '@tag.outer',
         },
         goto_previous_start = {
+          ['[b'] = '@codeblock.inner', -- markdown code block
           ['[f'] = '@function.outer',
           ['[c'] = '@class.outer',
           ['[t'] = '@tag.outer',
         },
         goto_previous_end = {
+          ['[B'] = '@codeblock.inner', -- markdown code block
           ['[F'] = '@function.outer',
           ['[C'] = '@class.outer',
           ['[T'] = '@tag.outer',

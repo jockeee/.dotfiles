@@ -96,6 +96,16 @@ return {
       chat = {
         adapter = 'copilot', -- d: copilot
         -- model = 'claude-sonnet-4',
+
+        -- olimorris/codecompanion.nvim/blob/main/doc/configuration/chat-buffer.md#slash-commands
+        slash_commands = {
+          ['buffer'] = { opts = { provider = 'snacks' } },
+          ['help'] = { opts = { provider = 'snacks' } },
+          ['file'] = { opts = { provider = 'snacks' } },
+          ['symbols'] = { opts = { provider = 'snacks' } },
+          -- ['now'] = {},
+          -- ['terminal'] = {},
+        },
         keymaps = {
           stop = {
             modes = {
@@ -122,15 +132,15 @@ return {
         provider = 'snacks', -- use snacks for CodeCompanionActions
         inline_prompt = { enabled = true }, -- For inline prompts
       },
-      chat = {
-        -- window = {
-        --   layout = 'horizontal', -- d: vertical, float|vertical|horizontal|buffer
-        --   height = 0.4, -- d: 0.8
-        -- },
-        -- intro_message = '', -- d: Welcome to CodeCompanion ✨! Press ? for options
-        -- show_settings = true, -- d: false, adapter can't be changed, with `ga`, when true
-        -- start_in_insert_mode = true, -- d: false
-      },
+      -- chat = {
+      -- window = {
+      --   layout = 'horizontal', -- d: vertical, float|vertical|horizontal|buffer
+      --   height = 0.4, -- d: 0.8
+      -- },
+      -- intro_message = '', -- d: Welcome to CodeCompanion ✨! Press ? for options
+      -- show_settings = true, -- d: false, adapter can't be changed, with `ga`, when true
+      -- start_in_insert_mode = true, -- d: false
+      -- },
     },
 
     extensions = {
