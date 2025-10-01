@@ -616,6 +616,7 @@ if test -e /etc/os-release
     set os_id (grep -E "^ID=" /etc/os-release | cut -d= -f2)
     switch $os_id
         case fedora
+            # @fish-lsp-disable-next-line 4006
             function upd -d 'system update, flatpak apps update, fisher plugins update'
                 echo -e '\e[1mUpdating system\e[0m'
                 echo -e '\e[3msudo dnf upgrade\e[0m\n'
@@ -634,6 +635,7 @@ if test -e /etc/os-release
                 # upd_npm_packages
             end
         case ubuntu
+            # @fish-lsp-disable-next-line 4006
             function upd -d 'system update, snap apps update, fisher plugins update'
                 if command -q /usr/bin/apt
                     echo -e '\e[1mUpdating system\e[0m'
