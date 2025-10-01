@@ -100,13 +100,14 @@ abbr --add c cat
 abbr --add f fd
 # abbr --add g 'rg --no-line-number'
 abbr --add g rg
+abbr --add sha sha256sum
+abbr --add sshk "ssh -F /dev/null -o IdentitiesOnly=yes -i ~/.ssh/"
 abbr --add t 'tree -L 3'
 abbr --add td 'tree -D -L 3'
+abbr --add u unzip
 abbr --add v vim
 abbr --add vo 'NVIM_APPNAME=nvim-prev vim' # old
 abbr --add vn 'NVIM_APPNAME=nvim-test vim' # new
-abbr --add sha sha256sum
-abbr --add sshk "ssh -F /dev/null -o IdentitiesOnly=yes -i ~/.ssh/"
 
 # tmux
 # https://github.com/lewisacidic/fish-tmux-abbr
