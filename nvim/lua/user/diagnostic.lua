@@ -5,7 +5,10 @@
 
 vim.diagnostic.config {
   severity_sort = true,
-  float = { border = 'rounded', source = 'if_many' },
+  float = {
+    border = 'rounded',
+    source = true, -- boolean | 'if_many'
+  },
   underline = false, -- { severity = vim.diagnostic.severity.ERROR },
   signs = {
     text = {

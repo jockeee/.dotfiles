@@ -81,6 +81,11 @@ return {
         --
         -- biome
         biome = {
+          filetypes = (function()
+            return vim.tbl_filter(function(ft)
+              return ft ~= 'css'
+            end, vim.lsp.config['biome'].filetypes or {})
+          end)(),
           -- root_dir = nil,
           -- root_markers = { '.git', 'package.json', 'biome.json', 'biome.jsonc' },
           workspace_required = false,

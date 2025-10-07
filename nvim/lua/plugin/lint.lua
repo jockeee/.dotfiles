@@ -12,7 +12,8 @@ return {
       lint.linters_by_ft = {
         -- if shellcheck is installed, bash-language-server will automatically call it for linting
         html = { 'htmlhint' },
-        -- css = { 'stylelint' },
+        css = { 'stylelint' },
+        php = { 'phpcs' },
         -- markdown = { 'markdownlint' },
       }
 

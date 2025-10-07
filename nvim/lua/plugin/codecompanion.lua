@@ -97,7 +97,7 @@ return {
         adapter = 'copilot', -- d: copilot
         -- model = 'claude-sonnet-4',
 
-        -- olimorris/codecompanion.nvim/blob/main/doc/configuration/chat-buffer.md#slash-commands
+        -- https://github.com/olimorris/codecompanion.nvim/blob/main/doc/configuration/chat-buffer.md#slash-commands
         slash_commands = {
           ['buffer'] = { opts = { provider = 'snacks' } },
           ['help'] = { opts = { provider = 'snacks' } },
@@ -106,14 +106,19 @@ return {
           -- ['now'] = {},
           -- ['terminal'] = {},
         },
+        -- https://github.com/olimorris/codecompanion.nvim/blob/946e18627271e008635d53f96a56af459ebb40da/lua/codecompanion/config.lua#L377
         keymaps = {
           stop = {
-            modes = {
-              n = '<leader>qs',
-            },
+            modes = { n = '<leader>qs' },
             index = 5,
             callback = 'keymaps.stop',
             description = 'chat: stop request',
+          },
+          clear = {
+            modes = { n = '<leader>qc' },
+            index = 6,
+            callback = 'keymaps.clear',
+            description = 'chat: clear chat',
           },
         },
       },
