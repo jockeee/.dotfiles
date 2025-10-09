@@ -121,10 +121,10 @@ vim.keymap.set('x', '<M-k>', ":m '<-2<cr>gv=gv", { desc = 'Lines: move up' })
 -- Buffer
 -- vim.keymap.set('n', '<S-h>', '<cmd>bprevious<cr>', { desc = 'Prev Buffer' })
 -- vim.keymap.set('n', '<S-l>', '<cmd>bnext<cr>', { desc = 'Next Buffer' })
-vim.keymap.set('n', '<M-,>', function()
+vim.keymap.set('n', '<C-,>', function()
   require('user.utils').jl_buf_backward()
 end, { desc = 'Prev Buffer' })
-vim.keymap.set('n', '<M-.>', function()
+vim.keymap.set('n', '<C-.>', function()
   require('user.utils').jl_buf_forward()
 end, { desc = 'Next Buffer' })
 
