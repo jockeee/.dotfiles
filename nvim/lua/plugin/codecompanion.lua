@@ -61,6 +61,13 @@
 --      Prompt examples:
 --        What does the code in #{buffer} do?
 --        Can you use the @{grep_search} tool to find occurrences of "add_message"
+--
+-- History extension
+--    :CodeCompanionHistory
+--    :CodeCompanionSummaries
+--
+--    Memory tool
+--      @memory       The LLM can search for, the summary of, previous chats so that you can refer to them in a new chat
 
 ---@type LazySpec
 return {
@@ -153,6 +160,9 @@ return {
         enabled = true,
         opts = {
           picker = 'snacks', -- d: telescope
+          title_generation_opts = {
+            adapter = 'copilot', -- d: (current adapter in chat)
+          },
         },
       },
 

@@ -121,12 +121,16 @@ vim.keymap.set('x', '<M-k>', ":m '<-2<cr>gv=gv", { desc = 'Lines: move up' })
 -- Buffer
 -- vim.keymap.set('n', '<S-h>', '<cmd>bprevious<cr>', { desc = 'Prev Buffer' })
 -- vim.keymap.set('n', '<S-l>', '<cmd>bnext<cr>', { desc = 'Next Buffer' })
-vim.keymap.set('n', '<C-,>', function()
+vim.keymap.set('n', '<S-h>', function()
   require('user.utils').jl_buf_backward()
 end, { desc = 'Prev Buffer' })
-vim.keymap.set('n', '<C-.>', function()
+vim.keymap.set('n', '<S-l>', function()
   require('user.utils').jl_buf_forward()
 end, { desc = 'Next Buffer' })
+
+vim.keymap.set('n', '<C-m>', 'H', { desc = 'Move to top of screen' })
+vim.keymap.set('n', '<C-,>', 'M', { desc = 'Move to middle of screen' })
+vim.keymap.set('n', '<C-.>', 'L', { desc = 'Move to bottom of screen' })
 
 -- Tabs
 vim.keymap.set({ 'n', 'x' }, '<leader>+', '<cmd>tabnew<cr>', { desc = 'Tab: new' })
