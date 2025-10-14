@@ -31,23 +31,6 @@ return {
       lsp_format = 'fallback',
       timeout_ms = 500,
     },
-    formatters_by_ft = {
-      lua = { 'stylua' },
-
-      css = { 'prettierd', 'prettier', stop_after_first = true },
-      html = { 'prettierd', 'prettier', stop_after_first = true },
-      javascript = { 'prettierd', 'prettier', stop_after_first = true },
-      typescript = { 'prettierd', 'prettier', stop_after_first = true },
-      sql = { 'sqlfluff' },
-      mysql = { 'sqlfluff' },
-      pgsql = { 'sqlfluff' },
-
-      -- bash = { 'shfmt' }, -- lsp runs formatter
-      -- fish = { 'fish_indent' }, -- lsp runs formatter
-      -- sh = { 'shfmt' }, -- lsp runs formatter
-      -- json = { 'jq' }, -- lsp runs formatter
-      -- python = { 'ruff' }, -- lsp runs formatter
-    },
     formatters = {
       stylelint = {
         inherit = false, -- don't merge with builtin args
@@ -64,6 +47,23 @@ return {
           )
         end,
       },
+    },
+    formatters_by_ft = {
+      lua = { 'stylua' },
+
+      css = { 'prettierd', 'prettier', stop_after_first = true },
+      html = { 'prettierd', 'prettier', stop_after_first = true },
+      javascript = { 'prettierd', 'prettier', stop_after_first = true },
+      typescript = { 'prettierd', 'prettier', stop_after_first = true },
+      sql = { 'sqlfluff' },
+      mysql = { 'sqlfluff' },
+      pgsql = { 'sqlfluff' },
+
+      -- bash = { 'shfmt' }, -- lsp runs formatter
+      -- fish = { 'fish_indent' }, -- lsp runs formatter
+      -- sh = { 'shfmt' }, -- lsp runs formatter
+      -- json = { 'jq' }, -- lsp runs formatter
+      -- python = { 'ruff' }, -- lsp runs formatter
     },
   },
 }
