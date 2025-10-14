@@ -170,30 +170,6 @@ end
 vim.keymap.set('n', '<M-p>', '<cmd>cprev<cr>', { desc = 'Quickfix: prev' }) -- included in v0.11, [q
 vim.keymap.set('n', '<M-n>', '<cmd>cnext<cr>', { desc = 'Quickfix: next' }) -- included in v0.11, ]q
 
--- Leader d: Buffer (document)
-vim.keymap.set('n', '<leader>dd', '<cmd>bp|bd#<cr>', { desc = 'Close buffer' }) -- bprevious, bdelete# (previous buffer)
-vim.keymap.set('n', '<leader>da', '<cmd>%bdelete!<cr>', { desc = 'Close all buffers (incl window/splits)' })
--- vim.keymap.set('n', '<leader>da', function()
---   for _, buf in ipairs(vim.api.nvim_list_bufs()) do
---     if vim.api.nvim_buf_is_valid(buf) and vim.bo[buf].buftype ~= 'terminal' then
---       vim.api.nvim_buf_delete(buf, {})
---     end
---   end
--- end, { desc = 'Close All Buffers, Except Terminals' })
-vim.keymap.set('n', '<leader>dx', '<cmd>bp|bd!#<cr>', { desc = 'Kill buffer (ignore unsaved changes)' })
-
--- Convert unicode escapes to utf-8 characters
-vim.keymap.set('n', '<leader>du', function()
-  local buf = vim.api.nvim_get_current_buf()
-  local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
-  for i, line in ipairs(lines) do
-    lines[i] = line:gsub('\\[uU]0*([%da-fA-F]+)', function(hex)
-      return vim.fn.nr2char(tonumber(hex, 16))
-    end)
-  end
-  vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
-end, { desc = 'Convert unicode escapes to utf-8 characters' })
-
 -- Markdown, bold
 vim.keymap.set({ 'n', 'i' }, '<C-b>', function()
   local mode = vim.api.nvim_get_mode().mode
@@ -267,6 +243,30 @@ vim.keymap.set({ 'n', 'i' }, '<C-b>', function()
     vim.cmd 'startinsert'
   end
 end, { desc = 'Text, bold, **word** or insert/remove ****' })
+
+-- Leader d: Buffer (document)
+vim.keymap.set('n', '<leader>dd', '<cmd>bp|bd#<cr>', { desc = 'Close buffer' }) -- bprevious, bdelete# (previous buffer)
+vim.keymap.set('n', '<leader>da', '<cmd>%bdelete!<cr>', { desc = 'Close all buffers (incl window/splits)' })
+-- vim.keymap.set('n', '<leader>da', function()
+--   for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+--     if vim.api.nvim_buf_is_valid(buf) and vim.bo[buf].buftype ~= 'terminal' then
+--       vim.api.nvim_buf_delete(buf, {})
+--     end
+--   end
+-- end, { desc = 'Close All Buffers, Except Terminals' })
+vim.keymap.set('n', '<leader>dx', '<cmd>bp|bd!#<cr>', { desc = 'Kill buffer (ignore unsaved changes)' })
+
+-- Convert unicode escapes to utf-8 characters
+vim.keymap.set('n', '<leader>du', function()
+  local buf = vim.api.nvim_get_current_buf()
+  local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
+  for i, line in ipairs(lines) do
+    lines[i] = line:gsub('\\[uU]0*([%da-fA-F]+)', function(hex)
+      return vim.fn.nr2char(tonumber(hex, 16))
+    end)
+  end
+  vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+end, { desc = 'Convert unicode escapes to utf-8 characters' })
 
 -- Execute line, bash
 -- vim.keymap.set('n', '<leader>de', '<cmd>.w !bash<cr>', { desc = 'Execute line, bash' })
@@ -375,17 +375,7 @@ vim.keymap.set('n', '<leader>dc', function()
   end
 end, { desc = 'Open tests/curl.sh' })
 
--- Leader z: nvim/Lua
-vim.keymap.set('n', '<leader>zm', '<cmd>Mason<cr>', { desc = 'Mason' })
-vim.keymap.set('n', '<leader>zl', '<cmd>Lazy<cr>', { desc = 'Lazy' })
--- vim.keymap.set('n', '<leader>zs', '<cmd>w !sudo tee %<cr>', { desc = 'Sudo Write' })
--- make different based on filetype? so same keymaps work for both .lua and .sh files
-vim.keymap.set('n', '<leader>zs', '<cmd>source %<CR>', { desc = 'Lua: source file' })
-vim.keymap.set('n', '<leader>zx', ':.lua<CR>', { desc = 'Lua: execute line' })
-vim.keymap.set('x', '<leader>zx', ':lua<CR>', { desc = 'Lua: execute selection' })
-
--- Leader t: Toggle
-
+-- Leader s: Toggle
 -- vim.keymap.set('n', '<leader>sL', function()
 --   vim.o.colorcolumn = vim.o.colorcolumn == '' and '100' or ''
 --   -- vim.opt.colorcolumn = vim.inspect(vim.opt.colorcolumn:get()) == '{}' and { 100 } or {}
@@ -433,7 +423,6 @@ vim.api.nvim_create_autocmd('UIEnter', {
   desc = 'Set line color columns on startup',
 })
 
--- sc = colorizer
 -- vim.keymap.set('n', '<leader>sc', '<cmd>set cursorline!<cr>', { desc = 'Cursor line' }) -- lua vim.opt.cursorline = not vim.opt.cursorline:get()
 vim.keymap.set('n', '<leader>sr', '<cmd>set relativenumber!<cr>', { desc = 'Relative numbers' }) -- set rnu! or lua vim.opt.relativenumber = not vim.opt.relativenumber:get()
 vim.keymap.set('n', '<leader>ss', vim.snippet.stop, { desc = 'Snippet: stop' })
@@ -442,4 +431,18 @@ vim.keymap.set('n', '<leader>st', function()
   ---@diagnostic disable-next-line: undefined-field
   vim.opt.showtabline = (vim.opt.showtabline:get() == 0) and 1 or 0
 end, { desc = 'Tab Line' })
+
+-- leader M: Marks
+vim.keymap.set('n', '<leader>M', '<cmd>marks<cr>', { desc = 'Marks' })
+
+-- leader w: Wrap
 vim.keymap.set('n', '<leader>w', '<cmd>set wrap!<cr>', { desc = 'Wrap text' }) -- lua vim.opt.wrap = not vim.opt.wrap:get()
+
+-- Leader z: nvim/Lua
+vim.keymap.set('n', '<leader>zm', '<cmd>Mason<cr>', { desc = 'Mason' })
+vim.keymap.set('n', '<leader>zl', '<cmd>Lazy<cr>', { desc = 'Lazy' })
+-- vim.keymap.set('n', '<leader>zs', '<cmd>w !sudo tee %<cr>', { desc = 'Sudo Write' })
+-- make different based on filetype? so same keymaps work for both .lua and .sh files
+vim.keymap.set('n', '<leader>zs', '<cmd>source %<CR>', { desc = 'Lua: source file' })
+vim.keymap.set('n', '<leader>zx', ':.lua<CR>', { desc = 'Lua: execute line' })
+vim.keymap.set('x', '<leader>zx', ':lua<CR>', { desc = 'Lua: execute selection' })

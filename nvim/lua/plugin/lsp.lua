@@ -73,6 +73,9 @@ return {
         },
 
         -- html
+        -- superhtml = { -- kristoff-it/superhtml
+        --   filetypes = { 'html' },
+        -- },
         html = { -- microsoft/vscode-html-languageservice
           filetypes = { 'html', 'template', 'templ' },
         },
