@@ -174,6 +174,10 @@ vim.keymap.set('n', '<M-n>', '<cmd>cnext<cr>', { desc = 'Quickfix: next' }) -- i
 vim.keymap.set('n', 'zj', 'zt', { desc = 'Top this line' })
 vim.keymap.set('n', 'zk', 'zb', { desc = 'Bottom this line' })
 
+vim.keymap.set('n', '<leader>yf', function()
+  vim.fn.setreg('+', vim.fn.expand '%:.')
+end, { desc = 'Yank file path' })
+
 -- Markdown, bold
 vim.keymap.set({ 'n', 'i' }, '<C-b>', function()
   local mode = vim.api.nvim_get_mode().mode
