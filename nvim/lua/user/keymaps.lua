@@ -151,7 +151,7 @@ vim.keymap.set({ 'n', 'x', 'i', 't' }, '<S-M-b>', function()
   end
 end, { desc = 'Tab: move right' })
 
--- M-[z-c] used by harpoon
+-- M-[a-d,z-c] used by harpoon
 -- for idx, char in ipairs { 'z', 'x', 'c' } do
 --   vim.keymap.set({ 'n', 'x' }, string.format('<M-%s>', char), string.format('%sgt', idx), { desc = 'Tab: switch to tab ' .. idx })
 -- end
@@ -169,6 +169,10 @@ end
 -- Quickfix
 vim.keymap.set('n', '<M-p>', '<cmd>cprev<cr>', { desc = 'Quickfix: prev' }) -- included in v0.11, [q
 vim.keymap.set('n', '<M-n>', '<cmd>cnext<cr>', { desc = 'Quickfix: next' }) -- included in v0.11, ]q
+
+-- Remap zt/zb to zj/zk
+vim.keymap.set('n', 'zj', 'zt', { desc = 'Top this line' })
+vim.keymap.set('n', 'zk', 'zb', { desc = 'Bottom this line' })
 
 -- Markdown, bold
 vim.keymap.set({ 'n', 'i' }, '<C-b>', function()
