@@ -25,6 +25,16 @@ vim.diagnostic.config {
   -- virtual_text = true,
 }
 
+-- [d prev diagnostic message, any severity
+-- ]d next diagnostic message, any severity
+vim.keymap.set('n', '[e', function()
+  vim.diagnostic.jump { count = -1, severity = vim.diagnostic.severity.ERROR }
+end, { desc = 'Diagnostics: prev error' })
+
+vim.keymap.set('n', ']e', function()
+  vim.diagnostic.jump { count = 1, severity = vim.diagnostic.severity.ERROR }
+end, { desc = 'Diagnostics: next error' })
+
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Diagnostics: show message' }) -- d: <C-w-d>
 
 vim.keymap.set('n', '<leader>sd', function()
@@ -41,7 +51,4 @@ vim.keymap.set('n', '<leader>sd', function()
   vim.diagnostic.config { virtual_lines = not enabled }
 end, { desc = 'Diagnostics: virtual lines' })
 
--- Diagnostics (https://github.com/neovim/nvim-lspconfig)
--- vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Prev Diagnostic Message' }) -- default in v0.11, [d
--- vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Next Diagnostic Message' }) -- default in v0.11, ]d
 -- vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open Diagnostic Quickfix List' }) -- trouble, leader-xx
