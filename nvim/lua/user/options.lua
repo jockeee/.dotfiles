@@ -22,6 +22,7 @@ vim.o.signcolumn = 'yes' -- always show sign column
 vim.o.showmode = false -- show current mode (insert, normal, visual, etc) in bottom bar
 vim.o.showcmd = false -- show command in bottom bar -- d: on
 vim.o.scrolloff = 0 -- d: 0, lines of context, minimal number of screen lines to keep above and below the cursor.
+vim.o.sidescrolloff = 0 -- d: 0, cols of context, minimal number of screen columns to keep to the left and right of the cursor.
 vim.o.pumheight = 10 -- popupmenu, maximum number of items to show in the popup menu
 vim.o.inccommand = 'split' -- d: nosplit, preview substitutions live as you type
 
