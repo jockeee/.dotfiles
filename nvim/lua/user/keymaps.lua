@@ -44,6 +44,40 @@ end)
 
 -- Yank
 vim.keymap.set('n', 'yl', '^vg_y', { desc = 'Yank: line content' })
+vim.keymap.set('n', 'yu', function()
+  local line = vim.api.nvim_get_current_line()
+  local url = line:match 'https?://%S+'
+  if url then
+    vim.fn.setreg('"', url)
+    vim.notify('Yank: ' .. url, vim.log.levels.INFO)
+  else
+    vim.notify('No URL found on this line', vim.log.levels.WARN)
+  end
+end, { desc = 'Yank: URL from current line' })
+vim.keymap.set('n', 'yc', function()
+  local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+  local line = vim.api.nvim_get_current_line()
+  -- Lua strings are 1-based, but col is 0-based
+  local left = col + 1
+  local right = col + 1
+
+  -- Move left to the first non-space character
+  while left > 1 and line:sub(left - 1, left - 1):match '%S' do
+    left = left - 1
+  end
+  -- Move right to the last non-space character
+  while right <= #line and line:sub(right + 1, right + 1):match '%S' do
+    right = right + 1
+  end
+
+  local word = line:sub(left, right)
+  if word ~= '' then
+    vim.fn.setreg('"', word)
+    vim.notify('Yank: ' .. word, vim.log.levels.INFO)
+  else
+    vim.notify('No non-space word under cursor', vim.log.levels.WARN)
+  end
+end, { desc = 'Yank: non-space word under cursor' })
 
 vim.keymap.set('i', '<C-Del>', '<C-o>dw', { desc = 'Delete word' })
 

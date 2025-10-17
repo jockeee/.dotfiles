@@ -102,7 +102,8 @@ return {
     strategies = {
       chat = {
         adapter = 'copilot', -- d: copilot
-        -- model = 'claude-sonnet-4',
+        -- model = 'gpt-5',
+        -- model = 'claude-sonnet-4.5',
 
         -- https://github.com/olimorris/codecompanion.nvim/blob/main/doc/configuration/chat-buffer.md#slash-commands
         slash_commands = {
@@ -110,7 +111,6 @@ return {
           ['help'] = { opts = { provider = 'snacks' } },
           ['file'] = { opts = { provider = 'snacks' } },
           ['symbols'] = { opts = { provider = 'snacks' } },
-          -- ['now'] = {},
           -- ['terminal'] = {},
         },
         -- https://github.com/olimorris/codecompanion.nvim/blob/946e18627271e008635d53f96a56af459ebb40da/lua/codecompanion/config.lua#L377

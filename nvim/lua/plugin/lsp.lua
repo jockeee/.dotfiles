@@ -82,6 +82,15 @@ return {
 
         -- js
         --
+        -- Summary Table:
+        -- | Feature                | Biome LSP | typescript-language-server |
+        -- |------------------------|-----------|----------------------------|
+        -- | Linting                | ✅        | ❌ (use ESLint)            |
+        -- | Formatting             | ✅        | ❌                         |
+        -- | Hover, K               | ❌        | ✅                         |
+        -- | Go to Definition       | ❌        | ✅                         |
+        -- | Autocomplete           | ❌        | ✅                         |
+
         -- biome
         biome = {
           filetypes = (function()
@@ -93,16 +102,17 @@ return {
           -- root_markers = { '.git', 'package.json', 'biome.json', 'biome.jsonc' },
           workspace_required = false,
         },
-        --
-        -- ts_ls = {
-        --   single_file_support = true,
-        -- },
-        --
+
+        -- typescript-language-server, ts_ls
+        ts_ls = {
+          single_file_support = true,
+        },
+
         -- eslint-lsp
         --  https://github.com/Microsoft/vscode-eslint
         --  The server uses the ESLint library installed in the opened workspace folder.
         --  If the folder doesn't provide one the extension looks for a global install version.
-        eslint = {},
+        --[[ eslint = {}, ]]
         -- biome
         --  nvim-lspconfig default config for biome respects eslint/prettier projects.
         --  = requires `biome.json` or `biome.jsonc` in project root or biome won't attach.
@@ -113,14 +123,14 @@ return {
         --  aca/emmet-ls
         emmet_ls = {
           filetypes = { 'html', 'css', 'javascript', 'php' },
-          init_options = {
-            html = {
-              options = {
-                -- For possible options, see: https://github.com/emmetio/emmet/blob/master/src/config.ts#L79-L267
-                ['bem.enabled'] = true,
-              },
-            },
-          },
+          -- init_options = {
+          --   html = {
+          --     options = {
+          --       -- For possible options, see: https://github.com/emmetio/emmet/blob/master/src/config.ts#L79-L267
+          --       ['bem.enabled'] = true,
+          --     },
+          --   },
+          -- },
         },
 
         -- json
