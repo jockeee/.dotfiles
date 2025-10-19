@@ -84,7 +84,11 @@ return {
     'nvim-lua/plenary.nvim',
     'nvim-treesitter/nvim-treesitter',
 
-    'ravitemer/mcphub.nvim',
+    {
+      'ravitemer/mcphub.nvim',
+      build = 'pnpm add -g mcp-hub@latest',
+      opts = {},
+    },
     {
       'ravitemer/codecompanion-history.nvim',
       dependencies = {

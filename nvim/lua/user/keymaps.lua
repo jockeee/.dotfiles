@@ -480,7 +480,8 @@ vim.keymap.set('n', '<leader>M', '<cmd>marks<cr>', { desc = 'Marks' })
 -- leader w: Wrap
 vim.keymap.set('n', '<leader>w', '<cmd>set wrap!<cr>', { desc = 'Wrap text' }) -- lua vim.opt.wrap = not vim.opt.wrap:get()
 
--- Leader z: nvim/Lua
+-- Leader z: nvim, lua, and tools
+vim.keymap.set('n', '<leader>zh', '<cmd>MCPHub<cr>', { desc = 'MCP hub' })
 vim.keymap.set('n', '<leader>zm', '<cmd>Mason<cr>', { desc = 'Mason' })
 vim.keymap.set('n', '<leader>zl', '<cmd>Lazy<cr>', { desc = 'Lazy' })
 -- vim.keymap.set('n', '<leader>zs', '<cmd>w !sudo tee %<cr>', { desc = 'Sudo Write' })
