@@ -190,6 +190,33 @@ end, { desc = 'Tab: move right' })
 --   vim.keymap.set({ 'n', 'x' }, string.format('<M-%s>', char), string.format('%sgt', idx), { desc = 'Tab: switch to tab ' .. idx })
 -- end
 
+-- Marks
+do
+  local prefix = "'"
+  local offset = 3
+
+  local function jump_mark_adjust(mark)
+    vim.cmd('normal! ' .. prefix .. mark)
+    local pos = vim.api.nvim_win_get_cursor(0)
+    local target_line = math.max(1, pos[1] - offset)
+    vim.api.nvim_win_set_cursor(0, { target_line, 0 })
+    vim.cmd 'normal! zt'
+    vim.api.nvim_win_set_cursor(0, pos)
+  end
+
+  for _, range in ipairs { { 'a', 'z' }, { 'A', 'Z' }, { '0', '9' } } do
+    for c = string.byte(range[1]), string.byte(range[2]) do
+      local mark = string.char(c)
+      vim.keymap.set('n', prefix .. mark, function()
+        jump_mark_adjust(mark)
+      end, { noremap = true, silent = true, desc = 'Jump to mark, with context' })
+    end
+  end
+end
+-- Remap zt/zb to zj/zk
+vim.keymap.set('n', 'zj', 'zt', { desc = 'Top this line' })
+vim.keymap.set('n', 'zk', 'zb', { desc = 'Bottom this line' })
+
 -- Indenting
 vim.keymap.set('x', '<', '<gv')
 vim.keymap.set('x', '>', '>gv')
@@ -203,10 +230,6 @@ end
 -- Quickfix
 vim.keymap.set('n', '<M-p>', '<cmd>cprev<cr>', { desc = 'Quickfix: prev' }) -- included in v0.11, [q
 vim.keymap.set('n', '<M-n>', '<cmd>cnext<cr>', { desc = 'Quickfix: next' }) -- included in v0.11, ]q
-
--- Remap zt/zb to zj/zk
-vim.keymap.set('n', 'zj', 'zt', { desc = 'Top this line' })
-vim.keymap.set('n', 'zk', 'zb', { desc = 'Bottom this line' })
 
 vim.keymap.set('n', '<leader>yf', function()
   vim.fn.setreg('+', vim.fn.expand '%:.')
