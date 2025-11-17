@@ -83,7 +83,6 @@ return {
     require 'plugin.render-markdown',
     'nvim-lua/plenary.nvim',
     'nvim-treesitter/nvim-treesitter',
-
     {
       'ravitemer/mcphub.nvim',
       build = 'pnpm add -g mcp-hub@latest',
@@ -98,14 +97,22 @@ return {
         dependencies = { 'nvim-lua/plenary.nvim' },
       },
     },
-
     -- 'j-hui/fidget.nvim', -- fidget status, https://github.com/olimorris/codecompanion.nvim/discussions/813
     'franco-ruggeri/codecompanion-spinner.nvim', -- virtual line status, https://github.com/olimorris/codecompanion.nvim/discussions/640
   },
   opts = {
+    adapters = {
+      acp = {
+        claude_code = function()
+          return require('codecompanion.adapters').extend 'claude_code'
+        end,
+      },
+    },
     strategies = {
       chat = {
-        adapter = 'copilot', -- d: copilot
+        adapter = 'claude_code', -- d: copilot, claude_code = anthropic acp
+        model = 'claude-sonnet-4.5',
+        -- adapter = 'copilot', -- d: copilot
         -- model = 'gpt-5',
         -- model = 'claude-sonnet-4.5',
 

@@ -170,13 +170,15 @@ vim.keymap.set('n', '<C-.>', 'L', { desc = 'Move to bottom of screen' })
 vim.keymap.set({ 'n', 'x' }, '<leader>+', '<cmd>tabnew<cr>', { desc = 'Tab: new' })
 vim.keymap.set({ 'n', 'x', 'i', 't' }, '<M-v>', '<cmd>tabprevious<cr>', { desc = 'Tab: previous' })
 vim.keymap.set({ 'n', 'x', 'i', 't' }, '<M-b>', '<cmd>tabnext<cr>', { desc = 'Tab: next' })
+
+-- this is tab bar order, not buffer swapping in splits.
+-- use C-w h/j/k/l for swapping buffers between windows (using smart-splits)
 vim.keymap.set({ 'n', 'x', 'i', 't' }, '<S-M-v>', function()
   local current_tab = vim.fn.tabpagenr()
   if current_tab > 1 then
     vim.cmd '-tabmove'
   end
 end, { desc = 'Tab: move left' })
-
 vim.keymap.set({ 'n', 'x', 'i', 't' }, '<S-M-b>', function()
   local current_tab = vim.fn.tabpagenr()
   local total_tabs = vim.fn.tabpagenr '$'
