@@ -77,6 +77,8 @@ return {
     { '<leader>qq', mode = { 'n', 'x' }, '<cmd>CodeCompanionChat Toggle<cr>', desc = 'chat: toggle' },
     { '<leader>qn', mode = { 'n', 'x' }, '<cmd>CodeCompanionChat<cr>', desc = 'chat: new' },
     { '<leader>qa', mode = { 'n', 'x' }, '<cmd>CodeCompanionActions<cr>', desc = 'actions' },
+    { '<leader>qe', mode = 'x', '<cmd>CodeCompanion /explain<cr>', desc = 'explain: selection' },
+    { '<leader>qd', mode = 'n', '<cmd>CodeCompanion /lsp<cr>', desc = 'explain: lsp diagnostics' },
   },
   cmd = { 'CodeCompanion', 'CodeCompanionActions', 'CodeCompanionChat', 'CodeCompanionCmd' },
   dependencies = {
@@ -108,13 +110,17 @@ return {
         end,
       },
     },
-    strategies = {
+    interactions = {
       chat = {
-        adapter = 'claude_code', -- d: copilot, claude_code = anthropic acp
-        model = 'claude-sonnet-4.5',
-        -- adapter = 'copilot', -- d: copilot
-        -- model = 'gpt-5',
+        -- adapter = 'claude_code', -- d: copilot, claude_code = anthropic acp
         -- model = 'claude-sonnet-4.5',
+        -- adapter = 'copilot', -- d: copilot
+        -- model = 'gpt-5.2',
+        -- model = 'claude-sonnet-4.5',
+        adapter = {
+          name = 'copilot',
+          model = 'gpt-5.2',
+        },
 
         -- https://github.com/olimorris/codecompanion.nvim/blob/main/doc/configuration/chat-buffer.md#slash-commands
         slash_commands = {
@@ -141,12 +147,16 @@ return {
         },
       },
       inline = {
-        adapter = 'copilot', -- d: copilot
-        -- model = 'claude-sonnet-4',
+        adapter = {
+          name = 'copilot',
+          model = 'gpt-5.2',
+        },
       },
       cmd = {
-        adapter = 'copilot', -- d: copilot
-        -- model = 'claude-sonnet-4',
+        adapter = {
+          name = 'copilot',
+          model = 'gpt-5.2',
+        },
       },
     },
 
@@ -155,6 +165,9 @@ return {
         provider = 'snacks', -- use snacks for CodeCompanionActions
         inline_prompt = { enabled = true }, -- For inline prompts
       },
+      -- chat = {
+      --   show_settings = true, -- d: false, adapter can't be changed, with `ga`, when true
+      -- },
       -- chat = {
       -- window = {
       --   layout = 'horizontal', -- d: vertical, float|vertical|horizontal|buffer
