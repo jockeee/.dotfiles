@@ -53,7 +53,9 @@ if command -v pass &>/dev/null; then
     alias pf='pass find'
     alias pg='pass generate -c -i'
     alias pi='pass insert -m'
+    alias pm='pass mv'
     alias po='pass otp -c'
+    alias pr='pass rm'
 
     pu() {
         if [ "$#" -ne 1 ]; then

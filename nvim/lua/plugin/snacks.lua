@@ -112,10 +112,15 @@ return {
 
     -- lazy plugins
     vim.keymap.set('n', '<leader>fl', function()
+      snacks.picker.grep {
+        cwd = vim.fs.joinpath(vim.fn.stdpath 'data', 'lazy'),
+      }
+    end, { desc = 'lazy plugins grep' })
+    vim.keymap.set('n', '<leader>fL', function()
       snacks.picker.files {
         cwd = vim.fs.joinpath(vim.fn.stdpath 'data', 'lazy'),
-        prompt_title = 'Lazy plugins',
+        prompt_title = 'Lazy plugin files',
       }
-    end, { desc = 'lazy plugins' })
+    end, { desc = 'lazy plugins files' })
   end,
 }

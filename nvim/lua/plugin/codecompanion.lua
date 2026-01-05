@@ -119,7 +119,7 @@ return {
         -- model = 'claude-sonnet-4.5',
         adapter = {
           name = 'copilot',
-          model = 'gpt-5.2',
+          model = 'gpt-5.1-codex',
         },
 
         -- https://github.com/olimorris/codecompanion.nvim/blob/main/doc/configuration/chat-buffer.md#slash-commands
@@ -149,13 +149,13 @@ return {
       inline = {
         adapter = {
           name = 'copilot',
-          model = 'gpt-5.2',
+          model = 'gpt-5.1-codex-mini',
         },
       },
       cmd = {
         adapter = {
           name = 'copilot',
-          model = 'gpt-5.2',
+          model = 'gpt-5.1-codex',
         },
       },
     },

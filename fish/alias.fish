@@ -62,7 +62,9 @@ if command -q pass
     abbr --add pf 'pass find'
     abbr --add pg 'pass generate -c -i'
     abbr --add pi 'pass insert -m'
+    abbr --add pm 'pass mv'
     abbr --add po 'pass otp -c'
+    abbr --add pr 'pass rm'
 
     function pu -d 'pass username'
         if test (count $argv) -ne 1
