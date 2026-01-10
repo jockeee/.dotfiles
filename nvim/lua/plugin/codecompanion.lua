@@ -112,14 +112,15 @@ return {
     },
     interactions = {
       chat = {
-        -- adapter = 'claude_code', -- d: copilot, claude_code = anthropic acp
-        -- model = 'claude-sonnet-4.5',
-        -- adapter = 'copilot', -- d: copilot
-        -- model = 'gpt-5.2',
-        -- model = 'claude-sonnet-4.5',
+        -- adapter = 'claude_code', -- d: copilot, claude_code (=anthropic acp)
+        -- adapter = {
+        --   name = 'claude_code',
+        --   model = 'claude-sonnet-4.5',
+        -- },
+
         adapter = {
           name = 'copilot',
-          model = 'gpt-5.2',
+          model = 'gpt-5-mini',
         },
 
         -- https://github.com/olimorris/codecompanion.nvim/blob/main/doc/configuration/chat-buffer.md#slash-commands
@@ -149,13 +150,13 @@ return {
       inline = {
         adapter = {
           name = 'copilot',
-          model = 'gpt-5.1-codex-mini',
+          model = 'gpt-5-mini',
         },
       },
       cmd = {
         adapter = {
           name = 'copilot',
-          model = 'gpt-5.2',
+          model = 'gpt-5-mini',
         },
       },
     },
