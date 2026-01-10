@@ -120,7 +120,7 @@ return {
 
         adapter = {
           name = 'copilot',
-          model = 'gpt-5-mini',
+          model = 'gpt-5.1-codex',
         },
 
         -- https://github.com/olimorris/codecompanion.nvim/blob/main/doc/configuration/chat-buffer.md#slash-commands
@@ -181,29 +181,30 @@ return {
     },
 
     extensions = {
-      history = {
-        enabled = true,
-        opts = {
-          picker = 'snacks', -- d: telescope
-          title_generation_opts = {
-            adapter = 'copilot', -- d: (current adapter in chat)
-          },
-        },
-      },
-
-      vectorcode = {
-        ---@type VectorCode.CodeCompanion.ExtensionOpts
-        opts = {
-          tool_group = {
-            -- this will register a tool group called `@vectorcode_toolbox` that contains all 3 tools
-            enabled = true,
-            -- a list of extra tools that you want to include in `@vectorcode_toolbox`.
-            -- if you use @vectorcode_vectorise, it'll be very handy to include `file_search` here.
-            extras = { 'file_search' },
-            collapse = false, -- whether the individual tools should be shown in the chat
-          },
-        },
-      },
+      -- bug new http adapters (gpt-5.1-codex etc)
+      --  https://github.com/ravitemer/codecompanion-history.nvim/issues/62
+      -- history = {
+      --   enabled = true,
+      --   opts = {
+      --     picker = 'snacks', -- d: telescope
+      --     title_generation_opts = {
+      --       adapter = 'copilot', -- d: (current adapter in chat)
+      --     },
+      --   },
+      -- },
+      -- vectorcode = {
+      --   ---@type VectorCode.CodeCompanion.ExtensionOpts
+      --   opts = {
+      --     tool_group = {
+      --       -- this will register a tool group called `@vectorcode_toolbox` that contains all 3 tools
+      --       enabled = true,
+      --       -- a list of extra tools that you want to include in `@vectorcode_toolbox`.
+      --       -- if you use @vectorcode_vectorise, it'll be very handy to include `file_search` here.
+      --       extras = { 'file_search' },
+      --       collapse = false, -- whether the individual tools should be shown in the chat
+      --     },
+      --   },
+      -- },
 
       mcphub = {
         callback = 'mcphub.extensions.codecompanion',
