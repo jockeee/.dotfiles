@@ -65,29 +65,47 @@ vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
   callback = function()
     local path = vim.api.nvim_buf_get_name(0)
 
+    -- Heuristic #0: Explicitly exclude cloud-init
+    -- cloud-init typically starts with one of these headers.
+    local head = vim.api.nvim_buf_get_lines(0, 0, 10, false)
+    for _, line in ipairs(head) do
+      if
+        line:match '^%s*#%s*cloud%-config%s*$'
+        or line:match '^%s*#%s*cloud%-boothook%s*$'
+        or line:match '^%s*#%s*cloud%-init%s*$'
+        or line:match '^%s*#%s*cloud%-config%-archive%s*$'
+      then
+        return
+      end
+    end
+
     -- Heuristic #1: Directory path hint
     if path:match '/roles/' or path:match '/tasks/' or path:match '/playbooks/' then
       vim.bo.filetype = 'yaml.ansible'
       return
     end
 
-    -- Heuristic #2: Content-based hint (first 20 lines)
-    local lines = vim.api.nvim_buf_get_lines(0, 0, 20, false)
+    -- Heuristic #2: Content-based hint (first 40 lines)
+    local lines = vim.api.nvim_buf_get_lines(0, 0, 40, false)
+    local saw_ansible_specific = false
     for _, line in ipairs(lines) do
       if
-        line:match '^%s*hosts:'
-        or line:match '^%s*tasks:'
-        or line:match '^%s*roles:'
-        or line:match '^%s*vars:'
-        or line:match '^%s*- name:'
-        or line:match '^%s*become:'
+        line:match '^%s*hosts:%s*'
+        or line:match '^%s*tasks:%s*'
+        or line:match '^%s*roles:%s*'
+        or line:match '^%s*become:%s*'
+        or line:match '^%s*gather_facts:%s*'
+        or line:match '^%s*ansible_'
       then
-        vim.bo.filetype = 'yaml.ansible'
-        return
+        saw_ansible_specific = true
+        break
       end
     end
 
-    -- No Ansible markers found: leave filetype as plain "yaml"
+    if saw_ansible_specific then
+      vim.bo.filetype = 'yaml.ansible'
+      return
+    end
   end,
 })
 
