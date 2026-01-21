@@ -4,6 +4,7 @@
 # @fish-lsp-disable 2002 4004
 #   2002    alias used, prefer using functions instead [2002]
 #   4004    Unused local function [4004]
+#   7001    Unknown command | '…' is not a known builtin, function, or command [7001]
 
 ##
 ## Alias and Abbreviations
@@ -1030,11 +1031,13 @@ function init_shell_completion -d 'create shell completion files in ~/.config/fi
 
     # bat
     if command -q bat
+        # @fish-lsp-disable-next-line 7001
         bat --completion fish >"$XDG_CONFIG_HOME/fish/completions/bat.fish"
     end
 
     # batcat
     if command -q batcat
+        # @fish-lsp-disable-next-line 7001
         batcat --completion fish >"$XDG_CONFIG_HOME/fish/completions/batcat.fish"
     end
 
