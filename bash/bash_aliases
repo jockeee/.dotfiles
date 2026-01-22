@@ -94,8 +94,8 @@ alias f='fd'
 alias g='rg'
 alias sha='sha256sum'
 alias sshk="ssh -F /dev/null -o IdentitiesOnly=yes -i ~/.ssh/"
-alias t='tree -L 3'
-alias td='tree -D -L 3'
+alias t='tree'     # -L 3
+alias td='tree -D' # -D -L 3
 alias u='unzip'
 alias v='vim'
 alias vo='NVIM_APPNAME=nvim-prev vim' # old

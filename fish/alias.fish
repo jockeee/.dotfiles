@@ -105,8 +105,8 @@ abbr --add f fd
 abbr --add g rg
 abbr --add sha sha256sum
 abbr --add sshk "ssh -F /dev/null -o IdentitiesOnly=yes -i ~/.ssh/"
-abbr --add t 'tree -L 3'
-abbr --add td 'tree -D -L 3'
+abbr --add t 'tree' # -L 3
+abbr --add td 'tree -D' # -D -L 3
 abbr --add u unzip
 abbr --add v vim
 abbr --add vo 'NVIM_APPNAME=nvim-prev vim' # old
