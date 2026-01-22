@@ -23,7 +23,7 @@ return {
 
     -- Document existing key chains
     wk.add {
-      { '<leader>c', group = 'Code' },
+      { '<leader>c', group = 'Color' },
       { '<leader>d', group = 'Buffer' },
       { '<leader>f', group = 'Find' },
       { '<leader>h', group = 'Git Hunk', mode = { 'n', 'v' } }, -- gitsigns
@@ -32,6 +32,7 @@ return {
       { '<leader>s', group = 'Show (toggle)' },
       { '<leader>sd', group = 'Diag: virtual text' },
       { '<leader>sD', group = 'Diag: virtual lines' },
+      { '<leader>u', group = 'Unicode' },
       { '<leader>v', group = 'Hurl' },
       { '<leader>x', group = 'Trouble' },
       { '<leader>z', group = 'nvim' },

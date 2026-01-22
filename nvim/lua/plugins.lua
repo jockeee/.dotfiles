@@ -59,4 +59,7 @@ return {
 
   -- http
   -- require 'plugin.hurl',
+
+  -- local plugins
+  require 'plugin.section-header',
 }

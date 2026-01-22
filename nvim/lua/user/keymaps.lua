@@ -44,6 +44,7 @@ end)
 
 -- Yank
 vim.keymap.set('n', 'yl', '^vg_y', { desc = 'Yank: line content' })
+
 vim.keymap.set('n', 'yu', function()
   local line = vim.api.nvim_get_current_line()
   local url = line:match 'https?://%S+'
@@ -54,6 +55,7 @@ vim.keymap.set('n', 'yu', function()
     vim.notify('No URL found on this line', vim.log.levels.WARN)
   end
 end, { desc = 'Yank: URL from current line' })
+
 vim.keymap.set('n', 'yc', function()
   local row, col = unpack(vim.api.nvim_win_get_cursor(0))
   local line = vim.api.nvim_get_current_line()
@@ -77,7 +79,7 @@ vim.keymap.set('n', 'yc', function()
   else
     vim.notify('No non-space word under cursor', vim.log.levels.WARN)
   end
-end, { desc = 'Yank: non-space word under cursor' })
+end, { desc = 'Yank: everything between spaces under cursor' })
 
 vim.keymap.set('i', '<C-Del>', '<C-o>dw', { desc = 'Delete word' })
 
@@ -323,8 +325,21 @@ vim.keymap.set('n', '<leader>da', '<cmd>%bdelete!<cr>', { desc = 'Close all buff
 -- end, { desc = 'Close All Buffers, Except Terminals' })
 vim.keymap.set('n', '<leader>dx', '<cmd>bp|bd!#<cr>', { desc = 'Kill buffer (ignore unsaved changes)' })
 
+-- Yank Unicode code point of character under cursor
+vim.keymap.set('n', '<leader>uy', function()
+  local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+  local line = vim.api.nvim_get_current_line()
+  local ch = vim.fn.strcharpart(line, col, 1)
+
+  local cp = vim.fn.strgetchar(ch, 0)
+  local out = string.format('u%04x', cp)
+
+  vim.fn.setreg('+', out)
+  vim.notify(out)
+end, { desc = 'Yank unicode code point' })
+
 -- Convert unicode escapes to utf-8 characters
-vim.keymap.set('n', '<leader>du', function()
+vim.keymap.set('n', '<leader>ui', function()
   local buf = vim.api.nvim_get_current_buf()
   local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
   for i, line in ipairs(lines) do
