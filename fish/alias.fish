@@ -150,8 +150,8 @@ end
 
 if command -q bat
     set bat_cmd bat
-    # alias cat 'bat -pp' # no paging
-    alias cat 'bat -p'
+    # alias cat 'bat -p' # plain
+    alias cat 'bat -pp' # plain, no paging
     abbr --add d batdiff
     abbr --add bd batdiff
 end
@@ -159,8 +159,8 @@ end
 if command -q batcat
     set bat_cmd batcat
     alias bat batcat
-    # alias cat 'batcat -pp' # no paging
-    alias cat 'batcat -p'
+    # alias cat 'batcat -p' # plain
+    alias cat 'batcat -pp' # plain, no paging
     abbr --add d batdiff
     abbr --add bd batdiff
 end

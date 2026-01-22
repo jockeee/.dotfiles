@@ -139,8 +139,8 @@ fi
 
 if command -v bat &>/dev/null; then
     bat_cmd='bat'
-    # alias cat='bat -pp' # no paging
-    alias cat='bat -p'
+    # alias cat='bat -p' # plain
+    alias cat='bat -pp' # plain, no paging
     alias d='batdiff'
     alias bd='batdiff'
 fi
@@ -148,8 +148,8 @@ fi
 if command -v batcat &>/dev/null; then
     bat_cmd='batcat'
     alias bat='batcat'
-    # alias cat='batcat -pp' # no paging
-    alias cat='batcat -p'
+    # alias cat='batcat -p' # no paging
+    alias cat='batcat -pp' # plain, no paging
     alias d='batdiff'
     alias bd='batdiff'
 fi
