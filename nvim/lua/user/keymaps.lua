@@ -217,9 +217,10 @@ do
     end
   end
 end
--- Remap zt/zb to zj/zk
-vim.keymap.set('n', 'zj', 'zt', { desc = 'Top this line' })
-vim.keymap.set('n', 'zk', 'zb', { desc = 'Bottom this line' })
+
+-- Remap zt/zb to zk/zj
+vim.keymap.set('n', 'zk', 'zt', { desc = 'Top this line' })
+vim.keymap.set('n', 'zj', 'zb', { desc = 'Bottom this line' })
 
 -- Indenting
 vim.keymap.set('x', '<', '<gv')
