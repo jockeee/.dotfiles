@@ -315,7 +315,6 @@ smart_splits.apply_to_config(config, {
 
 -- Local environment
 local local_config = wezterm.home_dir .. '/.local/wezterm.lua'
-
 local f, load_err = loadfile(local_config)
 
 if f then
