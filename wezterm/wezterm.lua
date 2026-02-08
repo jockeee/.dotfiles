@@ -15,11 +15,11 @@ local color_fg_inactive = '#7c7d83'
 wezterm.GLOBAL = wezterm.GLOBAL or {}
 wezterm.GLOBAL.default_workspaces = wezterm.GLOBAL.default_workspaces
   or {
-    q = { name = 'home', cwd = wezterm.home_dir },
-    w = { name = '.dot', cwd = wezterm.home_dir .. '/.dotfiles' },
-    e = { name = 'nvim', cwd = wezterm.home_dir .. '/.dotfiles/nvim' },
-    r = { name = 'dev1', cwd = wezterm.home_dir .. '/dev' },
-    f = { name = 'dev2', cwd = wezterm.home_dir .. '/dev' },
+    q = { name = 'ws1', cwd = wezterm.home_dir },
+    w = { name = 'dot', cwd = wezterm.home_dir .. '/.dotfiles' },
+    e = { name = 'vim', cwd = wezterm.home_dir .. '/.dotfiles/nvim' },
+    r = { name = 'ws4', cwd = wezterm.home_dir },
+    f = { name = 'ws5', cwd = wezterm.home_dir },
     t = { name = 'pass', cwd = wezterm.home_dir .. '/.password-store' },
   }
 
@@ -27,9 +27,7 @@ wezterm.GLOBAL.default_workspaces = wezterm.GLOBAL.default_workspaces
 -- local wezterm_config_path = os.getenv 'WEZTERM_CONFIG_DIR' or os.getenv 'XDG_CONFIG_HOME' .. '/wezterm'
 -- package.path = wezterm_config_path .. '/lua/?.lua;' .. wezterm_config_path .. '/lua/?/init.lua;' .. package.path
 
---
--- Events
---
+--- Events
 
 -- wezterm.on('gui-startup', function()
 --   local existing_workspaces = mux.get_workspace_names()
@@ -81,15 +79,13 @@ wezterm.on('copy-mode-yank', function(window, pane)
   window:perform_action(act.ClearSelection, pane)
 end)
 
---
--- Config
---
+--- Config
 
 local config = {}
 if wezterm.config_builder then
   -- Improved warning messages for configuration errors
   -- http://wezterm.org/config/lua/wezterm/config_builder.html
-  config = wezterm.config_builder()
+  config = wezterm.config_builder() --[[@as Config]]
 end
 
 -- config.unix_domains = {
@@ -101,10 +97,9 @@ end
 
 config = {
   automatically_reload_config = true,
-  default_workspace = 'home',
+  default_workspace = 'ws1',
   scrollback_lines = 3500,
 
-  --
   -- Visual
   enable_tab_bar = true,
   tab_bar_at_bottom = true,
@@ -118,14 +113,12 @@ config = {
     bottom = 0, -- d: 8
   },
 
-  --
   -- Font
   warn_about_missing_glyphs = false,
   font_size = 12,
   line_height = 1.05,
   -- harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' }, -- disable ligatures
 
-  --
   -- Colors
   color_scheme = 'Catppuccin Mocha',
   background = {
@@ -170,9 +163,7 @@ config = {
   },
 }
 
---
--- Keymaps
---
+--- Keymaps
 
 -- disable_default_key_bindings = true, -- d: false
 
@@ -275,19 +266,7 @@ config.keys = {
   },
 }
 
-for key, ws in pairs(wezterm.GLOBAL.default_workspaces) do
-  table.insert(config.keys, {
-    key = key,
-    mods = 'META',
-    action = wezterm.action_callback(function()
-      utils.switch_to_workspace_or_create(ws.name, ws.cwd)
-    end),
-  })
-end
-
---
--- Quick select patterns
---
+--- Quick select patterns
 
 -- Extends wezterm's quick select functionality
 config.quick_select_patterns = {
@@ -298,9 +277,7 @@ config.quick_select_patterns = {
   [['([^']+)']], -- Match: strings inside single quotes
 }
 
---
--- Hyperlinks
---
+--- Hyperlinks
 
 -- config.hyperlink_rules = {} -- disable hyperlinks
 -- config.hyperlink_rules = wezterm.default_hyperlink_rules()
@@ -314,9 +291,7 @@ config.quick_select_patterns = {
 --   format = 'https://github.com/$1/$3',
 -- })
 
---
--- Plugins
---
+--- Plugins
 
 -- local workspace_switcher = wezterm.plugin.require 'https://github.com/MLFlexer/smart_workspace_switcher.wezterm'
 local workspace_switcher = require 'lua.smart_workspace_switcher'
@@ -343,10 +318,22 @@ local local_config = wezterm.home_dir .. '/.local/wezterm.lua'
 local f = loadfile(local_config)
 if f then
   _G.config = config or {} -- for ~/.local/wezterm.lua access to config
+
   local ok, err = pcall(f)
   if not ok then
     wezterm.log_error(err)
   end
+end
+
+-- Workspace keymaps
+for key, ws in pairs(wezterm.GLOBAL.default_workspaces) do
+  table.insert(config.keys, {
+    key = key,
+    mods = 'META',
+    action = wezterm.action_callback(function()
+      utils.switch_to_workspace_or_create(ws.name, ws.cwd)
+    end),
+  })
 end
 
 return config

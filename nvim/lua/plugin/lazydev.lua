@@ -9,7 +9,12 @@ return {
   lazy = false,
   ft = 'lua',
   dependencies = {
-    { 'gonstoll/wezterm-types' }, -- wezterm (config) types for lua language server
+    -- WezTerm Lua config types for Lua Language Server
+    {
+      'DrKJeff16/wezterm-types',
+      lazy = true,
+      version = false, -- Get the latest version
+    },
   },
   opts = {
     library = {
