@@ -315,14 +315,18 @@ smart_splits.apply_to_config(config, {
 
 -- Local environment
 local local_config = wezterm.home_dir .. '/.local/wezterm.lua'
-local f = loadfile(local_config)
-if f then
-  _G.config = config or {} -- for ~/.local/wezterm.lua access to config
 
-  local ok, err = pcall(f)
+local f, load_err = loadfile(local_config)
+
+if f then
+  _G.config = config
+
+  local ok, run_err = pcall(f)
   if not ok then
-    wezterm.log_error(err)
+    wezterm.log_error(run_err)
   end
+elseif load_err and not load_err:match 'No such file' then
+  wezterm.log_error(load_err)
 end
 
 -- Workspace keymaps

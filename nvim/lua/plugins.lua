@@ -41,7 +41,6 @@ return {
   require 'plugin.blink', -- completion
   require 'plugin.conform', -- formatting
   require 'plugin.fidget', -- lsp status updates
-  require 'plugin.lazydev',
   require 'plugin.lint',
   require 'plugin.lsp',
 
