@@ -170,6 +170,7 @@ if command -q difft
     abbr --add ds 'git -c diff.external=difft diff --staged'
 end
 
+# ci (wezterm imgcat)
 if set -q WEZTERM_EXECUTABLE; and command -v rsvg-convert >/dev/null 2>&1
     function ci
         if test (count $argv) -ne 1
@@ -193,6 +194,11 @@ if set -q WEZTERM_EXECUTABLE; and command -v rsvg-convert >/dev/null 2>&1
     end
 else if set -q WEZTERM_EXECUTABLE
     abbr --add ci "wezterm imgcat"
+end
+
+# github copilot cli
+if command -q github-copilot-cli
+    abbr --add co 'copilot -p "'
 end
 
 abbr --add n npm

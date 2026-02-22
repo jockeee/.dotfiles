@@ -159,6 +159,13 @@ if command -v difft &>/dev/null; then
     alias ds='difftastic --staged'
 fi
 
+# ci (wezterm imgcat), see function ci below
+
+# github copilot cli
+if command -v copilot &>/dev/null; then
+    alias co='copilot -p "'
+fi
+
 alias n='npm'
 alias x='npx'
 
