@@ -197,7 +197,7 @@ else if set -q WEZTERM_EXECUTABLE
 end
 
 # github copilot cli
-if command -q github-copilot-cli
+if command -q copilot
     abbr --add co 'copilot -p "'
 end
 
