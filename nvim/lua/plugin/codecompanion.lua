@@ -69,6 +69,13 @@
 --    Memory tool
 --      @memory       The LLM can search for, the summary of, previous chats so that you can refer to them in a new chat
 
+-- Error executing vim.schedule lua callback: ...b.nvim/lua/mcphub/extensions/codecompanion/variables.lua:20: bad argument #1 to 'pairs' (table expected, got nil)
+-- stack traceback:
+--         [C]: in function 'pairs'
+--         ...b.nvim/lua/mcphub/extensions/codecompanion/variables.lua:20: in function 'register'
+--         ...b.nvim/lua/mcphub/extensions/codecompanion/variables.lua:92: in function ''
+--         vim/_editor.lua: in function <vim/_editor.lua:0>
+
 ---@type LazySpec
 return {
   'olimorris/codecompanion.nvim',
@@ -206,14 +213,14 @@ return {
       --   },
       -- },
 
-      mcphub = {
-        callback = 'mcphub.extensions.codecompanion',
-        opts = {
-          make_vars = true,
-          make_slash_commands = true,
-          show_result_in_chat = true,
-        },
-      },
+      -- mcphub = {
+      --   callback = 'mcphub.extensions.codecompanion',
+      --   opts = {
+      --     make_vars = true,
+      --     make_slash_commands = true,
+      --     show_result_in_chat = true,
+      --   },
+      -- },
 
       spinner = {},
     },
