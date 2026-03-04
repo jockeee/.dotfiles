@@ -3,6 +3,7 @@
 
 -- filetypes based on file extension
 vim.filetype.add { extension = { sqlfluff = 'cfg' } }
+vim.filetype.add { extension = { yml = 'yaml.ansible' } }
 
 -- lua
 vim.api.nvim_create_autocmd('FileType', {
