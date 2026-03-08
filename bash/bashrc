@@ -317,6 +317,9 @@ if [[ $- == *i* ]]; then
         [[ -n $BASH_VERSION ]] && eval "$(zoxide init --cmd cd bash)"
     fi
 
+    # Local environment
+    [[ -f "$HOME/.local/local.bash" ]] && source "$HOME/.local/local.bash"
+
 fi
 
 # vim: ft=bash
