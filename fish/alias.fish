@@ -55,6 +55,7 @@ if command -q eza
     alias ld 'eza -gld --git'
     alias laa 'eza -glaa --git'
     alias tree 'eza -aT --git-ignore'
+    # alias tree 'eza -aT --git-ignore --long --no-user --no-time --no-filesize'
 end
 
 if command -q pass

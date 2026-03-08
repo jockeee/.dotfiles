@@ -16,10 +16,10 @@ wezterm.GLOBAL = wezterm.GLOBAL or {}
 wezterm.GLOBAL.default_workspaces = wezterm.GLOBAL.default_workspaces
   or {
     q = { name = 'ws1 ', cwd = wezterm.home_dir },
-    w = { name = 'dot ', cwd = wezterm.home_dir .. '/.dotfiles' },
-    e = { name = 'vim ', cwd = wezterm.home_dir .. '/.dotfiles/nvim' },
-    r = { name = 'ws4 ', cwd = wezterm.home_dir },
-    f = { name = 'ws5 ', cwd = wezterm.home_dir },
+    w = { name = 'ws2 ', cwd = wezterm.home_dir },
+    e = { name = 'ws3 ', cwd = wezterm.home_dir },
+    r = { name = 'dot ', cwd = wezterm.home_dir .. '/.dotfiles' },
+    f = { name = 'vim ', cwd = wezterm.home_dir .. '/.dotfiles/nvim' },
     t = { name = 'pass', cwd = wezterm.home_dir .. '/.password-store' },
   }
 
