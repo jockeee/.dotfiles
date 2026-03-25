@@ -88,6 +88,10 @@ if command -v pass &>/dev/null; then
     }
 fi
 
+if command -v diceware &>/dev/null; then
+    alias dw='diceware'
+fi
+
 # abbr in fish
 alias c='cat'
 alias f='fd'

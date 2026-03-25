@@ -99,6 +99,11 @@ if command -q pass
     end
 end
 
+if command -q diceware
+    abbr --add dw diceware
+    abbr --add dww 'diceware /usr/local/share/diceware/wordlists/diceware'
+end
+
 # c<space> expands to cat, c<enter> behaves like an alias
 abbr --add c cat
 abbr --add f fd
@@ -106,7 +111,7 @@ abbr --add f fd
 abbr --add g rg
 abbr --add sha sha256sum
 abbr --add sshk "ssh -F /dev/null -o IdentitiesOnly=yes -i ~/.ssh/"
-abbr --add t 'tree' # -L 3
+abbr --add t tree # -L 3
 abbr --add td 'tree -D' # -D -L 3
 abbr --add u unzip
 abbr --add v vim
