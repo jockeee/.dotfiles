@@ -99,6 +99,7 @@ config = {
   automatically_reload_config = true,
   default_workspace = 'ws1 ',
   scrollback_lines = 3500,
+  enable_kitty_keyboard = true,
 
   -- Visual
   enable_tab_bar = true,
