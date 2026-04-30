@@ -12,6 +12,7 @@ local color_fg_active = '#b1b1b1'
 local color_fg_hover = '#909090'
 local color_fg_inactive = '#7c7d83'
 
+-- wezterm.GLOBAL values are typed as a generic string|number|table|true union.
 wezterm.GLOBAL = wezterm.GLOBAL or {}
 wezterm.GLOBAL.default_workspaces = wezterm.GLOBAL.default_workspaces
   or {
@@ -185,6 +186,13 @@ config.keys = {
   -- Send M-t, Transpose (swap) current and previous word
   { key = 't', mods = 'LEADER|ALT', action = act.SendKey { key = 't', mods = 'ALT' } },
 
+  --- enable_kitty_keyboard, fix del key
+  {
+    key = 'Delete',
+    mods = '',
+    action = wezterm.action.SendString '\x1b[3~',
+  },
+
   {
     key = 'p',
     mods = 'LEADER|CTRL',
@@ -330,7 +338,9 @@ elseif load_err and not load_err:match 'No such file' then
 end
 
 -- Workspace keymaps
-for key, ws in pairs(wezterm.GLOBAL.default_workspaces) do
+for key, ws in
+  pairs(wezterm.GLOBAL.default_workspaces --[[@as table<string, {name: string, cwd: string}>]])
+do
   table.insert(config.keys, {
     key = key,
     mods = 'META',
