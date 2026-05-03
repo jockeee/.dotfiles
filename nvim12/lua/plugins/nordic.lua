@@ -2,7 +2,7 @@
 -- plugins/nordic.lua
 
 vim.pack.add({
-	'https://github.com/AlexvZyl/nordic.nvim',
+  'https://github.com/AlexvZyl/nordic.nvim',
 })
 
 local nordic = require('nordic')
