@@ -165,6 +165,9 @@ config = {
   },
 }
 
+config.bidi_enabled = false
+config.bidi_direction = "LeftToRight"
+
 --- Keymaps
 
 -- disable_default_key_bindings = true, -- d: false

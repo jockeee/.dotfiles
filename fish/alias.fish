@@ -30,6 +30,7 @@ alias man 'man --nj'
 
 if command -q ~/.local/bin/nvim
     alias vim '~/.local/bin/nvim'
+    # alias vim12 '~/.local/bin/nvim'
 end
 
 # alias fd 'fd --hidden --no-ignore --no-ignore-parent'
@@ -115,8 +116,8 @@ abbr --add t tree # -L 3
 abbr --add td 'tree -D' # -D -L 3
 abbr --add u unzip
 abbr --add v vim
-abbr --add vo 'NVIM_APPNAME=nvim-prev vim' # old
-abbr --add vn 'NVIM_APPNAME=nvim-test vim' # new
+abbr --add vo 'NVIM_APPNAME=nvim-prev /usr/bin/nvim' # old
+abbr --add vn 'NVIM_APPNAME=nvim-next vim' # new
 
 # tmux
 # https://github.com/lewisacidic/fish-tmux-abbr
@@ -1384,10 +1385,11 @@ function build_nvim_release -d 'nvim (release)'
     end
 
     # install
-    make install CMAKE_INSTALL_PREFIX=$install_dir
+    echo "install_dir is: $install_dir"
+    make CMAKE_BUILD_TYPE=RelWithDebInfo CMAKE_INSTALL_PREFIX=$install_dir install
 
-    # create symling in ~/.local/bin if it doesn't exist
-    if not test -e ~/.local/bin/nvim
+    # create symlink in ~/.local/bin if it doesn't exist
+    if not test -L ~/.local/bin/nvim
         mkdir -p ~/.local/bin
         ln -s $install_dir/bin/nvim ~/.local/bin/nvim
     end
