@@ -164,9 +164,10 @@ vim.keymap.set('n', '<S-l>', function()
   require('user.utils').jl_buf_forward()
 end, { desc = 'Next Buffer' })
 
-vim.keymap.set('n', '<C-m>', 'H', { desc = 'Move to top of screen' })
-vim.keymap.set('n', '<C-,>', 'M', { desc = 'Move to middle of screen' })
-vim.keymap.set('n', '<C-.>', 'L', { desc = 'Move to bottom of screen' })
+-- Cursor
+vim.keymap.set('n', '<C-m>', 'H', { desc = 'Cursor: Move to top of screen' })
+vim.keymap.set('n', '<C-,>', 'M', { desc = 'Cursor: Move to middle of screen' })
+vim.keymap.set('n', '<C-.>', 'L', { desc = 'Cursor: Move to bottom of screen' })
 
 -- Tabs
 vim.keymap.set({ 'n', 'x' }, '<leader>+', '<cmd>tabnew<cr>', { desc = 'Tab: new' })
@@ -213,7 +214,7 @@ do
       local mark = string.char(c)
       vim.keymap.set('n', prefix .. mark, function()
         jump_mark_adjust(mark)
-      end, { noremap = true, silent = true, desc = 'Jump to mark, with context' })
+      end, { noremap = true, silent = true, desc = 'Jump to mark, with context (showing extra lines)' })
     end
   end
 end
