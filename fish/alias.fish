@@ -1398,7 +1398,11 @@ function build_nvim_release -d 'nvim (release)'
     cd $user_cwd
 
     echo
-    echo "nvim version: $(nvim --version | grep 'NVIM' | awk '{print $2}')"
+    echo -e '\e[3mwhich nvim\e[0m'
+    which nvim
+    echo
+    echo -e '\e[3mnvim -V1 -v\e[0m'
+    nvim -V1 -v
     echo
 end
 
