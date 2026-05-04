@@ -5,8 +5,8 @@ vim.pack.add({
   'https://github.com/rmagatti/auto-session',
 })
 
-local as = require 'auto-session'
+local session = require 'auto-session'
 
-as.setup({
+session.setup({
   suppressed_dirs = { '/', '/tmp', '/dev/shm', '~/', '~/Downloads' }, -- d: nil
 })

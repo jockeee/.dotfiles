@@ -3,4 +3,4 @@
 
 require 'plugins.nordic'
 require 'plugins.mini'
-require 'plugins.auto-session'
+require 'plugins.lualine'
