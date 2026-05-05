@@ -7,24 +7,38 @@ vim.pack.add({
 
 ---
 -- icons
----
 
 local icons = require 'mini.icons'
 icons.setup()
 
 ---
 --- pick
----
 
 local pick = require 'mini.pick'
 pick.setup()
 
 vim.keymap.set('n', '<Leader><Space>', pick.builtin.files, { desc = 'Find: files' })
 
+--
+-- diff
+
+-- local diff = require 'mini.diff'
+-- diff.setup()
+
+--
+-- git
+
+-- local git = require 'mini.git'
+-- git.setup()
+
+--
+-- statusline
+
+-- local sl = require 'mini.statusline'
+-- sl.setup()
 
 ---
 --- sessions
----
 
 local sessions = require('mini.sessions')
 
@@ -127,7 +141,6 @@ end, { desc = 'Pick session' })
 
 ---
 --- clue
----
 
 local clue = require('mini.clue')
 clue.setup({
