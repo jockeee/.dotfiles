@@ -181,6 +181,13 @@ vim.api.nvim_create_autocmd('UIEnter', {
   desc = 'Set line color columns on startup',
 })
 
+-- Leader z: nvim, lua, and tools
+vim.keymap.set('n', '<leader>zm', '<cmd>Mason<cr>', { desc = 'Mason' })
+vim.keymap.set('n', '<leader>zs', '<cmd>source %<CR>', { desc = 'Lua: source file' })
+vim.keymap.set('n', '<leader>zx', ':.lua<CR>', { desc = 'Lua: execute line' })
+vim.keymap.set('x', '<leader>zx', ':lua<CR>', { desc = 'Lua: execute selection' })
+
+
 ---
 --- "Extras"
 ---
