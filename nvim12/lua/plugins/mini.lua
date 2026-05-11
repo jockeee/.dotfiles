@@ -10,131 +10,10 @@ vim.pack.add {
 
 require('mini.icons').setup()
 
----
---- pick
+--
+-- extra
 
-require('mini.pick').setup()
-
--- pick files, with hidden
-MiniPick.registry.files = function(local_opts)
-  local tool = (local_opts or {}).tool or 'rg'
-  local commands = {
-    fd = { 'fd', '--hidden', '--type', 'f', '--color', 'never' },
-    rg = { 'rg', '--hidden', '--files', '--color', 'never' },
-  }
-  return MiniPick.builtin.cli({ command = commands[tool] }, { source = { name = string.format('Files (%s)', tool) } })
-end
-
-local function fetch_file(url, path)
-  vim.notify('Fetching ' .. vim.fn.fnamemodify(path, ':t') .. '...')
-  vim.fn.system { 'curl', '-s', '-L', url, '-o', path }
-  if vim.v.shell_error ~= 0 then
-    vim.notify('Failed to fetch ' .. url, vim.log.levels.ERROR)
-    return false
-  end
-  return true
-end
-
-local function icons_data_dir()
-  local dir = vim.fn.stdpath 'data' .. '/mini-pick-icons'
-  vim.fn.mkdir(dir, 'p')
-  return dir
-end
-
-local nerdfonts_url = 'https://github.com/ryanoasis/nerd-fonts/raw/refs/heads/master/glyphnames.json'
-local unicode_url = 'https://unicode.org/Public/UCD/latest/ucd/UnicodeData.txt'
-
-MiniPick.registry.icons_update = function()
-  local dir = icons_data_dir()
-  fetch_file(nerdfonts_url, dir .. '/nerdfonts.json')
-  fetch_file(unicode_url, dir .. '/unicode.txt')
-  vim.notify 'Icons data updated'
-end
-
-MiniPick.registry.icons = function()
-  local dir = icons_data_dir()
-  local nerdfonts_cache = dir .. '/nerdfonts.json'
-  local unicode_cache = dir .. '/unicode.txt'
-
-  if vim.fn.filereadable(nerdfonts_cache) == 0 then
-    if not fetch_file(nerdfonts_url, nerdfonts_cache) then
-      return
-    end
-  end
-  if vim.fn.filereadable(unicode_cache) == 0 then
-    if not fetch_file(unicode_url, unicode_cache) then
-      return
-    end
-  end
-
-  local items = {}
-
-  -- Nerd fonts
-  local fd = io.open(nerdfonts_cache, 'r')
-  if fd then
-    local data = vim.json.decode(fd:read '*a')
-    fd:close()
-    for name, info in pairs(data) do
-      if name ~= 'METADATA' then
-        table.insert(items, {
-          text = string.format('  %s  %s  nerd', info.char, name),
-          char = info.char,
-        })
-      end
-    end
-  end
-
-  -- MiniIcons
-  for _, category in ipairs { 'default', 'directory', 'extension', 'file', 'filetype', 'lsp', 'os' } do
-    for _, name in ipairs(MiniIcons.list(category)) do
-      local icon = MiniIcons.get(category, name)
-      table.insert(items, {
-        text = string.format('  %s  %s  %s  mini', icon, category, name),
-        char = icon,
-      })
-    end
-  end
-
-  -- Unicode
-  for line in io.lines(unicode_cache) do
-    local cp, name = line:match '^([^;]+);([^;]+)'
-    if cp and name then
-      local char = vim.fn.nr2char(tonumber(cp, 16))
-      table.insert(items, {
-        text = string.format('  %s  %s  unicode', char, name),
-        char = char,
-      })
-    end
-  end
-
-  MiniPick.start {
-    source = {
-      name = 'Icons',
-      items = items,
-      choose = function(item)
-        vim.schedule(function()
-          vim.api.nvim_put({ item.char }, 'c', true, true)
-        end)
-      end,
-    },
-  }
-end
-
-vim.keymap.set('n', '<Leader><Space>', MiniPick.registry.files, { desc = 'Find: files' })
--- vim.keymap.set('n', '<Leader><Space>', MiniPick.builtin.files, { desc = 'Find: files' })
-vim.keymap.set('n', '<leader>fa', MiniPick.builtin.resume, { desc = 'resume' })
-vim.keymap.set('n', '<leader>fh', MiniPick.builtin.help, { desc = 'help' })
-vim.keymap.set('n', '<leader>ff', MiniPick.builtin.grep_live, { desc = 'grep' })
-vim.keymap.set('n', '<leader>fi', MiniPick.registry.icons, { desc = 'digraphs' })
-
--- vim.keymap.set('n', '<leader>fa', snacks.picker.resume, { desc = 'resume' })
--- vim.keymap.set('n', '<leader>fi', snacks.picker.icons, { desc = 'icons' })
--- vim.keymap.set('n', '<leader>fb', snacks.picker.pickers, { desc = 'builtin pickers' })
--- vim.keymap.set('n', '<leader>ff', snacks.picker.grep, { desc = 'grep' })
--- vim.keymap.set('n', '<leader>fk', snacks.picker.keymaps, { desc = 'keymaps' })
--- vim.keymap.set('n', '<leader>fg', snacks.picker.git_grep, { desc = 'git grep' })
--- vim.keymap.set('n', '<leader>fp', snacks.picker.git_files, { desc = 'git files' }) -- project files
--- vim.keymap.set({ 'n', 'x' }, '<leader>fw', snacks.picker.grep_word, { desc = 'word' }) -- string under cursor or selection
+-- require('mini.extra').setup()
 
 --
 -- completion
@@ -292,3 +171,157 @@ clue.setup {
     clue.gen_clues.z(),
   },
 }
+
+---
+--- pick
+
+require('mini.pick').setup()
+
+-- pick files, with hidden files
+MiniPick.registry.files = function(local_opts)
+  local tool = (local_opts or {}).tool or 'rg'
+  local commands = {
+    fd = { 'fd', '--hidden', '--type', 'f', '--color', 'never' },
+    rg = { 'rg', '--hidden', '--files', '--color', 'never' },
+  }
+  return MiniPick.builtin.cli({ command = commands[tool] }, { source = { name = string.format('Files (%s)', tool) } })
+end
+
+local function fetch_file(url, path)
+  vim.notify('Fetching ' .. vim.fn.fnamemodify(path, ':t') .. '...')
+  vim.fn.system { 'curl', '-s', '-L', url, '-o', path }
+  if vim.v.shell_error ~= 0 then
+    vim.notify('Failed to fetch ' .. url, vim.log.levels.ERROR)
+    return false
+  end
+  return true
+end
+
+local function icons_data_dir()
+  local dir = vim.fn.stdpath 'data' .. '/mini-pick-icons'
+  vim.fn.mkdir(dir, 'p')
+  return dir
+end
+
+local unicode_url = 'https://unicode.org/Public/UCD/latest/ucd/UnicodeData.txt'
+local nerdfonts_url = 'https://github.com/ryanoasis/nerd-fonts/raw/refs/heads/master/glyphnames.json'
+
+MiniPick.registry.icons_update = function()
+  local dir = icons_data_dir()
+  fetch_file(nerdfonts_url, dir .. '/nerdfonts.json')
+  fetch_file(unicode_url, dir .. '/unicode.txt')
+  vim.notify 'Icons data updated'
+end
+
+-- snacks.picker.icons variant, adds unicode chars
+MiniPick.registry.icons = function()
+  local dir = icons_data_dir()
+  local nerdfonts_cache = dir .. '/nerdfonts.json'
+  local unicode_cache = dir .. '/unicode.txt'
+
+  if vim.fn.filereadable(nerdfonts_cache) == 0 then
+    if not fetch_file(nerdfonts_url, nerdfonts_cache) then
+      return
+    end
+  end
+  if vim.fn.filereadable(unicode_cache) == 0 then
+    if not fetch_file(unicode_url, unicode_cache) then
+      return
+    end
+  end
+
+  local items = {}
+
+  -- Nerd fonts
+  local fd = io.open(nerdfonts_cache, 'r')
+  if fd then
+    local data = vim.json.decode(fd:read '*a')
+    fd:close()
+    for name, info in pairs(data) do
+      if name ~= 'METADATA' then
+        table.insert(items, {
+          text = string.format('  %s  %s  nerd', info.char, name),
+          char = info.char,
+        })
+      end
+    end
+  end
+
+  -- MiniIcons
+  for _, category in ipairs { 'default', 'directory', 'extension', 'file', 'filetype', 'lsp', 'os' } do
+    for _, name in ipairs(MiniIcons.list(category)) do
+      local icon = MiniIcons.get(category, name)
+      table.insert(items, {
+        text = string.format('  %s  %s  %s  mini', icon, category, name),
+        char = icon,
+      })
+    end
+  end
+
+  -- Unicode
+  for line in io.lines(unicode_cache) do
+    local cp, name = line:match '^([^;]+);([^;]+)'
+    if cp and name then
+      local char = vim.fn.nr2char(tonumber(cp, 16))
+      table.insert(items, {
+        text = string.format('  %s  %s  unicode', char, name),
+        char = char,
+      })
+    end
+  end
+
+  MiniPick.start {
+    source = {
+      name = 'Icons',
+      items = items,
+      choose = function(item)
+        vim.schedule(function()
+          vim.api.nvim_put({ item.char }, 'c', true, true)
+        end)
+      end,
+    },
+  }
+end
+
+vim.keymap.set('n', '<Leader><Space>', MiniPick.registry.files, { desc = 'Find: files' })
+-- vim.keymap.set('n', '<Leader><Space>', MiniPick.builtin.files, { desc = 'Find: files' })
+vim.keymap.set('n', '<leader>fa', MiniPick.builtin.resume, { desc = 'resume' })
+-- vim.keymap.set('n', '<leader>fd', MiniExtra.pickers.diagnostic, { desc = 'diagnostic' })
+-- vim.keymap.set('n', '<leader>fe', MiniExtra.pickers.explorer, { desc = 'explorer' })
+vim.keymap.set('n', '<leader>ff', MiniPick.builtin.grep_live, { desc = 'grep' })
+-- vim.keymap.set('n', '<leader>fg', MiniExtra.pickers.git_hunks, { desc = 'git hunks' })
+-- vim.keymap.set('n', '<leader>fh', MiniExtra.pickers.hipatterns, { desc = 'hipatterns' }) -- i.e. todos
+vim.keymap.set('n', '<leader>fh', MiniPick.builtin.help, { desc = 'help' })
+-- vim.keymap.set('n', '<leader>fk', MiniExtra.pickers.keymaps, { desc = 'keymaps' })
+-- vim.keymap.set('n', '<leader>fl', MiniExtra.pickers.buf_lines, { desc = 'lines' })
+vim.keymap.set('n', '<leader>fu', MiniPick.registry.icons, { desc = 'icons: unicode, nerdfonts, miniicons' })
+
+--
+-- hipatterns
+
+-- require('mini.hipatterns').setup {
+--   highlighters = {
+--     hack = { pattern = '%f[%w]()HACK:()', group = 'MiniHipatternsHack' },
+--     fixme = { pattern = '%f[%w]()FIXME:()', group = 'MiniHipatternsFixme' },
+--     note = { pattern = '%f[%w]()NOTE:()', group = 'MiniHipatternsNote' },
+--     todo = { pattern = '%f[%w]()TODO:()', group = 'MiniHipatternsTodo' },
+--   },
+-- }
+
+-- vim.keymap.set('n', '<leader>fh', MiniExtra.pickers.hipatterns, { desc = 'hipatterns' })
+
+--
+-- hipatterns, miniextra
+
+-- local hi_words = require('mini.extra').gen_highlighter.words
+--
+-- require('mini.hipatterns').setup {
+--   highlighters = {
+--     hack = hi_words({ 'HACK', 'Hack', 'hack' }, 'MiniHipatternsHack'),
+--     fixme = hi_words({ 'FIXME', 'Fixme', 'fixme' }, 'MiniHipatternsFixme'),
+--     note = hi_words({ 'NOTE', 'Note', 'note' }, 'MiniHipatternsNote'),
+--     todo = hi_words({ 'TODO', 'Todo', 'todo' }, 'MiniHipatternsTodo'),
+--   },
+-- }
+
+-- vim.keymap.set('n', '<leader>fh', MiniExtra.pickers.hipatterns, { desc = 'hipatterns' })

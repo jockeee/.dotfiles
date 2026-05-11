@@ -8,6 +8,7 @@ require 'plugins.nordic'
 
 -- Multipurpose
 require 'plugins.mini'
+require 'plugins.snacks'
 
 -- Visual
 require 'plugins.lualine'
@@ -19,13 +20,12 @@ require 'plugins.treesitter'
 -- Functionality
 require 'plugins.smart-splits'
 
-  -- Completion, Formatting, Linting, LSP
+-- Completion, Formatting, Linting, LSP
 require 'plugins.conform' -- formatting
 require 'plugins.lsp'
 
 -- git
 require 'plugins.gitsigns'
 
-
--- conform
+--- TODO:
 -- mini completion sources, compare to blink, add lazydev pre lsp?

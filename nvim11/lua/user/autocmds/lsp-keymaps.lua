@@ -31,8 +31,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
     local client = vim.lsp.get_client_by_id(event.data.client_id)
 
     -- inlay hints
-    --  adds information like types, parameter names etc in the editor
-    --  example: vim.keymap.set(**mode:** { 'n', 'v' }, **lhs:** '<left>', **rhs:** 'b')
+    --  adds information like types, parameter names
+    --    vim.keymap.set(mode: { 'n', 'v' }, lhs: '<left>', rhs: 'b')
     if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint, event.buf) then
       vim.keymap.set('n', '<leader>si', function()
         vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })

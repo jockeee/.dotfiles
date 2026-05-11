@@ -4,10 +4,10 @@
 -- Enable faster startup by caching compiled Lua modules
 vim.loader.enable()
 
-require('vim._core.ui2').enable()
+-- require('vim._core.ui2').enable()
 
-require('config')
-require('plugins')
+require 'config'
+require 'plugins'
 
 -- undotree
 --  :h :Undotree

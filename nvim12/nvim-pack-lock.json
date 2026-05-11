@@ -56,6 +56,10 @@
       "rev": "80be31a3d2e37d32bd37794da72a4f69fce7a85f",
       "src": "https://github.com/mrjones2014/smart-splits.nvim"
     },
+    "snacks.nvim": {
+      "rev": "ad9ede6a9cddf16cedbd31b8932d6dcdee9b716e",
+      "src": "https://github.com/folke/snacks.nvim"
+    },
     "wezterm-types": {
       "rev": "3d66a8377f27af81d247c1961bc617c02fe80ebb",
       "src": "https://github.com/DrKJeff16/wezterm-types"

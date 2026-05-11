@@ -1,17 +1,17 @@
 --
 -- plugins/nordic.lua
 
-vim.pack.add({
+vim.pack.add {
   'https://github.com/AlexvZyl/nordic.nvim',
-})
+}
 
-local nordic = require('nordic')
-local util = require('nordic.utils')
+local nordic = require 'nordic'
+local util = require 'nordic.utils'
 
 local bg = '#1f1f1f'
 local fg = '#b1b1b1'
 
-nordic.setup({
+nordic.setup {
   on_palette = function(palette)
     -- Override base palette
     palette.gray0 = bg -- gray0 used for default background
@@ -19,7 +19,7 @@ nordic.setup({
     -- palette.black0 = bg -- cursorline background
   end,
 
-  -- setting colors after the palette has been applied
+  -- sets colors after the palette has been applied
   -- see: https://github.com/AlexvZyl/nordic.nvim/blob/main/lua/nordic/colors/init.lua
   after_palette = function(palette)
     palette.bg = bg
@@ -30,10 +30,10 @@ nordic.setup({
 
   italic_comments = true,
   bright_border = true,
-})
+}
 
 -- vim.cmd.colorscheme('nordic')
-nordic.load()
+nordic.load {}
 vim.g.colorscheme = 'nordic'
 
 local palette = require 'nordic.colors'
