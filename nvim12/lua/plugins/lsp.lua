@@ -17,8 +17,8 @@ require('mason').setup()
 --  ~/.local/share/nvim/site/pack/core/opt/nvim-lspconfig/lua/lspconfig/configs
 local servers = {
   lua_ls = {
+    -- https://luals.github.io/wiki/settings
     settings = {
-      -- https://luals.github.io/wiki/settings
       Lua = {
         completion = {
           callSnippet = 'Replace',

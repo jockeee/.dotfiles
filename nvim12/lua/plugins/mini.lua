@@ -15,12 +15,6 @@ require('mini.icons').setup()
 
 -- require('mini.extra').setup()
 
---
--- completion
-
-local completion = require 'mini.completion'
-completion.setup()
-
 ---
 --- sessions
 
@@ -170,6 +164,9 @@ clue.setup {
     clue.gen_clues.windows(),
     clue.gen_clues.z(),
   },
+
+  -- group names
+  { mode = 'n', keys = '<Leader>f', desc = 'find' },
 }
 
 ---
@@ -283,15 +280,15 @@ MiniPick.registry.icons = function()
   }
 end
 
-vim.keymap.set('n', '<Leader><Space>', MiniPick.registry.files, { desc = 'Find: files' })
+-- vim.keymap.set('n', '<Leader><Space>', MiniPick.registry.files, { desc = 'Find: files' })
 -- vim.keymap.set('n', '<Leader><Space>', MiniPick.builtin.files, { desc = 'Find: files' })
-vim.keymap.set('n', '<leader>fa', MiniPick.builtin.resume, { desc = 'resume' })
+-- vim.keymap.set('n', '<leader>fa', MiniPick.builtin.resume, { desc = 'resume' })
 -- vim.keymap.set('n', '<leader>fd', MiniExtra.pickers.diagnostic, { desc = 'diagnostic' })
 -- vim.keymap.set('n', '<leader>fe', MiniExtra.pickers.explorer, { desc = 'explorer' })
-vim.keymap.set('n', '<leader>ff', MiniPick.builtin.grep_live, { desc = 'grep' })
+-- vim.keymap.set('n', '<leader>ff', MiniPick.builtin.grep_live, { desc = 'grep' })
 -- vim.keymap.set('n', '<leader>fg', MiniExtra.pickers.git_hunks, { desc = 'git hunks' })
 -- vim.keymap.set('n', '<leader>fh', MiniExtra.pickers.hipatterns, { desc = 'hipatterns' }) -- i.e. todos
-vim.keymap.set('n', '<leader>fh', MiniPick.builtin.help, { desc = 'help' })
+-- vim.keymap.set('n', '<leader>fh', MiniPick.builtin.help, { desc = 'help' })
 -- vim.keymap.set('n', '<leader>fk', MiniExtra.pickers.keymaps, { desc = 'keymaps' })
 -- vim.keymap.set('n', '<leader>fl', MiniExtra.pickers.buf_lines, { desc = 'lines' })
 vim.keymap.set('n', '<leader>fu', MiniPick.registry.icons, { desc = 'icons: unicode, nerdfonts, miniicons' })

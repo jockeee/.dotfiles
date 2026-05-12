@@ -69,7 +69,7 @@ vim.keymap.set('n', '<leader>di', Snacks.image.hover, { desc = 'Snacks: image' }
 vim.keymap.set('n', '<leader>g', Snacks.lazygit.open, { desc = 'Lazygit' })
 
 vim.keymap.set('n', '\\', Snacks.explorer.open, { desc = 'Explorer' }) -- nvim-tree style
-vim.keymap.set('n', '<leader>/', Snacks.picker.lines, { desc = 'Find: buffer' })
+vim.keymap.set('n', '<leader>/', Snacks.picker.lines, { desc = 'Find: buffer lines' })
 -- vim.keymap.set('n', '<leader>/', function()
 --   Snacks.picker.lines {
 --     layout = {
@@ -79,28 +79,30 @@ vim.keymap.set('n', '<leader>/', Snacks.picker.lines, { desc = 'Find: buffer' })
 --       },
 --     },
 --   }
--- end, { desc = 'Find: buffer' })
+-- end, { desc = 'Find: buffer lines' })
 
 vim.keymap.set('n', '<leader><space>', Snacks.picker.files, { desc = 'Find: files' })
 vim.keymap.set('n', '<leader>fa', Snacks.picker.resume, { desc = 'resume' })
-vim.keymap.set('n', '<leader>fi', Snacks.picker.icons, { desc = 'icons' })
 vim.keymap.set('n', '<leader>fb', Snacks.picker.pickers, { desc = 'builtin pickers' })
-vim.keymap.set('n', '<leader>fh', Snacks.picker.help, { desc = 'help' })
 vim.keymap.set('n', '<leader>ff', Snacks.picker.grep, { desc = 'grep' })
+vim.keymap.set('n', '<leader>fg', Snacks.picker.git_grep, { desc = 'project, grep' }) -- repo
+vim.keymap.set('n', '<leader>fG', Snacks.picker.git_files, { desc = 'project, files' }) -- repo files
+vim.keymap.set('n', '<leader>fh', Snacks.picker.help, { desc = 'help' })
+vim.keymap.set('n', '<leader>fi', Snacks.picker.icons, { desc = 'icons' })
 vim.keymap.set('n', '<leader>fk', Snacks.picker.keymaps, { desc = 'keymaps' })
-vim.keymap.set('n', '<leader>fg', Snacks.picker.git_grep, { desc = 'git grep' })
-vim.keymap.set('n', '<leader>fp', Snacks.picker.git_files, { desc = 'git files' }) -- repo files
 vim.keymap.set({ 'n', 'x' }, '<leader>fw', Snacks.picker.grep_word, { desc = 'word' }) -- string under cursor or selection
 
--- find plugin code
+-- plugin code, grep
 vim.keymap.set('n', '<leader>fp', function()
   Snacks.picker.grep {
-    cwd = vim.fs.joinpath(vim.fn.stdpath 'data', 'site', 'pack'),
+    cwd = vim.fs.joinpath(vim.fn.stdpath 'data', 'site', 'pack', 'core', 'opt'), -- ~/.local/share/nvim/site/pack/core/opt
+    title = '~/.local/share/nvim/site/pack/core/opt (grep)',
   }
-end, { desc = 'plugin grep' })
-vim.keymap.set('n', '<leader>fL', function()
+end, { desc = 'plugin code, grep' })
+-- plugin code, files
+vim.keymap.set('n', '<leader>fP', function()
   Snacks.picker.files {
-    cwd = vim.fs.joinpath(vim.fn.stdpath 'data', 'lazy'),
-    prompt_title = 'Lazy plugin files',
+    cwd = vim.fs.joinpath(vim.fn.stdpath 'data', 'site', 'pack', 'core', 'opt'), -- ~/.local/share/nvim/site/pack/core/opt
+    title = '~/.local/share/nvim/site/pack/core/opt (files)',
   }
-end, { desc = 'lazy plugins files' })
+end, { desc = 'plugin code, files' })
