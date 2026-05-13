@@ -1,8 +1,6 @@
 --
 -- plugins/init.lua
 
-require 'plugins.lazydev'
-
 -- Colorscheme
 require 'plugins.nordic'
 
@@ -21,11 +19,10 @@ require 'plugins.treesitter'
 require 'plugins.smart-splits'
 
 -- Completion, Formatting, Linting, LSP
+require 'plugins.blink' -- completion
 require 'plugins.conform' -- formatting
+require 'plugins.lazydev' -- LuaLS setup
 require 'plugins.lsp'
 
 -- git
 require 'plugins.gitsigns'
-
---- TODO:
--- mini completion sources, compare to blink, add lazydev pre lsp?

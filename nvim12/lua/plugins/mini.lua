@@ -122,6 +122,7 @@ end, { desc = 'Pick session' })
 
 ---
 --- clue
+-- next key clues
 
 local clue = require 'mini.clue'
 clue.setup {
