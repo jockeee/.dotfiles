@@ -164,10 +164,19 @@ clue.setup {
     clue.gen_clues.registers(),
     clue.gen_clues.windows(),
     clue.gen_clues.z(),
-  },
 
-  -- group names
-  { mode = 'n', keys = '<Leader>f', desc = 'find' },
+    -- group names
+    { mode = 'n', keys = '<Leader>d', desc = 'document (buffer)' },
+    { mode = 'n', keys = '<Leader>f', desc = 'find' },
+    { mode = { 'n', 'v' }, keys = '<Leader>h', desc = 'git hunk' }, -- gitsigns
+    -- { mode = 'n', keys = '<Leader>m', desc = 'multicursor' },
+    { mode = 'n', keys = '<Leader>q', desc = 'ai' },
+    { mode = 'n', keys = '<Leader>s', desc = 'show (toggle)' },
+    { mode = 'n', keys = '<Leader>u', desc = 'unicode' },
+    -- { mode = 'n', keys = '<Leader>v', desc = 'hurl' },
+    { mode = 'n', keys = '<Leader>x', desc = 'trouble' },
+    { mode = 'n', keys = '<Leader>z', desc = 'nvim' },
+  },
 }
 
 ---
@@ -192,6 +201,7 @@ local function fetch_file(url, path)
     vim.notify('Failed to fetch ' .. url, vim.log.levels.ERROR)
     return false
   end
+  vim.notify ''
   return true
 end
 
@@ -299,10 +309,10 @@ vim.keymap.set('n', '<leader>fu', MiniPick.registry.icons, { desc = 'icons: unic
 
 -- require('mini.hipatterns').setup {
 --   highlighters = {
---     hack = { pattern = '%f[%w]()HACK:()', group = 'MiniHipatternsHack' },
---     fixme = { pattern = '%f[%w]()FIXME:()', group = 'MiniHipatternsFixme' },
---     note = { pattern = '%f[%w]()NOTE:()', group = 'MiniHipatternsNote' },
---     todo = { pattern = '%f[%w]()TODO:()', group = 'MiniHipatternsTodo' },
+--     hack = { pattern = '%f[%w]()HACK()', group = 'MiniHipatternsHack' }, -- colon removed to not trigger folke/todo-comments, ()KEYWORD:()
+--     fixme = { pattern = '%f[%w]()FIXME()', group = 'MiniHipatternsFixme' },
+--     note = { pattern = '%f[%w]()NOTE()', group = 'MiniHipatternsNote' },
+--     todo = { pattern = '%f[%w]()TODO()', group = 'MiniHipatternsTodo' },
 --   },
 -- }
 

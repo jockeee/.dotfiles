@@ -1,5 +1,9 @@
 {
   "plugins": {
+    "aerial.nvim": {
+      "rev": "645d108a5242ec7b378cbe643eb6d04d4223f034",
+      "src": "https://github.com/stevearc/aerial.nvim"
+    },
     "blink.cmp": {
       "rev": "2ef3db111181c5eef22a462aa0122349a6027f28",
       "src": "https://github.com/saghen/blink.cmp"
@@ -60,6 +64,10 @@
       "rev": "4916d6592ede8c07973490d9322f187e07dfefac",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter"
     },
+    "plenary.nvim": {
+      "rev": "74b06c6c75e4eeb3108ec01852001636d85a932b",
+      "src": "https://github.com/nvim-lua/plenary.nvim"
+    },
     "smart-splits.nvim": {
       "rev": "80be31a3d2e37d32bd37794da72a4f69fce7a85f",
       "src": "https://github.com/mrjones2014/smart-splits.nvim"
@@ -67,6 +75,10 @@
     "snacks.nvim": {
       "rev": "ad9ede6a9cddf16cedbd31b8932d6dcdee9b716e",
       "src": "https://github.com/folke/snacks.nvim"
+    },
+    "todo-comments.nvim": {
+      "rev": "31e3c38ce9b29781e4422fc0322eb0a21f4e8668",
+      "src": "https://github.com/folke/todo-comments.nvim"
     },
     "wezterm-types": {
       "rev": "3d66a8377f27af81d247c1961bc617c02fe80ebb",

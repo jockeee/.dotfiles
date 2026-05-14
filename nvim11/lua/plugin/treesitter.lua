@@ -20,6 +20,7 @@
 return {
   'nvim-treesitter/nvim-treesitter',
   lazy = false, -- This plugin does not support lazy-loading
+  branch = 'master',
   dependencies = {
     'nvim-treesitter/nvim-treesitter-context',
     'nvim-treesitter/nvim-treesitter-textobjects',

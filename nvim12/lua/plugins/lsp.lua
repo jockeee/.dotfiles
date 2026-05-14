@@ -155,7 +155,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(ev)
     local client = vim.lsp.get_client_by_id(ev.data.client_id)
 
-    -- document_color
+    -- textDocument/documentColor
     if client and client:supports_method 'textDocument/documentColor' then
       if client.name == 'lua_ls' then
         vim.lsp.document_color.enable(false, { bufnr = ev.buf })
@@ -163,9 +163,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
         vim.lsp.document_color.enable(true, { bufnr = ev.buf })
       end
 
-      vim.keymap.set('n', '<Leader>dc', function()
+      vim.keymap.set('n', '<Leader>sc', function()
         vim.lsp.document_color.enable(not vim.lsp.document_color.is_enabled { bufnr = 0 }, { bufnr = 0 })
-      end, { desc = 'lsp: document colors' })
+      end, { desc = 'lsp: documentColors' })
     end
 
     -- lsp default features

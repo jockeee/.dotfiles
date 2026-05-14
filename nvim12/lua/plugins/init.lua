@@ -9,8 +9,10 @@ require 'plugins.mini'
 require 'plugins.snacks'
 
 -- Visual
-require 'plugins.lualine'
+require 'plugins.aerial' -- code outline
 require 'plugins.fidget' -- notifications and LSP progress messages
+require 'plugins.lualine'
+require 'plugins.todo-comments'
 
 -- Editing
 require 'plugins.treesitter'
