@@ -21,7 +21,6 @@ require 'plugins.smart-splits'
 -- Completion, Formatting, Linting, LSP
 require 'plugins.blink' -- completion
 require 'plugins.conform' -- formatting
-require 'plugins.lazydev' -- LuaLS setup
 require 'plugins.lsp'
 
 -- git

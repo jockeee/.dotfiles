@@ -1,13 +1,12 @@
 --
 -- lewis6991/gitsigns.nvim
 
-vim.pack.add({
+vim.pack.add {
   'https://github.com/lewis6991/gitsigns.nvim',
-})
+}
 
-local gitsigns = require 'gitsigns'
-gitsigns.setup({
-  on_attach = function(bufnr)
+require('gitsigns').setup {
+  on_attach = function()
     local gitsigns = require 'gitsigns'
 
     -- Navigation
@@ -52,4 +51,4 @@ gitsigns.setup({
     vim.keymap.set('n', '<leader>hb', gitsigns.toggle_current_line_blame, { desc = 'blame line' })
     vim.keymap.set('n', '<leader>hx', gitsigns.preview_hunk_inline, { desc = 'deleted lines' })
   end,
-})
+}

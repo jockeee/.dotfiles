@@ -2,24 +2,15 @@
 -- saghen/blink.cmp
 
 vim.pack.add {
-  'https://github.com/saghen/blink.cmp',
   'https://github.com/saghen/blink.lib',
+  'https://github.com/saghen/blink.cmp',
 }
 
-vim.api.nvim_create_autocmd('PackChanged', {
-  callback = function(ev)
-    local name, kind = ev.data.spec.name, ev.data.kind
-    if name == 'blink.cmp' and kind == 'update' then
-      if not ev.data.active then
-        vim.cmd.packadd 'blink.cmp'
-      end
-      ---@diagnostic disable-next-line: undefined-field
-      require('blink.cmp').build():wait(60000)
-    end
-  end,
-})
+local cmp = require 'blink.cmp'
 
-require('blink.cmp').setup {
+cmp.build():wait(600000)
+
+cmp.setup {
   cmdline = {
     keymap = {
       preset = 'super-tab',
@@ -55,19 +46,9 @@ require('blink.cmp').setup {
     preset = 'super-tab',
   },
 
-  sources = {
-    -- add lazydev to your completion providers
-    -- default = { 'lazydev', 'lsp', 'path', 'snippets' },
-    default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer' },
-    providers = {
-      lazydev = {
-        name = 'LazyDev',
-        module = 'lazydev.integrations.blink',
-        -- make lazydev completions top priority (see `:h blink.cmp`)
-        score_offset = 100,
-      },
-    },
-  },
+  -- sources = {
+  --   default = { 'lsp', 'path', 'snippets', 'buffer' },
+  -- },
 
   -- Blink.cmp includes an optional, recommended rust fuzzy matcher,
   -- which automatically downloads a prebuilt binary when enabled.

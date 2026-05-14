@@ -1,11 +1,18 @@
 --
 -- folke/lazydev.nvim
 
+-- lazydev inject libraries per-file, causing a brief window of
+-- missing `vim.*` completions and warnings each time a new file opens.
+--
+-- startup cost vs per-file cost tradeoff
+
 -- :LazyDev [debug]
 --    Show a notification with the lazydev settings for the current buffer.
 -- :LazyDev lsp
 --    Show a notification with the settings for any attached LSP servers.
 --    Not limited to LuaLS.
+
+-- require 'plugins.lazydev' -- LuaLS setup
 
 vim.pack.add {
   'https://github.com/folke/lazydev.nvim',

@@ -17,6 +17,53 @@ require('mason').setup()
 --  ~/.local/share/nvim/site/pack/core/opt/nvim-lspconfig/lua/lspconfig/configs
 local servers = {
   lua_ls = {
+    -- Configure lua_ls workspace upfront rather than lazily (lazydev).
+    -- This avoids per-file re-indexing delays at the cost of a slower startup.
+    --
+    -- Without this, tools like lazydev inject libraries per-file, causing a brief
+    -- window of missing `vim.*` completions and warnings each time a new file opens.
+    --
+    -- Short version: pay the indexing cost once at startup, not on every new file.
+    -- startup cost vs per-file cost tradeoff
+    on_init = function(client)
+      client.server_capabilities.documentFormattingProvider = false -- Disable formatting (formatting is done by stylua)
+
+      if client.workspace_folders then
+        local path = client.workspace_folders[1].name
+        if
+          path ~= vim.fn.stdpath 'config'
+          and (vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc'))
+        then
+          return
+        end
+      end
+
+      client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
+        runtime = {
+          version = 'LuaJIT', -- tell luals which Lua version is running, so it uses the right standard library definitions.
+          path = { 'lua/?.lua', 'lua/?/init.lua' }, -- tell luals where to look when resolving require() calls
+        },
+        workspace = {
+          checkThirdParty = false, -- stops luals from prompting "do you want to configure third party libraries?" when it detects things like luassert.
+          library = vim.tbl_extend(
+            'force',
+            -- Removing your config dir from the library means luals won't treat your own config as
+            -- a "library", it will treat it as the workspace instead, which is the correct relationship.
+            -- https://github.com/neovim/nvim-lspconfig/issues/3189
+            vim.tbl_filter(function(dir)
+              return not dir:match(vim.fn.stdpath 'config' .. '/?a?f?t?e?r?')
+            end, vim.api.nvim_get_runtime_file('', true)),
+            -- ^^^ returns every directory in Neovim's runtime path.
+            -- ^^^ This includes Neovim's own runtime, all plugins, and your config dir.
+            -- ^^^ This is what tells luals "these are Lua files you should understand"
+            {
+              '${3rd}/luv/library', -- adds type definitions for vim.uv (libuv bindings)
+              '${3rd}/busted/library', -- adds type definitions for the busted test framework
+            }
+          ),
+        },
+      })
+    end,
     -- https://luals.github.io/wiki/settings
     settings = {
       Lua = {
@@ -27,7 +74,7 @@ local servers = {
           disable = { 'missing-fields' }, -- Ignore Lua_LS's noisy `missing-fields` warnings
         },
         format = {
-          enable = false,
+          enable = false, -- Disable formatting (formatting is done by stylua)
         },
         hint = {
           enable = true, -- inlay hints
