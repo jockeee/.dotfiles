@@ -16,12 +16,12 @@ vim.keymap.set('n', '<Esc>', function()
     vim.notify('Error clearing search index: ' .. err, vim.log.levels.ERROR)
   end
 
-  -- ok, err = pcall(function()
-  --   require('multicursor-nvim').clearCursors()
-  -- end)
-  -- if not ok then
-  --   vim.notify('Error clearing multicursor: ' .. err, vim.log.levels.ERROR)
-  -- end
+  ok, err = pcall(function()
+    require('multicursor-nvim').clearCursors()
+  end)
+  if not ok then
+    vim.notify('Error clearing multicursor: ' .. err, vim.log.levels.ERROR)
+  end
 end)
 
 -- Save file

@@ -14,15 +14,15 @@ require 'plugins.fidget' -- notifications and LSP progress messages
 require 'plugins.lualine'
 require 'plugins.todo-comments'
 
--- Editing
+-- Editing / Functionality
+require 'plugins.harpoon'
+require 'plugins.multicursor'
+require 'plugins.origami' -- folding
+require 'plugins.smart-splits'
 require 'plugins.surround'
 require 'plugins.treesitter'
 require 'plugins.treesj' -- split/join code blocks
 require 'plugins.vim-matchup' -- enhanced % matching
-require 'plugins.origami' -- folding
-
--- Functionality
-require 'plugins.smart-splits'
 
 -- Completion, Formatting, LSP
 require 'plugins.debug'
