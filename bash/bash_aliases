@@ -103,8 +103,8 @@ alias t='tree'     # -L 3
 alias td='tree -D' # -D -L 3
 alias u='unzip'
 alias v='vim'
-alias vo='NVIM_APPNAME=nvim-prev vim' # old
-alias vn='NVIM_APPNAME=nvim-test vim' # new
+alias vo='NVIM_APPNAME=nvim-prev vim'             # old
+alias vn='NVIM_APPNAME=nvim-nightly nvim-nightly' # new
 
 # tmux
 # https://github.com/lewisacidic/fish-tmux-abbr

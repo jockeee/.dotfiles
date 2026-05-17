@@ -1,7 +1,7 @@
 --
 -- wezterm
 
-local wezterm = require 'wezterm' --[[@as Wezterm]]
+local wezterm = require 'wezterm' ---@type Wezterm
 local act = wezterm.action
 local mux = wezterm.mux
 
@@ -86,7 +86,7 @@ local config = {}
 if wezterm.config_builder then
   -- Improved warning messages for configuration errors
   -- http://wezterm.org/config/lua/wezterm/config_builder.html
-  config = wezterm.config_builder() --[[@as Config]]
+  config = wezterm.config_builder() ---@type Config
 end
 
 -- config.unix_domains = {
@@ -166,7 +166,7 @@ config = {
 }
 
 config.bidi_enabled = false
-config.bidi_direction = "LeftToRight"
+config.bidi_direction = 'LeftToRight'
 
 --- Keymaps
 

@@ -117,7 +117,7 @@ abbr --add td 'tree -D' # -D -L 3
 abbr --add u unzip
 abbr --add v vim
 abbr --add vo 'NVIM_APPNAME=nvim-prev /usr/bin/nvim' # old
-abbr --add vn 'NVIM_APPNAME=nvim-next vim' # new
+abbr --add vn 'NVIM_APPNAME=nvim-nightly nvim-nightly' # new
 
 # tmux
 # https://github.com/lewisacidic/fish-tmux-abbr
@@ -1508,16 +1508,16 @@ function build_nvim_nightly -d 'nvim (nightly)'
         end
     end
 
-    set build_dir ~/.build/neovim
-    set install_dir ~/.build/nvim
+    set build_dir ~/.build/neovim-nightly
+    set install_dir ~/.build/nvim-nightly
 
     # backup
     if test -e $install_dir
         # while backup dir exists, keep adding -N
-        set backup_dir ~/.build/nvim-working-$(date +%F)
+        set backup_dir ~/.build/nvim-nightly-working-$(date +%F)
         set backup_count 1
         while test -e $backup_dir
-            set backup_dir ~/.build/nvim-working-$(date +%F)-$backup_count
+            set backup_dir ~/.build/nvim-nightly-working-$(date +%F)-$backup_count
             set backup_count (math $backup_count + 1)
         end
 
@@ -1555,19 +1555,37 @@ function build_nvim_nightly -d 'nvim (nightly)'
         return 1
     end
 
+    # build
+    set build_dir (ls -d $build_dir/*) # get the extracted directory inside build_dir, something like neovim-neovim-xxxxxxx
+    cd $build_dir
+    make CMAKE_BUILD_TYPE=RelWithDebInfo
+    if test $status -ne 0
+        echo "Error: Couldn't build neovim"
+        if test -n "$backup_dir"
+            echo "Info: Backup available at $backup_dir"
+        end
+        return 1
+    end
+
+
     # install
-    make install CMAKE_INSTALL_PREFIX=$install_dir
+    echo "install_dir is: $install_dir"
+    make CMAKE_BUILD_TYPE=RelWithDebInfo CMAKE_INSTALL_PREFIX=$install_dir install
 
     # create symling in ~/.local/bin if it doesn't exist
-    if not test -e ~/.local/bin/nvim
+    if not test -e ~/.local/bin/nvim-nightly
         mkdir -p ~/.local/bin
-        ln -s $install_dir/bin/nvim ~/.local/bin/nvim
+        ln -s $install_dir/bin/nvim ~/.local/bin/nvim-nightly
     end
 
     # restore CWD
     cd $user_cwd
 
     echo
-    echo "nvim version: $(nvim --version | grep 'NVIM' | awk '{print $2}')"
+    echo -e '\e[3mwhich nvim-nightly\e[0m'
+    which nvim-nightly
+    echo
+    echo -e '\e[3mnvim-nightly -V1 -v\e[0m'
+    nvim-nightly -V1 -v
     echo
 end
