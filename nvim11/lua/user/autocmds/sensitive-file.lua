@@ -3,11 +3,6 @@
 
 local g_sensitive_file = vim.api.nvim_create_augroup('g-sensitive-file', { clear = true })
 
-local username = vim.fn.expand '$USER'
-local whitelist_dirs = {
-  '/tmp/nvim.' .. username .. '/',
-}
-
 vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
   desc = 'Disable swap, backup, undo, copilot for certain filetypes and paths',
   group = g_sensitive_file,
@@ -16,7 +11,7 @@ vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
     local filetype = vim.bo.filetype
     local path_lower = path:lower()
 
-    local temp_dirs = {
+    local tmp_dirs = {
       '/tmp/',
       '/var/tmp/',
       '/dev/shm/',
@@ -50,7 +45,7 @@ vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
       \.(gpg|asc|key|pem|crt|csr|p12|pfx|ca|fullchain|env|log|bak|tmp)$
     ]]
 
-    local is_in_temp_dir = path_starts_with_any(path, temp_dirs)
+    local is_in_temp_dir = path_starts_with_any(path, tmp_dirs)
     local is_in_whitelist = path_in_whitelist(path, whitelist_dirs)
     local is_sensitive_ext = path_lower:match(sensitive_ext_pattern)
 

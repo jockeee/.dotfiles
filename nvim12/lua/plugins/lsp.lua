@@ -31,12 +31,7 @@ local servers = {
 
       if client.workspace_folders then
         local path = client.workspace_folders[1].name
-        if
-          path ~= vim.fn.stdpath 'config'
-          and (vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc'))
-        then
-          return
-        end
+        if path ~= vim.fn.stdpath 'config' and (vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc')) then return end
       end
 
       client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
@@ -52,9 +47,7 @@ local servers = {
             -- Removing your config dir from the library means luals won't treat your own config as
             -- a "library", it will treat it as the workspace instead, which is the correct relationship.
             -- https://github.com/neovim/nvim-lspconfig/issues/3189
-            vim.tbl_filter(function(dir)
-              return not dir:match(vim.fn.stdpath 'config' .. '/?a?f?t?e?r?')
-            end, vim.api.nvim_get_runtime_file('', true)),
+            vim.tbl_filter(function(dir) return not dir:match(vim.fn.stdpath 'config' .. '/?a?f?t?e?r?') end, vim.api.nvim_get_runtime_file('', true)),
             -- ^^^ returns every directory in Neovim's runtime path.
             -- ^^^ This includes Neovim's own runtime, all plugins, and your config dir.
             {
@@ -103,9 +96,12 @@ local servers = {
       },
     },
   },
-  yamlls = {},
+  yamlls = {
+    filetypes = { 'yaml' }, -- d: 'yaml', 'yaml.docker-compose', 'yaml.gitlab', 'yaml.helm-values'
+  },
 
   gopls = {
+    filetypes = { 'go', 'gomod', 'gowork' }, -- d: 'go', 'gomod', 'gowork', 'gotmpl'
     settings = {
       gopls = {
         analyses = {
@@ -115,7 +111,7 @@ local servers = {
         staticcheck = true,
         gofumpt = true,
       },
-      templateExtensions = { 'tmpl' },
+      -- templateExtensions = { 'tmpl' }, -- add filetype first
     },
   },
 
@@ -158,17 +154,44 @@ vim.api.nvim_create_autocmd('LspAttach', {
     local client = vim.lsp.get_client_by_id(ev.data.client_id)
 
     -- textDocument/documentColor
-    if client and client:supports_method 'textDocument/documentColor' then
+    if client and client:supports_method('textDocument/documentColor', ev.buf) then
       if client.name == 'lua_ls' then
         vim.lsp.document_color.enable(false, { bufnr = ev.buf })
       else
         vim.lsp.document_color.enable(true, { bufnr = ev.buf })
       end
 
-      vim.keymap.set('n', '<Leader>sc', function()
-        vim.lsp.document_color.enable(not vim.lsp.document_color.is_enabled { bufnr = 0 }, { bufnr = 0 })
-      end, { desc = 'lsp: documentColors' })
+      vim.keymap.set(
+        'n',
+        '<Leader>sc',
+        function() vim.lsp.document_color.enable(not vim.lsp.document_color.is_enabled { bufnr = 0 }, { bufnr = 0 }) end,
+        { desc = 'lsp: documentColors' }
+      )
     end
+
+    -- textDocument/documentHighlight
+    -- if client and client:supports_method('textDocument/documentHighlight', ev.buf) then
+    --   local highlight_augroup = vim.api.nvim_create_augroup('config-lsp-highlight', { clear = false })
+    --   vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
+    --     buffer = ev.buf,
+    --     group = highlight_augroup,
+    --     callback = vim.lsp.buf.document_highlight,
+    --   })
+    --
+    --   vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
+    --     buffer = ev.buf,
+    --     group = highlight_augroup,
+    --     callback = vim.lsp.buf.clear_references,
+    --   })
+    --
+    --   vim.api.nvim_create_autocmd('LspDetach', {
+    --     group = vim.api.nvim_create_augroup('config-lsp-detach', { clear = true }),
+    --     callback = function(ev2)
+    --       vim.lsp.buf.clear_references()
+    --       vim.api.nvim_clear_autocmds { group = 'config-lsp-highlight', buffer = ev2.buf }
+    --     end,
+    --   })
+    -- end
 
     -- lsp default features
     --  lsp-diagnostic    vim.diagnostic.config
