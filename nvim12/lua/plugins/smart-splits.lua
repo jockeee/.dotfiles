@@ -1,16 +1,16 @@
 --
 -- mrjones2014/smart-splits.nvim
 
-vim.pack.add({
+vim.pack.add {
   'https://github.com/mrjones2014/smart-splits.nvim',
-})
+}
 
 local ss = require 'smart-splits'
 
-ss.setup({
+ss.setup {
   at_edge = 'stop', -- tmux: use default, wezterm workspaces: use 'stop'
   disable_multiplexer_nav_when_zoomed = false, -- default: true
-})
+}
 
 -- Resize windows using <alt> + arrow keys
 vim.keymap.set('n', '<M-up>', ss.resize_up, { desc = 'smart-splits: Resize Up' })
@@ -28,4 +28,3 @@ vim.keymap.set('n', '<C-w>h', ss.swap_buf_left, { desc = 'smart-splits: Swap Lef
 vim.keymap.set('n', '<C-w>j', ss.swap_buf_down, { desc = 'smart-splits: Swap Down' })
 vim.keymap.set('n', '<C-w>k', ss.swap_buf_up, { desc = 'smart-splits: Swap Up' })
 vim.keymap.set('n', '<C-w>l', ss.swap_buf_right, { desc = 'smart-splits: Swap Right' })
-

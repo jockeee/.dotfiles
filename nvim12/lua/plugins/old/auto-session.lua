@@ -1,12 +1,12 @@
 --
 -- rmagatti/auto-session
 
-vim.pack.add({
+vim.pack.add {
   'https://github.com/rmagatti/auto-session',
-})
+}
 
 local session = require 'auto-session'
 
-session.setup({
+session.setup {
   suppressed_dirs = { '/', '/tmp', '/dev/shm', '~/', '~/Downloads' }, -- d: nil
-})
+}

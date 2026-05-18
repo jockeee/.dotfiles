@@ -11,15 +11,7 @@ require('origami').setup {
   },
 }
 
--- vim.keymap.set('n', 'h', function()
---   require('origami').h()
--- end)
--- vim.keymap.set('n', 'l', function()
---   require('origami').l()
--- end)
-vim.keymap.set('n', '^', function()
-  require('origami').caret()
-end)
-vim.keymap.set('n', '$', function()
-  require('origami').dollar()
-end)
+-- vim.keymap.set('n', 'h', function() require('origami').h() end)
+-- vim.keymap.set('n', 'l', function() require('origami').l() end)
+vim.keymap.set('n', '^', function() require('origami').caret() end)
+vim.keymap.set('n', '$', function() require('origami').dollar() end)

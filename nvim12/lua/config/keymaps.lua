@@ -112,6 +112,7 @@ vim.keymap.set('n', '<M-n>', '<cmd>cnext<cr>', { desc = 'Quickfix: next' }) -- i
 vim.keymap.set('n', '<leader>da', '<cmd>%bdelete!<cr>', { desc = 'Close all buffers (incl window/splits)' })
 vim.keymap.set('n', '<leader>dd', '<cmd>bp|bd#<cr>', { desc = 'Close buffer' }) -- bprevious, bdelete# (previous buffer)
 vim.keymap.set('n', '<leader>dp', '<cmd>let @+ = expand("%:p")<cr>', { desc = 'Copy file path' })
+vim.keymap.set('n', '<leader>du', '<cmd>Undotree<cr>', { desc = 'undo tree' })
 vim.keymap.set('n', '<leader>dx', '<cmd>bp|bd!#<cr>', { desc = 'Kill buffer (ignore unsaved changes)' })
 
 ---

@@ -1,13 +1,13 @@
 --
 -- j-hui/fidget.nvim
 
-vim.pack.add({
+vim.pack.add {
   'https://github.com/j-hui/fidget.nvim',
-})
+}
 
-local fidget = require('fidget')
+local fidget = require 'fidget'
 
-fidget.setup({
+fidget.setup {
   progress = { -- make fidget less noisy
     suppress_on_insert = true, -- suppress new messages while in insert mode -- default: false
     ignore_done_already = true, -- ignore new tasks that are already complete -- default: false
@@ -16,6 +16,4 @@ fidget.setup({
       done_ttl = 1, -- time a message persist after completion
     },
   },
-})
-
-
+}

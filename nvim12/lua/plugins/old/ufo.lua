@@ -9,9 +9,7 @@ vim.pack.add {
 local ufo = require 'ufo'
 
 ufo.setup {
-  provider_selector = function()
-    return { 'lsp', 'indent' }
-  end,
+  provider_selector = function() return { 'lsp', 'indent' } end,
   close_fold_kinds_for_ft = { -- Run `UfoInspect` for details if your provider has extended the kinds.
     default = { 'region' }, -- 'comment', 'imports', 'region'
     lua = {},

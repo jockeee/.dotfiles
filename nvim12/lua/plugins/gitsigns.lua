@@ -29,12 +29,8 @@ require('gitsigns').setup {
 
     -- Actions
     -- visual mode
-    vim.keymap.set('v', '<leader>hs', function()
-      gitsigns.stage_hunk { vim.fn.line '.', vim.fn.line 'v' }
-    end, { desc = 'git stage hunk' })
-    vim.keymap.set('v', '<leader>hr', function()
-      gitsigns.reset_hunk { vim.fn.line '.', vim.fn.line 'v' }
-    end, { desc = 'git reset hunk' })
+    vim.keymap.set('v', '<leader>hs', function() gitsigns.stage_hunk { vim.fn.line '.', vim.fn.line 'v' } end, { desc = 'git stage hunk' })
+    vim.keymap.set('v', '<leader>hr', function() gitsigns.reset_hunk { vim.fn.line '.', vim.fn.line 'v' } end, { desc = 'git reset hunk' })
     -- normal mode
     vim.keymap.set('n', '<leader>hs', gitsigns.stage_hunk, { desc = 'stage hunk' })
     vim.keymap.set('n', '<leader>hr', gitsigns.reset_hunk, { desc = 'reset hunk' })
@@ -44,9 +40,7 @@ require('gitsigns').setup {
     vim.keymap.set('n', '<leader>hp', gitsigns.preview_hunk, { desc = 'preview hunk' })
     vim.keymap.set('n', '<leader>hb', gitsigns.blame_line, { desc = 'git blame line' })
     vim.keymap.set('n', '<leader>hd', gitsigns.diffthis, { desc = 'git diff against index' })
-    vim.keymap.set('n', '<leader>hD', function()
-      gitsigns.diffthis '@'
-    end, { desc = 'diff against last commit' })
+    vim.keymap.set('n', '<leader>hD', function() gitsigns.diffthis '@' end, { desc = 'diff against last commit' })
     -- Toggles
     vim.keymap.set('n', '<leader>hb', gitsigns.toggle_current_line_blame, { desc = 'blame line' })
     vim.keymap.set('n', '<leader>hx', gitsigns.preview_hunk_inline, { desc = 'deleted lines' })
