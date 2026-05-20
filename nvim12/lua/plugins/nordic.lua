@@ -85,11 +85,17 @@ local function filtered_highlight(hl)
   return filtered
 end
 
--- Remove underline from Search highlight
+-- Search, remove underline
 local hl_search = vim.api.nvim_get_hl(0, { name = 'Search' })
 hl_search = filtered_highlight(hl_search)
 hl_search.underline = nil
 vim.api.nvim_set_hl(0, 'Search', hl_search)
+
+-- Delimiter, remove italic
+-- local hl_delimiter = vim.api.nvim_get_hl(0, { name = 'Delimiter' })
+-- hl_delimiter = filtered_highlight(hl_delimiter)
+-- hl_delimiter.italic = nil
+-- vim.api.nvim_set_hl(0, 'Delimiter', hl_delimiter)
 
 -- Markdown
 vim.api.nvim_set_hl(0, 'RenderMarkdownCode', {

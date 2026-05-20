@@ -28,9 +28,14 @@ alias ladz 'ls -ladZ'
 alias lazd 'ls -ladZ'
 alias man 'man --nj'
 
+# history, bash style
+function history
+    builtin history | tac # bash style, without numbers
+    # builtin history | tac | nl # bash style
+end
+
 if command -q ~/.local/bin/nvim
     alias vim '~/.local/bin/nvim'
-    # alias vim12 '~/.local/bin/nvim'
 end
 
 # alias fd 'fd --hidden --no-ignore --no-ignore-parent'
@@ -1566,7 +1571,6 @@ function build_nvim_nightly -d 'nvim (nightly)'
         end
         return 1
     end
-
 
     # install
     echo "install_dir is: $install_dir"
