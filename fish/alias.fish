@@ -278,74 +278,18 @@ function gg -d 'git add, git commit, git push'
         return 1
     end
 
-    set use_ai 0
-
     if test (count $argv) -eq 0
-        if functions -q aicommit
-            set use_ai 1
-        else
-            echo "Usage: gg [commit message]"
-            echo "Info: Didn't find aicommit."
-            return 1
-        end
+        echo "Usage: gg [commit message]"
+        return 1
     end
 
-    if test $use_ai -eq 1
-        # using aicommit
-        # echo statements has bold text
-        echo -e "\e[1mgit add -A\e[0m" && git add -A &&
-            echo -e "\e[1maicommit\e[0m" && aicommit &&
-            echo -e "\e[1mgit push\e[0m" && git push
-    else
-        # using user supplied commit message
-        # echo statements has bold text
-        echo -e "\e[1mgit add -A\e[0m" && git add -A &&
-            echo -e "\e[1mgit commit -m \"$argv\"\e[0m" && git commit -m "$argv" &&
-            echo -e "\e[1mgit push\e[0m" && git push
-    end
+    # using user supplied commit message
+    # echo statements has bold text
+    echo -e "\e[1mgit add -A\e[0m" && git add -A &&
+        echo -e "\e[1mgit commit -m \"$argv\"\e[0m" && git commit -m "$argv" &&
+        echo -e "\e[1mgit push\e[0m" && git push
 end
 
-function aicommit -d 'Generate commit message using AI'
-    if not is_git_repo
-        echo 'Error: Unable to locate a Git repository.'
-        return 1
-    end
-
-    if not command -q openai
-        echo "Error: 'openai' not found."
-        return 1
-    end
-
-    if git diff --cached --quiet
-        echo "No staged changes found."
-        return 1
-    end
-
-    set continue n
-    # -g user "Write a concise commit message for the following git diff:" \
-    while test "$continue" != y; and test "$continue" != Y
-        set message (openai api chat.completions.create \
-        -m gpt-5-mini \
-        -g user "Write a very short commit message for the following git diff:" \
-        -g user "$(git diff --cached)")
-        if test $status -ne 0
-            echo "Error: Couldn't retrieve a commit message from 'openai'"
-            return 1
-        end
-
-        echo
-        echo "$message"
-        read -P "Use this commit message? [y/N/q]: " continue
-        if test "$continue" = q
-            return 1
-        end
-    end
-
-    git commit -m "$message"
-end
-
-# gg (git add, git commit, git push)
-# usage: gg [commit message]
 # function gg -d 'git add, git commit, git push'
 #     if not is_git_repo
 #         echo 'Error: Unable to locate a Git repository.'
@@ -355,20 +299,20 @@ end
 #     set use_ai 0
 #
 #     if test (count $argv) -eq 0
-#         if command -q aicommits
+#         if functions -q aicommit
 #             set use_ai 1
 #         else
 #             echo "Usage: gg [commit message]"
-#             echo "info: aicommits not present"
+#             echo "Info: Didn't find aicommit."
 #             return 1
 #         end
 #     end
 #
 #     if test $use_ai -eq 1
-#         # using aicomments
+#         # using aicommit
 #         # echo statements has bold text
 #         echo -e "\e[1mgit add -A\e[0m" && git add -A &&
-#             echo -e "\e[1maicommits\e[0m" && aicommits &&
+#             echo -e "\e[1maicommit\e[0m" && aicommit &&
 #             echo -e "\e[1mgit push\e[0m" && git push
 #     else
 #         # using user supplied commit message
@@ -377,6 +321,45 @@ end
 #             echo -e "\e[1mgit commit -m \"$argv\"\e[0m" && git commit -m "$argv" &&
 #             echo -e "\e[1mgit push\e[0m" && git push
 #     end
+# end
+
+# function aicommit -d 'Generate commit message using AI'
+#     if not is_git_repo
+#         echo 'Error: Unable to locate a Git repository.'
+#         return 1
+#     end
+#
+#     if not command -q openai
+#         echo "Error: 'openai' not found."
+#         return 1
+#     end
+#
+#     if git diff --cached --quiet
+#         echo "No staged changes found."
+#         return 1
+#     end
+#
+#     set continue n
+#     # -g user "Write a concise commit message for the following git diff:" \
+#     while test "$continue" != y; and test "$continue" != Y
+#         set message (openai api chat.completions.create \
+#         -m gpt-5-mini \
+#         -g user "Write a very short commit message for the following git diff:" \
+#         -g user "$(git diff --cached)")
+#         if test $status -ne 0
+#             echo "Error: Couldn't retrieve a commit message from 'openai'"
+#             return 1
+#         end
+#
+#         echo
+#         echo "$message"
+#         read -P "Use this commit message? [y/N/q]: " continue
+#         if test "$continue" = q
+#             return 1
+#         end
+#     end
+#
+#     git commit -m "$message"
 # end
 
 # ww (git add, git commit, git push - whatthecommit.com)
