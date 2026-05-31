@@ -100,6 +100,7 @@ config = {
   automatically_reload_config = true,
   default_workspace = 'ws1 ',
   scrollback_lines = 3500,
+  enable_kitty_graphics = true,
   enable_kitty_keyboard = false,
 
   -- Visual

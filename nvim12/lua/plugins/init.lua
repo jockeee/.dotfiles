@@ -12,6 +12,7 @@ require 'plugins.snacks'
 require 'plugins.aerial' -- code outline
 require 'plugins.fidget' -- notifications and LSP progress messages
 require 'plugins.lualine'
+require 'plugins.render-markdown'
 require 'plugins.todo-comments'
 
 -- Editing / Functionality

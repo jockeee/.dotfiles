@@ -106,6 +106,10 @@
       "rev": "74b06c6c75e4eeb3108ec01852001636d85a932b",
       "src": "https://github.com/nvim-lua/plenary.nvim"
     },
+    "render-markdown.nvim": {
+      "rev": "5adf0895310c1904e5abfaad40a2baad7fe44a07",
+      "src": "https://github.com/MeanderingProgrammer/render-markdown.nvim"
+    },
     "smart-splits.nvim": {
       "rev": "3151100591670148cb0065388117622212208ee3",
       "src": "https://github.com/mrjones2014/smart-splits.nvim"
