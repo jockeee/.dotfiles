@@ -23,21 +23,26 @@ require('render-markdown').setup {
 
   code = {
     -- position = 'right', -- language position
-    language_pad = 0,
-    language_border = ' ',
+    -- language_pad = 0,
+    -- language_border = ' ',
 
+    -- Width of the code block background.
+    -- | block | width of the code block  |
+    -- | full  | full width of the window |
     width = 'block',
-    min_width = 80,
+    min_width = 80, -- Minimum width to use for code blocks when width is 'block'.
     -- left_pad = 2,
-    right_pad = 4,
+    -- right_pad = 4,
 
-    border = 'none', -- d: hide, none | thick | thin | hide
+    border = 'thick', -- d: hide, none | thick | thin | hide
     -- highlight = 'RenderMarkdownCode', -- Highlight for code blocks.
     -- highlight_info = 'RenderMarkdownCodeInfo', -- Highlight for code info section, after the language.
-    -- highlight_language = nil, Highlight for language, overrides icon provider value.
+    highlight_language = 'RenderMarkdownLanguageFG', -- Highlight for language, overrides icon provider value.
     -- highlight_border = false, -- d: RenderMarkdownCodeBorder, border, use false to add no highlight.
     -- highlight_fallback = 'RenderMarkdownCodeFallback', -- Highlight for language, used if icon provider does not have a value.
     -- highlight_inline = 'RenderMarkdownCodeInline', -- Highlight for inline code.
+
+    language_icon = false, -- d: true
   },
 
   html = {

@@ -97,7 +97,7 @@ vim.api.nvim_set_hl(0, 'Search', hl_search)
 -- hl_delimiter.italic = nil
 -- vim.api.nvim_set_hl(0, 'Delimiter', hl_delimiter)
 
--- Markdown
+-- render-markdown.nvim
 vim.api.nvim_set_hl(0, 'RenderMarkdownCode', {
   bg = util.blend(palette.fg, palette.bg, 0.06),
 })
@@ -105,6 +105,9 @@ vim.api.nvim_set_hl(0, 'RenderMarkdownCodeInline', {
   -- bold = true,
   fg = util.blend(palette.bg, palette.fg, 0.12),
   bg = util.blend(palette.fg, palette.bg, 0.06),
+})
+vim.api.nvim_set_hl(0, 'RenderMarkdownLanguageFG', {
+  fg = util.blend(palette.bg, palette.fg, 0.6),
 })
 -- vim.api.nvim_set_hl(0, '@markup.raw.block.markdown', {
 --   fg = util.blend(palette.bg, palette.fg, 0.12),
