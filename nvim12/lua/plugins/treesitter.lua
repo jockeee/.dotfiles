@@ -36,5 +36,3 @@ require('nvim-treesitter').install {
   'vimdoc',
   'yaml',
 }
-
-vim.treesitter.language.register('bash', 'ini')
