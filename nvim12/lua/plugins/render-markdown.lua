@@ -18,7 +18,7 @@ require('render-markdown').setup {
   heading = {
     icons = { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' },
     width = 'block',
-    min_width = 30,
+    min_width = 40,
   },
 
   code = {
@@ -27,7 +27,7 @@ require('render-markdown').setup {
     language_border = ' ',
 
     width = 'block',
-    min_width = 76,
+    min_width = 80,
     -- left_pad = 2,
     right_pad = 4,
 
