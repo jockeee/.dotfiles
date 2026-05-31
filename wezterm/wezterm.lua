@@ -100,7 +100,7 @@ config = {
   automatically_reload_config = true,
   default_workspace = 'ws1 ',
   scrollback_lines = 3500,
-  enable_kitty_keyboard = true,
+  enable_kitty_keyboard = false,
 
   -- Visual
   enable_tab_bar = true,
@@ -189,12 +189,16 @@ config.keys = {
   -- Send M-t, Transpose (swap) current and previous word
   { key = 't', mods = 'LEADER|ALT', action = act.SendKey { key = 't', mods = 'ALT' } },
 
-  --- enable_kitty_keyboard, fix del key
-  {
-    key = 'Delete',
-    mods = '',
-    action = wezterm.action.SendString '\x1b[3~',
-  },
+  -- CSI-u encoding for shift-enter
+  -- Using in claude code, claude code native binding: C-j
+  { key = 'Enter', mods = 'SHIFT', action = wezterm.action.SendString '\x1b[13;2u' },
+
+  --- fix del key when `enable_kitty_keyboard = true`
+  -- {
+  --   key = 'Delete',
+  --   mods = '',
+  --   action = wezterm.action.SendString '\x1b[3~',
+  -- },
 
   {
     key = 'p',
