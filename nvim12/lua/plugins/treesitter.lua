@@ -22,6 +22,7 @@ require('nvim-treesitter').install {
   'diff',
   'fish',
   'html',
+  'ini',
   'javascript',
   'json',
   'lua',
