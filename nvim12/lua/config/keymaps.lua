@@ -116,6 +116,12 @@ vim.keymap.set('n', '<leader>du', '<cmd>Undotree<cr>', { desc = 'undo tree' })
 vim.keymap.set('n', '<leader>dx', '<cmd>bp|bd!#<cr>', { desc = 'Kill buffer (ignore unsaved changes)' })
 
 ---
+--- Leader g: git
+---
+
+vim.keymap.set('n', '<leader>gg', '<cmd>!gg …<cr>', { desc = 'gg …' })
+
+---
 --- Leader p: plugins (vim.pack)
 ---
 
@@ -209,6 +215,72 @@ vim.keymap.set('n', 'gx', function()
 
   vim.fn.jobstart({ 'xdg-open', target }, { detach = true })
 end, { desc = 'open, try as github repo' })
+
+--
+-- Markdown
+--
+
+-- Markdown, bold
+vim.keymap.set({ 'n', 'i' }, '<C-b>', function()
+  local mode = vim.api.nvim_get_mode().mode
+  local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+  local line = vim.api.nvim_get_current_line()
+
+  -- Adjust col for insert mode, col is after the cursor
+  if mode == 'i' then
+    col = col - 1
+    if col < 0 then col = 0 end
+  end
+
+  -- Remove bold (**...**) if cursor is inside or on asterisks
+  local search_start = 1
+  while true do
+    local s, e = line:find('%*%*.-%*%*', search_start)
+    if not s then break end
+    if col + 1 >= s and col + 1 <= e then
+      local word_start, word_end = s + 2, e - 2
+      local new_line = line:sub(1, s - 1) .. line:sub(word_start, word_end) .. line:sub(e + 1)
+      local new_col = (col + 1 <= word_start or col + 1 > word_end) and (s - 1) or (col - 2)
+      vim.api.nvim_set_current_line(new_line)
+      vim.api.nvim_win_set_cursor(0, { row, new_col })
+      if mode == 'i' then vim.cmd 'startinsert' end
+      return
+    end
+    search_start = e + 1
+  end
+
+  -- Remove **** if cursor is on or between them
+  local s, e = line:find '%*%*%*%*'
+  while s do
+    if col + 1 >= s and col + 1 <= e + 1 then
+      vim.api.nvim_set_current_line(line:sub(1, s - 1) .. line:sub(e + 1))
+      vim.api.nvim_win_set_cursor(0, { row, math.max(s - 3, 0) })
+      if mode == 'i' then vim.cmd 'startinsert' end
+      return
+    end
+    s, e = line:find('%*%*%*%*', e + 1)
+  end
+
+  -- If on a word, surround with **
+  local cword = vim.fn.expand '<cword>'
+  if cword ~= '' then
+    local ws, we = line:find(cword, 1, true)
+    while ws and not (col + 1 >= ws and col + 1 <= we) do
+      ws, we = line:find(cword, we + 1, true)
+    end
+    if ws then
+      vim.api.nvim_set_current_line(line:sub(1, ws - 1) .. '**' .. cword .. '**' .. line:sub(we + 1))
+      vim.api.nvim_win_set_cursor(0, { row, col + 2 })
+      if mode == 'i' then vim.cmd 'startinsert' end
+      return
+    end
+  end
+
+  -- Otherwise, insert **** at cursor and move between
+  vim.api.nvim_set_current_line(line:sub(1, col) .. '****' .. line:sub(col + 1))
+  vim.api.nvim_win_set_cursor(0, { row, col + 2 })
+  if mode == 'i' then vim.cmd 'startinsert' end
+end, { desc = 'Text, bold, **word** or insert/remove ****' })
 
 ---
 --- Yank

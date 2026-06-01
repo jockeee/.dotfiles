@@ -13,7 +13,8 @@ require('aerial').setup {
     -- They can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
     -- min_width and max_width can be a list of mixed types.
     -- max_width = {40, 0.2} means "the lesser of 40 columns or 20% of total"
-    max_width = { 80, 0.2 }, -- d: 40, 0.2
+    -- max_width = { 80, 0.2 }, -- d: 40, 0.2
+    max_width = { 80, 0.20 }, -- d: 40, 0.2
     width = nil,
     min_width = 40, -- d: 10
 
@@ -26,7 +27,8 @@ require('aerial').setup {
     -- options will open the window in the other direction *if* there is a
     -- different buffer in the way of the preferred direction
     -- Enum: prefer_right, prefer_left, right, left, float
-    default_direction = 'float', -- d: prefer_right
+    -- default_direction = 'float', -- d: prefer_right
+    default_direction = 'right', -- d: prefer_right
 
     -- Determines where the aerial window will be opened
     --   edge   - open aerial at the far right/left of the editor
@@ -37,7 +39,11 @@ require('aerial').setup {
     resize_to_content = true, -- d: true
 
     -- Preserve window size equality with (:h CTRL-W_=)
-    preserve_equality = false, -- d: false
+    preserve_equality = true, -- d: false
+
+    win_opts = {
+      winbar = ' ', -- blank top row, so aerial's first item lines up with the doc's first line
+    },
   },
 
   -- Determines how the aerial window decides which buffer to display symbols for
@@ -88,5 +94,25 @@ require('aerial').setup {
 }
 
 vim.keymap.set('n', '<Leader>a', function()
-  require('aerial').toggle { focus = true } -- https://github.com/stevearc/aerial.nvim/blob/master/doc/api.md#toggleopts
+  local aerial = require 'aerial'
+  if aerial.is_open() then
+    aerial.focus()
+  else
+    aerial.open { focus = true }
+  end
 end, { desc = 'Aerial' })
+
+-- 'float' settings
+--
+-- vim.api.nvim_create_autocmd('FileType', {
+--   pattern = 'markdown',
+--   callback = function()
+--     if vim.bo.buftype ~= '' then return end -- skip special/preview buffers
+--     require('aerial').open { direction = 'right', focus = false }
+--   end,
+-- })
+--
+-- vim.keymap.set('n', '<Leader>a', function()
+--   local dir = vim.bo.filetype == 'markdown' and 'right' or 'float'
+--   require('aerial').toggle { focus = true, direction = dir }
+-- end, { desc = 'Aerial' })

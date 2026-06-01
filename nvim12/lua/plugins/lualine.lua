@@ -27,6 +27,11 @@ lualine.setup {
     theme = 'vscode-colors', -- lua/lualine/themes/vscode-colors.lua
     component_separators = '',
     section_separators = '',
+    disabled_filetypes = {
+      statusline = { 'aerial' }, -- no statusline in the aerial pane
+      winbar = { 'aerial' }, -- no winbar in the aerial pane
+    },
+    ignore_focus = { 'aerial' }, -- focusing aerial won't flip your doc statusline to inactive
   },
   sections = {
     -- lualine_a = {}, -- default: 'mode'
@@ -46,7 +51,7 @@ lualine.setup {
       },
     },
     lualine_c = {
-      'aerial',
+      -- 'aerial',
       'diagnostics',
       'diff',
     },
@@ -75,7 +80,7 @@ lualine.setup {
       },
     },
     lualine_c = {
-      'aerial',
+      -- 'aerial',
       'diagnostics',
     },
     lualine_x = {

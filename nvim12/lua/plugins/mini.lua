@@ -202,13 +202,12 @@ clue.setup {
     -- group names
     { mode = 'n', keys = '<Leader>d', desc = 'document (buffer)' },
     { mode = 'n', keys = '<Leader>f', desc = 'find' },
+    { mode = 'n', keys = '<Leader>g', desc = 'git' },
     { mode = { 'n', 'v' }, keys = '<Leader>h', desc = 'git hunk' }, -- gitsigns
-    -- { mode = 'n', keys = '<Leader>m', desc = 'multicursor' },
-    -- { mode = 'n', keys = '<Leader>p', desc = 'plugins (vim.pack)' },
+    { mode = 'n', keys = '<Leader>m', desc = 'multicursor' },
     { mode = 'n', keys = '<Leader>q', desc = 'ai' },
     { mode = 'n', keys = '<Leader>s', desc = 'show (toggle)' },
     { mode = 'n', keys = '<Leader>u', desc = 'unicode' },
-    -- { mode = 'n', keys = '<Leader>v', desc = 'hurl' },
     { mode = 'n', keys = '<Leader>x', desc = 'trouble' },
     { mode = 'n', keys = '<Leader>z', desc = 'nvim' },
   },
