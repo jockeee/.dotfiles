@@ -119,7 +119,7 @@ vim.keymap.set('n', '<leader>dx', '<cmd>bp|bd!#<cr>', { desc = 'Kill buffer (ign
 --- Leader g: git
 ---
 
-vim.keymap.set('n', '<leader>gg', '<cmd>!gg …<cr>', { desc = 'gg …' })
+vim.keymap.set('n', '<leader>gg', '<cmd>!bash -i -c "gg …"<cr>', { desc = 'gg …' })
 
 ---
 --- Leader p: plugins (vim.pack)
