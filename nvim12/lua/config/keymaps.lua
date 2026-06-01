@@ -116,12 +116,6 @@ vim.keymap.set('n', '<leader>du', '<cmd>Undotree<cr>', { desc = 'undo tree' })
 vim.keymap.set('n', '<leader>dx', '<cmd>bp|bd!#<cr>', { desc = 'Kill buffer (ignore unsaved changes)' })
 
 ---
---- Leader g: git
----
-
-vim.keymap.set('n', '<leader>gg', '<cmd>!bash -i -c "gg …"<cr>', { desc = 'gg …' })
-
----
 --- Leader p: plugins (vim.pack)
 ---
 

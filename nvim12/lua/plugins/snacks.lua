@@ -68,7 +68,7 @@ vim.keymap.set('n', 'g0', Snacks.picker.lsp_symbols, { desc = 'snacks: lsp symbo
 
 vim.keymap.set('n', '<leader>di', Snacks.image.hover, { desc = 'snacks: image' })
 
--- vim.keymap.set('n', '<leader>g', Snacks.lazygit.open, { desc = 'lazygit' })
+vim.keymap.set('n', '<leader>g', Snacks.lazygit.open, { desc = 'lazygit' })
 
 vim.keymap.set('n', '\\', Snacks.explorer.open, { desc = 'Explorer' }) -- nvim-tree style
 vim.keymap.set('n', '<leader>/', Snacks.picker.lines, { desc = 'find: buffer lines' })
