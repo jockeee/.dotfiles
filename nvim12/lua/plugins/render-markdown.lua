@@ -5,8 +5,12 @@ vim.pack.add {
   'https://github.com/MeanderingProgrammer/render-markdown.nvim',
 }
 
+-- vim.api.nvim_create_autocmd('ModeChanged', {
+--   callback = function() vim.notify(vim.fn.mode(1), vim.log.levels.INFO) end,
+-- })
+
 require('render-markdown').setup {
-  render_modes = { 'n', 'c', 't', 'i', 'v', 'V', '\22' }, -- d: n, c, t
+  render_modes = { 'n', 'c', 't', 'i', 'v', 'V', '\22', 'no' }, -- d: n, c, t
   completions = { lsp = { enabled = true } },
   file_types = { 'markdown' },
   debounce = 10,

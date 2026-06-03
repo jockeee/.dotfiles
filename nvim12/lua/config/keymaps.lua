@@ -349,14 +349,36 @@ vim.keymap.set('n', '<leader>uy', function()
 end, { desc = 'Yank unicode code point' })
 
 -- Convert unicode escapes to utf-8 characters
+-- Convert unicode escapes to utf-8 characters
 vim.keymap.set('n', '<leader>ui', function()
   local buf = vim.api.nvim_get_current_buf()
   local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
+  local replacements = {
+    [0x2013] = '-', -- en dash (width of "N")
+    [0x2014] = '-', -- em dash (width of "M")
+    [0x2018] = "'", -- left single quotation mark
+    [0x2019] = "'", -- right single quotation mark / apostrophe
+    [0x201C] = '"', -- left double quotation mark
+    [0x201D] = '"', -- right double quotation mark
+  }
   for i, line in ipairs(lines) do
-    lines[i] = line:gsub('\\[uU]0*([%da-fA-F]+)', function(hex) return vim.fn.nr2char(tonumber(hex, 16)) end)
+    lines[i] = line:gsub('\\[uU]0*([%da-fA-F]+)', function(hex)
+      local codepoint = tonumber(hex, 16)
+      return replacements[codepoint] or vim.fn.nr2char(codepoint)
+    end)
   end
   vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
 end, { desc = 'Convert unicode escapes to utf-8 characters' })
+
+-- Convert unicode escapes to utf-8 characters
+-- vim.keymap.set('n', '<leader>ui', function()
+--   local buf = vim.api.nvim_get_current_buf()
+--   local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
+--   for i, line in ipairs(lines) do
+--     lines[i] = line:gsub('\\[uU]0*([%da-fA-F]+)', function(hex) return vim.fn.nr2char(tonumber(hex, 16)) end)
+--   end
+--   vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+-- end, { desc = 'Convert unicode escapes to utf-8 characters' })
 
 ---
 --- Floaterminal
