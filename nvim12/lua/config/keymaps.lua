@@ -214,6 +214,15 @@ end, { desc = 'open, try as github repo' })
 -- Markdown
 --
 
+-- Markdown, codeblock
+vim.keymap.set('n', '<Leader>mm', function()
+  vim.notify 'test'
+  local row = vim.api.nvim_win_get_cursor(0)[1]
+  vim.api.nvim_buf_set_lines(0, row - 1, row - 1, false, { '```', '', '```' })
+  vim.api.nvim_win_set_cursor(0, { row, 3 }) -- opening ``` is now on the original line
+  vim.cmd 'startinsert!'
+end, { desc = 'md: code block' })
+
 -- Markdown, bold
 vim.keymap.set({ 'n', 'i' }, '<C-b>', function()
   local mode = vim.api.nvim_get_mode().mode
@@ -274,7 +283,7 @@ vim.keymap.set({ 'n', 'i' }, '<C-b>', function()
   vim.api.nvim_set_current_line(line:sub(1, col) .. '****' .. line:sub(col + 1))
   vim.api.nvim_win_set_cursor(0, { row, col + 2 })
   if mode == 'i' then vim.cmd 'startinsert' end
-end, { desc = 'Text, bold, **word** or insert/remove ****' })
+end, { desc = 'md: Text, bold, **word** or insert/remove ****' })
 
 ---
 --- Yank

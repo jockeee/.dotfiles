@@ -54,8 +54,8 @@ require('aerial').setup {
   keymaps = {
     -- close keybinds
     -- `q` works by default
-    ['<C-c>'] = 'actions.close',
-    ['<Esc>'] = 'actions.close',
+    -- ['<C-c>'] = 'actions.close', -- used it with 'float' setting
+    -- ['<Esc>'] = 'actions.close', -- used it with 'float' setting
   },
 
   -- A list of all symbols to display. Set to false to display all symbols.
@@ -93,6 +93,14 @@ require('aerial').setup {
   -- end,
 }
 
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'markdown',
+  callback = function()
+    if vim.bo.buftype ~= '' then return end -- skip preview/special markdown buffers
+    require('aerial').open { focus = false }
+  end,
+})
+
 vim.keymap.set('n', '<Leader>a', function()
   local aerial = require 'aerial'
   if aerial.is_open() then
@@ -102,7 +110,7 @@ vim.keymap.set('n', '<Leader>a', function()
   end
 end, { desc = 'Aerial' })
 
--- 'float' settings
+-- used it with 'float' setting
 --
 -- vim.api.nvim_create_autocmd('FileType', {
 --   pattern = 'markdown',
