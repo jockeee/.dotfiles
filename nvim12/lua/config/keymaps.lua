@@ -111,7 +111,6 @@ vim.keymap.set('n', '<M-n>', '<cmd>cnext<cr>', { desc = 'Quickfix: next' }) -- i
 
 vim.keymap.set('n', '<leader>da', '<cmd>%bdelete!<cr>', { desc = 'Close all buffers (incl window/splits)' })
 vim.keymap.set('n', '<leader>dd', '<cmd>bp|bd#<cr>', { desc = 'Close buffer' }) -- bprevious, bdelete# (previous buffer)
-vim.keymap.set('n', '<leader>dp', '<cmd>let @+ = expand("%:p")<cr>', { desc = 'Copy file path' })
 vim.keymap.set('n', '<leader>du', '<cmd>Undotree<cr>', { desc = 'undo tree' })
 vim.keymap.set('n', '<leader>dx', '<cmd>bp|bd!#<cr>', { desc = 'Kill buffer (ignore unsaved changes)' })
 
@@ -289,6 +288,13 @@ end, { desc = 'md: Text, bold, **word** or insert/remove ****' })
 --- Yank
 ---
 
+-- yc   non-space content under cursor
+-- yl   line content
+-- yP   file path
+-- yu   url on line
+
+vim.keymap.set('n', 'yP', '<cmd>let @+ = expand("%:p")<cr>', { desc = 'yank: file path' })
+
 -- yank "line content"
 vim.keymap.set('n', 'yl', '^vg_y', { desc = 'yank: line content' })
 
@@ -327,9 +333,9 @@ vim.keymap.set('n', 'yc', function()
     vim.fn.setreg('"', word)
     vim.notify('yank: ' .. word, vim.log.levels.INFO)
   else
-    vim.notify('yank: no non-space word under cursor', vim.log.levels.WARN)
+    vim.notify('yank: no non-space content under cursor', vim.log.levels.WARN)
   end
-end, { desc = 'yank: w/e under cursor' })
+end, { desc = 'yank: non-space content under cursor' })
 
 ---
 --- Unicode
