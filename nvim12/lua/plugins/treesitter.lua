@@ -24,6 +24,7 @@ require('nvim-treesitter').install {
   'html',
   'ini',
   'javascript',
+  'jinja',
   'json',
   'lua',
   'luadoc',

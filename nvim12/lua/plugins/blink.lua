@@ -46,9 +46,9 @@ cmp.setup {
     preset = 'super-tab',
   },
 
-  -- sources = {
-  --   default = { 'lsp', 'path', 'snippets', 'buffer' },
-  -- },
+  sources = {
+    default = { 'lsp', 'path', 'snippets', 'buffer' },
+  },
 
   -- Blink.cmp includes an optional, recommended rust fuzzy matcher,
   -- which automatically downloads a prebuilt binary when enabled.

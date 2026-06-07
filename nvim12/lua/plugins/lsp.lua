@@ -99,6 +99,11 @@ local servers = {
   yamlls = {
     filetypes = { 'yaml' }, -- d: 'yaml', 'yaml.docker-compose', 'yaml.gitlab', 'yaml.helm-values'
   },
+  ansiblels = {
+    cmd_env = {
+      ANSIBLE_INVENTORY = vim.fn.expand '~/dev/automation/ansible/inventory/hosts',
+    },
+  },
 
   gopls = {
     filetypes = { 'go', 'gomod', 'gowork' }, -- d: 'go', 'gomod', 'gowork', 'gotmpl'
@@ -125,6 +130,8 @@ local tools = {
   -- bash
   'shfmt', -- formatter
   'shellcheck', -- linter
+
+  -- 'ansible-lint', -- using w/e version the distro package manager has
 
   -- go
   'gofumpt', -- formatter, a stricter gofmt

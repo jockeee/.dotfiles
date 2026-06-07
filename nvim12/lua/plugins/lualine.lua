@@ -15,7 +15,7 @@ local function cwd_limit()
 
   if #cwd > limit then cwd = '…' .. cwd:sub(-(limit - 1)) end
 
-  return cwd
+  return cwd .. '/'
 end
 
 local lualine = require 'lualine'
@@ -49,6 +49,7 @@ lualine.setup {
         path = 1, -- 0 = filename, 1 = relative path, 2 = absolute path, 3 = relative to home
         file_status = true,
       },
+      'location',
     },
     lualine_c = {
       -- 'aerial',
@@ -57,12 +58,12 @@ lualine.setup {
     },
     lualine_x = {
       { 'copilot', show_colors = false },
-      'encoding',
-      'fileformat',
       'filetype',
+      'fileformat',
+      'encoding',
     },
     lualine_y = {}, -- default: 'progress'
-    lualine_z = { 'location' }, -- default: 'location'
+    lualine_z = {}, -- default: 'location'
   },
   inactive_sections = {
     lualine_a = {},
@@ -78,6 +79,7 @@ lualine.setup {
         path = 1, -- 0 = filename, 1 = relative path, 2 = absolute path, 3 = relative to home
         file_status = true,
       },
+      'location',
     },
     lualine_c = {
       -- 'aerial',
@@ -85,12 +87,12 @@ lualine.setup {
     },
     lualine_x = {
       { 'copilot', show_colors = false },
-      'encoding',
-      'fileformat',
       'filetype',
+      'fileformat',
+      'encoding',
     },
     lualine_y = {}, -- default: 'progress'
-    lualine_z = { 'location' }, -- default: 'location'
+    lualine_z = {}, -- default: 'location'
   },
   winbar = {
     lualine_a = {},
@@ -129,4 +131,5 @@ lualine.setup {
     lualine_z = {},
   },
   -- extensions = { 'nvim-tree' },
+  -- extensions = { 'aerial' },
 }

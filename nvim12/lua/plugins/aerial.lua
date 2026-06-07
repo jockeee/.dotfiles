@@ -14,7 +14,7 @@ require('aerial').setup {
     -- min_width and max_width can be a list of mixed types.
     -- max_width = {40, 0.2} means "the lesser of 40 columns or 20% of total"
     -- max_width = { 80, 0.2 }, -- d: 40, 0.2
-    max_width = { 80, 0.20 }, -- d: 40, 0.2
+    max_width = { 100, 0.25 }, -- d: 40, 0.2
     width = nil,
     min_width = 40, -- d: 10
 
