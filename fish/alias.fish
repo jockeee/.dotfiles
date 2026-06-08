@@ -64,6 +64,12 @@ if command -q eza
     # alias tree 'eza -aT --git-ignore --long --no-user --no-time --no-filesize'
 end
 
+if command -q ansible
+    abbr --add al ansible-lint
+    abbr --add ap ansible-playbook
+    abbr --add av ansible-vault
+end
+
 if command -q pass
     abbr --add p 'pass show -c'
     abbr --add pe 'pass edit'

@@ -49,6 +49,12 @@ if command -v eza &>/dev/null; then
 fi
 
 if command -v pass &>/dev/null; then
+    alias al='ansible-lint'
+    alias ap='ansible-playbook'
+    alias av='ansible-vault'
+fi
+
+if command -v pass &>/dev/null; then
     alias p='pass show -c'
     alias pe='pass edit'
     alias pf='pass find'
