@@ -103,7 +103,8 @@ vim.api.nvim_set_hl(0, 'RenderMarkdownCode', {
 })
 vim.api.nvim_set_hl(0, 'RenderMarkdownCodeInline', {
   -- bold = true,
-  fg = util.blend(palette.bg, palette.fg, 0.12),
+  -- fg = util.blend(palette.bg, palette.fg, 0.12),
+  fg = util.blend(palette.bg, palette.fg, 0.2),
   bg = util.blend(palette.fg, palette.bg, 0.06),
 })
 vim.api.nvim_set_hl(0, 'RenderMarkdownLanguageFG', {
