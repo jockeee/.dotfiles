@@ -33,6 +33,7 @@ require('nvim-treesitter').install {
   'python',
   'query',
   'regex',
+  'sql',
   'vim',
   'vimdoc',
   'yaml',
