@@ -101,6 +101,7 @@ local servers = {
   },
   ansiblels = {
     cmd_env = {
+      -- don't run any inventory scripts (which only will timeout b/c host unreachable)
       ANSIBLE_INVENTORY = vim.fn.expand '~/dev/automation/ansible/inventory/hosts',
     },
   },
