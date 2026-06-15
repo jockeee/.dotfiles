@@ -15,4 +15,6 @@ todo.setup {
   signs = false, -- d: true, icons in sign column
 }
 
-vim.keymap.set('n', '<leader>fS', function() require('snacks').picker['todo_comments']() end, { desc = 'todo' })
+vim.keymap.set('n', '<leader>fS', function()
+  require('snacks').picker['todo_comments']()
+end, { desc = 'todo' })

@@ -31,7 +31,9 @@ local servers = {
 
       if client.workspace_folders then
         local path = client.workspace_folders[1].name
-        if path ~= vim.fn.stdpath 'config' and (vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc')) then return end
+        if path ~= vim.fn.stdpath 'config' and (vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc')) then
+          return
+        end
       end
 
       client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
@@ -47,7 +49,9 @@ local servers = {
             -- Removing your config dir from the library means luals won't treat your own config as
             -- a "library", it will treat it as the workspace instead, which is the correct relationship.
             -- https://github.com/neovim/nvim-lspconfig/issues/3189
-            vim.tbl_filter(function(dir) return not dir:match(vim.fn.stdpath 'config' .. '/?a?f?t?e?r?') end, vim.api.nvim_get_runtime_file('', true)),
+            vim.tbl_filter(function(dir)
+              return not dir:match(vim.fn.stdpath 'config' .. '/?a?f?t?e?r?')
+            end, vim.api.nvim_get_runtime_file('', true)),
             -- ^^^ returns every directory in Neovim's runtime path.
             -- ^^^ This includes Neovim's own runtime, all plugins, and your config dir.
             {
@@ -171,12 +175,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
         vim.lsp.document_color.enable(true, { bufnr = ev.buf })
       end
 
-      vim.keymap.set(
-        'n',
-        '<Leader>sc',
-        function() vim.lsp.document_color.enable(not vim.lsp.document_color.is_enabled { bufnr = 0 }, { bufnr = 0 }) end,
-        { desc = 'lsp: documentColors' }
-      )
+      vim.keymap.set('n', '<Leader>sc', function()
+        vim.lsp.document_color.enable(not vim.lsp.document_color.is_enabled { bufnr = 0 }, { bufnr = 0 })
+      end, { desc = 'lsp: documentColors' })
     end
 
     -- textDocument/documentHighlight

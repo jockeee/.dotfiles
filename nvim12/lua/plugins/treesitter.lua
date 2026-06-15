@@ -5,7 +5,9 @@ vim.api.nvim_create_autocmd('PackChanged', {
   callback = function(ev)
     local name, kind = ev.data.spec.name, ev.data.kind
     if name == 'nvim-treesitter' and kind == 'update' then
-      if not ev.data.active then vim.cmd.packadd 'nvim-treesitter' end
+      if not ev.data.active then
+        vim.cmd.packadd 'nvim-treesitter'
+      end
       vim.cmd 'TSUpdate'
     end
   end,
@@ -45,7 +47,9 @@ require('nvim-treesitter').install(parsers)
 ---@param language string
 local function treesitter_try_attach(buf, language)
   -- Check if a parser exists and load it
-  if not vim.treesitter.language.add(language) then return end
+  if not vim.treesitter.language.add(language) then
+    return
+  end
   -- Enable syntax highlighting and other treesitter features
   vim.treesitter.start(buf, language)
 
@@ -59,7 +63,9 @@ local function treesitter_try_attach(buf, language)
   local has_indent_query = vim.treesitter.query.get(language, 'indents') ~= nil
 
   -- Enable treesitter based indentation
-  if has_indent_query then vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()" end
+  if has_indent_query then
+    vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+  end
 end
 
 local available_parsers = require('nvim-treesitter').get_available()
@@ -68,7 +74,9 @@ vim.api.nvim_create_autocmd('FileType', {
     local buf, filetype = args.buf, args.match
 
     local language = vim.treesitter.language.get_lang(filetype)
-    if not language then return end
+    if not language then
+      return
+    end
 
     local installed_parsers = require('nvim-treesitter').get_installed 'parsers'
 
@@ -77,7 +85,9 @@ vim.api.nvim_create_autocmd('FileType', {
       treesitter_try_attach(buf, language)
     elseif vim.tbl_contains(available_parsers, language) then
       -- If a parser is available in `nvim-treesitter`, auto-install it and enable it after the installation is done
-      require('nvim-treesitter').install(language):await(function() treesitter_try_attach(buf, language) end)
+      require('nvim-treesitter').install(language):await(function()
+        treesitter_try_attach(buf, language)
+      end)
     else
       -- Try to enable treesitter features in case the parser exists but is not available from `nvim-treesitter`
       treesitter_try_attach(buf, language)

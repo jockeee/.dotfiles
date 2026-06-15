@@ -121,7 +121,9 @@ local function detect_yaml_variant(path, bufnr)
   -- Ansible heuristic 2: content inspection (first 40 lines).
   for _, line in ipairs(lines) do
     for _, pat in ipairs(ansible_patterns) do
-      if line:match(pat) then return 'yaml.ansible' end
+      if line:match(pat) then
+        return 'yaml.ansible'
+      end
     end
   end
 

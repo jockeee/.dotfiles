@@ -9,7 +9,9 @@ vim.o.mousemodel = 'extend' -- d: popup_setpos
 -- Sync clipboard between os and neovim
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
 --  :h 'clipboard'
-vim.schedule(function() vim.o.clipboard = 'unnamedplus' end)
+vim.schedule(function()
+  vim.o.clipboard = 'unnamedplus'
+end)
 
 -- vim.o.modeline = false
 vim.o.termguicolors = true -- true color support (24-bit)

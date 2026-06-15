@@ -36,17 +36,25 @@ local suppressed_dirs = {
 local function is_suppressed()
   local cwd = vim.fn.getcwd()
   for _, dir in ipairs(suppressed_dirs) do
-    if cwd == dir then return true end
+    if cwd == dir then
+      return true
+    end
   end
   return false
 end
 
 local function session_name()
-  return vim.fn.getcwd():gsub('([^%w])', function(c) return string.format('%%%02X', string.byte(c)) end) .. '.vim'
+  return vim.fn.getcwd():gsub('([^%w])', function(c)
+    return string.format('%%%02X', string.byte(c))
+  end) .. '.vim'
 end
 
 local function decode_session_name(name)
-  return name:gsub('%%(%x%x)', function(hex) return string.char(tonumber(hex, 16)) end):gsub('%.vim$', '')
+  return name
+    :gsub('%%(%x%x)', function(hex)
+      return string.char(tonumber(hex, 16))
+    end)
+    :gsub('%.vim$', '')
 end
 
 local group = vim.api.nvim_create_augroup('MiniSessionsAuto', { clear = true })
@@ -58,7 +66,9 @@ vim.api.nvim_create_autocmd('VimEnter', {
   callback = function()
     if vim.fn.argc() == 0 and not is_suppressed() then
       local name = session_name()
-      if MiniSessions.detected[name] then MiniSessions.read(name) end
+      if MiniSessions.detected[name] then
+        MiniSessions.read(name)
+      end
     end
   end,
 })
@@ -66,7 +76,9 @@ vim.api.nvim_create_autocmd('VimEnter', {
 vim.api.nvim_create_autocmd('VimLeavePre', {
   group = group,
   callback = function()
-    if not is_suppressed() then MiniSessions.write(session_name()) end
+    if not is_suppressed() then
+      MiniSessions.write(session_name())
+    end
   end,
 })
 
@@ -112,15 +124,12 @@ vim.keymap.set('n', '<leader>fs', function()
   Snacks.picker {
     title = 'Sessions',
     finder = function()
-      return vim.tbl_map(
-        function(name)
-          return {
-            text = decode_session_name(name),
-            name = name,
-          }
-        end,
-        vim.tbl_keys(MiniSessions.detected)
-      )
+      return vim.tbl_map(function(name)
+        return {
+          text = decode_session_name(name),
+          name = name,
+        }
+      end, vim.tbl_keys(MiniSessions.detected))
     end,
     format = 'text',
     confirm = function(picker, item)
@@ -261,10 +270,14 @@ MiniPick.registry.icons = function()
   local unicode_cache = dir .. '/unicode.txt'
 
   if vim.fn.filereadable(nerdfonts_cache) == 0 then
-    if not fetch_file(nerdfonts_url, nerdfonts_cache) then return end
+    if not fetch_file(nerdfonts_url, nerdfonts_cache) then
+      return
+    end
   end
   if vim.fn.filereadable(unicode_cache) == 0 then
-    if not fetch_file(unicode_url, unicode_cache) then return end
+    if not fetch_file(unicode_url, unicode_cache) then
+      return
+    end
   end
 
   local items = {}
@@ -275,10 +288,12 @@ MiniPick.registry.icons = function()
     local data = vim.json.decode(fd:read '*a')
     fd:close()
     for name, info in pairs(data) do
-      if name ~= 'METADATA' then table.insert(items, {
-        text = string.format('  %s  %s  nerd', info.char, name),
-        char = info.char,
-      }) end
+      if name ~= 'METADATA' then
+        table.insert(items, {
+          text = string.format('  %s  %s  nerd', info.char, name),
+          char = info.char,
+        })
+      end
     end
   end
 
@@ -310,7 +325,9 @@ MiniPick.registry.icons = function()
       name = 'Icons',
       items = items,
       choose = function(item)
-        vim.schedule(function() vim.api.nvim_put({ item.char }, 'c', true, true) end)
+        vim.schedule(function()
+          vim.api.nvim_put({ item.char }, 'c', true, true)
+        end)
       end,
     },
   }

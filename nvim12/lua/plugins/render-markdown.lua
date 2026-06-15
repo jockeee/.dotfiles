@@ -78,7 +78,9 @@ end
 
 local function copy_code_block(pos)
   local block = code_block_at_cursor(pos)
-  if not block then return vim.notify('Not in a code block', vim.log.levels.WARN) end
+  if not block then
+    return vim.notify('Not in a code block', vim.log.levels.WARN)
+  end
   local content
   for child in block:iter_children() do
     if child:type() == 'code_fence_content' then
@@ -86,7 +88,9 @@ local function copy_code_block(pos)
       break
     end
   end
-  if not content then return vim.notify('Empty code block', vim.log.levels.WARN) end
+  if not content then
+    return vim.notify('Empty code block', vim.log.levels.WARN)
+  end
   local text = vim.treesitter.get_node_text(content, 0):gsub('\n$', '')
   vim.fn.setreg('+', text)
   vim.notify 'Code block copied'
@@ -99,7 +103,9 @@ vim.api.nvim_create_autocmd('FileType', {
   callback = function(args)
     vim.keymap.set('n', '<2-LeftMouse>', function()
       local pos = vim.fn.getmousepos()
-      if pos.line <= 0 then return end
+      if pos.line <= 0 then
+        return
+      end
       copy_code_block(pos)
     end, { buffer = args.buf, desc = 'yank: code block' })
   end,

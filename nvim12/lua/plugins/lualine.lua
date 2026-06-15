@@ -11,9 +11,13 @@ local function cwd_limit()
   local cwd = vim.fn.getcwd()
   local home = os.getenv 'HOME'
 
-  if cwd:sub(1, #home) == home then cwd = '~' .. cwd:sub(#home + 1) end
+  if cwd:sub(1, #home) == home then
+    cwd = '~' .. cwd:sub(#home + 1)
+  end
 
-  if #cwd > limit then cwd = '…' .. cwd:sub(-(limit - 1)) end
+  if #cwd > limit then
+    cwd = '…' .. cwd:sub(-(limit - 1))
+  end
 
   return cwd .. '/'
 end

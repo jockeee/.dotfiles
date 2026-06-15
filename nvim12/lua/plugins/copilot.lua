@@ -11,7 +11,9 @@ require('copilot').setup {
     [''] = false, -- false = disabled for buffers with no filetype
     sh = function()
       -- disabled for .env files
-      if string.match(vim.fs.basename(vim.api.nvim_buf_get_name(0)), '^%.env.*') then return false end
+      if string.match(vim.fs.basename(vim.api.nvim_buf_get_name(0)), '^%.env.*') then
+        return false
+      end
       return true
     end,
     text = false, -- false = disabled for text files
@@ -58,9 +60,15 @@ require('copilot').setup {
   --   end,
   -- },
   should_attach = function(buf_id, bufname)
-    if not vim.b[buf_id].copilot_enabled then return false end
-    if not vim.bo[buf_id].buflisted then return false end
-    if vim.bo[buf_id].buftype ~= '' then return false end
+    if not vim.b[buf_id].copilot_enabled then
+      return false
+    end
+    if not vim.bo[buf_id].buflisted then
+      return false
+    end
+    if vim.bo[buf_id].buftype ~= '' then
+      return false
+    end
 
     local tmp_dirs = { '/tmp/', '/var/tmp/', '/dev/shm/', vim.fn.expand '~/.cache/' }
     local whitelist_dirs = { '/tmp/nvim.' .. vim.fn.expand '$USER' .. '/' }
@@ -85,15 +93,21 @@ require('copilot').setup {
 
     local function starts_with_any(s, prefixes)
       for _, p in ipairs(prefixes) do
-        if s:sub(1, #p) == p then return true end
+        if s:sub(1, #p) == p then
+          return true
+        end
       end
       return false
     end
 
     local ext = bufname:lower():match '%.([^.]+)$'
-    if ext ~= nil and sensitive_exts[ext] ~= nil then return false end
+    if ext ~= nil and sensitive_exts[ext] ~= nil then
+      return false
+    end
 
-    if starts_with_any(bufname, tmp_dirs) and not starts_with_any(bufname, whitelist_dirs) then return false end
+    if starts_with_any(bufname, tmp_dirs) and not starts_with_any(bufname, whitelist_dirs) then
+      return false
+    end
 
     return true
   end,

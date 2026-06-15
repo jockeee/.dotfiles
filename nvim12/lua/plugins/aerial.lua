@@ -96,7 +96,9 @@ require('aerial').setup {
 vim.api.nvim_create_autocmd('FileType', {
   pattern = 'markdown',
   callback = function()
-    if vim.bo.buftype ~= '' then return end -- skip preview/special markdown buffers
+    if vim.bo.buftype ~= '' then
+      return
+    end -- skip preview/special markdown buffers
     require('aerial').open { focus = false }
   end,
 })

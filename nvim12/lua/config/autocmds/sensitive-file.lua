@@ -3,7 +3,9 @@
 
 local active = true
 
-if not active then return end
+if not active then
+  return
+end
 
 vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
   desc = 'Disable swap, backup, undo for sensitive extensions and paths',
@@ -34,7 +36,9 @@ vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
 
     local function starts_with_any(s, prefixes)
       for _, p in ipairs(prefixes) do
-        if s:sub(1, #p) == p then return true end
+        if s:sub(1, #p) == p then
+          return true
+        end
       end
       return false
     end
@@ -51,7 +55,9 @@ vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
       vim.opt_local.writebackup = false
       vim.opt_local.undofile = false
 
-      vim.schedule(function() vim.notify('Disabled swap, backup, undo', vim.log.levels.WARN) end)
+      vim.schedule(function()
+        vim.notify('Disabled swap, backup, undo', vim.log.levels.WARN)
+      end)
     end
   end,
 })

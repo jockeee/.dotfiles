@@ -80,7 +80,9 @@ local function filtered_highlight(hl)
   }
   local filtered = {}
   for k, v in pairs(hl) do
-    if valid_keys[k] then filtered[k] = v end
+    if valid_keys[k] then
+      filtered[k] = v
+    end
   end
   return filtered
 end
