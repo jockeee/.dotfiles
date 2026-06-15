@@ -28,8 +28,8 @@ lualine.setup {
     component_separators = '',
     section_separators = '',
     disabled_filetypes = {
-      statusline = { 'aerial' }, -- no statusline in the aerial pane
-      winbar = { 'aerial' }, -- no winbar in the aerial pane
+      statusline = { 'aerial', 'snacks_layout_box' }, -- no statusline in ...
+      winbar = { 'aerial', 'snacks_layout_box' }, -- no winbar in ...
     },
     ignore_focus = { 'aerial' }, -- focusing aerial won't flip your doc statusline to inactive
   },

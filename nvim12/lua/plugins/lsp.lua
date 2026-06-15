@@ -132,6 +132,8 @@ local tools = {
   'shfmt', -- formatter
   'shellcheck', -- linter
 
+  'yamlfmt', -- generic YAML
+  'yamlfix', -- "the most ansible-aware of the bunch"
   -- 'ansible-lint', -- using w/e version the distro package manager has
 
   -- go

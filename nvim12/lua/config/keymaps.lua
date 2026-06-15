@@ -9,11 +9,19 @@ vim.keymap.set({ 'n', 'x' }, '<space>', '<nop>')
 vim.keymap.set('n', '<Esc>', function()
   vim.cmd 'nohlsearch'
 
-  local ok, err = pcall(function() require('config.utils').search_index_clear() end)
-  if not ok then vim.notify('Error clearing search index: ' .. err, vim.log.levels.ERROR) end
+  local ok, err = pcall(function()
+    require('config.utils').search_index_clear()
+  end)
+  if not ok then
+    vim.notify('Error clearing search index: ' .. err, vim.log.levels.ERROR)
+  end
 
-  ok, err = pcall(function() require('multicursor-nvim').clearCursors() end)
-  if not ok then vim.notify('Error clearing multicursor: ' .. err, vim.log.levels.ERROR) end
+  ok, err = pcall(function()
+    require('multicursor-nvim').clearCursors()
+  end)
+  if not ok then
+    vim.notify('Error clearing multicursor: ' .. err, vim.log.levels.ERROR)
+  end
 end)
 
 -- Save file
@@ -44,7 +52,9 @@ vim.keymap.set({ 'n', 'x' }, '<Right>', 'e')
 -- vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true })
 local mux_with_g = function(key)
   local gkey = 'g' .. key
-  return function() return vim.v.count == 0 and gkey or key end
+  return function()
+    return vim.v.count == 0 and gkey or key
+  end
 end
 vim.keymap.set({ 'n', 'x' }, 'j', mux_with_g 'j', { expr = true })
 vim.keymap.set({ 'n', 'x' }, 'k', mux_with_g 'k', { expr = true })
@@ -52,8 +62,12 @@ vim.keymap.set({ 'n', 'x' }, 'k', mux_with_g 'k', { expr = true })
 -- Buffer
 -- vim.keymap.set('n', '<S-h>', '<cmd>bprevious<cr>', { desc = 'Prev Buffer' })
 -- vim.keymap.set('n', '<S-l>', '<cmd>bnext<cr>', { desc = 'Next Buffer' })
-vim.keymap.set('n', '<S-h>', function() require('config.utils').jl_buf_backward() end, { desc = 'Prev Buffer' })
-vim.keymap.set('n', '<S-l>', function() require('config.utils').jl_buf_forward() end, { desc = 'Next Buffer' })
+vim.keymap.set('n', '<S-h>', function()
+  require('config.utils').jl_buf_backward()
+end, { desc = 'Prev Buffer' })
+vim.keymap.set('n', '<S-l>', function()
+  require('config.utils').jl_buf_forward()
+end, { desc = 'Next Buffer' })
 
 -- Using smart-splits instead
 -- Window, focus
@@ -89,12 +103,16 @@ vim.keymap.set({ 'n', 'x', 'i', 't' }, '<M-b>', '<cmd>tabnext<cr>', { desc = 'Ta
 -- use C-w h/j/k/l for swapping buffers between windows/splits (using smart-splits)
 vim.keymap.set({ 'n', 'x', 'i', 't' }, '<S-M-v>', function()
   local current_tab = vim.fn.tabpagenr()
-  if current_tab > 1 then vim.cmd '-tabmove' end
+  if current_tab > 1 then
+    vim.cmd '-tabmove'
+  end
 end, { desc = 'Tab: move left' })
 vim.keymap.set({ 'n', 'x', 'i', 't' }, '<S-M-b>', function()
   local current_tab = vim.fn.tabpagenr()
   local total_tabs = vim.fn.tabpagenr '$'
-  if current_tab < total_tabs then vim.cmd '+tabmove' end
+  if current_tab < total_tabs then
+    vim.cmd '+tabmove'
+  end
 end, { desc = 'Tab: move right' })
 
 -- Indenting
@@ -109,10 +127,49 @@ vim.keymap.set('n', '<M-n>', '<cmd>cnext<cr>', { desc = 'Quickfix: next' }) -- i
 --- Leader d: Buffer (document)
 ---
 
+-- vim.keymap.set('n', '<leader>dd', '<cmd>bp|bd#<cr>', { desc = 'Close buffer' }) -- bprevious, bdelete# (previous buffer)
+-- vim.keymap.set('n', '<leader>dx', '<cmd>bp|bd!#<cr>', { desc = 'Kill buffer (ignore unsaved changes)' })
+
 vim.keymap.set('n', '<leader>da', '<cmd>%bdelete!<cr>', { desc = 'Close all buffers (incl window/splits)' })
-vim.keymap.set('n', '<leader>dd', '<cmd>bp|bd#<cr>', { desc = 'Close buffer' }) -- bprevious, bdelete# (previous buffer)
+
+-- Kill buffer
+vim.keymap.set('n', '<leader>dd', function()
+  local listed = vim.tbl_filter(function(bufnr)
+    return vim.bo[bufnr].buflisted
+  end, vim.api.nvim_list_bufs())
+
+  local ok, err
+  if #listed > 1 then
+    vim.cmd 'bprevious'
+    ok, err = pcall(function()
+      vim.cmd 'bdelete #'
+    end)
+  else
+    ok, err = pcall(function()
+      vim.cmd 'bdelete'
+    end)
+  end
+
+  if not ok then
+    local msg = tostring(err)
+    vim.notify(msg:match 'E%d+:.*' or err, vim.log.levels.ERROR)
+  end
+end, { desc = 'Close buffer' })
+
+-- Kill buffer (ignore unsaved changes)
+vim.keymap.set('n', '<leader>dx', function()
+  local listed = vim.tbl_filter(function(bufnr)
+    return vim.bo[bufnr].buflisted
+  end, vim.api.nvim_list_bufs())
+
+  if #listed > 1 then
+    vim.cmd 'bprevious'
+    vim.cmd 'bdelete! #'
+  else
+    vim.cmd 'bdelete!'
+  end
+end, { desc = 'Kill buffer (ignore unsaved changes)' })
 vim.keymap.set('n', '<leader>du', '<cmd>Undotree<cr>', { desc = 'undo tree' })
-vim.keymap.set('n', '<leader>dx', '<cmd>bp|bd!#<cr>', { desc = 'Kill buffer (ignore unsaved changes)' })
 
 ---
 --- Leader p: plugins (vim.pack)
@@ -131,14 +188,18 @@ vim.keymap.set('n', '<leader>dx', '<cmd>bp|bd!#<cr>', { desc = 'Kill buffer (ign
 --                                        Like "delete" (if plugin is not active), "update" or "skip updating" (if there are pending updates).
 
 vim.keymap.set('n', '<leader>zu', vim.pack.update, { desc = 'update plugins' })
-vim.keymap.set('n', '<leader>zl', function() vim.pack.update(nil, { offline = true }) end, { desc = 'list plugins' })
+vim.keymap.set('n', '<leader>zl', function()
+  vim.pack.update(nil, { offline = true })
+end, { desc = 'list plugins' })
 
 ---
 --- Leader s: Toggle
 ---
 
 -- color columns
-vim.keymap.set('n', '<leader>sL', function() vim.o.colorcolumn = vim.o.colorcolumn == '' and '81,101' or '' end, { desc = 'UI color columns' })
+vim.keymap.set('n', '<leader>sL', function()
+  vim.o.colorcolumn = vim.o.colorcolumn == '' and '81,101' or ''
+end, { desc = 'UI color columns' })
 
 local function get_color_cols()
   local ok_colors, colors = pcall(require, 'nordic.colors')
@@ -231,21 +292,27 @@ vim.keymap.set({ 'n', 'i' }, '<C-b>', function()
   -- Adjust col for insert mode, col is after the cursor
   if mode == 'i' then
     col = col - 1
-    if col < 0 then col = 0 end
+    if col < 0 then
+      col = 0
+    end
   end
 
   -- Remove bold (**...**) if cursor is inside or on asterisks
   local search_start = 1
   while true do
     local s, e = line:find('%*%*.-%*%*', search_start)
-    if not s then break end
+    if not s then
+      break
+    end
     if col + 1 >= s and col + 1 <= e then
       local word_start, word_end = s + 2, e - 2
       local new_line = line:sub(1, s - 1) .. line:sub(word_start, word_end) .. line:sub(e + 1)
       local new_col = (col + 1 <= word_start or col + 1 > word_end) and (s - 1) or (col - 2)
       vim.api.nvim_set_current_line(new_line)
       vim.api.nvim_win_set_cursor(0, { row, new_col })
-      if mode == 'i' then vim.cmd 'startinsert' end
+      if mode == 'i' then
+        vim.cmd 'startinsert'
+      end
       return
     end
     search_start = e + 1
@@ -257,7 +324,9 @@ vim.keymap.set({ 'n', 'i' }, '<C-b>', function()
     if col + 1 >= s and col + 1 <= e + 1 then
       vim.api.nvim_set_current_line(line:sub(1, s - 1) .. line:sub(e + 1))
       vim.api.nvim_win_set_cursor(0, { row, math.max(s - 3, 0) })
-      if mode == 'i' then vim.cmd 'startinsert' end
+      if mode == 'i' then
+        vim.cmd 'startinsert'
+      end
       return
     end
     s, e = line:find('%*%*%*%*', e + 1)
@@ -273,7 +342,9 @@ vim.keymap.set({ 'n', 'i' }, '<C-b>', function()
     if ws then
       vim.api.nvim_set_current_line(line:sub(1, ws - 1) .. '**' .. cword .. '**' .. line:sub(we + 1))
       vim.api.nvim_win_set_cursor(0, { row, col + 2 })
-      if mode == 'i' then vim.cmd 'startinsert' end
+      if mode == 'i' then
+        vim.cmd 'startinsert'
+      end
       return
     end
   end
@@ -281,7 +352,9 @@ vim.keymap.set({ 'n', 'i' }, '<C-b>', function()
   -- Otherwise, insert **** at cursor and move between
   vim.api.nvim_set_current_line(line:sub(1, col) .. '****' .. line:sub(col + 1))
   vim.api.nvim_win_set_cursor(0, { row, col + 2 })
-  if mode == 'i' then vim.cmd 'startinsert' end
+  if mode == 'i' then
+    vim.cmd 'startinsert'
+  end
 end, { desc = 'md: Text, bold, **word** or insert/remove ****' })
 
 ---
@@ -404,7 +477,11 @@ vim.keymap.set('x', '<RightMouse>', 'y', { desc = 'Yank' })
 -- normal mode = toggle fold
 vim.keymap.set('n', '<RightMouse>', function()
   local mouse = vim.fn.getmousepos()
-  if mouse.winid ~= vim.api.nvim_get_current_win() then vim.api.nvim_set_current_win(mouse.winid) end
+  if mouse.winid ~= vim.api.nvim_get_current_win() then
+    vim.api.nvim_set_current_win(mouse.winid)
+  end
   vim.api.nvim_win_set_cursor(0, { mouse.line, mouse.column })
-  pcall(function() vim.cmd 'normal! za' end)
+  pcall(function()
+    vim.cmd 'normal! za'
+  end)
 end)

@@ -32,10 +32,14 @@ require('conform').setup {
   formatters_by_ft = {
     lua = { 'stylua' },
 
+    yaml = { 'yamlfmt' },
+    ['yaml.ansible'] = { 'yamlfix' },
+
     css = { 'prettierd', 'prettier', stop_after_first = true },
     html = { 'prettierd', 'prettier', stop_after_first = true },
     javascript = { 'prettierd', 'prettier', stop_after_first = true },
     typescript = { 'prettierd', 'prettier', stop_after_first = true },
+
     sql = { 'sqlfluff' },
     mysql = { 'sqlfluff' },
     pgsql = { 'sqlfluff' },
@@ -48,20 +52,12 @@ require('conform').setup {
   },
 }
 
--- {
---   '<leader>df', -- format buffer, async
---   function()
---     -- timeout_ms: No effect if async formatting
---     require('conform').format { async = true, lsp_format = 'fallback' }
---   end,
---   mode = '',
---   desc = 'Format buffer',
--- },
--- {
---   '<leader>ds', -- stylelint --fix
---   function()
---     require('conform').format { async = true, lsp_format = 'none', formatters = { 'stylelint' } }
---   end,
---   mode = '',
---   desc = 'stylelint --fix',
--- },
+vim.keymap.set('n', '<Leader>df', function()
+  -- timeout_ms: No effect if async formatting
+  require('conform').format { async = true, lsp_format = 'fallback' }
+end, { desc = 'conform: format buffer' })
+
+vim.keymap.set('n', '<Leader>ds', function()
+  -- stylelint --fix
+  require('conform').format { async = true, lsp_format = 'never', formatters = { 'stylelint' } }
+end, { desc = 'conform: stylelint --fix' })
