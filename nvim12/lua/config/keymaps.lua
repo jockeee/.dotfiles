@@ -376,7 +376,7 @@ vim.keymap.set('n', 'yu', function()
   local line = vim.api.nvim_get_current_line()
   local url = line:match 'https?://%S+'
   if url then
-    vim.fn.setreg('"', url)
+    vim.fn.setreg('+', url)
     vim.notify('yank: ' .. url, vim.log.levels.INFO)
   else
     vim.notify('No URL found on this line', vim.log.levels.WARN)
