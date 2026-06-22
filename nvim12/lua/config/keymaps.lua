@@ -362,6 +362,7 @@ end, { desc = 'md: Text, bold, **word** or insert/remove ****' })
 ---
 
 -- yc   non-space content under cursor
+-- yC   md code block, defined in: render-markdown
 -- yl   line content
 -- yP   file path
 -- yu   url on line
