@@ -13,24 +13,21 @@ require('snacks').setup {
       -- render the image inline in the buffer
       -- if your env doesn't support unicode placeholders, this will be disabled
       -- takes precedence over `opts.float` on supported terminals
-      inline = true, -- healthcheck says wezterm is not supported
+      inline = false, -- healthcheck says wezterm is not supported
       -- render the image in a floating window
       -- only used if `opts.inline` is disabled
-      float = false,
-      max_width = 40, -- d: 80
-      max_height = 20, -- d: 40
+      float = true,
+      -- max_width = 40, -- d: 80
+      -- max_height = 20, -- d: 40
     },
-
     -- TODO: implement
     -- https://github.com/obsidian-nvim/obsidian.nvim/wiki/Images#inline-image-viewing
-    image = {
-      resolve = function(path, src)
-        local api = require 'obsidian.api'
-        if api.path_is_note(path) then
-          return api.resolve_attachment_path(src)
-        end
-      end,
-    },
+    -- resolve = function(path, src)
+    --   local api = require 'obsidian.api'
+    --   if api.path_is_note(path) then
+    --     return api.resolve_attachment_path(src)
+    --   end
+    -- end,
   },
   lazygit = {},
   picker = {
