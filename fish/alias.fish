@@ -166,6 +166,10 @@ end
 if command -q lazygit
     abbr --add lg lazygit
 end
+if command -q hunk
+    abbr --add hd hunk diff
+    abbr --add hs hunk show
+end
 
 if command -q bat
     set bat_cmd bat
