@@ -13,9 +13,10 @@ require('aerial').setup {
     -- They can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
     -- min_width and max_width can be a list of mixed types.
     -- max_width = {40, 0.2} means "the lesser of 40 columns or 20% of total"
-    max_width = 40, -- d: 40, 0.2
-    width = nil,
-    min_width = 30, -- d: 10
+    -- max_width = { 80, 0.2 }, -- d: 40, 0.2
+    -- max_width = 60, -- d: { 40, 0.2 }
+    width = 40,
+    -- min_width = 40, -- d: 10
 
     -- key-value pairs of window-local options for aerial window (e.g. winhl)
     -- win_opts = { -- d: {}
@@ -26,34 +27,35 @@ require('aerial').setup {
     -- options will open the window in the other direction *if* there is a
     -- different buffer in the way of the preferred direction
     -- Enum: prefer_right, prefer_left, right, left, float
-    default_direction = 'right', -- d: prefer_right
+    -- default_direction = 'right', -- d: prefer_right
+    default_direction = 'float', -- d: prefer_right
 
     -- Determines where the aerial window will be opened
     --   edge   - open aerial at the far right/left of the editor
     --   window - open aerial to the right/left of the current window
-    placement = 'edge', -- d: window
+    placement = 'window', -- d: window
 
     -- When the symbols change, resize the aerial window (within min/max constraints) to fit
-    resize_to_content = false, -- d: true
+    -- resize_to_content = false, -- d: true
 
     -- Preserve window size equality with (:h CTRL-W_=)
-    preserve_equality = true, -- d: false
-  },
+    preserve_equality = false, -- d: false
 
-  float = {
-    min_height = 2,
+    win_opts = {
+      winbar = ' ', -- blank top row, so aerial's first item lines up with the doc's first line
+    },
   },
 
   -- Determines how the aerial window decides which buffer to display symbols for
   --   window - aerial window will display symbols for the buffer in the window from which it was opened
   --   global - aerial window will display symbols for the current window
-  attach_mode = 'global', -- d: window
+  -- attach_mode = 'window', -- d: window
 
   keymaps = {
     -- close keybinds
     -- `q` works by default
-    ['<C-c>'] = 'actions.close',
-    ['<Esc>'] = 'actions.close',
+    -- ['<C-c>'] = 'actions.close', -- used it with 'float' setting
+    -- ['<Esc>'] = 'actions.close', -- used it with 'float' setting
   },
 
   -- A list of all symbols to display. Set to false to display all symbols.
@@ -72,7 +74,7 @@ require('aerial').setup {
 
   -- When jumping to a symbol, highlight the line for this many ms.
   -- Set to false to disable
-  highlight_on_jump = 300, -- d: 300
+  -- highlight_on_jump = 300, -- d: 300
 
   -- Jump to symbol in source window when the cursor moves
   autojump = false,
@@ -94,22 +96,34 @@ require('aerial').setup {
 vim.api.nvim_create_autocmd('FileType', {
   pattern = 'markdown',
   callback = function()
+    -- skip preview/special markdown buffers
     if vim.bo.buftype ~= '' then
       return
-    end -- skip preview/special markdown buffers
+    end
     require('aerial').open { focus = false, direction = 'right' }
   end,
 })
 
-vim.keymap.set('n', '<Leader>a', function()
-  require('aerial').toggle { focus = true }
+vim.keymap.set('n', '<leader>a', function()
+  local dir = vim.bo.filetype == 'markdown' and 'right' or 'float'
+  require('aerial').toggle { focus = true, direction = dir }
 end, { desc = 'Aerial' })
 
--- vim.keymap.set('n', '<Leader>a', function()
+-- vim.keymap.set('n', '<leader>a', function()
+--   require('aerial').toggle { focus = true }
+-- end, { desc = 'Aerial' })
+
+-- vim.api.nvim_create_autocmd('FileType', {
+--   pattern = 'markdown',
+--   callback = function()
+--     if vim.bo.buftype ~= '' then return end -- skip special/preview buffers
+--     require('aerial').open { direction = 'right', focus = false }
+--   end,
+-- })
+
+-- used it with 'float' setting
+--
+-- vim.keymap.set('n', '<leader>a', function()
 --   local dir = vim.bo.filetype == 'markdown' and 'right' or 'float'
 --   require('aerial').toggle { focus = true, direction = dir }
 -- end, { desc = 'Aerial' })
---
--- vim.keymap.set('n', '<Leader>A', function()
---   require('aerial').toggle { focus = true, direction = 'right' }
--- end, { desc = 'Aerial (right)' })
