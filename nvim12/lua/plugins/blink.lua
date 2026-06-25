@@ -14,7 +14,7 @@ cmp.setup {
   cmdline = {
     keymap = {
       preset = 'super-tab',
-      ['<CR>'] = { 'accept_and_enter', 'fallback' },
+      ['<cr>'] = { 'accept_and_enter', 'fallback' },
       ['<Tab>'] = { 'show_and_insert', 'select_and_accept' },
       ['<C-y>'] = { 'accept', 'fallback' },
     },

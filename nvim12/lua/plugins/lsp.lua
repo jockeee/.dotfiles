@@ -85,8 +85,6 @@ local servers = {
   bashls = {},
   fish_lsp = {},
 
-  ruff = {}, -- python
-
   jsonls = {
     -- init_options = {
     --   provideFormatter = false,
@@ -126,6 +124,9 @@ local servers = {
   },
 
   ols = {}, -- odin
+
+  -- python
+  ruff = {},
 }
 
 local tools = {

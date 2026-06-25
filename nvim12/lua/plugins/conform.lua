@@ -44,9 +44,9 @@ require('conform').setup {
     mysql = { 'sqlfluff' },
     pgsql = { 'sqlfluff' },
 
+    -- sh = { 'shfmt' }, -- lsp runs formatter
     -- bash = { 'shfmt' }, -- lsp runs formatter
     -- fish = { 'fish_indent' }, -- lsp runs formatter
-    -- sh = { 'shfmt' }, -- lsp runs formatter
     -- json = { 'jq' }, -- lsp runs formatter
     -- python = { 'ruff' }, -- lsp runs formatter
   },

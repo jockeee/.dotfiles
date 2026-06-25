@@ -53,7 +53,7 @@ require('aerial').setup {
     -- close keybinds
     -- `q` works by default
     ['<C-c>'] = 'actions.close',
-    ['<Esc>'] = 'actions.close',
+    ['<esc>'] = 'actions.close',
   },
 
   -- A list of all symbols to display. Set to false to display all symbols.

@@ -5,8 +5,8 @@
 vim.keymap.set({ 'n', 'x' }, '<space>', '<nop>')
 
 -- Escape
---  Clean up search results and extmarks with <Esc>
-vim.keymap.set('n', '<Esc>', function()
+--  Clean up search results and extmarks with <esc>
+vim.keymap.set('n', '<esc>', function()
   vim.cmd 'nohlsearch'
 
   local ok, err = pcall(function()
@@ -43,8 +43,8 @@ vim.keymap.set({ 'n', 'x' }, 'x', '"_x')
 vim.keymap.set({ 'n', 'x' }, 'X', '"_X')
 
 -- Back/end of word with left/right keys
-vim.keymap.set({ 'n', 'x' }, '<Left>', 'b')
-vim.keymap.set({ 'n', 'x' }, '<Right>', 'e')
+vim.keymap.set({ 'n', 'x' }, '<left>', 'b')
+vim.keymap.set({ 'n', 'x' }, '<right>', 'e')
 
 -- Navigate visual lines
 -- j/k navigates into visual lines (wrapped lines) if not prefixed with a count, i.e. `5j`
@@ -247,9 +247,9 @@ vim.api.nvim_create_autocmd('UIEnter', {
 ---
 
 vim.keymap.set('n', '<leader>zm', '<cmd>Mason<cr>', { desc = 'Mason' })
-vim.keymap.set('n', '<leader>zs', '<cmd>source %<CR>', { desc = 'Lua: source file' })
-vim.keymap.set('n', '<leader>zx', ':.lua<CR>', { desc = 'Lua: execute line' })
-vim.keymap.set('x', '<leader>zx', ':lua<CR>', { desc = 'Lua: execute selection' })
+vim.keymap.set('n', '<leader>zs', '<cmd>source %<cr>', { desc = 'Lua: source file' })
+vim.keymap.set('n', '<leader>zx', ':.lua<cr>', { desc = 'Lua: execute line' })
+vim.keymap.set('x', '<leader>zx', ':lua<cr>', { desc = 'Lua: execute selection' })
 
 ---
 --- "Extras"
@@ -465,7 +465,7 @@ end, { desc = 'Convert unicode escapes to utf-8 characters' })
 ---
 
 -- Exit terminal mode in the builtin terminal with <esc> (default: <C-\><C-n>).
-vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
+vim.keymap.set('t', '<esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 vim.keymap.set({ 'n', 'x', 't' }, '`', '<cmd>Floaterminal<cr>', { desc = 'Floaterminal' })
 
 ---

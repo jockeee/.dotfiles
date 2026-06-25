@@ -50,7 +50,7 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.opt_local.textwidth = 80 -- gq
 
     -- Insert blockquote prefix on Enter in insert mode
-    vim.keymap.set('i', '<CR>', function()
+    vim.keymap.set('i', '<cr>', function()
       local line = vim.api.nvim_get_current_line()
       local prefix = line:match '^%s*>%s*'
       if prefix then
