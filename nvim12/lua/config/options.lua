@@ -13,7 +13,8 @@ vim.schedule(function()
   vim.o.clipboard = 'unnamedplus'
 end)
 
--- vim.o.modeline = false
+-- vim.o.modeline = false -- 'modeline' 'ml' (default on (off for root))
+-- vim.o.modelineexpr = false -- 'modelineexpr' 'mle' (default off)
 vim.o.termguicolors = true -- true color support (24-bit)
 vim.o.background = 'dark' -- colorschemes that can be light or dark will be made dark
 vim.o.cursorline = false -- highlight line which your cursor is on

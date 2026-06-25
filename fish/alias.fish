@@ -748,12 +748,17 @@ function upd_nvim_release -d 'nvim (release)'
             end
         end
 
+        set repo neovim/neovim
+
+        set build_dir ~/.build/neovim
+        set install_dir ~/.build/nvim
+
         # download json
         # set json (gh api /repos/neovim/neovim/releases/latest)
-        set json (curl -sL https://api.github.com/repos/neovim/neovim/releases/latest)
+        set json (curl -sL https://api.github.com/repos/$repo/releases/latest)
 
         if test $status -ne 0
-            echo "Error: Couldn't retrieve JSON response from 'https://api.github.com/repos/neovim/neovim/releases/latest'"
+            echo "Error: Couldn't retrieve JSON response from 'https://api.github.com/repos/$repo/releases/latest'"
             return 1
         end
 
@@ -798,11 +803,13 @@ function upd_nvim_release -d 'nvim (release)'
                 return 1
             end
 
-            # "security check" aka https, github.com and repo neovim/neovim
-            if not test (echo $tarball_url | cut -c1-42) = "https://api.github.com/repos/neovim/neovim"
+            # "security check" aka https, github.com and same repo
+            if not string match --quiet --regex "^https://api.github.com/repos/$repo/.*" $tarball_url
                 echo "Error: Unexpected tarball URL"
-                echo "URL: $tarball_url"
-                echo "Expected: https://api.github.com/repos/neovim/neovim ..."
+                echo "URL:"
+                echo "$tarball_url"
+                echo "Expecpted:"
+                echo "https://api.github.com/repos/$repo/ ..."
                 return 1
             end
 
@@ -825,36 +832,23 @@ function upd_nvim_release -d 'nvim (release)'
                 return 1
             end
 
-            set build_dir ~/.build/neovim
-            set install_dir ~/.build/nvim
-
-            # backup
-            if test -e $install_dir
-                # while backup dir exists, keep adding -N
-                set backup_dir ~/.build/nvim-working-$(date +%F)
-                set backup_count 1
-                while test -e $backup_dir
-                    set backup_dir ~/.build/nvim-working-$(date +%F)-$backup_count
-                    set backup_count (math $backup_count + 1)
-                end
-
-                mv $install_dir $backup_dir
-                echo "Info: Backup available at $backup_dir"
-                echo
-            end
-
             # remove old build
             if test -e $build_dir
                 rm -rf $build_dir
+                if test $status -ne 0
+                    echo "Error: Couldn't remove $build_dir"
+                    rm $temp_file
+                    return 1
+                end
             end
 
             # extract
             mkdir -p $build_dir
-            sudo tar -C $build_dir -xf $temp_file
+            tar -C $build_dir -xf $temp_file
 
             if test $status -ne 0
                 echo "Error: Archive extraction failed"
-                sudo rm -rf $build_dir
+                rm -rf $build_dir
                 rm $temp_file
                 return 1
             end
@@ -870,17 +864,50 @@ function upd_nvim_release -d 'nvim (release)'
             make CMAKE_BUILD_TYPE=RelWithDebInfo
             if test $status -ne 0
                 echo "Error: Couldn't build neovim"
-                if test -n "$backup_dir"
-                    echo "Info: Backup available at $backup_dir"
-                end
+                # restore CWD
+                cd $user_cwd
                 return 1
             end
 
-            # install
-            make install CMAKE_INSTALL_PREFIX=$install_dir
+            # backup
+            if test -e $install_dir
+                # while backup dir exists, keep adding -N
+                set backup_dir ~/.build/nvim-working-$(date +%F)
+                set backup_count 1
+                while test -e $backup_dir
+                    set backup_dir ~/.build/nvim-working-$(date +%F)-$backup_count
+                    set backup_count (math $backup_count + 1)
+                end
 
-            # create symling in ~/.local/bin if it doesn't exist
-            if not test -e ~/.local/bin/nvim
+                mv $install_dir $backup_dir
+                if test $status -ne 0
+                    echo "Error: Failed to create backup"
+                    echo
+                    # restore CWD
+                    cd $user_cwd
+                    return 1
+                end
+
+                echo "Info: Backup available at $backup_dir"
+                echo
+            end
+
+            # install
+            echo "install_dir is: $install_dir"
+            make CMAKE_BUILD_TYPE=RelWithDebInfo CMAKE_INSTALL_PREFIX=$install_dir install
+            if test $status -ne 0
+                if test -n "$backup_dir"
+                    echo
+                    echo "Info: Backup available at $backup_dir"
+                    echo
+                end
+                # restore CWD
+                cd $user_cwd
+                return 1
+            end
+
+            # create symlink in ~/.local/bin if it doesn't exist
+            if not test -L ~/.local/bin/nvim
                 mkdir -p ~/.local/bin
                 ln -s $install_dir/bin/nvim ~/.local/bin/nvim
             end
@@ -892,7 +919,11 @@ function upd_nvim_release -d 'nvim (release)'
         end
 
         echo
-        echo "nvim version: $(nvim --version | grep 'NVIM' | awk '{print $2}')"
+        echo -e '\e[3mwhich nvim\e[0m'
+        which nvim
+        echo
+        echo -e '\e[3mnvim -V1 -v\e[0m'
+        nvim -V1 -v
         echo
     end
 end
@@ -1273,7 +1304,7 @@ function build_nvim_release -d 'nvim (release)'
     echo -e '\e[3mhttps://github.com/neovim/neovim\e[0m'
     echo
 
-    for cmd in ninja cmake gcc make unzip gettext curl
+    for cmd in ninja-build cmake gcc make unzip gettext curl
         if not command -q $cmd
             echo "Error: '$cmd' not found"
             return 1
@@ -1330,24 +1361,14 @@ function build_nvim_release -d 'nvim (release)'
         return 1
     end
 
-    # backup
-    if test -e $install_dir
-        # while backup dir exists, keep adding -N
-        set backup_dir ~/.build/nvim-working-$(date +%F)
-        set backup_count 1
-        while test -e $backup_dir
-            set backup_dir ~/.build/nvim-working-$(date +%F)-$backup_count
-            set backup_count (math $backup_count + 1)
-        end
-
-        mv $install_dir $backup_dir
-        echo "Info: Backup available at $backup_dir"
-        echo
-    end
-
     # remove old build
     if test -e $build_dir
         rm -rf $build_dir
+        if test $status -ne 0
+            echo "Error: Couldn't remove $build_dir"
+            rm $temp_file
+            return 1
+        end
     end
 
     # extract
@@ -1356,7 +1377,7 @@ function build_nvim_release -d 'nvim (release)'
 
     if test $status -ne 0
         echo "Error: Archive extraction failed"
-        sudo rm -rf $build_dir
+        rm -rf $build_dir
         rm $temp_file
         return 1
     end
@@ -1372,15 +1393,47 @@ function build_nvim_release -d 'nvim (release)'
     make CMAKE_BUILD_TYPE=RelWithDebInfo
     if test $status -ne 0
         echo "Error: Couldn't build neovim"
-        if test -n "$backup_dir"
-            echo "Info: Backup available at $backup_dir"
-        end
+        # restore CWD
+        cd $user_cwd
         return 1
+    end
+
+    # backup
+    if test -e $install_dir
+        # while backup dir exists, keep adding -N
+        set backup_dir ~/.build/nvim-working-$(date +%F)
+        set backup_count 1
+        while test -e $backup_dir
+            set backup_dir ~/.build/nvim-working-$(date +%F)-$backup_count
+            set backup_count (math $backup_count + 1)
+        end
+
+        mv $install_dir $backup_dir
+        if test $status -ne 0
+            echo "Error: Failed to create backup"
+            echo
+            # restore CWD
+            cd $user_cwd
+            return 1
+        end
+
+        echo "Info: Backup available at $backup_dir"
+        echo
     end
 
     # install
     echo "install_dir is: $install_dir"
     make CMAKE_BUILD_TYPE=RelWithDebInfo CMAKE_INSTALL_PREFIX=$install_dir install
+    if test $status -ne 0
+        if test -n "$backup_dir"
+            echo
+            echo "Info: Backup available at $backup_dir"
+            echo
+        end
+        # restore CWD
+        cd $user_cwd
+        return 1
+    end
 
     # create symlink in ~/.local/bin if it doesn't exist
     if not test -L ~/.local/bin/nvim

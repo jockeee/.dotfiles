@@ -52,12 +52,12 @@ require('conform').setup {
   },
 }
 
-vim.keymap.set('n', '<Leader>df', function()
+vim.keymap.set('n', '<leader>df', function()
   -- timeout_ms: No effect if async formatting
   require('conform').format { async = true, lsp_format = 'fallback' }
 end, { desc = 'conform: format buffer' })
 
-vim.keymap.set('n', '<Leader>ds', function()
+vim.keymap.set('n', '<leader>ds', function()
   -- stylelint --fix
   require('conform').format { async = true, lsp_format = 'never', formatters = { 'stylelint' } }
 end, { desc = 'conform: stylelint --fix' })

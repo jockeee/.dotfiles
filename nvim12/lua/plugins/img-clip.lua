@@ -9,7 +9,7 @@ require('img-clip').setup {}
 
 -- vim.keymap.set('n', '<leader>p', '<cmd>PasteImage<cr>', { desc = 'Paste image from clipboard' })
 
-vim.keymap.set('n', '<Leader>i', function()
+vim.keymap.set('n', '<leader>i', function()
   Snacks.picker.files {
     ft = { 'jpg', 'jpeg', 'png', 'webp' },
     confirm = function(self, item, _)

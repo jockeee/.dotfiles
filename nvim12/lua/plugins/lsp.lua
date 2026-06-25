@@ -175,7 +175,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
         vim.lsp.document_color.enable(true, { bufnr = ev.buf })
       end
 
-      vim.keymap.set('n', '<Leader>sc', function()
+      vim.keymap.set('n', '<leader>sc', function()
         vim.lsp.document_color.enable(not vim.lsp.document_color.is_enabled { bufnr = 0 }, { bufnr = 0 })
       end, { desc = 'lsp: documentColors' })
     end

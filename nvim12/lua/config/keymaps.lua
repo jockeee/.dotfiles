@@ -275,7 +275,7 @@ end, { desc = 'open, try as github repo' })
 --
 
 -- Markdown, codeblock
-vim.keymap.set('n', '<Leader>mm', function()
+vim.keymap.set('n', '<leader>mm', function()
   vim.notify 'test'
   local row = vim.api.nvim_win_get_cursor(0)[1]
   vim.api.nvim_buf_set_lines(0, row - 1, row - 1, false, { '```', '', '```' })

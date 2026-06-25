@@ -113,7 +113,7 @@ require('copilot').setup {
   end,
 }
 
-vim.keymap.set('n', '<Leader>c', function()
+vim.keymap.set('n', '<leader>c', function()
   vim.b.copilot_enabled = true -- only this buffer
   vim.cmd 'Copilot attach'
   vim.notify('Copilot enabled', vim.log.levels.INFO)

@@ -172,7 +172,7 @@ local clue = require 'mini.clue'
 clue.setup {
   triggers = {
     -- Leader triggers
-    { mode = { 'n', 'x' }, keys = '<Leader>' },
+    { mode = { 'n', 'x' }, keys = '<leader>' },
 
     -- `[` and `]` keys
     { mode = 'n', keys = '[' },
@@ -209,15 +209,15 @@ clue.setup {
     clue.gen_clues.z(),
 
     -- group names
-    { mode = 'n', keys = '<Leader>d', desc = 'document (buffer)' },
-    { mode = 'n', keys = '<Leader>f', desc = 'find' },
-    { mode = { 'n', 'v' }, keys = '<Leader>h', desc = 'git hunk' }, -- gitsigns
-    { mode = 'n', keys = '<Leader>m', desc = 'multicursor' },
-    { mode = 'n', keys = '<Leader>q', desc = 'ai' },
-    { mode = 'n', keys = '<Leader>s', desc = 'show (toggle)' },
-    { mode = 'n', keys = '<Leader>u', desc = 'unicode' },
-    { mode = 'n', keys = '<Leader>x', desc = 'trouble' },
-    { mode = 'n', keys = '<Leader>z', desc = 'nvim' },
+    { mode = 'n', keys = '<leader>d', desc = 'document (buffer)' },
+    { mode = 'n', keys = '<leader>f', desc = 'find' },
+    { mode = { 'n', 'v' }, keys = '<leader>h', desc = 'git hunk' }, -- gitsigns
+    { mode = 'n', keys = '<leader>m', desc = 'multicursor' },
+    { mode = 'n', keys = '<leader>q', desc = 'ai' },
+    { mode = 'n', keys = '<leader>s', desc = 'show (toggle)' },
+    { mode = 'n', keys = '<leader>u', desc = 'unicode' },
+    { mode = 'n', keys = '<leader>x', desc = 'trouble' },
+    { mode = 'n', keys = '<leader>z', desc = 'nvim' },
   },
 }
 
@@ -333,8 +333,8 @@ MiniPick.registry.icons = function()
   }
 end
 
--- vim.keymap.set('n', '<Leader><Space>', MiniPick.registry.files, { desc = 'Find: files' })
--- vim.keymap.set('n', '<Leader><Space>', MiniPick.builtin.files, { desc = 'Find: files' })
+-- vim.keymap.set('n', '<leader><Space>', MiniPick.registry.files, { desc = 'Find: files' })
+-- vim.keymap.set('n', '<leader><Space>', MiniPick.builtin.files, { desc = 'Find: files' })
 -- vim.keymap.set('n', '<leader>fa', MiniPick.builtin.resume, { desc = 'resume' })
 -- vim.keymap.set('n', '<leader>fd', MiniExtra.pickers.diagnostic, { desc = 'diagnostic' })
 -- vim.keymap.set('n', '<leader>fe', MiniExtra.pickers.explorer, { desc = 'explorer' })

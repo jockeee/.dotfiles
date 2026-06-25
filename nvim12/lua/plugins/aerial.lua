@@ -14,9 +14,9 @@ require('aerial').setup {
     -- min_width and max_width can be a list of mixed types.
     -- max_width = {40, 0.2} means "the lesser of 40 columns or 20% of total"
     -- max_width = { 80, 0.2 }, -- d: 40, 0.2
-    max_width = { 100, 0.25 }, -- d: 40, 0.2
+    max_width = 60, -- d: { 40, 0.2 }
     width = nil,
-    min_width = 40, -- d: 10
+    min_width = 20, -- d: 10
 
     -- key-value pairs of window-local options for aerial window (e.g. winhl)
     -- win_opts = { -- d: {}
@@ -33,13 +33,13 @@ require('aerial').setup {
     -- Determines where the aerial window will be opened
     --   edge   - open aerial at the far right/left of the editor
     --   window - open aerial to the right/left of the current window
-    placement = 'edge', -- d: window
+    placement = 'window', -- d: window
 
     -- When the symbols change, resize the aerial window (within min/max constraints) to fit
-    resize_to_content = true, -- d: true
+    -- resize_to_content = false, -- d: true
 
     -- Preserve window size equality with (:h CTRL-W_=)
-    preserve_equality = true, -- d: false
+    -- preserve_equality = true, -- d: false
 
     win_opts = {
       winbar = ' ', -- blank top row, so aerial's first item lines up with the doc's first line
@@ -49,7 +49,7 @@ require('aerial').setup {
   -- Determines how the aerial window decides which buffer to display symbols for
   --   window - aerial window will display symbols for the buffer in the window from which it was opened
   --   global - aerial window will display symbols for the current window
-  attach_mode = 'global', -- d: window
+  -- attach_mode = 'window', -- d: window
 
   keymaps = {
     -- close keybinds
@@ -74,14 +74,17 @@ require('aerial').setup {
 
   -- When jumping to a symbol, highlight the line for this many ms.
   -- Set to false to disable
-  highlight_on_jump = 300, -- d: 300
+  -- highlight_on_jump = 300, -- d: 300
 
   -- Jump to symbol in source window when the cursor moves
   autojump = false,
 
   -- Automatically open aerial when entering supported buffers.
   -- This can be a function (see :h aerial-open-automatic)
-  open_automatic = false,
+  -- open_automatic = false,
+  open_automatic = function(bufnr)
+    return vim.bo[bufnr].filetype == 'markdown' and vim.bo[bufnr].buftype == ''
+  end,
 
   -- Run this command after jumping to a symbol (false will disable)
   post_jump_cmd = 'normal! zz',
@@ -93,27 +96,26 @@ require('aerial').setup {
   -- end,
 }
 
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = 'markdown',
-  callback = function()
-    if vim.bo.buftype ~= '' then
-      return
-    end -- skip preview/special markdown buffers
-    require('aerial').open { focus = false }
-  end,
-})
-
-vim.keymap.set('n', '<Leader>a', function()
-  local aerial = require 'aerial'
-  if aerial.is_open() then
-    aerial.focus()
-  else
-    aerial.open { focus = true }
-  end
+vim.keymap.set('n', '<leader>a', function()
+  require('aerial').toggle { focus = true }
 end, { desc = 'Aerial' })
 
--- used it with 'float' setting
---
+-- vim.api.nvim_create_autocmd('FileType', {
+--   pattern = 'markdown',
+--   callback = function()
+--     -- skip preview/special markdown buffers
+--     if vim.bo.buftype ~= '' then
+--       return
+--     end
+--     require('aerial').open { focus = false }
+--   end,
+-- })
+
+-- vim.keymap.set('n', '<leader>a', function()
+--   local dir = vim.bo.filetype == 'markdown' and 'right' or 'float'
+--   require('aerial').toggle { focus = true, direction = dir }
+-- end, { desc = 'Aerial' })
+
 -- vim.api.nvim_create_autocmd('FileType', {
 --   pattern = 'markdown',
 --   callback = function()
@@ -121,8 +123,10 @@ end, { desc = 'Aerial' })
 --     require('aerial').open { direction = 'right', focus = false }
 --   end,
 -- })
+
+-- used it with 'float' setting
 --
--- vim.keymap.set('n', '<Leader>a', function()
+-- vim.keymap.set('n', '<leader>a', function()
 --   local dir = vim.bo.filetype == 'markdown' and 'right' or 'float'
 --   require('aerial').toggle { focus = true, direction = dir }
 -- end, { desc = 'Aerial' })
