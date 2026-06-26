@@ -17,9 +17,9 @@ require 'plugins.todo-comments'
 
 -- Editing / Functionality
 require 'plugins.harpoon'
-require 'plugins.img-clip'
 require 'plugins.multicursor'
 require 'plugins.obsidian'
+require 'plugins.oil'
 require 'plugins.origami' -- folding
 require 'plugins.smart-splits'
 require 'plugins.surround'
