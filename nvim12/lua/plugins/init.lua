@@ -37,6 +37,6 @@ require 'plugins.lsp'
 require 'plugins.gitsigns'
 
 -- ai
-require 'plugins.copilot'
+-- require 'plugins.copilot'
 -- require 'plugins.codecompanion'
 -- require 'plugins.folke-sidekick'
