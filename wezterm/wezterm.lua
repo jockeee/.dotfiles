@@ -23,8 +23,8 @@ wezterm.GLOBAL.default_workspaces = wezterm.GLOBAL.default_workspaces
     e = { name = 'ws3 ', cwd = wezterm.home_dir },
     r = { name = 'ws4 ', cwd = wezterm.home_dir },
     t = { name = 'pass', cwd = wezterm.home_dir .. '/.password-store' },
-    f = { name = 'dot ', cwd = wezterm.home_dir .. '/.dotfiles' },
-    g = { name = 'vim ', cwd = wezterm.home_dir .. '/.dotfiles/nvim' },
+    f = { name = 'vim ', cwd = wezterm.home_dir .. '/.dotfiles/nvim' },
+    g = { name = 'dot ', cwd = wezterm.home_dir .. '/.dotfiles' },
   }
 
 -- Prepend lua/ subfolder to Lua module search path (require behaves like in nvim)
