@@ -16,12 +16,15 @@ local color_fg_inactive = '#7c7d83'
 wezterm.GLOBAL = wezterm.GLOBAL or {}
 wezterm.GLOBAL.default_workspaces = wezterm.GLOBAL.default_workspaces
   or {
+    -- M-[q-t,f-g], wezterm, ws 1-6
+    -- M-[a-d,z-c], harpoon, file 1-6
     q = { name = 'ws1 ', cwd = wezterm.home_dir },
     w = { name = 'ws2 ', cwd = wezterm.home_dir },
     e = { name = 'ws3 ', cwd = wezterm.home_dir },
-    r = { name = 'dot ', cwd = wezterm.home_dir .. '/.dotfiles' },
-    f = { name = 'vim ', cwd = wezterm.home_dir .. '/.dotfiles/nvim' },
+    r = { name = 'ws4 ', cwd = wezterm.home_dir },
     t = { name = 'pass', cwd = wezterm.home_dir .. '/.password-store' },
+    f = { name = 'dot ', cwd = wezterm.home_dir .. '/.dotfiles' },
+    g = { name = 'vim ', cwd = wezterm.home_dir .. '/.dotfiles/nvim' },
   }
 
 -- Prepend lua/ subfolder to Lua module search path (require behaves like in nvim)
@@ -96,72 +99,70 @@ end
 -- }
 -- config.default_gui_startup_args = { 'connect', 'unix' }
 
-config = {
-  automatically_reload_config = true,
-  default_workspace = 'ws1 ',
-  scrollback_lines = 3500,
-  enable_kitty_graphics = true,
-  enable_kitty_keyboard = false,
+config.automatically_reload_config = true
+config.default_workspace = 'ws1 '
+config.scrollback_lines = 3500
+config.enable_kitty_graphics = true
+config.enable_kitty_keyboard = false
 
-  -- Visual
-  enable_tab_bar = true,
-  tab_bar_at_bottom = true,
-  use_fancy_tab_bar = false,
-  hide_tab_bar_if_only_one_tab = false,
-  window_decorations = 'NONE',
-  window_padding = {
-    left = 0, -- d: 8
-    right = 0, -- d: 8
-    top = 8, -- d: 8
-    bottom = 0, -- d: 8
-  },
+-- Visual
+config.enable_tab_bar = true
+config.tab_bar_at_bottom = true
+config.use_fancy_tab_bar = false
+config.hide_tab_bar_if_only_one_tab = false
+config.window_decorations = 'NONE'
+config.window_padding = {
+  left = 0, -- d: 8
+  right = 0, -- d: 8
+  top = 8, -- d: 8
+  bottom = 0, -- d: 8
+}
 
-  -- Font
-  warn_about_missing_glyphs = false,
-  font_size = 12,
-  line_height = 1.05,
-  -- harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' }, -- disable ligatures
+-- Font
+config.warn_about_missing_glyphs = false
+config.font_size = 12
+config.line_height = 1.05
+-- config.harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' } -- disable ligatures
 
-  -- Colors
-  color_scheme = 'Catppuccin Mocha',
-  background = {
-    {
-      source = {
-        Color = color_bg,
-      },
-      width = '100%',
-      height = '100%',
+-- Colors
+config.color_scheme = 'Catppuccin Mocha'
+config.background = {
+  {
+    source = {
+      Color = color_bg,
     },
+    width = '100%',
+    height = '100%',
   },
-  -- Dimming of inactive panes
-  inactive_pane_hsb = {
-    saturation = 1.0, -- 1.0 = keep as-is
-    brightness = 1.0, -- 1.0 = keep as-is
-  },
-  colors = {
-    tab_bar = {
-      background = color_bg,
-      active_tab = {
-        bg_color = color_bg,
-        fg_color = color_fg_active,
-        intensity = 'Bold', -- default: Normal - Half, Normal, Bold
-      },
-      inactive_tab = {
-        bg_color = color_bg,
-        fg_color = color_fg_inactive,
-      },
-      -- inactive_tab_hover = {
-      --   bg_color = color_bg,
-      --   fg_color = color_fg_hover,
-      -- },
-      new_tab = {
-        bg_color = color_bg,
-        fg_color = color_bg, -- "hidden"
-      },
-      new_tab_hover = {
-        bg_color = color_bg,
-        fg_color = color_fg_hover,
-      },
+}
+-- Dimming of inactive panes
+config.inactive_pane_hsb = {
+  saturation = 1.0, -- 1.0 = keep as-is
+  brightness = 1.0, -- 1.0 = keep as-is
+}
+config.colors = {
+  tab_bar = {
+    background = color_bg,
+    active_tab = {
+      bg_color = color_bg,
+      fg_color = color_fg_active,
+      intensity = 'Bold', -- default: Normal - Half, Normal, Bold
+    },
+    inactive_tab = {
+      bg_color = color_bg,
+      fg_color = color_fg_inactive,
+    },
+    -- inactive_tab_hover = {
+    --   bg_color = color_bg,
+    --   fg_color = color_fg_hover,
+    -- },
+    new_tab = {
+      bg_color = color_bg,
+      fg_color = color_bg, -- "hidden"
+    },
+    new_tab_hover = {
+      bg_color = color_bg,
+      fg_color = color_fg_hover,
     },
   },
 }
@@ -192,7 +193,7 @@ config.keys = {
 
   -- CSI-u encoding for shift-enter
   -- Using in claude code, claude code native binding: C-j
-  { key = 'Enter', mods = 'SHIFT', action = wezterm.action.SendString '\x1b[13;2u' },
+  -- { key = 'Enter', mods = 'SHIFT', action = wezterm.action.SendString '\x1b[13;2u' },
 
   --- fix del key when `enable_kitty_keyboard = true`
   -- {
@@ -235,8 +236,8 @@ config.keys = {
       local process_info = pane:get_foreground_process_info()
 
       if process_info then
-        local pid = process_info.pid
-        os.execute('kill -9 ' .. pid)
+        local pid = tostring(process_info.pid)
+        wezterm.background_child_process { 'kill', '-9', pid }
       end
     end),
   },
